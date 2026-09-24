@@ -6,6 +6,37 @@ Backgrounds are excluded. The difficulty screen remains unchanged except for its
 
 ## Execution batches: 100 assets
 
+### Workspace handoff and continuation — 2026-09-24
+
+The active Topaz working set has moved from Brasilia to Albuquerque. Local
+provider journals, paid masters, manual edits, references, and frozen budgets
+were copied and verified; Brasilia remains preserved. Three saved requests now
+report provider failure and remain recovery work without automatic resubmission.
+
+Continue Guybrush first, then resume the remaining regular scene/resource
+batches here in the existing order. Do not run the scene coordinator alongside
+the Guybrush worker. Completion means the processing checkpoint; rejected
+cutouts, tiny pilots, native effects, and provider failures stay explicit rather
+than being marked approved. Finished drafts continue to install while the game
+is closed, preserving manual edits.
+
+The Guybrush worker currently stops at its frozen credit ceiling: 1,370 of
+1,371 credits used, with insufficient allowance for the next two-stage source.
+The last live account check returned two credits. Further paid work needs a new
+authorized allowance; retain the existing ledger and never buy credits or reset
+its history to bypass the cap.
+
+The asset pack now includes 687 additional Guybrush frames across costumes
+2–6: 650 automatically validated outputs, 35 rejected cleanup drafts, and two
+derived copies. All are installed under the existing draft policy. Their
+canonical masters, both Topaz runtime packs, cleaned references, and portable
+library indexes are packaged together, bringing the selected Topaz set to 3,498.
+The user-supplied 2560 × 1888 inventory panel is installed byte-for-byte as a
+manual replacement and packaged as the canonical UI master, bringing the
+portable gallery to 3,499 assets. Future draft installs preserve this override.
+Generation journals and credentials remain local; the portable pack is a
+playback/editor snapshot, not a resumable paid-job queue.
+
 ### Guybrush priority pass — 2026-09-24
 
 `tools/topaz_guybrush.py` inventories 125 identified Guybrush-related resource
