@@ -19,6 +19,7 @@ from quiver_cannon import atomic, locked
 from topaz_batch import API
 from topaz_character_cutouts import run, digest, load_jobs
 from topaz_scenes import ROOT, OUTPUT, read, prepare_scene, materialize
+from topaz_allowance import Allowance, regular_batches
 
 # Recovery cases are held without repurchase while other source groups continue.
 RECOVERY = {'failed', 'unknown', 'submitting'}
@@ -57,17 +58,24 @@ def cost(base, sources):
                for s, j in jobs.items() if s in sources)
 
 
-def execute(rooms, output=OUTPUT, local=ROOT/'.playtest', max_credits=None):
+def execute(rooms, output=OUTPUT, local=ROOT/'.playtest', max_credits=None, allowance_id=None):
     if len(rooms) != 2 or len(set(rooms)) != 2:
         raise ValueError('Select exactly two distinct rooms')
     if max_credits is not None and (not math.isfinite(max_credits) or max_credits < 0):
         raise ValueError('Invalid continuation credit ceiling')
     folder = output/'batches'/('parallel-' + '-'.join(f'{r:04}' for r in rooms))
+    allowance = Allowance(output, allowance_id) if allowance_id else None
+    if allowance:
+        folder = allowance.folder/folder.name
     marker = output/'stop-after-current'
     with ExitStack() as locks:
         # Excludes legacy scene runners for the entire paired invocation.
         for path in (output, output/'batches', folder):
             locks.enter_context(locked(path))
+        if allowance:
+            allowance.validate()
+            if any(r not in allowance.data['membership']['rooms'] for r in rooms):
+                raise ValueError('Room outside allowance membership')
         if marker.exists():
             raise RuntimeError('Stop marker present')
         plan = read(output/'plan.json'); units = read(output/'batches/plan.json')
@@ -85,31 +93,36 @@ def execute(rooms, output=OUTPUT, local=ROOT/'.playtest', max_credits=None):
             if (base/'stop-after-current').exists():
                 raise RuntimeError(f'Room {room} stop marker present')
             selected = [b for b in units['batches'] if b['room'] == room and b['phase'] == 'process']
+            if allowance:selected=regular_batches(plan,selected)
             if not selected:
                 raise ValueError(f'No regular work for room {room}')
             groups = group_batches(selected, 100); groups_by_room[room] = groups
             sources = {s for g in groups for s in g['sources']}
             membership = dict(room=room, batch_size=100, total_sources=len(sources), groups=groups)
-            previous = read(production/'large-plan.json')
+            budget_folder = allowance.folder/production.name if allowance else production
+            previous = read(budget_folder/'large-plan.json')
             if previous and previous != membership:
                 raise ValueError('Frozen source membership changed')
-            atomic(production/'large-plan.json', membership)
+            atomic(budget_folder/'large-plan.json', membership)
             scene = next(s for s in plan['scenes'] if s['room'] == room)
             prepare_scene(output, scene, Path(plan['source_batch']))
             paid = cost(base, sources)
-            budget = read(production/'budget.json')
+            budget_path = budget_folder/'budget.json'
+            budget = read(budget_path)
             if budget and set(budget['sources']) != sources:
                 raise ValueError('Frozen budget membership changed')
             if not budget:
                 budget = dict(ceiling=sum(b['planning_minimum_credits'] for b in selected),
                               initial_cost=paid, sources=sorted(sources))
-                atomic(production/'budget.json', budget)
+                atomic(budget_path, budget)
             requests.append((room, max(0, budget['ceiling'] - (paid-budget['initial_cost']))))
             specs[room] = dict(base=base, production=production, sources=sources, budget=budget, groups=groups)
         validate_membership(groups_by_room)
         reservation = read(folder/'budget.json')
         if not reservation:
             balance = api.balance()
+            if allowance:
+                balance = min(balance, allowance.remaining())
             if max_credits is not None:
                 balance = min(balance, max_credits)
             allowances = allocate(balance, requests)
@@ -118,6 +131,17 @@ def execute(rooms, output=OUTPUT, local=ROOT/'.playtest', max_credits=None):
             atomic(folder/'budget.json', reservation)
         if set(reservation['rooms']) != {str(r) for r in rooms}:
             raise ValueError('Reservation membership changed')
+        # Re-entering after another phase spent credits must not resurrect old
+        # reservations. These invocation slices are disjoint and never expand.
+        invocation_costs = {r: cost(specs[r]['base'], specs[r]['sources']) for r in rooms}
+        invocation_limits = None
+        if allowance:
+            available = min(allowance.remaining(), api.balance())
+            if max_credits is not None:
+                available = min(available, max_credits)
+            invocation_limits = allocate(available, [(r, max(0,
+                reservation['rooms'][str(r)]['ceiling'] -
+                (invocation_costs[r]-reservation['rooms'][str(r)]['initial_cost']))) for r in rooms])
         checkpoint = threading.Lock(); states = {}
         def publish(room, state, **details):
             with checkpoint:
@@ -125,6 +149,7 @@ def execute(rooms, output=OUTPUT, local=ROOT/'.playtest', max_credits=None):
                 value = dict(state=state, pid=os.getpid(), room=room, concurrency=16,
                              source_count=len(spec['sources']), credits=cost(spec['base'],spec['sources'])-spec['budget']['initial_cost'],
                              ceiling=spec['budget']['ceiling'], updated_at=time.time(), **details)
+                if allowance:value['allowance_id']=allowance.id
                 states[str(room)] = value
                 atomic(spec['production']/'progress.json', value)
                 atomic(folder/'progress.json', dict(pid=os.getpid(), rooms=states, updated_at=time.time()))
@@ -142,6 +167,8 @@ def execute(rooms, output=OUTPUT, local=ROOT/'.playtest', max_credits=None):
                     paid=cost(base,sources)
                     remaining=max(0,min(budget['ceiling']-(paid-budget['initial_cost']),
                                         reserved['ceiling']-(paid-reserved['initial_cost'])))
+                    if invocation_limits is not None:
+                        remaining=max(0,min(remaining,invocation_limits[room]-(paid-invocation_costs[room])))
                     publish(room,'running',current_batch=group['id'])
                     print(f"START {group['id']}: 16 slots, {remaining} reserved credits remaining",flush=True)
                     selected_sources=[]

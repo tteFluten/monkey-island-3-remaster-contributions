@@ -13,6 +13,8 @@ from topaz_batch import API
 from topaz_character_cutouts import digest, load_jobs, run
 from topaz_parallel_scenes import cost, TERMINAL
 from topaz_scenes import OUTPUT, ROOT, read, natural, prepare_scene, materialize
+from topaz_allowance import Allowance
+from install_asset_drafts import install
 
 # Resource sets identified from local contact sheets, including combined actor
 # animations, detached limbs, disguises, child poses and distant representations.
@@ -114,12 +116,13 @@ def remaining(budget, current_cost):
     return max(0, budget['ceiling'] - (current_cost - budget['initial_cost']))
 
 
-def execute(max_credits, output=OUTPUT, local=ROOT/'.playtest'):
+def execute(max_credits, output=OUTPUT, local=ROOT/'.playtest', allowance_id=None):
     if max_credits < 0:
         raise ValueError('Negative credit ceiling')
     folder=output/'batches/guybrush-all';marker=output/'stop-after-current'
     with ExitStack() as locks:
         for path in (output,output/'batches',folder):locks.enter_context(locked(path))
+        allowance = Allowance(output, allowance_id).validate() if allowance_id else None
         membership=prepare(output);plan=read(output/'plan.json')
         grouped=defaultdict(list)
         for source,base in membership['owners'].items():grouped[base].append(source)
@@ -130,38 +133,52 @@ def execute(max_credits, output=OUTPUT, local=ROOT/'.playtest'):
         total_cost=lambda:sum(cost(output/b,ss) for b,ss in grouped.items())
         api=API(ROOT/'.context/secrets/topaz-api-key',4)
         budget=read(folder/'budget.json')
-        if not budget:
+        if not budget and not allowance:
             budget=dict(ceiling=min(max_credits,api.balance()),initial_cost=total_cost(),
                         membership_sha256=digest(folder/'plan.json'))
             atomic(folder/'budget.json',budget)
-        if budget['membership_sha256']!=digest(folder/'plan.json'):
+        if budget and budget['membership_sha256']!=digest(folder/'plan.json'):
             raise ValueError('Budget membership changed')
         def progress(state,**details):
+            accounting = allowance.summary() if allowance else dict(
+                ceiling=budget['ceiling'],credits=total_cost()-budget['initial_cost'])
             atomic(folder/'progress.json',dict(state=state,pid=os.getpid(),updated_at=time.time(),
-                ceiling=budget['ceiling'],credits=total_cost()-budget['initial_cost'],**details))
+                **accounting,**details))
+            return state
         # Main costume first even when its already-paid owner is elsewhere.
         ordered=sorted(grouped,key=lambda b:(not any(costume(s)==2 for s in grouped[b]),b))
         try:
             for base in ordered:
                 sources=grouped[base]
                 for offset in range(0,len(sources),100):
-                    if marker.exists() or (folder/'stop-after-current').exists():progress('stopped');return
+                    if marker.exists() or (folder/'stop-after-current').exists():return progress('stopped')
                     jobs=read(output/base/'jobs.json',{})
                     pending=[s for s in sources[offset:offset+100] if jobs.get(s,{}).get('state') not in TERMINAL]
                     if not pending:continue
-                    left=remaining(budget,total_cost())
+                    left=allowance.remaining() if allowance else remaining(budget,total_cost())
                     if left<1 and not any(jobs.get(s,{}).get('state')=='submitted' for s in pending):
-                        progress('credit_cap');status(output,local);return
-                    progress('running',owner=base,batch=offset//100+1)
+                        status(output,local)
+                        return progress('credit_cap',owner=base,batch=offset//100+1,next_source=pending[0])
+                    progress('running',owner=base,batch=offset//100+1,next_source=pending[0])
                     run(output/base,api,left,sources=pending,concurrency=16,require_pilots=False,
                         stop_files=(marker,folder/'stop-after-current'),poll_timeout=300)
                     materialize(output,plan)
+                    installation = {}
+                    try:installation['installed_new_or_changed']=install(output,local)['new_or_changed']
+                    except Exception as error:installation['installation_pending']=str(error)
                     report=status(output,local)
-                    print('GUYBRUSH CHECKPOINT',base,offset//100+1,report['states'],flush=True)
+                    print('GUYBRUSH CHECKPOINT',base,offset//100+1,report['states'],installation,flush=True)
+                    atomic(folder/'checkpoints'/f'{base.replace("/", "_")}-{offset//100+1:04}.json',
+                           dict(owner=base,batch=offset//100+1,states=report['states'],
+                                updated_at=time.time(),**installation))
                     state=read(output/base/'progress.json')['state']
                     if state in ('credit_cap','stopped','interrupted','awaiting_provider'):
-                        progress(state,owner=base);return
-            progress('production_checkpoint');status(output,local)
+                        jobs=read(output/base/'jobs.json',{})
+                        unfinished=[s for s in pending if jobs.get(s,{}).get('state') not in TERMINAL]
+                        return progress(state,owner=base,batch=offset//100+1,
+                                        next_source=unfinished[0] if unfinished else None,**installation)
+            status(output,local)
+            return progress('production_checkpoint')
         except Exception as error:
             progress('interrupted',error=str(error));raise
 
@@ -170,7 +187,8 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command',choices=('prepare','status','run'))
     parser.add_argument('--max-credits',type=int,default=0)
+    parser.add_argument('--allowance-id')
     args=parser.parse_args()
     if args.command=='prepare':prepare();print(status()['states'])
     elif args.command=='status':print(status()['states'])
-    else:execute(args.max_credits)
+    else:execute(args.max_credits,allowance_id=args.allowance_id)
