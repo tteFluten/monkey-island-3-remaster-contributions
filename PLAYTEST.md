@@ -364,6 +364,22 @@ Other costumes keep their selected replacement pack.
 Run `PYTHONPATH=tools tools/venv/bin/python -m unittest test_scene_visibility test_object_depth`
 for visibility, image numbering, water routing and depth checks.
 
+## Inventory panel and item layers
+
+When the replacement inventory panel is available, the engine suppresses the
+original panel and draws the replacement above the scene, followed by the items
+in the native blast queue. Collected items retain their original positions and
+hitboxes. Icons without HD artwork use their original image and palette on top
+of the new panel. Hover text and the verb coin remain above both layers.
+Closing the inventory removes the overlay; missing panel artwork retains the
+original inventory. Rebuild with `bash tools/build_engine.sh` after updating.
+
+Run `tools/venv/bin/python -m unittest tools/test_inventory.py` for alpha blending,
+native icon fallback, clipping, 4×/6× geometry, and repeatable patch ordering
+that keeps scene color grades off inventory artwork. Native verification uses
+copied saves: pick up the cannon-room ramrod, open inventory with I, hover/select
+it, then close and reopen the panel in both aspect modes.
+
 ## Character lighting
 
 Characters also receive procedural contact shadows on the floor. The solid

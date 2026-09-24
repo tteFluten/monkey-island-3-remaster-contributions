@@ -18,6 +18,9 @@ def patch(root, edit):
     void drawHDLookPanel();''')
     # Grade the scene before HD text, verbs, inventory and cursor are drawn.
     marker = '\t// Step 2.7: Render HD font characters recorded during 8-bit drawing'
+    inventory = '\t// Native inventory UI: panel first, then every queued item, above the scene.'
+    if inventory in (root / gfx).read_text():
+        marker = inventory
     edit(gfx, marker, '\trenderHDColorGrade();\n\n' + marker)
     edit('engines/scumm/input.cpp', '\tif (handleHDDepthOfFieldEvent(event)) return;',
          '\tif (handleHDDepthOfFieldEvent(event)) return;\n\tif (handleHDLookEvent(event)) return;')
