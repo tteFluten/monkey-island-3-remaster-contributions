@@ -112,5 +112,15 @@ class AssetPackTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'outdated master'): pack.install(self.root, self.target)
         self.assertFalse((self.target / '.playtest').exists())
 
+    def test_workshop_indexes_are_portable_and_reversible(self):
+        self.add('assets/metadata/plan.json', json.dumps({'source_batch': 'output/topaz-batch'}).encode(),
+                 'output/topaz-scenes/plan.json', workspace_paths=['source_batch'])
+        result = pack.install(self.root, self.target)
+        plan = self.target / 'output/topaz-scenes/plan.json'
+        self.assertEqual(json.loads(plan.read_text())['source_batch'], str((self.target / 'output/topaz-batch').resolve()))
+        self.assertEqual(pack.install(self.root, self.target)['changed_files'], 0)
+        pack.rollback(self.target, result['transaction'])
+        self.assertFalse(plan.exists())
+
 
 if __name__ == '__main__': unittest.main()

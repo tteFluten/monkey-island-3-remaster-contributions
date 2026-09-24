@@ -38,8 +38,9 @@ def within(root, relative):
 
 
 def destination(root, relative):
-    if not relative.startswith(('.playtest/hd/', 'upscaled/imported/', 'output/topaz-batch/4x/')) and relative not in {
-        '.playtest/game/RESOURCE/VOXDISK1.BUN', '.playtest/state.json'}:
+    if not relative.startswith(('.playtest/hd/', 'upscaled/imported/', 'output/topaz-batch/4x/', 'output/topaz-batch/cleaned/')) and relative not in {
+        '.playtest/game/RESOURCE/VOXDISK1.BUN', '.playtest/state.json',
+        'output/topaz-batch/manifest.json', 'output/topaz-scenes/plan.json'}:
         raise ValueError('Unsupported installation destination: ' + relative)
     return within(root, relative)
 
@@ -138,6 +139,15 @@ def installation_plan(root, target, manifest):
         if not row.get('destination'): continue
         path = destination(target, row['destination'])
         before = digest(path) if path.is_file() else None
+        if row.get('workspace_paths'):
+            value = json.loads(within(root, row['path']).read_text())
+            for key in row['workspace_paths']:
+                if key not in {'source_root', 'source_batch'}: raise ValueError('Unsupported workspace path field')
+                value[key] = str(within(target, value[key]))
+            data = (json.dumps(value, indent=2) + '\n').encode()
+            after = hashlib.sha256(data).hexdigest()
+            if before != after: result.append(dict(destination=row['destination'], before=before, after=after, data=data))
+            continue
         if row.get('compatible_input_sha256') and before not in {*row['compatible_input_sha256'], row['sha256']}:
             raise ValueError('Unsupported or missing original voice bundle; import the matching English game edition first')
         if before != row['sha256']:

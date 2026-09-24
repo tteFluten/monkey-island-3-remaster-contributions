@@ -104,7 +104,7 @@ Use the existing staging tools for the relevant asset category; update affected 
 | `data/`, `extracted/`, `upscaled/`, `previews/` | Existing scene library and reference media |
 | `.playtest/`, `output/`, `downloads/` | Ignored local runtime, generation work, and caches |
 
-Sprite masters are restored to the editable local output tree. Historical provider responses, intermediate renders, and generation queues are not archived in this snapshot; prepare a new queue before continuing generation. See [Topaz workflow](TOPAZ.md) and [scene batches](SCENE_BATCHES.md).
+Sprite masters, a portable batch index, and their cleaned reference images are restored to the editable local output tree. The Topaz browser and PNG editor work immediately after installation. Historical provider responses, intermediate renders, and generation queues are not archived in this snapshot; prepare a new queue before continuing generation. See [Topaz workflow](TOPAZ.md) and [scene batches](SCENE_BATCHES.md).
 
 ## Optional generation services
 
