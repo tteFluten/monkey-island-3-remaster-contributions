@@ -41,7 +41,7 @@ cd monkey-island-3-remaster
 git lfs pull
 ```
 
-The current pack contains 35,069 manifest entries, approximately 14.25 GiB of packaged files and 9.15 GiB of unique LFS media. Allow additional disk space for the Git LFS cache, original game data, engine build, installed copies, and rollback backups.
+The current pack contains 37,818 manifest entries, approximately 16.17 GiB of packaged files and 9.78 GiB of unique LFS media. It includes 3,498 selected Topaz 4× masters and the user-supplied inventory panel in the UI masters. Allow additional disk space for the Git LFS cache, original game data, engine build, installed copies, and rollback backups.
 
 ## Prerequisites
 
