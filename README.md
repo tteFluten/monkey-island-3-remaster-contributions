@@ -2,7 +2,7 @@
 
 Private Basement Studio workspace for a playable remaster of **The Curse of Monkey Island**.
 The workshop manages artwork, reviews replacements, and launches a patched native COMI-HD engine.
-This repository becomes the source of truth when the migration PR merges; new changes should target its `main` branch.
+This repository is the project's source of truth. New changes should target its `main` branch through pull requests.
 
 ## What is included
 
@@ -14,6 +14,20 @@ This repository becomes the source of truth when the migration PR merges; new ch
 - Hash verification and reversible installation of the asset pack.
 
 The pack is a snapshot of work in progress. Some installed artwork is an unapproved or rejected draft retained from the existing playable setup. New replacements take precedence where validated; existing artwork and original-game fallback cover the rest. No files are silently promoted to approved.
+
+## How it works
+
+The project connects three parts:
+
+| Part | Role |
+| --- | --- |
+| Workshop | A local browser interface for inspecting scenes, comparing and editing artwork, recording review status, and launching playtests. Its Node.js backend runs the local tools. |
+| Asset pack | Versioned replacement media and editable masters under `assets/`. The manifest records checksums, source relationships, review status, and installation destinations. Git LFS stores the binary media. |
+| Native engine | A patched COMI-HD engine that runs the original game data with installed replacement artwork, cinematics, music, and repaired speech. It provides the 4:3 and 16:9 display modes. |
+
+For playback, import your original game data, build the engine, and install the verified pack into the local workspace. The workshop launches the engine with the selected artwork. Available replacements cover individual assets; existing artwork and original-game fallback keep unfinished areas playable. The browser workshop and the native game run as separate applications.
+
+For artwork work, start from the canonical master, edit and review the replacement, export its runtime files, and update the manifest. Verify and playtest the result before submitting a PR. Local edits become shared project assets when their updated masters, runtime files, and metadata are committed together.
 
 ## Access and clone
 
@@ -27,7 +41,7 @@ cd monkey-island-3-remaster
 git lfs pull
 ```
 
-While the migration PR is open, check out `migration/playable-remaster` before running `git lfs pull`. The initial `main` contains only the repository introduction.
+The current pack contains 35,069 manifest entries, approximately 14.25 GiB of packaged files and 9.15 GiB of unique LFS media. Allow additional disk space for the Git LFS cache, original game data, engine build, installed copies, and rollback backups.
 
 ## Prerequisites
 

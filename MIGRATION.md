@@ -1,6 +1,6 @@
 # Migration snapshot
 
-The migration PR imports the working project into the private `basementstudio/monkey-island-3-remaster` repository with a clean history. The previous repository, its PRs, and its worktree remotes are unchanged. Merge the migration PR to establish the new `main` as the source of truth.
+The [migration PR](https://github.com/basementstudio/monkey-island-3-remaster/pull/1) establishes the working project in the private `basementstudio/monkey-island-3-remaster` repository with a clean history. This repository's `main` is the source of truth. The previous repository, its PRs, and its worktree remotes are unchanged.
 
 ## Sources and integration
 
