@@ -67,3 +67,21 @@ The eight pilots used 16 credits from the existing unused allowance, leaving
 1,804 after the original continuation's 1,182 credits. This is not a new credit
 allowance. Broad continuation stays stopped; future accounting must include
 `output/topaz-scenes/focus-0009-0011/pilot-01/jobs.json` before spending more.
+
+## Active review checkpoint
+
+A detached, scene-restricted batch now processes at most 50 unique waterline
+character frames from resources 52, 53, 55, 56 and 60, following inspection of
+the eight pilot comparisons. Already-paid pilot inputs and duplicate inputs are
+excluded. Cannon resource 29 remains held for the shoe/ground-edge check.
+
+The batch reserves at most 100 credits from the existing net remainder of 1,804;
+it does not create a new allowance. Its immutable budget and cumulative paid
+journal are under `output/topaz-scenes/focus-0009-0011/waterline-characters-01/`.
+Future remaining-credit calculations must subtract **both** focused journals
+from the parent allowance remainder. Up to 1,704 credits remain unreserved.
+
+The worker stops after this checkpoint, keeps failures/uncertain jobs for
+inspection, and neither installs results nor advances to another scene. Local
+worker metadata and logs are `.context/scene-focus/worker.json` and
+`.context/scene-focus/character-batch.log`.

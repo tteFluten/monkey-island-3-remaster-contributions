@@ -51,7 +51,7 @@ def audit(root):
                                 unplanned=sum(not r['planned'] for r in rows),
                                 background_installed=background.exists(), assets=rows)
     missing = [s for r in native for s in r['sources'] if s not in entries]
-    return dict(rooms=list(ROOMS), broad_continuation='paused', scene_signoff=False,
+    return dict(rooms=list(ROOMS), broad_continuation=('paused' if (root / 'output/topaz-scenes/stop-after-current').exists() else 'not_paused'), scene_signoff=False,
                 native_resources=native, native_cels=sum(r['cels'] for r in native),
                 native_cels_missing_from_previous_plan=len(missing), unplanned_native_sources=missing,
                 scenes=scopes, notes=[
