@@ -3,6 +3,17 @@ int ScummEngine::hdAspectRatio() const {
     return ConfMan.hasKey("hd_aspect_ratio") ? HdAspect::preference(ConfMan.getInt("hd_aspect_ratio")) : 43;
 }
 
+void ScummEngine::publishHDWideBackground(bool movie) {
+    if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session")) return;
+    Common::String path;
+    if (!movie && !isSmushActive() && _currentRoom == 9 && _roomWidth == 640 &&
+        _roomHeight == 480 && hdAspectRatio() == 169 && !hdInventoryOpen())
+        path = ConfMan.get("hd_path") + "/widescreen/bg_0009.png";
+    ConfMan.set("hd_wide_background", path, Common::ConfigManager::kTransientDomain);
+    ConfMan.setInt("hd_wide_background_revision", _playtestCommandId,
+        Common::ConfigManager::kTransientDomain);
+}
+
 bool ScummEngine::hdInventoryOpen() const {
     // COMI normally draws its inventory background as a blast object; some
     // overlay paths use a verb instead. Inspect native visibility, not pixels.
@@ -23,6 +34,7 @@ void ScummEngine::refreshHDInventoryViewport() {
 
 void ScummEngine::configureHDViewport(bool movie) {
     if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session")) return;
+    publishHDWideBackground(movie);
     const int width = movie || hdInventoryOpen() ? 640 : HdAspect::viewport(hdAspectRatio(), _roomWidth, _roomHeight);
     _hdMotionClock.valid = _hdMotionPresented = _hdMotionMoving = false;
     _hdPresentedCursor = Common::Rect();
@@ -83,6 +95,7 @@ bool ScummEngine::handleHDAspectEvent(const Common::Event &event) {
 }
 
 void ScummEngine::drawHDAspectMenu() {
+    publishHDWideBackground();
     if (!hasHDFontSizeMenu() || !ConfMan.hasKey("playtest_session")) return;
     const int previous = _hdFontManager->getSizePercent();
     _hdFontManager->setSizePercent(65);

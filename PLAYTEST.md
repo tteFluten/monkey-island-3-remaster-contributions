@@ -39,7 +39,20 @@ fullscreen scale that presentation uniformly. On a 3840 × 2160 display, a
 fixed 4:3 scene occupies 2880 × 2160 with side bars.
 The supplied 3840 × 2880 masters and wider/taller room images are preserved.
 Engine copies use four times each **room's** original dimensions, not a fixed
-screen-sized crop. Images with incompatible proportions cannot be applied.
+screen-sized crop. Images with incompatible proportions cannot be applied,
+except for the explicit cannon-room extension described below.
+
+Room 9 (cannon) also accepts exact 16:9 artwork with the original composition
+in its centered 4:3 area. Import the full image through Playtest and apply it.
+The importer preserves the full master, stages its central crop at 2560 × 1920,
+and stages a 2560 × 1440 full-width copy under `hd/widescreen/bg_0009.png`.
+In 16:9, the OpenGL backend draws that extended scenery behind the unchanged
+gameplay surface. The added sides are decorative; characters, objects,
+walkboxes, and clicks keep their original center coordinates. In 4:3 only the
+central crop is shown. Inventory, options, and movies keep their existing
+framing. Selecting and applying an ordinary background removes the extension;
+missing or invalid extended artwork falls back to side bars. This is a local
+playtest variant and does not promote the artwork into the canonical pack.
 
 In 16:9, horizontal rooms at least 864 pixels wide and exactly 480 pixels tall
 reveal more of their existing panorama. The native viewport is 864 × 480 to
@@ -50,9 +63,10 @@ scripts, walkboxes, HD asset selections, and source images remain intact.
 Narrow, vertical, and two-dimensional rooms and movies keep their existing
 framing. The options book and inventory use the centered 4:3 area, including
 when opened from a panorama; closing either restores the wider viewport.
-Black margins are noninteractive; releasing a press that
-began in gameplay releases it at the last valid position. No side artwork is
-imported or generated, and future 16:9 artwork does not replace current masters.
+Side margins (including cannon extension artwork) are noninteractive; releasing
+a press that began in gameplay releases it at the last valid position. Other
+fixed-width rooms retain side bars. Extended cannon artwork is selected
+separately from the existing 4:3 masters.
 
 `hd_aspect_ratio=43` (default) or `169` in `.playtest/scummvm.ini` records the
 selection. Existing engine-status fields retain their meaning; additive
@@ -71,6 +85,12 @@ so desktop mouse/keyboard activity cannot interfere with the automated run.
 The full sweep and interaction checks expect a cannon-room save in slot 0.
 Set `MI3_ASPECT_TEST_SAVES` to a fixture save directory to use a known baseline
 without changing the player's saves.
+
+After staging a wide cannon variant, run
+`tools/venv/bin/python tools/check_wide_background.py` with the same fixture
+setting. It checks the displayed side pixels, centered input, both display modes,
+inventory, resize/fullscreen, missing/invalid artwork, and reload/save restoration.
+Sidecar failure checks use an isolated copy of the extended artwork.
 
 The engine is built with compiler optimizations and targets 60 Hz presentation.
 The HD pointer updates between native game ticks using small dirty rectangles;

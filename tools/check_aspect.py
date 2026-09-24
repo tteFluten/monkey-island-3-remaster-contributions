@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Check:
-    def __init__(self, output, aspect=43):
+    def __init__(self, output, aspect=43, hd_path=None, color_grades_path=None):
         self.output = output.resolve()
         self.output.mkdir(parents=True, exist_ok=True)
         for name in ('status.json', 'test-input.txt', 'test-window.json', 'command.json', 'save-load.txt'):
@@ -32,6 +32,10 @@ class Check:
         self.config['comi'].update({'savepath': str(self.output / 'saves'), 'playtest_session': str(self.output),
                                    'hd_aspect_ratio': str(aspect), 'hd_aspect_test_input': 'true',
                                    'hd_aspect_ui_path': str(ROOT / 'extracted/objects')})
+        if hd_path is not None:
+            self.config['comi']['hd_path'] = str(hd_path.resolve())
+        if color_grades_path is not None:
+            self.config['comi']['hd_color_grades_path'] = str(color_grades_path.resolve())
         with (self.output / 'scummvm.ini').open('w') as handle:
             self.config.write(handle)
         self.log = (self.output / 'engine.log').open('w')
