@@ -121,3 +121,7 @@ print('Applied persistent 4:3 / 16:9 presentation and HD panorama viewports')
 from patch_costume_edge import patch as patch_costume_edge
 patch_costume_edge(root, edit)
 print('Applied clean matte edges to Guybrush head poses')
+
+from patch_inventory import patch as patch_inventory
+patch_inventory(root, edit)
+print('Applied inventory panel replacement and item layering')
