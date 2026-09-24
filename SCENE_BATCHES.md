@@ -4,7 +4,66 @@ The current workflow is **Wonder 3.5, High enhancement, 4×**, followed by **Top
 
 Backgrounds are excluded. The difficulty screen remains unchanged except for its four knife animation cels. Solid object artwork is upscaled intact, because matting a scenery patch would erase intended artwork. Positioned layers reuse the enhanced object at its original coordinates; duplicates reuse the same result across scenes. Blank assets need no API request. Very small sprites remain listed for padded-input pilots, following the successful cannon-particle approach.
 
+## Current focus — cannon and waterline only
+
+The user narrowed the next quality pass to **0009_cannon** and **0011_waterln**.
+The all-Guybrush/room-19 continuation is paused. Do not resume it or advance to
+another scene until the user selects the next scene. The local global stop marker
+is `output/topaz-scenes/stop-after-current`; retain it for broad coordinators.
+
+First install and package all completed outputs as drafts, preserving review
+states and manual edits. The latest snapshot adds 625 sources (444 automatically
+validated, 145 rejected cleanup drafts and 36 derived copies), for 4,124 selected
+assets and 40,318 packaged files. Installation and media verification completed.
+Rejected means cleanup remains; installation is not approval.
+
+For the focused pass, inspect backgrounds, full character resources and shared
+poses, props, inventory icons, rope/thin strokes and water/splash effects. Check
+native resource headers for omissions, transparency on contrasting backgrounds,
+original placement and palette behavior, and animation continuity in the game.
+A missing ripple, clipped limb or matte rectangle blocks scene sign-off. Do not
+mark a scene complete from a passing file checksum or a single still image.
+
+Historical budgets, provider IDs and their charged requests remain intact.
+There are 1,820 unused credits in the latest 3,002-credit allowance; changing
+scene priority does not authorize exceeding that total or buying credits.
+
 ## Execution batches: 100 assets
+
+### Authorized continuation — 2026-09-24
+
+The user authorized **3,002 additional credits total**, shared by Guybrush first
+and then missing regular rooms from the room-19 continuation. The historical
+Guybrush and scene budgets remain unchanged. Resume this allowance with:
+
+```sh
+tools/venv/bin/python -u tools/topaz_resume.py \
+  --allowance-id albuquerque-20260924-3002 --max-credits 3002 --start-room 19
+```
+
+The immutable authorization and starting journal charges live in
+`output/topaz-scenes/batches/allowances/albuquerque-20260924-3002/allowance.json`.
+Restarting this command reuses that allowance; a higher cap is rejected. Later
+account top-ups do not enlarge it. Shared source jobs count once, uncertain
+submissions retain their reserved charges, and scene workers receive separate
+reservations from the same remaining allowance. Both coordinators also accept
+`--allowance-id` for resuming an already-created allowance directly.
+
+Guybrush runs alone before the scene coordinator. Existing paid results are
+reused; failures, unknown submissions, native effects, tiny pilots and the 35
+separately extracted costume-29 cels remain follow-up work. Completed drafts
+install at checkpoints only while the game is closed, preserving manual edits.
+On completion or interruption, the wrapper installs available drafts, packages
+their canonical masters/runtime copies/references, and verifies all packaged
+media. Installation or packaging failures are recorded as `delivery_pending`.
+
+The wrapper's `progress.json` records the final phase, spending, delivery result,
+and restart checkpoint. During processing, use the Guybrush or room progress
+files for current frame activity. Log: `.context/topaz-resume-20260924.log`.
+The global `output/topaz-scenes/stop-after-current` marker drains processing
+without resubmitting or cancelling paid jobs. This allowance is not expected to
+finish the entire remaining Guybrush inventory, so room processing may require
+a later explicit allowance.
 
 ### Workspace handoff and continuation — 2026-09-24
 
