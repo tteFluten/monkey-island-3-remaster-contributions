@@ -122,6 +122,18 @@ from patch_costume_edge import patch as patch_costume_edge
 patch_costume_edge(root, edit)
 print('Applied clean matte edges to Guybrush head poses')
 
+from patch_depth_of_field import patch as patch_depth_of_field
+patch_depth_of_field(root, edit)
+print('Applied optional z-plane foreground depth of field')
+
 from patch_inventory import patch as patch_inventory
 patch_inventory(root, edit)
 print('Applied inventory panel replacement and item layering')
+
+from patch_color_grade import patch as patch_color_grade
+patch_color_grade(root, edit)
+print('Applied per-room color grades and the playtest Look panel')
+
+from patch_wide_background import patch as patch_wide_background
+patch_wide_background(root, edit)
+print('Applied optional full-width cannon background presentation')

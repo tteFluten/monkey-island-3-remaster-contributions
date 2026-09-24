@@ -38,6 +38,36 @@ export function readFontSize(config: string): number {
   }
   return size;
 }
+// Depth of field is opt-in: 0 off, 1 low, 2 high (in-game options book).
+export function readDepthOfField(config: string): 0 | 1 | 2 {
+  let section = '';
+  let level: 0 | 1 | 2 = 0;
+  for (const line of config.split(/\r?\n/)) {
+    const heading = /^\s*\[([^\]]+)\]\s*$/.exec(line);
+    if (heading) section = heading[1];
+    const setting = /^\s*hd_depth_of_field\s*=\s*(.*?)\s*$/.exec(line);
+    if (section === 'comi' && setting) level = setting[1] === '1' ? 1 : setting[1] === '2' ? 2 : 0;
+  }
+  return level;
+}
+// Live-tuning hotkey values: blur in tenths of a native pixel (0 = preset),
+// edge softness in native pixels, intensity in percent, z-plane depth threshold.
+export function readDepthOfFieldTuning(config: string): { blur: number; edge: number; intensity: number; depth: number } {
+  const tuning = { blur: 0, edge: 2, intensity: 100, depth: 1 };
+  const limits = { blur: [0, 120], edge: [0, 12], intensity: [0, 100], depth: [1, 7] } as const;
+  const keys = { hd_dof_blur: 'blur', hd_dof_edge: 'edge', hd_dof_intensity: 'intensity', hd_dof_depth: 'depth' } as const;
+  let section = '';
+  for (const line of config.split(/\r?\n/)) {
+    const heading = /^\s*\[([^\]]+)\]\s*$/.exec(line);
+    if (heading) section = heading[1];
+    const setting = /^\s*(hd_dof_blur|hd_dof_edge|hd_dof_intensity|hd_dof_depth)\s*=\s*(\d+)\s*$/.exec(line);
+    if (section !== 'comi' || !setting) continue;
+    const name = keys[setting[1] as keyof typeof keys];
+    const value = Number(setting[2]);
+    if (value >= limits[name][0] && value <= limits[name][1]) tuning[name] = value;
+  }
+  return tuning;
+}
 export function roomFromFilename(name: string): number | null {
   const match = /^(?:bg_)?(\d+)(?:[_ .-]|$)/i.exec(name);
   return match ? Number(match[1]) : null;
@@ -46,6 +76,14 @@ export function assertAspect(width: number, height: number, originalWidth: numbe
   if (!width || !height || Math.abs((width / height) / (originalWidth / originalHeight) - 1) > 0.001) {
     throw new Error(`Proportions must match ${originalWidth} × ${originalHeight}; received ${width} × ${height}. Correct the source image before importing.`);
   }
+}
+// Extended cannon artwork keeps the original room in its centered 4:3 area.
+// Only the decorative side scenery is presented outside the gameplay surface.
+export function cannonWideCrop(width: number, height: number, room: Pick<PlaytestRoom, 'room' | 'width' | 'height'>) {
+  if (room.room !== 9 || room.width !== 640 || room.height !== 480 ||
+      width <= 0 || height <= 0 || width * 9 !== height * 16) return null;
+  const cropWidth = height * 4 / 3;
+  return { left: (width - cropWidth) / 2, top: 0, width: cropWidth, height };
 }
 export function validateSettings(value: unknown): PlaytestSettings {
   if (!value || typeof value !== 'object') throw new Error('Settings are required');
@@ -206,7 +244,8 @@ export class PlaytestService extends EventEmitter {
         if (!candidate || !room || candidate.error) throw new Error(`Invalid image or room: ${item.file}`);
         if (used.has(room.room)) throw new Error(`Select only one image for room ${room.room}`);
         used.add(room.room);
-        assertAspect(candidate.width, candidate.height, room.width, room.height);
+        if (!cannonWideCrop(candidate.width, candidate.height, room))
+          assertAspect(candidate.width, candidate.height, room.width, room.height);
         const source = path.join(this.state.settings.backgroundFolder, candidate.file);
         items.push({ room, source, hash: await hashFile(source), width: candidate.width, height: candidate.height });
       }
@@ -248,13 +287,25 @@ export class PlaytestService extends EventEmitter {
     const variant = room.variants.find(v => v.id === room.selectedVariantId);
     const source = path.join(this.root, variant?.filePath ?? room.originalPath);
     const meta = await sharp(source).metadata();
-    assertAspect(meta.width ?? 0, meta.height ?? 0, room.width, room.height);
+    const crop = variant ? cannonWideCrop(meta.width ?? 0, meta.height ?? 0, room) : null;
+    if (!crop) assertAspect(meta.width ?? 0, meta.height ?? 0, room.width, room.height);
     const destination = path.join(this.local, `hd/backgrounds/bg_${String(room.room).padStart(4, '0')}.png`);
-    const stamp = `${await hashFile(source)}:${PLAYTEST_SCALE}:${variant ? 'lanczos3' : 'nearest'}`;
-    if (await fileExists(destination) && await fs.readFile(destination + '.stamp', 'utf8').catch(() => '') === stamp) return;
+    const wideDestination = path.join(this.local, `hd/widescreen/bg_${String(room.room).padStart(4, '0')}.png`);
+    const stamp = `${await hashFile(source)}:${PLAYTEST_SCALE}:${variant ? 'lanczos3' : 'nearest'}${crop ? ':wide-center-v1' : ''}`;
+    const wideExists = await fileExists(wideDestination);
+    if (await fileExists(destination) && await fs.readFile(destination + '.stamp', 'utf8').catch(() => '') === stamp && wideExists === !!crop) return;
     await fs.mkdir(path.dirname(destination), { recursive: true });
     const temp = destination + '.tmp';
-    await sharp(source).resize(room.width * PLAYTEST_SCALE, room.height * PLAYTEST_SCALE, { fit: 'fill', kernel: variant ? 'lanczos3' : 'nearest' }).ensureAlpha().png().toFile(temp);
+    const input = sharp(source);
+    if (crop) input.extract(crop);
+    await input.resize(room.width * PLAYTEST_SCALE, room.height * PLAYTEST_SCALE, { fit: 'fill', kernel: variant ? 'lanczos3' : 'nearest' }).ensureAlpha().png().toFile(temp);
+    // Publish the matching full-width art before committing the center/stamp.
+    // Switching back to any ordinary variant removes obsolete side scenery.
+    if (crop) {
+      await fs.mkdir(path.dirname(wideDestination), { recursive: true });
+      await sharp(source).resize(2560, 1440).ensureAlpha().png().toFile(wideDestination + '.tmp');
+      await fs.rename(wideDestination + '.tmp', wideDestination);
+    } else await fs.rm(wideDestination, { force: true });
     await fs.rename(temp, destination);
     await fs.writeFile(destination + '.stamp', stamp);
   }
@@ -280,8 +331,10 @@ export class PlaytestService extends EventEmitter {
         const previousConfig = await fs.readFile(configPath, 'utf8').catch(() => '');
         const fontSize = readFontSize(previousConfig);
         const aspect = readAspectRatio(previousConfig);
+        const depthOfField = readDepthOfField(previousConfig);
+        const tuning = readDepthOfFieldTuning(previousConfig);
         const displayConfig = config.replace('last_window_height=960', `last_window_height=${aspect === 169 ? 720 : 960}`);
-        await fs.writeFile(configPath, displayConfig + `playtest_character_pack=${pack}\nplaytest_scale=${PLAYTEST_SCALE}\nhd_font_size=${fontSize}\nhd_aspect_ratio=${aspect}\nhd_aspect_ui_path=${path.join(this.root, 'extracted/objects')}\n`);
+        await fs.writeFile(configPath, displayConfig + `playtest_character_pack=${pack}\nplaytest_scale=${PLAYTEST_SCALE}\nhd_font_size=${fontSize}\nhd_aspect_ratio=${aspect}\nhd_depth_of_field=${depthOfField}\nhd_dof_blur=${tuning.blur}\nhd_dof_edge=${tuning.edge}\nhd_dof_intensity=${tuning.intensity}\nhd_dof_depth=${tuning.depth}\nhd_aspect_ui_path=${path.join(this.root, 'extracted/objects')}\nhd_color_grades_path=${path.join(this.root, 'data/color-grades.json')}\n`);
         this.status.engine = null; this.status.error = null;
         const child = spawn(this.binary(), ['--config=' + configPath, '--debuglevel=0', ...(resume ? [`--save-slot=${resumeSlot}`] : []), 'comi'], { cwd: this.session, stdio: ['ignore', 'pipe', 'pipe'] });
         this.child = child; this.status.running = true; this.launchedAt = Date.now();

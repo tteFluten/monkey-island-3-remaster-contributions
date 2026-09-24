@@ -5,8 +5,62 @@ import subprocess
 import tempfile
 import unittest
 
+if __package__:
+    from .engine.patch_color_grade import patch as patch_color_grade
+    from .engine.patch_inventory import patch as patch_inventory
+else:
+    from engine.patch_color_grade import patch as patch_color_grade
+    from engine.patch_inventory import patch as patch_inventory
+
 
 class InventoryTests(unittest.TestCase):
+    def test_color_grade_precedes_inventory_and_patches_repeat(self):
+        # Exercise both a fresh combined build and an engine already using
+        # main's color-grade patch before inventory support is added.
+        for existing_color_grade in (False, True):
+            with self.subTest(existing_color_grade=existing_color_grade), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                source = root / 'engines/scumm'
+                source.mkdir(parents=True)
+                fixtures = {
+                    'scumm.h': '    bool _hdDepthOfFieldMouseDown = false;\n',
+                    'scumm_v6.h': '\tvoid drawBlastObject(BlastObject *eo);\n\tint getBlastCount() const\n',
+                    'input.cpp': '\tif (handleHDDepthOfFieldEvent(event)) return;\n',
+                    'object.cpp': '#include "scumm/bomp.h"\n'
+                        'void ScummEngine_v6::drawBlastObject(BlastObject *eo) {\n'
+                        '\tdrawBomp(bdd);\n\n\tmarkRectAsDirty\n',
+                    'gfx.cpp': '#include "scumm/hd_depth_of_field.h"\n'
+                        '#include "scumm/hd_depth_of_field.inc"\n'
+                        '\t// Step 2.7: Render HD font characters recorded during 8-bit drawing\n'
+                        'if (!vst->hd_obj_nr || vst->hd_obj_nr == 114)\n'
+                        '\tdrawHDDepthOfFieldMenu();\n\tdrawHDAspectMenu();\n',
+                }
+                for name, content in fixtures.items():
+                    (source / name).write_text(content)
+
+                def edit(name, before, after):
+                    file = root / name
+                    text = file.read_text()
+                    if after not in text:
+                        self.assertIn(before, text)
+                        file.write_text(text.replace(before, after, 1))
+
+                if existing_color_grade:
+                    patch_color_grade(root, edit)
+                patch_inventory(root, edit)
+                patch_color_grade(root, edit)
+                first = {p.name: p.read_bytes() for p in source.iterdir()}
+                patch_inventory(root, edit)
+                patch_color_grade(root, edit)
+                self.assertEqual(first, {p.name: p.read_bytes() for p in source.iterdir()})
+                gfx = (source / 'gfx.cpp').read_text()
+                grade = 'renderHDColorGrade();'
+                inventory = 'static_cast<ScummEngine_v6 *>(this)->drawHDInventory();'
+                self.assertEqual(gfx.count(grade), 1)
+                self.assertEqual(gfx.count(inventory), 1)
+                self.assertLess(gfx.index(grade), gfx.index(inventory))
+                self.assertLess(gfx.index(inventory), gfx.index('// Step 2.7:'))
+
     def test_panel_items_and_clipping(self):
         if not shutil.which('c++'):
             self.skipTest('C++ compiler required')

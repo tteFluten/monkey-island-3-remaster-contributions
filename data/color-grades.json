@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "rooms": {
+    "9": {"brightness": 2, "contrast": 12, "saturation": 10, "gamma": 100, "warmth": 0, "tint": 8, "vignetteEnabled": 1, "vignetteAmount": 60, "vignetteRadius": 55, "vignetteSoftness": 60}
+  }
+}
