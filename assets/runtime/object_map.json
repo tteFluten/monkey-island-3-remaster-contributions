@@ -1,0 +1,1239 @@
+{
+  "841": {
+    "name": "windsock-nw",
+    "rooms": {
+      "39": {
+        "states": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    }
+  },
+  "284": {
+    "name": "cannon-door-keyhole",
+    "rooms": {
+      "9": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "275": {
+    "name": "cannon-treasure-door",
+    "rooms": {
+      "9": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "280": {
+    "name": "hook-object",
+    "rooms": {
+      "9": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "279": {
+    "name": "ramrod-object",
+    "rooms": {
+      "9": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "121": {
+    "name": "hook-icon-object",
+    "rooms": {
+      "3": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "114": {
+    "name": "inventory-bg-object",
+    "rooms": {
+      "3": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "105": {
+    "name": "system-cursor-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "108": {
+    "name": "north-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "1391": {
+    "name": "saveload-checkbox",
+    "rooms": {
+      "92": {
+        "states": [
+          1
+        ]
+      }
+    }
+  },
+  "330": {
+    "name": "fort-turret-1",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "331": {
+    "name": "fort-turret-2",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "332": {
+    "name": "fort-turret-3",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "291": {
+    "name": "fort-wall-1",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "292": {
+    "name": "fort-wall-2",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "293": {
+    "name": "fort-wall-3",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "294": {
+    "name": "fort-wall-4",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "295": {
+    "name": "fort-wall-5",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "296": {
+    "name": "fort-wall-6",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "297": {
+    "name": "fort-wall-7",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "298": {
+    "name": "fort-wall-8",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "299": {
+    "name": "fort-wall-9",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "300": {
+    "name": "fort-wall-10",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "302": {
+    "name": "fort-wall-12",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "310": {
+    "name": "fort-wall-20",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "314": {
+    "name": "fort-wall-24",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "317": {
+    "name": "fort-wall-27",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "318": {
+    "name": "fort-wall-28",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "301": {
+    "name": "fort-wall-11",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "320": {
+    "name": "fort-wall-30",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "321": {
+    "name": "fort-wall-31",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "322": {
+    "name": "fort-wall-32",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "324": {
+    "name": "fort-wall-34",
+    "rooms": {
+      "10": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "344": {
+    "name": "cursed-ring",
+    "rooms": {
+      "12": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "343": {
+    "name": "nickel-bag",
+    "rooms": {
+      "12": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "356": {
+    "name": "treasure-flotation-device",
+    "rooms": {
+      "12": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "152": {
+    "name": "bullseye-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "116": {
+    "name": "decrement-inventory-arrow",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "188": {
+    "name": "dialog-decrement-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "189": {
+    "name": "dialog-increment-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "107": {
+    "name": "east-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "115": {
+    "name": "increment-inventory-arrow",
+    "rooms": {
+      "3": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "245": {
+    "name": "next-page-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "111": {
+    "name": "northeast-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "110": {
+    "name": "northwest-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "246": {
+    "name": "prev-page-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "109": {
+    "name": "south-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "112": {
+    "name": "southeast-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "113": {
+    "name": "southwest-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "257": {
+    "name": "system-wait-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "106": {
+    "name": "west-arrow-icon",
+    "rooms": {
+      "3": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "374": {
+    "name": "plndrboat-animation-object",
+    "rooms": {
+      "13": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "396": {
+    "name": "big-glowing-ember-object",
+    "rooms": {
+      "14": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "383": {
+    "name": "fortbase-elaine-plaque",
+    "rooms": {
+      "14": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "376": {
+    "name": "fortbase-elaine-statue",
+    "rooms": {
+      "14": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "377": {
+    "name": "fortbase-monkey-prints",
+    "rooms": {
+      "14": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "385": {
+    "name": "glowing-ember-object",
+    "rooms": {
+      "14": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "412": {
+    "name": "bottomless-mug-object",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "438": {
+    "name": "chicken-door-anim-object",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "436": {
+    "name": "flower-on-ground",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "401": {
+    "name": "town-barber-int-door",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "397": {
+    "name": "town-chicken-int-door",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "404": {
+    "name": "town-contract",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "419": {
+    "name": "town-door-1a",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "420": {
+    "name": "town-door-1b",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "400": {
+    "name": "town-flyer",
+    "rooms": {
+      "15": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "408": {
+    "name": "town-ipecac-flower",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "439": {
+    "name": "town-leaves-object",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "431": {
+    "name": "town-nature-trail-sign",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "402": {
+    "name": "town-offstage-door",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "410": {
+    "name": "town-pitcher-object",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "407": {
+    "name": "town-undergrowth",
+    "rooms": {
+      "15": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "430": {
+    "name": "town-warning-sign",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "414": {
+    "name": "replacement-mug-object",
+    "rooms": {
+      "15": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "474": {
+    "name": "glove-object",
+    "rooms": {
+      "18": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "478": {
+    "name": "offstage-juggling-bag",
+    "rooms": {
+      "18": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "472": {
+    "name": "offstage-lice",
+    "rooms": {
+      "18": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "473": {
+    "name": "offstage-pocket",
+    "rooms": {
+      "18": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "477": {
+    "name": "offstage-ventriloquism-book",
+    "rooms": {
+      "18": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "475": {
+    "name": "offstage-wand",
+    "rooms": {
+      "18": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "491": {
+    "name": "open-trunk-object",
+    "rooms": {
+      "18": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "451": {
+    "name": "biscuit-cutter-object",
+    "rooms": {
+      "16": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "468": {
+    "name": "chkn-int-bucket",
+    "rooms": {
+      "16": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "466": {
+    "name": "chkn-int-fandango-button",
+    "rooms": {
+      "16": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "442": {
+    "name": "club-card-object",
+    "rooms": {
+      "16": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "441": {
+    "name": "gross-chicken-object",
+    "rooms": {
+      "16": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "444": {
+    "name": "maggot-biscuit-object",
+    "rooms": {
+      "16": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "452": {
+    "name": "pie-pan-object",
+    "rooms": {
+      "16": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "448": {
+    "name": "stunt-tooth-object",
+    "rooms": {
+      "16": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "542": {
+    "name": "spot-no-shovel",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "541": {
+    "name": "spotlight-anim-cannonball",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "535": {
+    "name": "spotlight-big-hole",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "530": {
+    "name": "spotlight-east-button",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "521": {
+    "name": "spotlight-east",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "538": {
+    "name": "spotlight-master-lever-2",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "526": {
+    "name": "spotlight-master-lever",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "539": {
+    "name": "spotlight-north-2",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "528": {
+    "name": "spotlight-north-button",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "519": {
+    "name": "spotlight-north",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "540": {
+    "name": "spotlight-northeast-2",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "529": {
+    "name": "spotlight-northeast-button",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "518": {
+    "name": "spotlight-northeast",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "527": {
+    "name": "spotlight-northwest-button",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "520": {
+    "name": "spotlight-northwest",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "532": {
+    "name": "spotlight-south-button",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "523": {
+    "name": "spotlight-south",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "531": {
+    "name": "spotlight-southeast-button",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "522": {
+    "name": "spotlight-southeast",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "533": {
+    "name": "spotlight-southwest-button",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "524": {
+    "name": "spotlight-southwest",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "534": {
+    "name": "spotlight-west-button",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "525": {
+    "name": "spotlight-west",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "537": {
+    "name": "spotlight-x-marks-the-spot",
+    "rooms": {
+      "20": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "511": {
+    "name": "stage-anim-cannonball-2",
+    "rooms": {
+      "19": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "514": {
+    "name": "stage-broken-dishes",
+    "rooms": {
+      "19": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "494": {
+    "name": "stage-elaine-spot",
+    "rooms": {
+      "19": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "509": {
+    "name": "stage-floorboard-anim-object",
+    "rooms": {
+      "19": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "513": {
+    "name": "stage-plates-object",
+    "rooms": {
+      "19": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "512": {
+    "name": "stage-poles-object",
+    "rooms": {
+      "19": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "495": {
+    "name": "stage-shovel-object",
+    "rooms": {
+      "19": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "515": {
+    "name": "stage-x",
+    "rooms": {
+      "19": {
+        "states": [
+          0
+        ]
+      }
+    }
+  }
+}

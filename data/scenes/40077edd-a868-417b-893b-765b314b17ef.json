@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "40077edd-a868-417b-893b-765b314b17ef",
+    "name": "stancrpt",
+    "roomNumber": 69,
+    "assets": [
+      "611a30ba-93a9-4b64-b32f-9158add08ab9",
+      "6344b020-2b27-4d7b-a3b4-7e5b3fa96e35",
+      "e84b7f78-c4c9-4372-acae-c5cec099de7e",
+      "0e1570db-00eb-4ccb-a37a-d7a5c9f7bd14",
+      "4cf2f00b-3a45-499e-8ad3-404283239fd7",
+      "cb1ddafc-e5c3-4f51-87d7-8b627a08f659",
+      "62d7bc33-7590-4494-a02a-927cf86d26da",
+      "46aab331-7ef5-4edf-8c19-d4b38e38ef34",
+      "fe7ba278-e5b3-4c67-906c-cfff797cb93f",
+      "75e852d8-cac9-4fd9-9c00-a3d0bf13d9ff",
+      "4d0da947-1396-401f-90a7-45e95d4fd18d",
+      "9b097fdd-41e6-4646-b083-fe8045adbb0e",
+      "e4d135e4-77b0-4a9d-90de-6fc7377512dd",
+      "dffbaacc-6973-4f9f-af04-84f91f7efc50",
+      "2f63e0b7-5007-4a64-ab03-ca8d77c46e9a",
+      "9881a864-3323-4cc7-bbec-9230046c8978",
+      "df09ff8c-dc9a-4e73-b87a-5ef462f2213b",
+      "c2468cc3-ee4c-4de3-995b-42e1a42e1118",
+      "eb8adf26-2290-4826-a8f3-9a2aed37c90f",
+      "6e447149-9ebb-4e1b-bf26-a884bab4ff5e",
+      "eeac0f5c-2b30-4788-9ca4-5709c43005e8",
+      "8ec6b579-91c3-4cad-83d8-77b5b6ae1c39",
+      "763cef44-ad6c-42ba-a7e7-2432d9320b00",
+      "4ce3ad32-39c7-484b-93bb-b81cfd41a32f",
+      "6b4a70db-b82d-48be-a5b3-06aa8a2c036d",
+      "c48c3da8-6034-44ef-9c04-b63988f9b2a7",
+      "2dfac157-ce1c-442b-b1fd-164b7d2517ae",
+      "d7585b5f-bad3-4574-8a5f-66875ed8ed1c",
+      "ffeb8a8c-eca2-4372-abfa-b28cab63e9da",
+      "cd0f3dfe-1553-4692-a121-69492258cad2"
+    ]
+  },
+  "assets": {
+    "611a30ba-93a9-4b64-b32f-9158add08ab9": {
+      "id": "611a30ba-93a9-4b64-b32f-9158add08ab9",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stancrpt",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0069_stancrpt.png",
+      "originalHash": "54b48f4e31652049de139d428c9fabe9bee5e6823fb37938877d45d1a3ae1af0",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stancrpt.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.192Z"
+    },
+    "6344b020-2b27-4d7b-a3b4-7e5b3fa96e35": {
+      "id": "6344b020-2b27-4d7b-a3b4-7e5b3fa96e35",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_coffin-nail-4_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_coffin-nail-4_0000.png",
+      "originalHash": "90dd41879e8f79cd1c24652f5b32f8ae52cc828d33c8d3eeea3f65c71373f570",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_coffin-nail-4_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.207Z"
+    },
+    "e84b7f78-c4c9-4372-acae-c5cec099de7e": {
+      "id": "e84b7f78-c4c9-4372-acae-c5cec099de7e",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_generic-paper-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_generic-paper-object_0000.png",
+      "originalHash": "87543f385cd64df2fe731be795ad9db302e279275047e936e311603e06aeae43",
+      "width": 56,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_generic-paper-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.223Z"
+    },
+    "0e1570db-00eb-4ccb-a37a-d7a5c9f7bd14": {
+      "id": "0e1570db-00eb-4ccb-a37a-d7a5c9f7bd14",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_generic-paper-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_generic-paper-object_0001.png",
+      "originalHash": "2fcb8857aa8bb77f236613f18967084ce3e787d156b49ebaa7896cc2d99deb32",
+      "width": 56,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_generic-paper-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.239Z"
+    },
+    "4cf2f00b-3a45-499e-8ad3-404283239fd7": {
+      "id": "4cf2f00b-3a45-499e-8ad3-404283239fd7",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_generic-paper-object_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_generic-paper-object_0002.png",
+      "originalHash": "c740e1f7241774c96ca07ea5aa664592e44ca09668fe9fbfebc92d07ce1610f0",
+      "width": 56,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_generic-paper-object_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.255Z"
+    },
+    "cb1ddafc-e5c3-4f51-87d7-8b627a08f659": {
+      "id": "cb1ddafc-e5c3-4f51-87d7-8b627a08f659",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_guybrushs-animation-coffin_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_guybrushs-animation-coffin_0000.png",
+      "originalHash": "450ad9e194186e7f6c2a72ba591f77524741ac3e78eb6f7a5b8a1eab5b4a2c19",
+      "width": 256,
+      "height": 120,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_guybrushs-animation-coffin_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.270Z"
+    },
+    "62d7bc33-7590-4494-a02a-927cf86d26da": {
+      "id": "62d7bc33-7590-4494-a02a-927cf86d26da",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_guybrushs-animation-coffin_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_guybrushs-animation-coffin_0002.png",
+      "originalHash": "3d80c7d683b76e31bb569dc1d119ab36c04b791838388ee0f59b5744cd01d215",
+      "width": 256,
+      "height": 120,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_guybrushs-animation-coffin_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.288Z"
+    },
+    "46aab331-7ef5-4edf-8c19-d4b38e38ef34": {
+      "id": "46aab331-7ef5-4edf-8c19-d4b38e38ef34",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_guybrushs-animation-coffin_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_guybrushs-animation-coffin_0003.png",
+      "originalHash": "6768f39b02afee4ffe3a3067b81b973d8b7da343f6316f25f3502829c916942f",
+      "width": 256,
+      "height": 120,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_guybrushs-animation-coffin_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.303Z"
+    },
+    "fe7ba278-e5b3-4c67-906c-cfff797cb93f": {
+      "id": "fe7ba278-e5b3-4c67-906c-cfff797cb93f",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_guybrushs-animation-coffin_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_guybrushs-animation-coffin_0004.png",
+      "originalHash": "b0cc305fe45a33d1218be919f21cfa33930faee3998cf60557839e23867e8df6",
+      "width": 256,
+      "height": 120,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_guybrushs-animation-coffin_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.318Z"
+    },
+    "75e852d8-cac9-4fd9-9c00-a3d0bf13d9ff": {
+      "id": "75e852d8-cac9-4fd9-9c00-a3d0bf13d9ff",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stancrypt-gate-shadow_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stancrypt-gate-shadow_0000.png",
+      "originalHash": "70a925780213841a43128922f747c33b8e8a016aba66e362832b3ada7238a419",
+      "width": 112,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stancrypt-gate-shadow_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.333Z"
+    },
+    "4d0da947-1396-401f-90a7-45e95d4fd18d": {
+      "id": "4d0da947-1396-401f-90a7-45e95d4fd18d",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-crypt-animation-coffin_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-crypt-animation-coffin_0000.png",
+      "originalHash": "b25370e6d4dd014ca0c55c2c13187bc3e0a53922c0ba3b9aea7e7a7fd60719ff",
+      "width": 280,
+      "height": 168,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-crypt-animation-coffin_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.348Z"
+    },
+    "9b097fdd-41e6-4646-b083-fe8045adbb0e": {
+      "id": "9b097fdd-41e6-4646-b083-fe8045adbb0e",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-crypt-cemetery-door_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-crypt-cemetery-door_0000.png",
+      "originalHash": "554576b914f7e774661245f85ab9fb8b1196ffcec3412ff8468941637cfd392d",
+      "width": 56,
+      "height": 184,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-crypt-cemetery-door_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.363Z"
+    },
+    "e4d135e4-77b0-4a9d-90de-6fc7377512dd": {
+      "id": "e4d135e4-77b0-4a9d-90de-6fc7377512dd",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-crypt-coffin-nails-1_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-crypt-coffin-nails-1_0000.png",
+      "originalHash": "1b68faaff6d8ed9c62d2985fc08070d95c12e3a38b90208114ebd4aebcb29fa3",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-crypt-coffin-nails-1_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.378Z"
+    },
+    "dffbaacc-6973-4f9f-af04-84f91f7efc50": {
+      "id": "dffbaacc-6973-4f9f-af04-84f91f7efc50",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-crypt-coffin-nails-2_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-crypt-coffin-nails-2_0000.png",
+      "originalHash": "ae2693cb69a17146ee4a9106c82835335959c80963c4554fb4a0a4ad3be7f0dc",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-crypt-coffin-nails-2_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.391Z"
+    },
+    "2f63e0b7-5007-4a64-ab03-ca8d77c46e9a": {
+      "id": "2f63e0b7-5007-4a64-ab03-ca8d77c46e9a",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-crypt-coffin-nails-3_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-crypt-coffin-nails-3_0000.png",
+      "originalHash": "2bbe26e2a3d86953b2a7c2f65396fdd51617aa13d2c72ebadec1ae103d6bf7b7",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-crypt-coffin-nails-3_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.405Z"
+    },
+    "9881a864-3323-4cc7-bbec-9230046c8978": {
+      "id": "9881a864-3323-4cc7-bbec-9230046c8978",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-crypt-desk-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-crypt-desk-anim-object_0000.png",
+      "originalHash": "8f43715396317053fa30a4220280029fa7a02e616ee66681f3def0333bf9113e",
+      "width": 56,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-crypt-desk-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.419Z"
+    },
+    "df09ff8c-dc9a-4e73-b87a-5ef462f2213b": {
+      "id": "df09ff8c-dc9a-4e73-b87a-5ef462f2213b",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-crypt-desk-anim-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-crypt-desk-anim-object_0001.png",
+      "originalHash": "d120490b6f77500138ffc59e9dc24f86ee6551284bc6ac3ca833c2122a10fee9",
+      "width": 56,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-crypt-desk-anim-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.508Z"
+    },
+    "c2468cc3-ee4c-4de3-995b-42e1a42e1118": {
+      "id": "c2468cc3-ee4c-4de3-995b-42e1a42e1118",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-crypt-guybrushs-coffin_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-crypt-guybrushs-coffin_0000.png",
+      "originalHash": "7b3c5b3ef92a686eed37c691890d7234841877731b102feea1c46fe0a3e6bb73",
+      "width": 232,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-crypt-guybrushs-coffin_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.525Z"
+    },
+    "eb8adf26-2290-4826-a8f3-9a2aed37c90f": {
+      "id": "eb8adf26-2290-4826-a8f3-9a2aed37c90f",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-crypt-stans-coffin_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-crypt-stans-coffin_0000.png",
+      "originalHash": "a1e9e0eb1bb5ba792851223afb968d7dd22e41a530ffde0f0d20c75702409805",
+      "width": 96,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-crypt-stans-coffin_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.539Z"
+    },
+    "6e447149-9ebb-4e1b-bf26-a884bab4ff5e": {
+      "id": "6e447149-9ebb-4e1b-bf26-a884bab4ff5e",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "0069_stans-office_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0069_stans-office_0000.png",
+      "originalHash": "bf29e6129c2527a67134401cc745d74c46c96b84f0c418f7831b10f2c943099e",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 69,
+        "originalFile": "0069_stans-office_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.555Z"
+    },
+    "eeac0f5c-2b30-4788-9ca4-5709c43005e8": {
+      "id": "eeac0f5c-2b30-4788-9ca4-5709c43005e8",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0337",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0337_frame_0.png",
+      "originalHash": "054593fa608685ed28bc05fd62b0c7eb20cbe660e405185899b8606335a74d6d",
+      "width": 74,
+      "height": 98,
+      "frameCount": 105,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0337",
+        "frameCount": 105
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.118Z"
+    },
+    "8ec6b579-91c3-4cad-83d8-77b5b6ae1c39": {
+      "id": "8ec6b579-91c3-4cad-83d8-77b5b6ae1c39",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0338",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0338_frame_0.png",
+      "originalHash": "63d97f454ade147ee0c2ef779ac7e9ea8ba5e9c89e68370edf83439b5ad6939f",
+      "width": 81,
+      "height": 84,
+      "frameCount": 57,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0338",
+        "frameCount": 57
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.142Z"
+    },
+    "763cef44-ad6c-42ba-a7e7-2432d9320b00": {
+      "id": "763cef44-ad6c-42ba-a7e7-2432d9320b00",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0339",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0339_frame_0.png",
+      "originalHash": "5a8ab1faf66889c95f359bddfdc9c3954ef7744e1cf48a247d749403baf44840",
+      "width": 165,
+      "height": 97,
+      "frameCount": 19,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0339",
+        "frameCount": 19
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.166Z"
+    },
+    "4ce3ad32-39c7-484b-93bb-b81cfd41a32f": {
+      "id": "4ce3ad32-39c7-484b-93bb-b81cfd41a32f",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0340",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0340_frame_0.png",
+      "originalHash": "1b50253fb6f14adb8a7bac8ed2eb3404a7814d99ec1f1f948597566258ef78c1",
+      "width": 81,
+      "height": 84,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0340",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.187Z"
+    },
+    "6b4a70db-b82d-48be-a5b3-06aa8a2c036d": {
+      "id": "6b4a70db-b82d-48be-a5b3-06aa8a2c036d",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0342",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0342_frame_0.png",
+      "originalHash": "c153dd60f6d4cab96e6b1b129a691a775cd5747600e544555f3c880f2be96981",
+      "width": 81,
+      "height": 212,
+      "frameCount": 12,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0342",
+        "frameCount": 12
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.211Z"
+    },
+    "c48c3da8-6034-44ef-9c04-b63988f9b2a7": {
+      "id": "c48c3da8-6034-44ef-9c04-b63988f9b2a7",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0344",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0344_frame_0.png",
+      "originalHash": "0695cdb77f8c1a971cf76ca3bc7f75a83872b47902f9168d1c27d923d9319d49",
+      "width": 166,
+      "height": 265,
+      "frameCount": 14,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0344",
+        "frameCount": 14
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.232Z"
+    },
+    "2dfac157-ce1c-442b-b1fd-164b7d2517ae": {
+      "id": "2dfac157-ce1c-442b-b1fd-164b7d2517ae",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0346",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0346_frame_0.png",
+      "originalHash": "58e420b89845fbdd83bce37c18522a1b9a430f83f32bc5d1213ed2c4f15bc62a",
+      "width": 95,
+      "height": 207,
+      "frameCount": 15,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0346",
+        "frameCount": 15
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.258Z"
+    },
+    "d7585b5f-bad3-4574-8a5f-66875ed8ed1c": {
+      "id": "d7585b5f-bad3-4574-8a5f-66875ed8ed1c",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0347",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0347_frame_0.png",
+      "originalHash": "991b1b37e5f9280e85469e694143b0299604d3e967c3065f2bd94131ca27e67e",
+      "width": 81,
+      "height": 208,
+      "frameCount": 88,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0347",
+        "frameCount": 88
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.281Z"
+    },
+    "ffeb8a8c-eca2-4372-abfa-b28cab63e9da": {
+      "id": "ffeb8a8c-eca2-4372-abfa-b28cab63e9da",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0348",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0348_frame_0.png",
+      "originalHash": "4f4e9b5b8fd89ee6954befee2b52926619a13b3dd9b558b8d2157a4c78f71fa6",
+      "width": 113,
+      "height": 157,
+      "frameCount": 86,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0348",
+        "frameCount": 86
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.303Z"
+    },
+    "cd0f3dfe-1553-4692-a121-69492258cad2": {
+      "id": "cd0f3dfe-1553-4692-a121-69492258cad2",
+      "sceneId": "40077edd-a868-417b-893b-765b314b17ef",
+      "name": "LFLF_0069_AKOS_0349",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0069_AKOS_0349_frame_0.png",
+      "originalHash": "bc81dc2560b3b5b0ea912786bf0dbb371c7754d5539380d606ef6f6c6356f266",
+      "width": 113,
+      "height": 157,
+      "frameCount": 52,
+      "metadata": {
+        "roomNumber": 69,
+        "akosId": "LFLF_0069_AKOS_0349",
+        "frameCount": 52
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.326Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

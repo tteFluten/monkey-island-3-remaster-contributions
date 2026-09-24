@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "d98696aa-2111-437c-a9c8-7f53413ea806",
+    "name": "shipcom4",
+    "roomNumber": 43,
+    "assets": [
+      "ab6ce5d1-a6f7-4226-a603-9cbc903085be",
+      "1e15711e-e079-466e-aad3-fed376d50732"
+    ]
+  },
+  "assets": {
+    "ab6ce5d1-a6f7-4226-a603-9cbc903085be": {
+      "id": "ab6ce5d1-a6f7-4226-a603-9cbc903085be",
+      "sceneId": "d98696aa-2111-437c-a9c8-7f53413ea806",
+      "name": "0043_shipcom4",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0043_shipcom4.png",
+      "originalHash": "5925d9a421af9660885d4050aebb294dd9399dbfa0e3debe3cf4119fcc4b7635",
+      "width": 1200,
+      "height": 1200,
+      "metadata": {
+        "roomNumber": 43,
+        "originalFile": "0043_shipcom4.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.643Z"
+    },
+    "1e15711e-e079-466e-aad3-fed376d50732": {
+      "id": "1e15711e-e079-466e-aad3-fed376d50732",
+      "sceneId": "d98696aa-2111-437c-a9c8-7f53413ea806",
+      "name": "0043_shipcom4-squid-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0043_shipcom4-squid-object_0000.png",
+      "originalHash": "0b86c896b08fe03b8263962a71d495048bac65618153f03adb4531d10fab9248",
+      "width": 192,
+      "height": 120,
+      "metadata": {
+        "roomNumber": 43,
+        "originalFile": "0043_shipcom4-squid-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.658Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

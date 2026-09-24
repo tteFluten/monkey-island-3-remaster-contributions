@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+    "name": "treasure",
+    "roomNumber": 12,
+    "assets": [
+      "28ed108f-87bb-45c3-b1dd-3f5d3099b812",
+      "94e42b47-46e3-4297-8ff8-a1ab710f4b73",
+      "b734bb77-e37b-492c-a1b8-2a49e8fda1c5",
+      "7082a077-7836-4603-8150-f3a30175248b",
+      "880930c2-c342-4f81-991a-40c6b5d1e84d",
+      "ff4a9a90-c967-4530-94d4-f272fecc0167",
+      "8608720f-c623-4140-b870-cceb8f472671",
+      "96f521fb-0714-495b-9515-e1a12ad647e0",
+      "1a21a2dc-25ce-4c47-a710-2c5643323b57"
+    ]
+  },
+  "assets": {
+    "28ed108f-87bb-45c3-b1dd-3f5d3099b812": {
+      "id": "28ed108f-87bb-45c3-b1dd-3f5d3099b812",
+      "sceneId": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+      "name": "0012_treasure",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0012_treasure.png",
+      "originalHash": "902183b37710ee9d95cfd7011f7229f239303aac59a7c50b2641281e821df811",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 12,
+        "originalFile": "0012_treasure.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.701Z"
+    },
+    "94e42b47-46e3-4297-8ff8-a1ab710f4b73": {
+      "id": "94e42b47-46e3-4297-8ff8-a1ab710f4b73",
+      "sceneId": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+      "name": "0012_cursed-ring_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0012_cursed-ring_0000.png",
+      "originalHash": "a1707b129a9e9e89bd645809c31590b5b235b336949be0c15d65595a8207089a",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 12,
+        "originalFile": "0012_cursed-ring_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.716Z"
+    },
+    "b734bb77-e37b-492c-a1b8-2a49e8fda1c5": {
+      "id": "b734bb77-e37b-492c-a1b8-2a49e8fda1c5",
+      "sceneId": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+      "name": "0012_cursed-ring_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0012_cursed-ring_0001.png",
+      "originalHash": "edd1742c0d6efe8cdd0c139ba46ca3c3dfbf81ea1b0aa9eaabcb1587dbc04cca",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 12,
+        "originalFile": "0012_cursed-ring_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.731Z"
+    },
+    "7082a077-7836-4603-8150-f3a30175248b": {
+      "id": "7082a077-7836-4603-8150-f3a30175248b",
+      "sceneId": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+      "name": "0012_nickel-bag_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0012_nickel-bag_0000.png",
+      "originalHash": "54905b6e808bf034955ff43379f3994674352bbd9954796744a26e953376a3a8",
+      "width": 64,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 12,
+        "originalFile": "0012_nickel-bag_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.745Z"
+    },
+    "880930c2-c342-4f81-991a-40c6b5d1e84d": {
+      "id": "880930c2-c342-4f81-991a-40c6b5d1e84d",
+      "sceneId": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+      "name": "0012_nickel-bag_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0012_nickel-bag_0001.png",
+      "originalHash": "ec4b5a1840fa73a9057197292a3fc89ce7d3136f46c545deb659131d94da21d7",
+      "width": 64,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 12,
+        "originalFile": "0012_nickel-bag_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.759Z"
+    },
+    "ff4a9a90-c967-4530-94d4-f272fecc0167": {
+      "id": "ff4a9a90-c967-4530-94d4-f272fecc0167",
+      "sceneId": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+      "name": "0012_treasure-flotation-device_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0012_treasure-flotation-device_0000.png",
+      "originalHash": "73542ea56e07338ebc4ed9d56f3584084136d8b0c453d2bd2ee82d17e08a0838",
+      "width": 104,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 12,
+        "originalFile": "0012_treasure-flotation-device_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.771Z"
+    },
+    "8608720f-c623-4140-b870-cceb8f472671": {
+      "id": "8608720f-c623-4140-b870-cceb8f472671",
+      "sceneId": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+      "name": "0012_treasure-porthole_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0012_treasure-porthole_0000.png",
+      "originalHash": "0d874a9614671fb4fc579bbb093f542b3145e6b14ba9d992676b788105aea7c1",
+      "width": 32,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 12,
+        "originalFile": "0012_treasure-porthole_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.784Z"
+    },
+    "96f521fb-0714-495b-9515-e1a12ad647e0": {
+      "id": "96f521fb-0714-495b-9515-e1a12ad647e0",
+      "sceneId": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+      "name": "LFLF_0012_AKOS_0061",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0012_AKOS_0061_frame_0.png",
+      "originalHash": "e7828e7daccc7ac4ebc9aa8d2198901e05cabcdee5eb9c766117087300e31d8a",
+      "width": 59,
+      "height": 196,
+      "frameCount": 47,
+      "metadata": {
+        "roomNumber": 12,
+        "akosId": "LFLF_0012_AKOS_0061",
+        "frameCount": 47
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.406Z"
+    },
+    "1a21a2dc-25ce-4c47-a710-2c5643323b57": {
+      "id": "1a21a2dc-25ce-4c47-a710-2c5643323b57",
+      "sceneId": "9c9230af-b74f-476a-a7cd-31245c894ea7",
+      "name": "LFLF_0012_AKOS_0062",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0012_AKOS_0062_frame_0.png",
+      "originalHash": "6727836595eaab5f7bbf8057f69a24044aa5813bdb3e752ff6d033577af28f01",
+      "width": 2,
+      "height": 2,
+      "frameCount": 39,
+      "metadata": {
+        "roomNumber": 12,
+        "akosId": "LFLF_0012_AKOS_0062",
+        "frameCount": 39
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.426Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

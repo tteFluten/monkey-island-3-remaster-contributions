@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "59aa575d-b6eb-4fb1-a963-0b3ebd20f909",
+    "name": "hang-dia",
+    "roomNumber": 84,
+    "assets": [
+      "873dad9e-1b5d-458d-91b5-ac05da5d0b4e",
+      "8e4b7ed6-8830-4da3-bf0c-62af2242d97f",
+      "5ff04e89-771d-4f02-84e1-b172bebf102f",
+      "256a13b8-4347-40fd-88e1-e4782dc6ff5b",
+      "cef86406-3d20-41df-bf5b-507f042fa078"
+    ]
+  },
+  "assets": {
+    "873dad9e-1b5d-458d-91b5-ac05da5d0b4e": {
+      "id": "873dad9e-1b5d-458d-91b5-ac05da5d0b4e",
+      "sceneId": "59aa575d-b6eb-4fb1-a963-0b3ebd20f909",
+      "name": "0084_hang-dia",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0084_hang-dia.png",
+      "originalHash": "759b9ea952e29992876c4dce39524628c57850d08e8bab0785693d7109a319fa",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 84,
+        "originalFile": "0084_hang-dia.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.058Z"
+    },
+    "8e4b7ed6-8830-4da3-bf0c-62af2242d97f": {
+      "id": "8e4b7ed6-8830-4da3-bf0c-62af2242d97f",
+      "sceneId": "59aa575d-b6eb-4fb1-a963-0b3ebd20f909",
+      "name": "0084_hang-diorama-fallen-corpse_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0084_hang-diorama-fallen-corpse_0000.png",
+      "originalHash": "79fad4d0fd07d657894e5adbdafb6caa535816dd196b4d76875ddf8e34da73f8",
+      "width": 128,
+      "height": 136,
+      "metadata": {
+        "roomNumber": 84,
+        "originalFile": "0084_hang-diorama-fallen-corpse_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.078Z"
+    },
+    "5ff04e89-771d-4f02-84e1-b172bebf102f": {
+      "id": "5ff04e89-771d-4f02-84e1-b172bebf102f",
+      "sceneId": "59aa575d-b6eb-4fb1-a963-0b3ebd20f909",
+      "name": "0084_hang-diorama-noose-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0084_hang-diorama-noose-anim-object_0000.png",
+      "originalHash": "08afc5a013a1d8c92ca5002fe5f1e9087478951c3d4f3c07d74c4333ee007fea",
+      "width": 88,
+      "height": 112,
+      "metadata": {
+        "roomNumber": 84,
+        "originalFile": "0084_hang-diorama-noose-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.092Z"
+    },
+    "256a13b8-4347-40fd-88e1-e4782dc6ff5b": {
+      "id": "256a13b8-4347-40fd-88e1-e4782dc6ff5b",
+      "sceneId": "59aa575d-b6eb-4fb1-a963-0b3ebd20f909",
+      "name": "0084_hang-diorama-rope_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0084_hang-diorama-rope_0000.png",
+      "originalHash": "3b4afbcd390698b7eaf1a92fe17a8982329c0ffccab037eb7a9a7b9cb704c376",
+      "width": 80,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 84,
+        "originalFile": "0084_hang-diorama-rope_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.106Z"
+    },
+    "cef86406-3d20-41df-bf5b-507f042fa078": {
+      "id": "cef86406-3d20-41df-bf5b-507f042fa078",
+      "sceneId": "59aa575d-b6eb-4fb1-a963-0b3ebd20f909",
+      "name": "LFLF_0084_AKOS_0420",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0084_AKOS_0420_frame_0.png",
+      "originalHash": "91e64ebd72094518537facfe46aa0036936a34082da3671cca639a1baed809ee",
+      "width": 96,
+      "height": 149,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 84,
+        "akosId": "LFLF_0084_AKOS_0420",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.747Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

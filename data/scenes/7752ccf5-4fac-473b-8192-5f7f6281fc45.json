@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+    "name": "firefly",
+    "roomNumber": 58,
+    "assets": [
+      "79db669f-1476-4d15-8015-82a67cf84111",
+      "3f3a28c2-2e0e-494e-8190-58eeb4e927b9",
+      "a48fec88-5d51-411e-a975-b44efa8db521",
+      "207575f5-fe45-4355-a466-04644795a46e",
+      "ba7185f1-71b6-4c1f-89be-39379567bae9",
+      "5e298ded-4db5-4237-ad2a-5b3037722569",
+      "7f352bb1-52f0-4f61-b582-db22fb5350cd",
+      "eaa7721f-b49b-4e33-a065-c472cc60ba93",
+      "334a9185-1d18-4dbe-b05e-42aef9a36f83",
+      "01d24d06-74e9-4f54-a905-b311ae98af67",
+      "1478800e-aa98-4007-9976-e8e72cd64ca1",
+      "8d17b2e8-1ad8-423b-a29b-63cf8f2ed9f2"
+    ]
+  },
+  "assets": {
+    "79db669f-1476-4d15-8015-82a67cf84111": {
+      "id": "79db669f-1476-4d15-8015-82a67cf84111",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "0058_firefly",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0058_firefly.png",
+      "originalHash": "fdb644bb3a295d7b3bbee54d64ac4e151c2368a2099f45a510273baebea842e4",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 58,
+        "originalFile": "0058_firefly.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.627Z"
+    },
+    "3f3a28c2-2e0e-494e-8190-58eeb4e927b9": {
+      "id": "3f3a28c2-2e0e-494e-8190-58eeb4e927b9",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "0058_firefly-cursed-ring_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0058_firefly-cursed-ring_0000.png",
+      "originalHash": "178b2777000f4cc7159cb732b5b21b78e870f7237376013eef6296ea848514a3",
+      "width": 32,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 58,
+        "originalFile": "0058_firefly-cursed-ring_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.642Z"
+    },
+    "a48fec88-5d51-411e-a975-b44efa8db521": {
+      "id": "a48fec88-5d51-411e-a975-b44efa8db521",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "0058_firefly-jar_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0058_firefly-jar_0000.png",
+      "originalHash": "baf968308195af75319ac845bc8dda457a0eb98660b959cc736aa97e7f2d2b71",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 58,
+        "originalFile": "0058_firefly-jar_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.655Z"
+    },
+    "207575f5-fe45-4355-a466-04644795a46e": {
+      "id": "207575f5-fe45-4355-a466-04644795a46e",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "0058_firefly-jar_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0058_firefly-jar_0001.png",
+      "originalHash": "acd31567bdd99a961403912a40d4e8198ae42560462236233d46e4772e4a1318",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 58,
+        "originalFile": "0058_firefly-jar_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.669Z"
+    },
+    "ba7185f1-71b6-4c1f-89be-39379567bae9": {
+      "id": "ba7185f1-71b6-4c1f-89be-39379567bae9",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "0058_firefly-lighthouse-animation-obj_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0058_firefly-lighthouse-animation-obj_0000.png",
+      "originalHash": "2f0c97d7afae5ac011beb85867ba1381302dca3d7b554e1ea8d6d160c3c89df7",
+      "width": 96,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 58,
+        "originalFile": "0058_firefly-lighthouse-animation-obj_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.682Z"
+    },
+    "5e298ded-4db5-4237-ad2a-5b3037722569": {
+      "id": "5e298ded-4db5-4237-ad2a-5b3037722569",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "0058_firefly-lighthouse-animation-obj_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0058_firefly-lighthouse-animation-obj_0001.png",
+      "originalHash": "d725c19d7b66bef418994878e14bbf150bca57132060825c6f96b7565e15a410",
+      "width": 96,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 58,
+        "originalFile": "0058_firefly-lighthouse-animation-obj_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.696Z"
+    },
+    "7f352bb1-52f0-4f61-b582-db22fb5350cd": {
+      "id": "7f352bb1-52f0-4f61-b582-db22fb5350cd",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "LFLF_0058_AKOS_0296",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0058_AKOS_0296_frame_0.png",
+      "originalHash": "474e0448a4d7da2917ac582812a3fb6984f83b1bd76ceca258a529e7a06a8e50",
+      "width": 2,
+      "height": 7,
+      "frameCount": 462,
+      "metadata": {
+        "roomNumber": 58,
+        "akosId": "LFLF_0058_AKOS_0296",
+        "frameCount": 462
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:26.124Z"
+    },
+    "eaa7721f-b49b-4e33-a065-c472cc60ba93": {
+      "id": "eaa7721f-b49b-4e33-a065-c472cc60ba93",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "LFLF_0058_AKOS_0297",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0058_AKOS_0297_frame_0.png",
+      "originalHash": "17f5d36c1b7ce9a15a084703d843dad185e72f5a0ed9208508b6c6070a9bfdd2",
+      "width": 68,
+      "height": 240,
+      "frameCount": 36,
+      "metadata": {
+        "roomNumber": 58,
+        "akosId": "LFLF_0058_AKOS_0297",
+        "frameCount": 36
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:26.151Z"
+    },
+    "334a9185-1d18-4dbe-b05e-42aef9a36f83": {
+      "id": "334a9185-1d18-4dbe-b05e-42aef9a36f83",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "LFLF_0058_AKOS_0298",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0058_AKOS_0298_frame_0.png",
+      "originalHash": "08b1e1d963230da4db12d78b373889d30f76ec52508bbd124cfeec5eb1739716",
+      "width": 1,
+      "height": 1,
+      "frameCount": 6,
+      "metadata": {
+        "roomNumber": 58,
+        "akosId": "LFLF_0058_AKOS_0298",
+        "frameCount": 6
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:26.175Z"
+    },
+    "01d24d06-74e9-4f54-a905-b311ae98af67": {
+      "id": "01d24d06-74e9-4f54-a905-b311ae98af67",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "LFLF_0058_AKOS_0299",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0058_AKOS_0299_frame_0.png",
+      "originalHash": "a0a078ef21672adc36722273bc158d026927bf02fafd7695de45f2dba72a77fc",
+      "width": 1,
+      "height": 1,
+      "frameCount": 33,
+      "metadata": {
+        "roomNumber": 58,
+        "akosId": "LFLF_0058_AKOS_0299",
+        "frameCount": 33
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:26.197Z"
+    },
+    "1478800e-aa98-4007-9976-e8e72cd64ca1": {
+      "id": "1478800e-aa98-4007-9976-e8e72cd64ca1",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "LFLF_0058_AKOS_0300",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0058_AKOS_0300_frame_0.png",
+      "originalHash": "0f04bd827c8cba61ef5c3d928646f14adce160adc5b545ac622299f5b8980d1b",
+      "width": 140,
+      "height": 156,
+      "frameCount": 35,
+      "metadata": {
+        "roomNumber": 58,
+        "akosId": "LFLF_0058_AKOS_0300",
+        "frameCount": 35
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:26.218Z"
+    },
+    "8d17b2e8-1ad8-423b-a29b-63cf8f2ed9f2": {
+      "id": "8d17b2e8-1ad8-423b-a29b-63cf8f2ed9f2",
+      "sceneId": "7752ccf5-4fac-473b-8192-5f7f6281fc45",
+      "name": "LFLF_0058_AKOS_0301",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0058_AKOS_0301_frame_0.png",
+      "originalHash": "018ba622d719ba81b7f1299c5a855901995b42764ef5f276806193febc6834e2",
+      "width": 53,
+      "height": 68,
+      "frameCount": 68,
+      "metadata": {
+        "roomNumber": 58,
+        "akosId": "LFLF_0058_AKOS_0301",
+        "frameCount": 68
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:26.241Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

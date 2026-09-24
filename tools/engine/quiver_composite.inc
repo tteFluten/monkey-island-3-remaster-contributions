@@ -1,0 +1,74 @@
+// Validated poses have already been removed from quiverNative before the native
+// foreground copy. Draw only their replacement textures, in original depth order.
+if (!quiverPoses.empty()) {
+    for (uint ai = 0; ai < quiverPoses.size(); ++ai) {
+        Actor *a = quiverPoses[ai].actor;
+        const bool coin = a->_costume == 1 && a->_layer < 0;
+        if (coin != hdCoinPass) continue;
+        const HdActorLighting::Tint lighting = coin ? HdActorLighting::Tint() : actorLighting(a);
+        Common::Array<Graphics::Surface *> &textures = quiverPoses[ai].textures;
+        for (uint di = 0; di < textures.size(); ++di) {
+            const Actor::QuiverDraw &d = a->_quiverDraws[di];
+            const Graphics::Surface &texture = *textures[di];
+            if (coin && d.cel < 63) {
+                for (uint pi = 0; pi < d.coinPixels.size(); ++pi) {
+                    const Actor::CoinPixel &p = d.coinPixels[pi];
+                    const byte *rgb = _currentPalette + p.color * 3;
+                    uint32 color = _hdComposite.format.RGBToColor(rgb[0], rgb[1], rgb[2]);
+                    for (int y = p.y * scale; y < MIN(hdH, (p.y + 1) * scale); ++y)
+                        for (int x = p.x * scale; x < MIN(hdW, (p.x + 1) * scale); ++x) {
+                            *(uint32 *)_hdComposite.getBasePtr(x, y) = color;
+                            hdAlphaMask[y * hdW + x] = 1;
+                        }
+                }
+                continue;
+            }
+            const bool cleanHeadMatte = HdCostumeEdge::guybrushHead(d.costume, d.cel);
+            // Bounds come from the original decoder's scale table, not a
+            // floating-point approximation of actor scaling.
+            int w = d.screenWidth * scale;
+            int h = d.screenHeight * scale;
+            if (!w || !h) continue;
+            int left = d.screenLeft * scale;
+            int top = d.screenTop * scale;
+            for (int yy = MAX(0, top); yy < MIN(hdH, top + h); ++yy) {
+                const int ny = yy / scale;
+                const byte *nativeRow = !coin && !quiverWithoutCoin.empty()
+                    ? &quiverWithoutCoin[ny * visW] : (const byte *)vs->getBasePtr(vs->xstart, ny);
+                const byte *actorRow = &a->_quiverAfter[ny * visW];
+                // Resolve the z-buffer resource once per row, never once per HD
+                // pixel. Preserve sub-strip camera offsets in the byte lookup.
+                const byte *maskRow = d.z >= 0 && d.z < _gdi->_numZBuffer ? getMaskBuffer(0, ny, d.z) : nullptr;
+                const int maskOffset = vs->xstart & 7;
+                int sourceY = (yy - top) * texture.h / h;
+                uint32 *dest = (uint32 *)_hdComposite.getBasePtr(0, yy);
+                for (int xx = MAX(0, left); xx < MIN(hdW, left + w); ++xx) {
+                    int nx = xx / scale;
+                    if (nativeRow[nx] != actorRow[nx]) continue;
+                    if (!coin && HdObjectDepth::masked(maskRow, nx, maskOffset)) continue;
+                    int sourceX = (xx - left) * texture.w / w;
+                    if (d.mirror) sourceX = texture.w - 1 - sourceX;
+                    // Extend real outline RGB into the soft matte BEFORE room
+                    // lighting; retain alpha and the native geometry exactly.
+                    uint32 color = lighting.apply(HdCostumeEdge::sample(
+                        (const uint32 *)texture.getPixels(), texture.pitch / 4,
+                        texture.w, texture.h, sourceX, sourceY, cleanHeadMatte));
+                    uint32 alpha = color >> 24;
+                    if (!alpha) continue;
+                    uint32 previous = dest[xx];
+                    uint32 r = ((color & 255) * alpha + (previous & 255) * (255 - alpha) + 127) / 255;
+                    uint32 g = (((color >> 8) & 255) * alpha + ((previous >> 8) & 255) * (255 - alpha) + 127) / 255;
+                    uint32 b = (((color >> 16) & 255) * alpha + ((previous >> 16) & 255) * (255 - alpha) + 127) / 255;
+                    dest[xx] = r | (g << 8) | (b << 16) | 0xff000000;
+                    hdAlphaMask[yy * hdW + xx] = 1;
+                }
+            }
+            if (_hdFrameCount % 30 == 0)
+                hdPrintf("QUIVER actor=%d costume=%d cel=%d at=%d,%d size=%d,%d mirror=%d light=%d,%d,%d", a->_number, d.costume, d.cel, left, top, w, h, d.mirror, lighting.channel[0], lighting.channel[1], lighting.channel[2]);
+        }
+        for (uint i = 0; i < textures.size(); ++i) {
+            textures[i]->free();
+            delete textures[i];
+        }
+    }
+}

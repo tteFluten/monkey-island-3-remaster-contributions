@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+    "name": "banjo",
+    "roomNumber": 25,
+    "assets": [
+      "6f587e04-1b06-4ed4-8257-3e6adfd99bd6",
+      "88fcdf82-02f3-4208-aa07-dc63eddde83b",
+      "60a79670-4542-434a-b4a7-29f697e5eaa5",
+      "2cb191e8-788d-4c8f-b9ee-4ff3e580f45a",
+      "3a9ebd7f-75ec-4700-8865-9a7b0cc98d4f",
+      "10de25de-4392-450a-bc4a-b67b857971e5",
+      "883e4ab5-41fd-44f2-9030-bb3717b5f16d",
+      "2eaac4b2-78cd-4e70-8658-49363774e6ce",
+      "4253e6b4-9986-4122-95ba-92f365cf33c5",
+      "f459a556-8d89-4923-a74b-1b172fd09b2e",
+      "54ec32c8-70f3-4496-bd73-9abb0072b403"
+    ]
+  },
+  "assets": {
+    "6f587e04-1b06-4ed4-8257-3e6adfd99bd6": {
+      "id": "6f587e04-1b06-4ed4-8257-3e6adfd99bd6",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "0025_banjo",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0025_banjo.png",
+      "originalHash": "264ca16856e1566786ba1cbcb2e6814bf94f0a939ebcc854c19720de1ecab185",
+      "width": 1280,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 25,
+        "originalFile": "0025_banjo.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.041Z"
+    },
+    "88fcdf82-02f3-4208-aa07-dc63eddde83b": {
+      "id": "88fcdf82-02f3-4208-aa07-dc63eddde83b",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0144",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0144_frame_0.png",
+      "originalHash": "7af15b2cfe2b4476232c0f4aa023180fc80b79399041239facc353422265509f",
+      "width": 451,
+      "height": 267,
+      "frameCount": 2,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0144",
+        "frameCount": 2
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:19.999Z"
+    },
+    "60a79670-4542-434a-b4a7-29f697e5eaa5": {
+      "id": "60a79670-4542-434a-b4a7-29f697e5eaa5",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0145",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0145_frame_0.png",
+      "originalHash": "a3b8a98041fb85c5bf0cbc39ffe71a78ed39a9c09ff1dfe8d27ad2728c5ff646",
+      "width": 474,
+      "height": 208,
+      "frameCount": 4,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0145",
+        "frameCount": 4
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.026Z"
+    },
+    "2cb191e8-788d-4c8f-b9ee-4ff3e580f45a": {
+      "id": "2cb191e8-788d-4c8f-b9ee-4ff3e580f45a",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0146",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0146_frame_0.png",
+      "originalHash": "a2543d6347abed511ae8438d431e4ce5dee22d98082691c055078de9e97c5cc0",
+      "width": 640,
+      "height": 480,
+      "frameCount": 5,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0146",
+        "frameCount": 5
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.053Z"
+    },
+    "3a9ebd7f-75ec-4700-8865-9a7b0cc98d4f": {
+      "id": "3a9ebd7f-75ec-4700-8865-9a7b0cc98d4f",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0147",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0147_frame_0.png",
+      "originalHash": "d047e79bd1ff42b2988e4c57f7bf3af0b6af6517e4c3ce1fd763623522a1b524",
+      "width": 568,
+      "height": 32,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0147",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.078Z"
+    },
+    "10de25de-4392-450a-bc4a-b67b857971e5": {
+      "id": "10de25de-4392-450a-bc4a-b67b857971e5",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0148",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0148_frame_0.png",
+      "originalHash": "846fcc5d781f5df5f56250f74246c335ea32be274d7ea58d7fd5166af833f4f8",
+      "width": 368,
+      "height": 371,
+      "frameCount": 21,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0148",
+        "frameCount": 21
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.102Z"
+    },
+    "883e4ab5-41fd-44f2-9030-bb3717b5f16d": {
+      "id": "883e4ab5-41fd-44f2-9030-bb3717b5f16d",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0149",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0149_frame_0.png",
+      "originalHash": "7c1807056ae87e6ff1757eeb7290ce50d93c6a162ebbedcd00c967fe085bb540",
+      "width": 149,
+      "height": 251,
+      "frameCount": 17,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0149",
+        "frameCount": 17
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.129Z"
+    },
+    "2eaac4b2-78cd-4e70-8658-49363774e6ce": {
+      "id": "2eaac4b2-78cd-4e70-8658-49363774e6ce",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0150",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0150_frame_0.png",
+      "originalHash": "5d4ac9a62362cd38e0e3b90a534d1f53a2f2cc1b8e058277cedc6f2a65d9370d",
+      "width": 608,
+      "height": 23,
+      "frameCount": 58,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0150",
+        "frameCount": 58
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.156Z"
+    },
+    "4253e6b4-9986-4122-95ba-92f365cf33c5": {
+      "id": "4253e6b4-9986-4122-95ba-92f365cf33c5",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0151",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0151_frame_0.png",
+      "originalHash": "3a8b7e6d3051c2c448a243a964737dee48ab944d12c08bfb16ef39a9a3b0db7e",
+      "width": 592,
+      "height": 97,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0151",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.182Z"
+    },
+    "f459a556-8d89-4923-a74b-1b172fd09b2e": {
+      "id": "f459a556-8d89-4923-a74b-1b172fd09b2e",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0152",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0152_frame_0.png",
+      "originalHash": "2be018f936dbdc3a56026cc319511bac48ed93e489fa5cb164d9ea00b5f2ef08",
+      "width": 364,
+      "height": 350,
+      "frameCount": 22,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0152",
+        "frameCount": 22
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.215Z"
+    },
+    "54ec32c8-70f3-4496-bd73-9abb0072b403": {
+      "id": "54ec32c8-70f3-4496-bd73-9abb0072b403",
+      "sceneId": "451a484d-4094-4ccd-8442-b46f9eeb1380",
+      "name": "LFLF_0025_AKOS_0153",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0025_AKOS_0153_frame_0.png",
+      "originalHash": "95ce7e3f3158d8bd7d265c8508bd2eea17709e768cdba0bbfbf6c3e1ec88b416",
+      "width": 180,
+      "height": 262,
+      "frameCount": 6,
+      "metadata": {
+        "roomNumber": 25,
+        "akosId": "LFLF_0025_AKOS_0153",
+        "frameCount": 6
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.243Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "690cd3f4-7418-431b-89f2-e1c35097bc4b",
+    "name": "chapter6",
+    "roomNumber": 88,
+    "assets": [
+      "6644d363-bcce-45b9-a563-a5c4564f59b0"
+    ]
+  },
+  "assets": {
+    "6644d363-bcce-45b9-a563-a5c4564f59b0": {
+      "id": "6644d363-bcce-45b9-a563-a5c4564f59b0",
+      "sceneId": "690cd3f4-7418-431b-89f2-e1c35097bc4b",
+      "name": "0088_chapter6",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0088_chapter6.png",
+      "originalHash": "6eb04ba5084a3ec4b3c2deafd9b724f1144aeffcf1c08da7aa044f17348158ab",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 88,
+        "originalFile": "0088_chapter6.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.507Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

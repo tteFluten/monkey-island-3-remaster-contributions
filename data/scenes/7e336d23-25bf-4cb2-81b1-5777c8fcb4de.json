@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "7e336d23-25bf-4cb2-81b1-5777c8fcb4de",
+    "name": "thx",
+    "roomNumber": 2,
+    "assets": [
+      "afa87f30-273a-4168-b38f-dcc935351368"
+    ]
+  },
+  "assets": {
+    "afa87f30-273a-4168-b38f-dcc935351368": {
+      "id": "afa87f30-273a-4168-b38f-dcc935351368",
+      "sceneId": "7e336d23-25bf-4cb2-81b1-5777c8fcb4de",
+      "name": "0002_thx",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0002_thx.png",
+      "originalHash": "cb9eddac652142a96c02d740dc0940b3100a0017d4154460e86c5241568c9d33",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 2,
+        "originalFile": "0002_thx.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:08.711Z"
+    }
+  },
+  "variants": {},
+  "jobs": {
+    "e270bfe6-a531-4137-a561-d4be6157cd83": {
+      "id": "e270bfe6-a531-4137-a561-d4be6157cd83",
+      "assetId": "afa87f30-273a-4168-b38f-dcc935351368",
+      "tool": "imagelab-generate",
+      "model": "gemini-3.1-pro-image-preview",
+      "prompt": "Remaster the original game background in @1 at high resolution. Preserve its exact composition, camera, perspective, object positions, silhouettes, painted cartoon style, palette and lighting. Clean compression and pixelation while faithfully reconstructing existing contours and painted detail. Do not add, remove, move or redesign elements. No photorealism, new text, crop or camera change.",
+      "params": {
+        "aspect_ratio": "4:3",
+        "image_size": "4k"
+      },
+      "references": [
+        {
+          "position": 1,
+          "assetId": "afa87f30-273a-4168-b38f-dcc935351368",
+          "label": "background"
+        }
+      ],
+      "status": "failed",
+      "createdAt": "2026-09-21T22:56:28.642Z",
+      "startedAt": "2026-09-21T22:56:28.650Z",
+      "error": "No image in MCP response: [{\"type\":\"text\",\"text\":\"MCP error -32602: Input validation error: Invalid arguments for tool imagelab-generate: [\\n  {\\n    \\\"code\\\": \\\"invalid_value\\\",\\n    \\\"values\\\": [\\n      \\\"512\\\",\\n      \\\"1K\\\",\\n      \\\"2K\\\",\\n      \\\"4K\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"image_size\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input\\\"\\n  }\\n]\"}]",
+      "completedAt": "2026-09-21T22:56:29.307Z"
+    },
+    "44f4a1d8-5fb3-46df-9a70-110fd192b219": {
+      "id": "44f4a1d8-5fb3-46df-9a70-110fd192b219",
+      "assetId": "afa87f30-273a-4168-b38f-dcc935351368",
+      "tool": "imagelab-generate",
+      "model": "gemini-2.5-flash-image",
+      "prompt": "Remaster the original game background in @1 at high resolution. Preserve its exact composition, camera, perspective, object positions, silhouettes, painted cartoon style, palette and lighting. Clean compression and pixelation while faithfully reconstructing existing contours and painted detail. Do not add, remove, move or redesign elements. No photorealism, new text, crop or camera change.",
+      "params": {
+        "aspect_ratio": "4:3",
+        "image_size": "4k"
+      },
+      "references": [
+        {
+          "position": 1,
+          "assetId": "afa87f30-273a-4168-b38f-dcc935351368",
+          "label": "background"
+        }
+      ],
+      "status": "failed",
+      "createdAt": "2026-09-21T22:56:31.595Z",
+      "startedAt": "2026-09-21T22:56:31.604Z",
+      "error": "No image in MCP response: [{\"type\":\"text\",\"text\":\"MCP error -32602: Input validation error: Invalid arguments for tool imagelab-generate: [\\n  {\\n    \\\"code\\\": \\\"invalid_value\\\",\\n    \\\"values\\\": [\\n      \\\"512\\\",\\n      \\\"1K\\\",\\n      \\\"2K\\\",\\n      \\\"4K\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"image_size\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input\\\"\\n  }\\n]\"}]",
+      "completedAt": "2026-09-21T22:56:31.986Z"
+    },
+    "75f3c813-5f46-4b80-b690-d37a89f17873": {
+      "id": "75f3c813-5f46-4b80-b690-d37a89f17873",
+      "assetId": "afa87f30-273a-4168-b38f-dcc935351368",
+      "tool": "imagelab-generate",
+      "model": "gemini-3.1-pro-image-preview",
+      "prompt": "Remaster the original game background in @1 at high resolution. Preserve its exact composition, camera, perspective, object positions, silhouettes, painted cartoon style, palette and lighting. Clean compression and pixelation while faithfully reconstructing existing contours and painted detail. Do not add, remove, move or redesign elements. No photorealism, new text, crop or camera change.",
+      "params": {
+        "aspect_ratio": "4:3",
+        "image_size": "4k"
+      },
+      "references": [
+        {
+          "position": 1,
+          "assetId": "afa87f30-273a-4168-b38f-dcc935351368",
+          "label": "background"
+        }
+      ],
+      "status": "failed",
+      "createdAt": "2026-09-21T22:56:38.557Z",
+      "startedAt": "2026-09-21T22:56:38.566Z",
+      "error": "No image in MCP response: [{\"type\":\"text\",\"text\":\"MCP error -32602: Input validation error: Invalid arguments for tool imagelab-generate: [\\n  {\\n    \\\"code\\\": \\\"invalid_value\\\",\\n    \\\"values\\\": [\\n      \\\"512\\\",\\n      \\\"1K\\\",\\n      \\\"2K\\\",\\n      \\\"4K\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"image_size\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input\\\"\\n  }\\n]\"}]",
+      "completedAt": "2026-09-21T22:56:39.097Z"
+    },
+    "739c5439-ca50-441d-ae9e-42f9e16964b9": {
+      "id": "739c5439-ca50-441d-ae9e-42f9e16964b9",
+      "assetId": "afa87f30-273a-4168-b38f-dcc935351368",
+      "tool": "imagelab-generate",
+      "model": "gemini-3.1-pro-image-preview",
+      "prompt": "Remaster the original game background in @1 at high resolution. Preserve its exact composition, camera, perspective, object positions, silhouettes, painted cartoon style, palette and lighting. Clean compression and pixelation while faithfully reconstructing existing contours and painted detail. Do not add, remove, move or redesign elements. No photorealism, new text, crop or camera change.",
+      "params": {
+        "aspect_ratio": "4:3",
+        "image_size": "4k"
+      },
+      "references": [
+        {
+          "position": 1,
+          "assetId": "afa87f30-273a-4168-b38f-dcc935351368",
+          "label": "background"
+        }
+      ],
+      "status": "failed",
+      "createdAt": "2026-09-22T00:16:48.580Z",
+      "startedAt": "2026-09-22T00:16:48.589Z",
+      "error": "No image in MCP response: [{\"type\":\"text\",\"text\":\"MCP error -32602: Input validation error: Invalid arguments for tool imagelab-generate: [\\n  {\\n    \\\"code\\\": \\\"invalid_value\\\",\\n    \\\"values\\\": [\\n      \\\"512\\\",\\n      \\\"1K\\\",\\n      \\\"2K\\\",\\n      \\\"4K\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"image_size\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input\\\"\\n  }\\n]\"}]",
+      "completedAt": "2026-09-22T00:16:49.649Z"
+    }
+  }
+}

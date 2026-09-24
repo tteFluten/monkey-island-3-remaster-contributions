@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "14342551-9775-4873-b339-b28658daebad",
+    "name": "skulisle",
+    "roomNumber": 77,
+    "assets": [
+      "5a841cba-12f1-46e0-a29d-8c87a70fe8a0",
+      "72da62e8-9fdd-41aa-8573-55321ea7bdae",
+      "083432fd-277f-44ae-9656-8bb89ff5cce3",
+      "c6ebfe4c-559e-452e-88cd-356a4bc8e5ee",
+      "8ba63687-c0fb-42b7-9bda-9e19b9a6d647",
+      "b0009a17-2482-4f75-9507-9f8bb7ee84bc",
+      "f139d6be-4414-4d5d-93c2-1348cfedbc0f",
+      "eb8961bd-e7e6-4f9b-94f1-add56e495700",
+      "b3b3c5c3-4621-438c-b264-5f46a81daec1"
+    ]
+  },
+  "assets": {
+    "5a841cba-12f1-46e0-a29d-8c87a70fe8a0": {
+      "id": "5a841cba-12f1-46e0-a29d-8c87a70fe8a0",
+      "sceneId": "14342551-9775-4873-b339-b28658daebad",
+      "name": "0077_skulisle",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0077_skulisle.png",
+      "originalHash": "e0817e56df59bfe10730afedb17cdeb8a7a309a67beb93df823651cb67155567",
+      "width": 640,
+      "height": 987,
+      "metadata": {
+        "roomNumber": 77,
+        "originalFile": "0077_skulisle.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.298Z"
+    },
+    "72da62e8-9fdd-41aa-8573-55321ea7bdae": {
+      "id": "72da62e8-9fdd-41aa-8573-55321ea7bdae",
+      "sceneId": "14342551-9775-4873-b339-b28658daebad",
+      "name": "0077_skull-island-animation-door_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0077_skull-island-animation-door_0000.png",
+      "originalHash": "37ba5ed0ec968fbea79e0fcd43525c175f7c08d17585ee4b3b0e61fab6d537c2",
+      "width": 216,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 77,
+        "originalFile": "0077_skull-island-animation-door_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.314Z"
+    },
+    "083432fd-277f-44ae-9656-8bb89ff5cce3": {
+      "id": "083432fd-277f-44ae-9656-8bb89ff5cce3",
+      "sceneId": "14342551-9775-4873-b339-b28658daebad",
+      "name": "0077_skull-island-elevator_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0077_skull-island-elevator_0000.png",
+      "originalHash": "17d53833bcdd6c756472ed2931b84f1f2e043bc5cb43821d6f1ba27732adea71",
+      "width": 32,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 77,
+        "originalFile": "0077_skull-island-elevator_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.328Z"
+    },
+    "c6ebfe4c-559e-452e-88cd-356a4bc8e5ee": {
+      "id": "c6ebfe4c-559e-452e-88cd-356a4bc8e5ee",
+      "sceneId": "14342551-9775-4873-b339-b28658daebad",
+      "name": "0077_skull-island-smglcave-door_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0077_skull-island-smglcave-door_0000.png",
+      "originalHash": "5e1e5839f23630597a1274287ca980dc52fa29ee80a7f6136812c8873b755654",
+      "width": 56,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 77,
+        "originalFile": "0077_skull-island-smglcave-door_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.342Z"
+    },
+    "8ba63687-c0fb-42b7-9bda-9e19b9a6d647": {
+      "id": "8ba63687-c0fb-42b7-9bda-9e19b9a6d647",
+      "sceneId": "14342551-9775-4873-b339-b28658daebad",
+      "name": "LFLF_0077_AKOS_0376",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0077_AKOS_0376_frame_0.png",
+      "originalHash": "6499720b5a64ffa374924e13a17408723403cc82c66d86dfc33c826d4f9c91df",
+      "width": 3,
+      "height": 1,
+      "frameCount": 172,
+      "metadata": {
+        "roomNumber": 77,
+        "akosId": "LFLF_0077_AKOS_0376",
+        "frameCount": 172
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.395Z"
+    },
+    "b0009a17-2482-4f75-9507-9f8bb7ee84bc": {
+      "id": "b0009a17-2482-4f75-9507-9f8bb7ee84bc",
+      "sceneId": "14342551-9775-4873-b339-b28658daebad",
+      "name": "LFLF_0077_AKOS_0377",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0077_AKOS_0377_frame_0.png",
+      "originalHash": "b7dbcb4d1dfc0e36ffffca2f31cad8b10913e64ad0ea8330f68a7bb49e26873c",
+      "width": 24,
+      "height": 9,
+      "frameCount": 80,
+      "metadata": {
+        "roomNumber": 77,
+        "akosId": "LFLF_0077_AKOS_0377",
+        "frameCount": 80
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.416Z"
+    },
+    "f139d6be-4414-4d5d-93c2-1348cfedbc0f": {
+      "id": "f139d6be-4414-4d5d-93c2-1348cfedbc0f",
+      "sceneId": "14342551-9775-4873-b339-b28658daebad",
+      "name": "LFLF_0077_AKOS_0378",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0077_AKOS_0378_frame_0.png",
+      "originalHash": "969028bf8bff2bd245938e137899d4a72f509f3884b33a12041d1a23e28cfb9d",
+      "width": 14,
+      "height": 29,
+      "frameCount": 12,
+      "metadata": {
+        "roomNumber": 77,
+        "akosId": "LFLF_0077_AKOS_0378",
+        "frameCount": 12
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.437Z"
+    },
+    "eb8961bd-e7e6-4f9b-94f1-add56e495700": {
+      "id": "eb8961bd-e7e6-4f9b-94f1-add56e495700",
+      "sceneId": "14342551-9775-4873-b339-b28658daebad",
+      "name": "LFLF_0077_AKOS_0379",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0077_AKOS_0379_frame_0.png",
+      "originalHash": "19ecd202dc23817b86b54ba4f819f732bdcb31c9b3dc64664909f6ab515929f5",
+      "width": 22,
+      "height": 9,
+      "frameCount": 30,
+      "metadata": {
+        "roomNumber": 77,
+        "akosId": "LFLF_0077_AKOS_0379",
+        "frameCount": 30
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.458Z"
+    },
+    "b3b3c5c3-4621-438c-b264-5f46a81daec1": {
+      "id": "b3b3c5c3-4621-438c-b264-5f46a81daec1",
+      "sceneId": "14342551-9775-4873-b339-b28658daebad",
+      "name": "LFLF_0077_AKOS_0380",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0077_AKOS_0380_frame_0.png",
+      "originalHash": "e2b160fd2dabebad56934e36acfd50c64dbbffd51ead21447135bb62112944f8",
+      "width": 54,
+      "height": 152,
+      "frameCount": 12,
+      "metadata": {
+        "roomNumber": 77,
+        "akosId": "LFLF_0077_AKOS_0380",
+        "frameCount": 12
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.481Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "2b3788ae-2e99-4557-9d2a-0090bf1202ca",
+    "name": "storerm",
+    "roomNumber": 63,
+    "assets": [
+      "16fade88-c130-419f-b868-4b0eadd89b0b",
+      "15cdd55d-7197-44da-a7ff-ed4ea88296ff",
+      "3e4050a4-e1b6-44c4-92b9-d33ec5503240",
+      "2a93e118-0867-460c-a547-6f2411e7c25b",
+      "2591cf21-8023-4f9d-a553-af9ecd21427b"
+    ]
+  },
+  "assets": {
+    "16fade88-c130-419f-b868-4b0eadd89b0b": {
+      "id": "16fade88-c130-419f-b868-4b0eadd89b0b",
+      "sceneId": "2b3788ae-2e99-4557-9d2a-0090bf1202ca",
+      "name": "0063_storerm",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0063_storerm.png",
+      "originalHash": "c459d37a4472e1193548d4eb9e9cc8c1ecb46b5d95fdf2d3f2c4baaed44190f2",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 63,
+        "originalFile": "0063_storerm.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.445Z"
+    },
+    "15cdd55d-7197-44da-a7ff-ed4ea88296ff": {
+      "id": "15cdd55d-7197-44da-a7ff-ed4ea88296ff",
+      "sceneId": "2b3788ae-2e99-4557-9d2a-0090bf1202ca",
+      "name": "0063_cheese-chunk-animation-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0063_cheese-chunk-animation-object_0000.png",
+      "originalHash": "706d3c1551cba631a8a57d9e0617941c5407874cc7a940dcc42a2ddeb1160fbf",
+      "width": 72,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 63,
+        "originalFile": "0063_cheese-chunk-animation-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.459Z"
+    },
+    "3e4050a4-e1b6-44c4-92b9-d33ec5503240": {
+      "id": "3e4050a4-e1b6-44c4-92b9-d33ec5503240",
+      "sceneId": "2b3788ae-2e99-4557-9d2a-0090bf1202ca",
+      "name": "0063_storerm-cheese-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0063_storerm-cheese-object_0000.png",
+      "originalHash": "17e547fd99e6b3a85b3e1dc5e33351d470ed43fec1061ce1fd826f4fc0f7bb1e",
+      "width": 216,
+      "height": 216,
+      "metadata": {
+        "roomNumber": 63,
+        "originalFile": "0063_storerm-cheese-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.474Z"
+    },
+    "2a93e118-0867-460c-a547-6f2411e7c25b": {
+      "id": "2a93e118-0867-460c-a547-6f2411e7c25b",
+      "sceneId": "2b3788ae-2e99-4557-9d2a-0090bf1202ca",
+      "name": "0063_storeroom-death-certificate_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0063_storeroom-death-certificate_0000.png",
+      "originalHash": "1f71170d6937a0d1e90deaf25fe81d898dd714d90a424495058941335a1e1345",
+      "width": 64,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 63,
+        "originalFile": "0063_storeroom-death-certificate_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.490Z"
+    },
+    "2591cf21-8023-4f9d-a553-af9ecd21427b": {
+      "id": "2591cf21-8023-4f9d-a553-af9ecd21427b",
+      "sceneId": "2b3788ae-2e99-4557-9d2a-0090bf1202ca",
+      "name": "0063_storeroom-refrigerator-magnet_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0063_storeroom-refrigerator-magnet_0000.png",
+      "originalHash": "bf29cd9877658cd93e8efad20be8e16660343763be588770e48f24ff007e3321",
+      "width": 48,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 63,
+        "originalFile": "0063_storeroom-refrigerator-magnet_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.506Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

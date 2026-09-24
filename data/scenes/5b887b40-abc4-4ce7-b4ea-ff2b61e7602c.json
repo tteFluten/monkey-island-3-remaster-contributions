@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "5b887b40-abc4-4ce7-b4ea-ff2b61e7602c",
+    "name": "litetop",
+    "roomNumber": 74,
+    "assets": [
+      "030c3b85-7cdc-4978-9ece-e0cb457a8955",
+      "3cafe954-c7f5-44bd-8832-aa1cabdc3567",
+      "27f91a01-2609-485d-be93-e6381f93c0f5",
+      "2b564e1d-e7d6-45c4-ad6d-cbc4df2b7378",
+      "1592d242-5e47-4a62-ab72-297aff0faae3",
+      "eb339741-4bb3-4716-a827-91cc46b458bd",
+      "96262315-e910-4578-b37a-145d568feaee",
+      "7730145b-664f-410b-a465-8e4404c3417e"
+    ]
+  },
+  "assets": {
+    "030c3b85-7cdc-4978-9ece-e0cb457a8955": {
+      "id": "030c3b85-7cdc-4978-9ece-e0cb457a8955",
+      "sceneId": "5b887b40-abc4-4ce7-b4ea-ff2b61e7602c",
+      "name": "0074_litetop",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0074_litetop.png",
+      "originalHash": "f522655bbab7f316d8e33c1c3b657e8a0e63fec5121a20ba77d65b81808912a9",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 74,
+        "originalFile": "0074_litetop.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.921Z"
+    },
+    "3cafe954-c7f5-44bd-8832-aa1cabdc3567": {
+      "id": "3cafe954-c7f5-44bd-8832-aa1cabdc3567",
+      "sceneId": "5b887b40-abc4-4ce7-b4ea-ff2b61e7602c",
+      "name": "0074_lighthouse-cloud_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0074_lighthouse-cloud_0000.png",
+      "originalHash": "dcbc4da58408194d5682ec5ffc18434124c47c033cd216b69b56e935208d7ea9",
+      "width": 208,
+      "height": 136,
+      "metadata": {
+        "roomNumber": 74,
+        "originalFile": "0074_lighthouse-cloud_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.934Z"
+    },
+    "27f91a01-2609-485d-be93-e6381f93c0f5": {
+      "id": "27f91a01-2609-485d-be93-e6381f93c0f5",
+      "sceneId": "5b887b40-abc4-4ce7-b4ea-ff2b61e7602c",
+      "name": "0074_lighthouse-cloud_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0074_lighthouse-cloud_0001.png",
+      "originalHash": "e4640e74b408180506ff0f33dba19db2ec7609f9e03e7e69cb0798f56b0a47d7",
+      "width": 208,
+      "height": 136,
+      "metadata": {
+        "roomNumber": 74,
+        "originalFile": "0074_lighthouse-cloud_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.948Z"
+    },
+    "2b564e1d-e7d6-45c4-ad6d-cbc4df2b7378": {
+      "id": "2b564e1d-e7d6-45c4-ad6d-cbc4df2b7378",
+      "sceneId": "5b887b40-abc4-4ce7-b4ea-ff2b61e7602c",
+      "name": "0074_lighthouse-cloud_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0074_lighthouse-cloud_0002.png",
+      "originalHash": "954d2a1377930d1a9182b6341db4a1271d672d619d16c58cfd2a50e24680d0d9",
+      "width": 208,
+      "height": 136,
+      "metadata": {
+        "roomNumber": 74,
+        "originalFile": "0074_lighthouse-cloud_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.961Z"
+    },
+    "1592d242-5e47-4a62-ab72-297aff0faae3": {
+      "id": "1592d242-5e47-4a62-ab72-297aff0faae3",
+      "sceneId": "5b887b40-abc4-4ce7-b4ea-ff2b61e7602c",
+      "name": "0074_lighthouse-lantern-post_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0074_lighthouse-lantern-post_0000.png",
+      "originalHash": "b52bd0464af82b65c4110380e138f8c017ee320f59d77570bd7d056dbd082929",
+      "width": 40,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 74,
+        "originalFile": "0074_lighthouse-lantern-post_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.974Z"
+    },
+    "eb339741-4bb3-4716-a827-91cc46b458bd": {
+      "id": "eb339741-4bb3-4716-a827-91cc46b458bd",
+      "sceneId": "5b887b40-abc4-4ce7-b4ea-ff2b61e7602c",
+      "name": "0074_lighthouse-lantern_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0074_lighthouse-lantern_0000.png",
+      "originalHash": "d26629b81cf4af179702d14007933592d4925591a8f8bc0b70fc685059d73538",
+      "width": 408,
+      "height": 216,
+      "metadata": {
+        "roomNumber": 74,
+        "originalFile": "0074_lighthouse-lantern_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.988Z"
+    },
+    "96262315-e910-4578-b37a-145d568feaee": {
+      "id": "96262315-e910-4578-b37a-145d568feaee",
+      "sceneId": "5b887b40-abc4-4ce7-b4ea-ff2b61e7602c",
+      "name": "0074_lighthouse-lantern_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0074_lighthouse-lantern_0001.png",
+      "originalHash": "cec72275014b7428b2275aa265beaa429b55f2c1f60d21f8d1be670f62ec59d1",
+      "width": 408,
+      "height": 216,
+      "metadata": {
+        "roomNumber": 74,
+        "originalFile": "0074_lighthouse-lantern_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.001Z"
+    },
+    "7730145b-664f-410b-a465-8e4404c3417e": {
+      "id": "7730145b-664f-410b-a465-8e4404c3417e",
+      "sceneId": "5b887b40-abc4-4ce7-b4ea-ff2b61e7602c",
+      "name": "0074_lighthouse-mirror_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0074_lighthouse-mirror_0000.png",
+      "originalHash": "94884ad47f11b0a9703e1165ef53b798abd328c7fb74f83e5d8e9fcc85a53f0c",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 74,
+        "originalFile": "0074_lighthouse-mirror_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.014Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

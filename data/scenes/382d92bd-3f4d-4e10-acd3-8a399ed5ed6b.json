@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "382d92bd-3f4d-4e10-acd3-8a399ed5ed6b",
+    "name": "undrwatr",
+    "roomNumber": 76,
+    "assets": [
+      "14e1d45a-3635-49d5-822e-34893816b3b0",
+      "9596a90e-a92e-4a82-8d3a-79912c0237a8",
+      "43769bce-afb0-42a7-b248-16bf4421457f",
+      "029d9a96-2636-463c-8d97-28bf168b1134",
+      "c1099231-cfbe-4bb8-8afa-61f2e825d0b3",
+      "0f7ef251-c2a9-4e5e-98d4-6eca452b5574",
+      "77a1b013-9991-4b86-8940-12bcd2cd8e6e"
+    ]
+  },
+  "assets": {
+    "14e1d45a-3635-49d5-822e-34893816b3b0": {
+      "id": "14e1d45a-3635-49d5-822e-34893816b3b0",
+      "sceneId": "382d92bd-3f4d-4e10-acd3-8a399ed5ed6b",
+      "name": "0076_undrwatr",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0076_undrwatr.png",
+      "originalHash": "bfbd7b223851b196bde4e5f5c9f0d543bd5eec88c837be48b106c9dab5b5b2e8",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 76,
+        "originalFile": "0076_undrwatr.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.189Z"
+    },
+    "9596a90e-a92e-4a82-8d3a-79912c0237a8": {
+      "id": "9596a90e-a92e-4a82-8d3a-79912c0237a8",
+      "sceneId": "382d92bd-3f4d-4e10-acd3-8a399ed5ed6b",
+      "name": "0076_undrwatr-dead-guybrush_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0076_undrwatr-dead-guybrush_0000.png",
+      "originalHash": "9b454b753473000e160c2f0ba12e754970b330838c2d31893486fd56908f8b85",
+      "width": 64,
+      "height": 128,
+      "metadata": {
+        "roomNumber": 76,
+        "originalFile": "0076_undrwatr-dead-guybrush_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.204Z"
+    },
+    "43769bce-afb0-42a7-b248-16bf4421457f": {
+      "id": "43769bce-afb0-42a7-b248-16bf4421457f",
+      "sceneId": "382d92bd-3f4d-4e10-acd3-8a399ed5ed6b",
+      "name": "0076_undrwatr-dead-guybrush_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0076_undrwatr-dead-guybrush_0001.png",
+      "originalHash": "3aa42dc766d6718592acd99e23e973e75eac44f35523cbd84dd3fe1a10b97c6d",
+      "width": 64,
+      "height": 128,
+      "metadata": {
+        "roomNumber": 76,
+        "originalFile": "0076_undrwatr-dead-guybrush_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.218Z"
+    },
+    "029d9a96-2636-463c-8d97-28bf168b1134": {
+      "id": "029d9a96-2636-463c-8d97-28bf168b1134",
+      "sceneId": "382d92bd-3f4d-4e10-acd3-8a399ed5ed6b",
+      "name": "0076_undrwatr-dead-guybrush_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0076_undrwatr-dead-guybrush_0002.png",
+      "originalHash": "ebeb3ad5c7a00dce250fe28df1cc1e811b172dbf192e22d128963b17de94a109",
+      "width": 64,
+      "height": 128,
+      "metadata": {
+        "roomNumber": 76,
+        "originalFile": "0076_undrwatr-dead-guybrush_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.232Z"
+    },
+    "c1099231-cfbe-4bb8-8afa-61f2e825d0b3": {
+      "id": "c1099231-cfbe-4bb8-8afa-61f2e825d0b3",
+      "sceneId": "382d92bd-3f4d-4e10-acd3-8a399ed5ed6b",
+      "name": "0076_undrwatr-seaweed_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0076_undrwatr-seaweed_0000.png",
+      "originalHash": "9c456234d31c42f4f73207e895850aa023952495289fddfb2ff16cdca03dc0b5",
+      "width": 176,
+      "height": 184,
+      "metadata": {
+        "roomNumber": 76,
+        "originalFile": "0076_undrwatr-seaweed_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.247Z"
+    },
+    "0f7ef251-c2a9-4e5e-98d4-6eca452b5574": {
+      "id": "0f7ef251-c2a9-4e5e-98d4-6eca452b5574",
+      "sceneId": "382d92bd-3f4d-4e10-acd3-8a399ed5ed6b",
+      "name": "0076_undrwatr-seaweed_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0076_undrwatr-seaweed_0001.png",
+      "originalHash": "551b06135b687d772887eabd585e97c66577a4ecd52e839d42406f9c5e82a187",
+      "width": 176,
+      "height": 184,
+      "metadata": {
+        "roomNumber": 76,
+        "originalFile": "0076_undrwatr-seaweed_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.264Z"
+    },
+    "77a1b013-9991-4b86-8940-12bcd2cd8e6e": {
+      "id": "77a1b013-9991-4b86-8940-12bcd2cd8e6e",
+      "sceneId": "382d92bd-3f4d-4e10-acd3-8a399ed5ed6b",
+      "name": "LFLF_0076_AKOS_0375",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0076_AKOS_0375_frame_0.png",
+      "originalHash": "8761c21850deaf1917d7fa4474d0d18ab7ded648a6a224c372b463cf39263c3f",
+      "width": 115,
+      "height": 144,
+      "frameCount": 3,
+      "metadata": {
+        "roomNumber": 76,
+        "akosId": "LFLF_0076_AKOS_0375",
+        "frameCount": 3
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.326Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

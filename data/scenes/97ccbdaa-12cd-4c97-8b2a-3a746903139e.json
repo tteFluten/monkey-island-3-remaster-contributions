@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "97ccbdaa-12cd-4c97-8b2a-3a746903139e",
+    "name": "danjrbch",
+    "roomNumber": 33,
+    "assets": [
+      "cc299362-9b75-49af-ad68-78ec0897cab3",
+      "dd4d86c0-a65e-407f-a6c7-02c1697fcd9f",
+      "af096c21-694b-4b6a-b49d-d0e55a98e0ea",
+      "8264b135-f48d-4a6f-8d7b-681f20609991",
+      "b718a373-c1c5-4cca-bfaa-9baa6ce4d6af",
+      "033cb743-b6c2-416b-8d9e-33bc8f406cb2",
+      "01f699b0-d7b2-45e4-9e77-2a5e756b6711",
+      "9d7f7cc8-d570-4d33-9dc5-860f301a2c92"
+    ]
+  },
+  "assets": {
+    "cc299362-9b75-49af-ad68-78ec0897cab3": {
+      "id": "cc299362-9b75-49af-ad68-78ec0897cab3",
+      "sceneId": "97ccbdaa-12cd-4c97-8b2a-3a746903139e",
+      "name": "0033_danjrbch",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0033_danjrbch.png",
+      "originalHash": "32121659263c3cfa72d4fa4ab35e8fed99b3294327de849cf73972fb191139dc",
+      "width": 1200,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 33,
+        "originalFile": "0033_danjrbch.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.690Z"
+    },
+    "dd4d86c0-a65e-407f-a6c7-02c1697fcd9f": {
+      "id": "dd4d86c0-a65e-407f-a6c7-02c1697fcd9f",
+      "sceneId": "97ccbdaa-12cd-4c97-8b2a-3a746903139e",
+      "name": "0033_danjerbeach-beach-cork_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0033_danjerbeach-beach-cork_0000.png",
+      "originalHash": "58304ee25b76ed2ed3d918d7aaba59c9cb92b9b5c9027161e60185b7c6a29051",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 33,
+        "originalFile": "0033_danjerbeach-beach-cork_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.704Z"
+    },
+    "af096c21-694b-4b6a-b49d-d0e55a98e0ea": {
+      "id": "af096c21-694b-4b6a-b49d-d0e55a98e0ea",
+      "sceneId": "97ccbdaa-12cd-4c97-8b2a-3a746903139e",
+      "name": "0033_danjerbeach-rubber-plug_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0033_danjerbeach-rubber-plug_0000.png",
+      "originalHash": "933d6f8a1d63f430eaa8980476e91a733c6b37ec06b503698a4584df536b13b8",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 33,
+        "originalFile": "0033_danjerbeach-rubber-plug_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.717Z"
+    },
+    "8264b135-f48d-4a6f-8d7b-681f20609991": {
+      "id": "8264b135-f48d-4a6f-8d7b-681f20609991",
+      "sceneId": "97ccbdaa-12cd-4c97-8b2a-3a746903139e",
+      "name": "0033_danjerbeach-rubber-plug_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0033_danjerbeach-rubber-plug_0001.png",
+      "originalHash": "833692d44b89bf8e8be80a9adbf527441754608cecdf516c8a65b274a9aff821",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 33,
+        "originalFile": "0033_danjerbeach-rubber-plug_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.730Z"
+    },
+    "b718a373-c1c5-4cca-bfaa-9baa6ce4d6af": {
+      "id": "b718a373-c1c5-4cca-bfaa-9baa6ce4d6af",
+      "sceneId": "97ccbdaa-12cd-4c97-8b2a-3a746903139e",
+      "name": "0033_danjrbch-board-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0033_danjrbch-board-object_0000.png",
+      "originalHash": "1390424b6cece13337dd189b6cca3e53a9a94d6bc5be22ccbaab92fd119ff686",
+      "width": 104,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 33,
+        "originalFile": "0033_danjrbch-board-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.744Z"
+    },
+    "033cb743-b6c2-416b-8d9e-33bc8f406cb2": {
+      "id": "033cb743-b6c2-416b-8d9e-33bc8f406cb2",
+      "sceneId": "97ccbdaa-12cd-4c97-8b2a-3a746903139e",
+      "name": "LFLF_0033_AKOS_0186",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0033_AKOS_0186_frame_0.png",
+      "originalHash": "262becfc3ac5692701a6f7b6b202ab6f9afd809fa5fbad2cafbc48baaddf17c6",
+      "width": 160,
+      "height": 203,
+      "frameCount": 17,
+      "metadata": {
+        "roomNumber": 33,
+        "akosId": "LFLF_0033_AKOS_0186",
+        "frameCount": 17
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:21.212Z"
+    },
+    "01f699b0-d7b2-45e4-9e77-2a5e756b6711": {
+      "id": "01f699b0-d7b2-45e4-9e77-2a5e756b6711",
+      "sceneId": "97ccbdaa-12cd-4c97-8b2a-3a746903139e",
+      "name": "LFLF_0033_AKOS_0187",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0033_AKOS_0187_frame_0.png",
+      "originalHash": "1bfa31ee8227177e8db7dfeb7058c9973ee47b972a3d0e92e22316af4a77d844",
+      "width": 1,
+      "height": 1,
+      "frameCount": 1033,
+      "metadata": {
+        "roomNumber": 33,
+        "akosId": "LFLF_0033_AKOS_0187",
+        "frameCount": 1033
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:21.235Z"
+    },
+    "9d7f7cc8-d570-4d33-9dc5-860f301a2c92": {
+      "id": "9d7f7cc8-d570-4d33-9dc5-860f301a2c92",
+      "sceneId": "97ccbdaa-12cd-4c97-8b2a-3a746903139e",
+      "name": "LFLF_0033_AKOS_0188",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0033_AKOS_0188_frame_0.png",
+      "originalHash": "3e42f258dfb09860078754eca6cf8fbde72f944bac355a111899783fabcd751f",
+      "width": 1,
+      "height": 1,
+      "frameCount": 1030,
+      "metadata": {
+        "roomNumber": 33,
+        "akosId": "LFLF_0033_AKOS_0188",
+        "frameCount": 1030
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:21.260Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

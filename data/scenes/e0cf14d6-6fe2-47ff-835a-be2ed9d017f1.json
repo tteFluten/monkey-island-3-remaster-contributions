@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "e0cf14d6-6fe2-47ff-835a-be2ed9d017f1",
+    "name": "waterln",
+    "roomNumber": 11,
+    "assets": [
+      "afda4e02-afa5-4016-b647-a914f4cf611f",
+      "bcb252fc-91b4-4d2e-9800-0acb816ab9cc",
+      "01d2d74a-c778-4de5-a4a0-2ceb69d51925",
+      "a8f04846-8134-45e6-818e-e281e79f3313",
+      "499fae58-9653-4ec8-88c0-d4f5aa147cd8",
+      "12a49a51-a19b-416b-aaa6-4ca39a5ef3ee"
+    ]
+  },
+  "assets": {
+    "afda4e02-afa5-4016-b647-a914f4cf611f": {
+      "id": "afda4e02-afa5-4016-b647-a914f4cf611f",
+      "sceneId": "e0cf14d6-6fe2-47ff-835a-be2ed9d017f1",
+      "name": "0011_waterln",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0011_waterln.png",
+      "originalHash": "3827add876f1c28360f07d143ca5c514c9a7f636330568db507e54491909ecd6",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 11,
+        "originalFile": "0011_waterln.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.664Z"
+    },
+    "bcb252fc-91b4-4d2e-9800-0acb816ab9cc": {
+      "id": "bcb252fc-91b4-4d2e-9800-0acb816ab9cc",
+      "sceneId": "e0cf14d6-6fe2-47ff-835a-be2ed9d017f1",
+      "name": "LFLF_0011_AKOS_0049",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0011_AKOS_0049_frame_0.png",
+      "originalHash": "f0d1b05a499b8c1654569df9a640ada2a3c05323a6305b6bad2cbc149dc43662",
+      "width": 171,
+      "height": 95,
+      "frameCount": 9,
+      "metadata": {
+        "roomNumber": 11,
+        "akosId": "LFLF_0011_AKOS_0049",
+        "frameCount": 9
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.180Z"
+    },
+    "01d2d74a-c778-4de5-a4a0-2ceb69d51925": {
+      "id": "01d2d74a-c778-4de5-a4a0-2ceb69d51925",
+      "sceneId": "e0cf14d6-6fe2-47ff-835a-be2ed9d017f1",
+      "name": "LFLF_0011_AKOS_0051",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0011_AKOS_0051_frame_0.png",
+      "originalHash": "e1c32bd0a5ecd5a46f932905f37e5ca01fe581d65797fa4ac6d9188b0f8cd5b4",
+      "width": 640,
+      "height": 137,
+      "frameCount": 10,
+      "metadata": {
+        "roomNumber": 11,
+        "akosId": "LFLF_0011_AKOS_0051",
+        "frameCount": 10
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.217Z"
+    },
+    "a8f04846-8134-45e6-818e-e281e79f3313": {
+      "id": "a8f04846-8134-45e6-818e-e281e79f3313",
+      "sceneId": "e0cf14d6-6fe2-47ff-835a-be2ed9d017f1",
+      "name": "LFLF_0011_AKOS_0057",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0011_AKOS_0057_frame_0.png",
+      "originalHash": "305ed590cf07c1e7249ab0b8188102b66a948cd761ece55b9a88a416160fb04f",
+      "width": 238,
+      "height": 59,
+      "frameCount": 23,
+      "metadata": {
+        "roomNumber": 11,
+        "akosId": "LFLF_0011_AKOS_0057",
+        "frameCount": 23
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.249Z"
+    },
+    "499fae58-9653-4ec8-88c0-d4f5aa147cd8": {
+      "id": "499fae58-9653-4ec8-88c0-d4f5aa147cd8",
+      "sceneId": "e0cf14d6-6fe2-47ff-835a-be2ed9d017f1",
+      "name": "LFLF_0011_AKOS_0058",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0011_AKOS_0058_frame_0.png",
+      "originalHash": "7d7dd7889a3fb2b571e51f878f8192ebf6f83f72914b9172dfa8238339a02a42",
+      "width": 27,
+      "height": 20,
+      "frameCount": 18,
+      "metadata": {
+        "roomNumber": 11,
+        "akosId": "LFLF_0011_AKOS_0058",
+        "frameCount": 18
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.278Z"
+    },
+    "12a49a51-a19b-416b-aaa6-4ca39a5ef3ee": {
+      "id": "12a49a51-a19b-416b-aaa6-4ca39a5ef3ee",
+      "sceneId": "e0cf14d6-6fe2-47ff-835a-be2ed9d017f1",
+      "name": "LFLF_0011_AKOS_0059",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0011_AKOS_0059_frame_0.png",
+      "originalHash": "1772805c1dbc94d8b4aa02eed29ea4fa49294a3ed371ab08e0efadf6b1988189",
+      "width": 318,
+      "height": 56,
+      "frameCount": 14,
+      "metadata": {
+        "roomNumber": 11,
+        "akosId": "LFLF_0011_AKOS_0059",
+        "frameCount": 14
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.301Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

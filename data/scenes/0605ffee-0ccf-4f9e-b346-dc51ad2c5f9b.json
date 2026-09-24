@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "0605ffee-0ccf-4f9e-b346-dc51ad2c5f9b",
+    "name": "beachhot",
+    "roomNumber": 27,
+    "assets": [
+      "a0687c98-291b-452e-a20d-ad795371bbf3",
+      "460034ab-1425-4531-a4d4-a525297f8482",
+      "0c4c78d6-0047-4500-bdb9-bf50eb810c81"
+    ]
+  },
+  "assets": {
+    "a0687c98-291b-452e-a20d-ad795371bbf3": {
+      "id": "a0687c98-291b-452e-a20d-ad795371bbf3",
+      "sceneId": "0605ffee-0ccf-4f9e-b346-dc51ad2c5f9b",
+      "name": "0027_beachhot",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0027_beachhot.png",
+      "originalHash": "f7dd9acd37f74e1eadf58da257e5577ae63036b8d4f03f4d0075e28473f19806",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 27,
+        "originalFile": "0027_beachhot.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.165Z"
+    },
+    "460034ab-1425-4531-a4d4-a525297f8482": {
+      "id": "460034ab-1425-4531-a4d4-a525297f8482",
+      "sceneId": "0605ffee-0ccf-4f9e-b346-dc51ad2c5f9b",
+      "name": "LFLF_0027_AKOS_0158",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0027_AKOS_0158_frame_0.png",
+      "originalHash": "76a75627434b9c54db932cd0f15a6ffdb75a2c303ca5c2b082b64c5d3ef0d798",
+      "width": 68,
+      "height": 274,
+      "frameCount": 22,
+      "metadata": {
+        "roomNumber": 27,
+        "akosId": "LFLF_0027_AKOS_0158",
+        "frameCount": 22
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.422Z"
+    },
+    "0c4c78d6-0047-4500-bdb9-bf50eb810c81": {
+      "id": "0c4c78d6-0047-4500-bdb9-bf50eb810c81",
+      "sceneId": "0605ffee-0ccf-4f9e-b346-dc51ad2c5f9b",
+      "name": "LFLF_0027_AKOS_0159",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0027_AKOS_0159_frame_0.png",
+      "originalHash": "84d76b8dfeeeb7e3b76f9318645ee8505c641cb7d01b76b72c7a67ba8429a688",
+      "width": 191,
+      "height": 89,
+      "frameCount": 36,
+      "metadata": {
+        "roomNumber": 27,
+        "akosId": "LFLF_0027_AKOS_0159",
+        "frameCount": 36
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.445Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

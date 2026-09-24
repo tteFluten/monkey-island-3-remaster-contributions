@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "08bf001a-926e-49b6-8d33-a338bfb5ef0e",
+    "name": "armsdlr",
+    "roomNumber": 44,
+    "assets": [
+      "10bebf4c-026e-4772-94b4-f1ded05869b2",
+      "69c12f60-55d8-4da1-ada6-8f9c2020a951",
+      "6d082be4-cd31-4d99-9ab0-83a8813c54c6"
+    ]
+  },
+  "assets": {
+    "10bebf4c-026e-4772-94b4-f1ded05869b2": {
+      "id": "10bebf4c-026e-4772-94b4-f1ded05869b2",
+      "sceneId": "08bf001a-926e-49b6-8d33-a338bfb5ef0e",
+      "name": "0044_armsdlr",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0044_armsdlr.png",
+      "originalHash": "43f858135c51cbcec9db6017370fa6944d3311763bb6d7bcd00f4fd7d726cfd6",
+      "width": 952,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 44,
+        "originalFile": "0044_armsdlr.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.693Z"
+    },
+    "69c12f60-55d8-4da1-ada6-8f9c2020a951": {
+      "id": "69c12f60-55d8-4da1-ada6-8f9c2020a951",
+      "sceneId": "08bf001a-926e-49b6-8d33-a338bfb5ef0e",
+      "name": "LFLF_0044_AKOS_0252",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0044_AKOS_0252_frame_0.png",
+      "originalHash": "608841cb322e74a932860b7c9fdab11a4d0a15c114211e88da012b1ecc55d746",
+      "width": 74,
+      "height": 111,
+      "frameCount": 9,
+      "metadata": {
+        "roomNumber": 44,
+        "akosId": "LFLF_0044_AKOS_0252",
+        "frameCount": 9
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.591Z"
+    },
+    "6d082be4-cd31-4d99-9ab0-83a8813c54c6": {
+      "id": "6d082be4-cd31-4d99-9ab0-83a8813c54c6",
+      "sceneId": "08bf001a-926e-49b6-8d33-a338bfb5ef0e",
+      "name": "LFLF_0044_AKOS_0253",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0044_AKOS_0253_frame_0.png",
+      "originalHash": "0559b7f51c408bb3ac44497e835312ffd932b6bae875f99c716f225ded51c4c4",
+      "width": 224,
+      "height": 347,
+      "frameCount": 30,
+      "metadata": {
+        "roomNumber": 44,
+        "akosId": "LFLF_0044_AKOS_0253",
+        "frameCount": 30
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.613Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

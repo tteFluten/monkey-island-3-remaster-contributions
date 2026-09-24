@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "689525d6-60e2-4185-b573-efb95f7341fc",
+    "name": "gondola",
+    "roomNumber": 81,
+    "assets": [
+      "b4e47604-f2ed-4099-96b1-3da2d09f901e",
+      "ac3fb85f-05d2-47b8-961b-6d57fafd86d9",
+      "fa1f4830-caae-484a-97f8-8e10dca196de",
+      "91e4e992-b1e5-429d-9323-fe601adc1138",
+      "e619372e-79ab-4f10-91e2-2727a9def2dd",
+      "2dd7a6e5-499e-4d61-a1be-d574b65692ea",
+      "22f28e83-ebb4-4f8b-8681-e7e989f03c4a",
+      "b536b15a-2aa2-4e1e-b309-f29d19fb05a6",
+      "adb2424a-615c-4e36-80fb-294098c20341",
+      "fd3e29b5-a953-4548-a816-25bbf898a545"
+    ]
+  },
+  "assets": {
+    "b4e47604-f2ed-4099-96b1-3da2d09f901e": {
+      "id": "b4e47604-f2ed-4099-96b1-3da2d09f901e",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "0081_gondola",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0081_gondola.png",
+      "originalHash": "46ee101c14566cdc3662b069fa10048af97a048c11ae5a36932a44188eed35cd",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 81,
+        "originalFile": "0081_gondola.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.854Z"
+    },
+    "ac3fb85f-05d2-47b8-961b-6d57fafd86d9": {
+      "id": "ac3fb85f-05d2-47b8-961b-6d57fafd86d9",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "0081_gondola-door-animation-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0081_gondola-door-animation-object_0000.png",
+      "originalHash": "45903c08cfe9193c63e94879e25babb6d8b15dc8e3dacfb930dd9f5f232f6365",
+      "width": 120,
+      "height": 272,
+      "metadata": {
+        "roomNumber": 81,
+        "originalFile": "0081_gondola-door-animation-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.867Z"
+    },
+    "fa1f4830-caae-484a-97f8-8e10dca196de": {
+      "id": "fa1f4830-caae-484a-97f8-8e10dca196de",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "LFLF_0081_AKOS_0396",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0081_AKOS_0396_frame_0.png",
+      "originalHash": "56e7a39267887306dac3eb539f3919b6e526c39f4fec74c5b873f0d0dcf43d72",
+      "width": 100,
+      "height": 235,
+      "frameCount": 75,
+      "metadata": {
+        "roomNumber": 81,
+        "akosId": "LFLF_0081_AKOS_0396",
+        "frameCount": 75
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.120Z"
+    },
+    "91e4e992-b1e5-429d-9323-fe601adc1138": {
+      "id": "91e4e992-b1e5-429d-9323-fe601adc1138",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "LFLF_0081_AKOS_0397",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0081_AKOS_0397_frame_0.png",
+      "originalHash": "9b7ac0f07f1c85f4f29ad2ac734528be54a0c305cc72c3cb6844ffd08174c8fe",
+      "width": 320,
+      "height": 144,
+      "frameCount": 54,
+      "metadata": {
+        "roomNumber": 81,
+        "akosId": "LFLF_0081_AKOS_0397",
+        "frameCount": 54
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.140Z"
+    },
+    "e619372e-79ab-4f10-91e2-2727a9def2dd": {
+      "id": "e619372e-79ab-4f10-91e2-2727a9def2dd",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "LFLF_0081_AKOS_0398",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0081_AKOS_0398_frame_0.png",
+      "originalHash": "ef9d6af1eb65ad6b4b03a84fe0facd433c0897b49b18460bec686a1d8d803953",
+      "width": 380,
+      "height": 215,
+      "frameCount": 1,
+      "metadata": {
+        "roomNumber": 81,
+        "akosId": "LFLF_0081_AKOS_0398",
+        "frameCount": 1
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.161Z"
+    },
+    "2dd7a6e5-499e-4d61-a1be-d574b65692ea": {
+      "id": "2dd7a6e5-499e-4d61-a1be-d574b65692ea",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "LFLF_0081_AKOS_0399",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0081_AKOS_0399_frame_0.png",
+      "originalHash": "8784552b6c7f41bc2e2cded7d362f3c0f462098e68c295528f2255648af86035",
+      "width": 90,
+      "height": 150,
+      "frameCount": 206,
+      "metadata": {
+        "roomNumber": 81,
+        "akosId": "LFLF_0081_AKOS_0399",
+        "frameCount": 206
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.186Z"
+    },
+    "22f28e83-ebb4-4f8b-8681-e7e989f03c4a": {
+      "id": "22f28e83-ebb4-4f8b-8681-e7e989f03c4a",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "LFLF_0081_AKOS_0400",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0081_AKOS_0400_frame_0.png",
+      "originalHash": "7f1c2daba7aab741a83bf280c201cbd286a0ae5d87978816c131fc91892bf2b1",
+      "width": 112,
+      "height": 129,
+      "frameCount": 43,
+      "metadata": {
+        "roomNumber": 81,
+        "akosId": "LFLF_0081_AKOS_0400",
+        "frameCount": 43
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.208Z"
+    },
+    "b536b15a-2aa2-4e1e-b309-f29d19fb05a6": {
+      "id": "b536b15a-2aa2-4e1e-b309-f29d19fb05a6",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "LFLF_0081_AKOS_0401",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0081_AKOS_0401_frame_0.png",
+      "originalHash": "d3da399d509f4dd2bda31ec025dbdc818bba397c9787bd474eb936991422dbbc",
+      "width": 81,
+      "height": 273,
+      "frameCount": 23,
+      "metadata": {
+        "roomNumber": 81,
+        "akosId": "LFLF_0081_AKOS_0401",
+        "frameCount": 23
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.229Z"
+    },
+    "adb2424a-615c-4e36-80fb-294098c20341": {
+      "id": "adb2424a-615c-4e36-80fb-294098c20341",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "LFLF_0081_AKOS_0403",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0081_AKOS_0403_frame_0.png",
+      "originalHash": "41dabe64decc20911f490f154caf7a196f48f3c76384865de23be94dd22ed2cb",
+      "width": 182,
+      "height": 151,
+      "frameCount": 5,
+      "metadata": {
+        "roomNumber": 81,
+        "akosId": "LFLF_0081_AKOS_0403",
+        "frameCount": 5
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.250Z"
+    },
+    "fd3e29b5-a953-4548-a816-25bbf898a545": {
+      "id": "fd3e29b5-a953-4548-a816-25bbf898a545",
+      "sceneId": "689525d6-60e2-4185-b573-efb95f7341fc",
+      "name": "LFLF_0081_AKOS_0404",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0081_AKOS_0404_frame_0.png",
+      "originalHash": "f082c12c8230fe38f2e2afab4a4258b93e6059832f298ccf6cbdb10cebf53cbe",
+      "width": 111,
+      "height": 186,
+      "frameCount": 10,
+      "metadata": {
+        "roomNumber": 81,
+        "akosId": "LFLF_0081_AKOS_0404",
+        "frameCount": 10
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.271Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

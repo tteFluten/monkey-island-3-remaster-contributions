@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "01f1074e-0244-4b78-8eaa-95b23524789a",
+    "name": "tort-dia",
+    "roomNumber": 85,
+    "assets": [
+      "bd0c5f00-f125-40ef-bcab-37a0729dbc40",
+      "3dc95e36-f678-4e9a-b9c3-2459d2b40342",
+      "1d73ad58-26b0-4c8d-8cf1-099496b761cb",
+      "a86edef2-d88c-4e16-9684-84a748a621f2",
+      "200a091f-72a4-45d1-8be3-6e536e40b304",
+      "90f946cd-91ea-409d-9d8b-a9c0510b35aa",
+      "f8d1cc99-8c44-4831-ae14-7909e4504a22",
+      "c9f31eef-5102-4919-9936-91ff5766bbbc",
+      "e10447f8-936d-4057-ba99-114b9dffef9e",
+      "b402964b-e7a0-48f1-a6a5-362e124d02e4"
+    ]
+  },
+  "assets": {
+    "bd0c5f00-f125-40ef-bcab-37a0729dbc40": {
+      "id": "bd0c5f00-f125-40ef-bcab-37a0729dbc40",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "0085_tort-dia",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0085_tort-dia.png",
+      "originalHash": "ada7a32f438a4b5a37eb6561e02021eb4b9742c94b0769042637d2fa877d00df",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 85,
+        "originalFile": "0085_tort-dia.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.141Z"
+    },
+    "3dc95e36-f678-4e9a-b9c3-2459d2b40342": {
+      "id": "3dc95e36-f678-4e9a-b9c3-2459d2b40342",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "0085_flickering-lamp-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0085_flickering-lamp-object_0000.png",
+      "originalHash": "314a34a5cf2aa5cf528f630821184a0d747ff3adce38f4b5dabd4d2602e666d5",
+      "width": 48,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 85,
+        "originalFile": "0085_flickering-lamp-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.156Z"
+    },
+    "1d73ad58-26b0-4c8d-8cf1-099496b761cb": {
+      "id": "1d73ad58-26b0-4c8d-8cf1-099496b761cb",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "0085_flickering-lamp-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0085_flickering-lamp-object_0001.png",
+      "originalHash": "82f420be4aaff78d407bdb9bbae403866380b745b45121f0c9ebce18718a88eb",
+      "width": 48,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 85,
+        "originalFile": "0085_flickering-lamp-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.172Z"
+    },
+    "a86edef2-d88c-4e16-9684-84a748a621f2": {
+      "id": "a86edef2-d88c-4e16-9684-84a748a621f2",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "0085_tort-dia-lantern-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0085_tort-dia-lantern-anim-object_0000.png",
+      "originalHash": "8ad8a79ae418128aafbae6f7993921ace145735916af57107b86fcee4a8fb5e3",
+      "width": 96,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 85,
+        "originalFile": "0085_tort-dia-lantern-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.194Z"
+    },
+    "200a091f-72a4-45d1-8be3-6e536e40b304": {
+      "id": "200a091f-72a4-45d1-8be3-6e536e40b304",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "0085_tort-dia-lantern-anim-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0085_tort-dia-lantern-anim-object_0001.png",
+      "originalHash": "c41def6ba9104c2ece6dd81c70152339e3969c08b1d8d679730f2d4a7bd0f54b",
+      "width": 96,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 85,
+        "originalFile": "0085_tort-dia-lantern-anim-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.209Z"
+    },
+    "90f946cd-91ea-409d-9d8b-a9c0510b35aa": {
+      "id": "90f946cd-91ea-409d-9d8b-a9c0510b35aa",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "0085_tort-dia-lantern-anim-object_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0085_tort-dia-lantern-anim-object_0002.png",
+      "originalHash": "cd13c32228af0609fea1540dd2e83168578af40179626d96911d89d00bc901ef",
+      "width": 96,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 85,
+        "originalFile": "0085_tort-dia-lantern-anim-object_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.223Z"
+    },
+    "f8d1cc99-8c44-4831-ae14-7909e4504a22": {
+      "id": "f8d1cc99-8c44-4831-ae14-7909e4504a22",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "0085_tort-dia-wally_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0085_tort-dia-wally_0000.png",
+      "originalHash": "e6ad800380e3cc369b725e123d6a7bb6cc7838fc45b0059c8fac4f9367a22c77",
+      "width": 88,
+      "height": 168,
+      "metadata": {
+        "roomNumber": 85,
+        "originalFile": "0085_tort-dia-wally_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.237Z"
+    },
+    "c9f31eef-5102-4919-9936-91ff5766bbbc": {
+      "id": "c9f31eef-5102-4919-9936-91ff5766bbbc",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "0085_tort-dia-wally_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0085_tort-dia-wally_0001.png",
+      "originalHash": "3d9a3bb603365b4d198c701584e8f858c6b19b09748d6a945b208f3319c6cf2e",
+      "width": 88,
+      "height": 168,
+      "metadata": {
+        "roomNumber": 85,
+        "originalFile": "0085_tort-dia-wally_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.250Z"
+    },
+    "e10447f8-936d-4057-ba99-114b9dffef9e": {
+      "id": "e10447f8-936d-4057-ba99-114b9dffef9e",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "0085_tort-dia-wally_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0085_tort-dia-wally_0002.png",
+      "originalHash": "ca1f511610d9dc477f7d4489a0b015b198843b775f143a48f6d43b219deb4e2b",
+      "width": 88,
+      "height": 168,
+      "metadata": {
+        "roomNumber": 85,
+        "originalFile": "0085_tort-dia-wally_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.264Z"
+    },
+    "b402964b-e7a0-48f1-a6a5-362e124d02e4": {
+      "id": "b402964b-e7a0-48f1-a6a5-362e124d02e4",
+      "sceneId": "01f1074e-0244-4b78-8eaa-95b23524789a",
+      "name": "LFLF_0085_AKOS_0422",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0085_AKOS_0422_frame_0.png",
+      "originalHash": "95bdb658a8d07dae49b5dda658976450f16d6278d51c6f3c9e8bd0155f9b4857",
+      "width": 95,
+      "height": 274,
+      "frameCount": 2,
+      "metadata": {
+        "roomNumber": 85,
+        "akosId": "LFLF_0085_AKOS_0422",
+        "frameCount": 2
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.869Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

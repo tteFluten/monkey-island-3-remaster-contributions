@@ -1,0 +1,477 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+    "name": "spotlght",
+    "roomNumber": 20,
+    "assets": [
+      "dcae549f-cc42-4eb9-9f98-942c47ee8d1a",
+      "fd3b7883-6fed-474f-9b22-21e898d1bf5c",
+      "9b543391-9dde-4532-b513-f99bfbee4d0f",
+      "a469f240-1f66-4f9f-bd82-5208abb595f6",
+      "7f0aedb2-d985-42f6-b974-a30a75749aed",
+      "26003fa9-3a1e-4a52-9fdc-abf1581a586a",
+      "522723b3-731e-4ea1-a496-e6e961cd883f",
+      "595d9bcd-9775-4979-ad92-88ccfb132f21",
+      "199dbce2-88c3-499a-a1c2-ee31e717930c",
+      "c117a3b6-2e53-47f4-a0bd-697f5682da01",
+      "bbd13a8b-266f-48e5-a990-0b5b3b5d4d0e",
+      "110d8ac9-6e69-4dca-9c31-877b27b19bb2",
+      "bbc7afa7-13d6-4542-b0f3-4ea598de2b95",
+      "b05d99ac-880c-4622-9d78-09a3c0599ea1",
+      "8e8dad61-94d9-4e58-8e45-55bac9be39f6",
+      "0435e7be-93f8-48c6-83dc-1d47ff80e130",
+      "6c3ba302-b27c-44fe-a926-936bd466895c",
+      "5350a40b-9314-43f3-9bf2-7ab55f58068f",
+      "81319129-ae55-4a4c-b4d1-721b80a897ed",
+      "d65af2a3-0dd7-46fd-bfca-b66f2764619f",
+      "68849b34-6974-4879-95fe-6cd941a18079",
+      "0160695b-a321-4914-8f3b-0a47305df8a7",
+      "a6514efc-30c3-40ad-bc90-508f7f363931",
+      "0a2be074-b731-452e-80b7-421161e121fc",
+      "1ad4379f-568a-4f43-82d9-541b72c7565f",
+      "dc94b957-0a24-4289-b7f6-c72575b42555",
+      "fddc0f6a-6101-48bd-89e7-66fe945f8a3b"
+    ]
+  },
+  "assets": {
+    "dcae549f-cc42-4eb9-9f98-942c47ee8d1a": {
+      "id": "dcae549f-cc42-4eb9-9f98-942c47ee8d1a",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlght",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0020_spotlght.png",
+      "originalHash": "5708502265d9ee52e2864a157d64684d49c68e8497e67ec67d2078dac1055b7c",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlght.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.798Z"
+    },
+    "fd3b7883-6fed-474f-9b22-21e898d1bf5c": {
+      "id": "fd3b7883-6fed-474f-9b22-21e898d1bf5c",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spot-no-shovel_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spot-no-shovel_0000.png",
+      "originalHash": "4dbda12b00f94b4b6d9161a266799a75094b57ac9d8fb1c14c277b907d326d1d",
+      "width": 48,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spot-no-shovel_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.811Z"
+    },
+    "9b543391-9dde-4532-b513-f99bfbee4d0f": {
+      "id": "9b543391-9dde-4532-b513-f99bfbee4d0f",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-anim-cannonball_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-anim-cannonball_0000.png",
+      "originalHash": "3c192ec5c11e69aed3cc10fac5743261180d747bcab3aafb6a85200a26a682fe",
+      "width": 32,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-anim-cannonball_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.824Z"
+    },
+    "a469f240-1f66-4f9f-bd82-5208abb595f6": {
+      "id": "a469f240-1f66-4f9f-bd82-5208abb595f6",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-big-hole_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-big-hole_0000.png",
+      "originalHash": "1d2f1f3a8a4a6b52f85c9686c05c8b101828cb7e22f088b3484f65364e2ae355",
+      "width": 160,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-big-hole_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.837Z"
+    },
+    "7f0aedb2-d985-42f6-b974-a30a75749aed": {
+      "id": "7f0aedb2-d985-42f6-b974-a30a75749aed",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-east-button_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-east-button_0000.png",
+      "originalHash": "deeb687d1f524d575e8d071ca454daf4b98be4af1d570782941b2947c442359c",
+      "width": 40,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-east-button_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.849Z"
+    },
+    "26003fa9-3a1e-4a52-9fdc-abf1581a586a": {
+      "id": "26003fa9-3a1e-4a52-9fdc-abf1581a586a",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-east_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-east_0000.png",
+      "originalHash": "cfd82e474fbf9774c5969db0b33816643b7254777c3e72a8900342c1dd411d25",
+      "width": 88,
+      "height": 160,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-east_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.862Z"
+    },
+    "522723b3-731e-4ea1-a496-e6e961cd883f": {
+      "id": "522723b3-731e-4ea1-a496-e6e961cd883f",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-master-lever-2_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-master-lever-2_0000.png",
+      "originalHash": "d10721615009ea9cd39673fdb59f5e41a636983572c542a818762a8cacfd947a",
+      "width": 80,
+      "height": 112,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-master-lever-2_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.879Z"
+    },
+    "595d9bcd-9775-4979-ad92-88ccfb132f21": {
+      "id": "595d9bcd-9775-4979-ad92-88ccfb132f21",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-master-lever_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-master-lever_0000.png",
+      "originalHash": "b989065432360ea951669ab717207ef0f78641145a6f5c4b583c36b47606342d",
+      "width": 72,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-master-lever_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.892Z"
+    },
+    "199dbce2-88c3-499a-a1c2-ee31e717930c": {
+      "id": "199dbce2-88c3-499a-a1c2-ee31e717930c",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-north-2_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-north-2_0000.png",
+      "originalHash": "f385a456cbb649d4cc60621536a45719f5475d3842e9cb175ec05e3d8c84279a",
+      "width": 64,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-north-2_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.904Z"
+    },
+    "c117a3b6-2e53-47f4-a0bd-697f5682da01": {
+      "id": "c117a3b6-2e53-47f4-a0bd-697f5682da01",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-north-button_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-north-button_0000.png",
+      "originalHash": "235fcb4b10d6d1ed611ec033a78a8cf78982b1fba351522e4f76513cbe5ac6ee",
+      "width": 40,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-north-button_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.918Z"
+    },
+    "bbd13a8b-266f-48e5-a990-0b5b3b5d4d0e": {
+      "id": "bbd13a8b-266f-48e5-a990-0b5b3b5d4d0e",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-north_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-north_0000.png",
+      "originalHash": "7f21dabdb17ee8b4ea94259c065654fb6679c1dbbca4bc23a27ad361ad4c9917",
+      "width": 88,
+      "height": 112,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-north_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.932Z"
+    },
+    "110d8ac9-6e69-4dca-9c31-877b27b19bb2": {
+      "id": "110d8ac9-6e69-4dca-9c31-877b27b19bb2",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-northeast-2_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-northeast-2_0000.png",
+      "originalHash": "073f439a4a140f5e12812ff02624358cc5549f4f069505295d7b5f164b9a0a75",
+      "width": 64,
+      "height": 112,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-northeast-2_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.945Z"
+    },
+    "bbc7afa7-13d6-4542-b0f3-4ea598de2b95": {
+      "id": "bbc7afa7-13d6-4542-b0f3-4ea598de2b95",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-northeast-button_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-northeast-button_0000.png",
+      "originalHash": "8e7927c83f8afe2c222138b7c334472f1dc9b59bf87261813290700cc1aaf578",
+      "width": 40,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-northeast-button_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.958Z"
+    },
+    "b05d99ac-880c-4622-9d78-09a3c0599ea1": {
+      "id": "b05d99ac-880c-4622-9d78-09a3c0599ea1",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-northeast_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-northeast_0000.png",
+      "originalHash": "700b25ec85f4fc91844761da349f24ab592ca70aa2afc711bc3c3d38297fb3e4",
+      "width": 144,
+      "height": 144,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-northeast_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.971Z"
+    },
+    "8e8dad61-94d9-4e58-8e45-55bac9be39f6": {
+      "id": "8e8dad61-94d9-4e58-8e45-55bac9be39f6",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-northwest-button_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-northwest-button_0000.png",
+      "originalHash": "0876f00c71dc920757f36be2d02eec017ec3b8f29bf203c2e895e7b10c1c8cfe",
+      "width": 40,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-northwest-button_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.985Z"
+    },
+    "0435e7be-93f8-48c6-83dc-1d47ff80e130": {
+      "id": "0435e7be-93f8-48c6-83dc-1d47ff80e130",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-northwest_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-northwest_0000.png",
+      "originalHash": "654c851e1069a36cf8bc15fcfcd51aa58da0b83e792f81fe8bce987e00cd2bd2",
+      "width": 256,
+      "height": 128,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-northwest_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.000Z"
+    },
+    "6c3ba302-b27c-44fe-a926-936bd466895c": {
+      "id": "6c3ba302-b27c-44fe-a926-936bd466895c",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-south-button_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-south-button_0000.png",
+      "originalHash": "c3a9d4c3b1ce5f98a1ddfdffcc86a2bcc32c489b2c66ea820344df1109b5806b",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-south-button_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.013Z"
+    },
+    "5350a40b-9314-43f3-9bf2-7ab55f58068f": {
+      "id": "5350a40b-9314-43f3-9bf2-7ab55f58068f",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-south_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-south_0000.png",
+      "originalHash": "01f36a893fe1e44d6c6e3e02e2ad57d5a6109031f66031a9cfdb6403751d560c",
+      "width": 296,
+      "height": 152,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-south_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.027Z"
+    },
+    "81319129-ae55-4a4c-b4d1-721b80a897ed": {
+      "id": "81319129-ae55-4a4c-b4d1-721b80a897ed",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-southeast-button_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-southeast-button_0000.png",
+      "originalHash": "628f2b395d0c8d9fff97747f41bb1149841361f1ff710d16dfb3f53e7bffd49a",
+      "width": 40,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-southeast-button_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.040Z"
+    },
+    "d65af2a3-0dd7-46fd-bfca-b66f2764619f": {
+      "id": "d65af2a3-0dd7-46fd-bfca-b66f2764619f",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-southeast_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-southeast_0000.png",
+      "originalHash": "efaa8a0ae21cf8c0c2468fd4ca68c12b7821b627121b87f05061d11087a03127",
+      "width": 96,
+      "height": 112,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-southeast_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.054Z"
+    },
+    "68849b34-6974-4879-95fe-6cd941a18079": {
+      "id": "68849b34-6974-4879-95fe-6cd941a18079",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-southwest-button_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-southwest-button_0000.png",
+      "originalHash": "8753a2510cf894c0d905472acb4aaf6c234b9cbbdcb7c53bc3757b6a8f439bab",
+      "width": 40,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-southwest-button_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.069Z"
+    },
+    "0160695b-a321-4914-8f3b-0a47305df8a7": {
+      "id": "0160695b-a321-4914-8f3b-0a47305df8a7",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-southwest_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-southwest_0000.png",
+      "originalHash": "0b3f133145686bdc9e62ec297deda4b340e0e8f2d898905078fecf18db2f6b42",
+      "width": 200,
+      "height": 144,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-southwest_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.083Z"
+    },
+    "a6514efc-30c3-40ad-bc90-508f7f363931": {
+      "id": "a6514efc-30c3-40ad-bc90-508f7f363931",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-west-button_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-west-button_0000.png",
+      "originalHash": "614a375d9040c3042b3830ff16724a44c566670c0295b87d819a4dc98ea74f17",
+      "width": 32,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-west-button_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.097Z"
+    },
+    "0a2be074-b731-452e-80b7-421161e121fc": {
+      "id": "0a2be074-b731-452e-80b7-421161e121fc",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-west_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-west_0000.png",
+      "originalHash": "2d1248917901c8daf5dbffba34068db69537a97e7fcf9243635e065136f8e769",
+      "width": 72,
+      "height": 184,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-west_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.110Z"
+    },
+    "1ad4379f-568a-4f43-82d9-541b72c7565f": {
+      "id": "1ad4379f-568a-4f43-82d9-541b72c7565f",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "0020_spotlight-x-marks-the-spot_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0020_spotlight-x-marks-the-spot_0000.png",
+      "originalHash": "9e88a5e5ca067c915a1287cbffa0aefbe5fca8b2a51c439e286d1f4c258b7386",
+      "width": 160,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 20,
+        "originalFile": "0020_spotlight-x-marks-the-spot_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.125Z"
+    },
+    "dc94b957-0a24-4289-b7f6-c72575b42555": {
+      "id": "dc94b957-0a24-4289-b7f6-c72575b42555",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "LFLF_0020_AKOS_0107",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0020_AKOS_0107_frame_0.png",
+      "originalHash": "9de5c9b2c0bf5f0dd5285298145e826f4b369de187a4845a32647ef0dfd899f7",
+      "width": 99,
+      "height": 114,
+      "frameCount": 9,
+      "metadata": {
+        "roomNumber": 20,
+        "akosId": "LFLF_0020_AKOS_0107",
+        "frameCount": 9
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.747Z"
+    },
+    "fddc0f6a-6101-48bd-89e7-66fe945f8a3b": {
+      "id": "fddc0f6a-6101-48bd-89e7-66fe945f8a3b",
+      "sceneId": "62c3b27a-edca-46a3-b247-3a4fceee9463",
+      "name": "LFLF_0020_AKOS_0108",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0020_AKOS_0108_frame_0.png",
+      "originalHash": "3ba5b70abcdfb393795812e22f19660d349eb8e4d181072f89f0e25ba0fd3d38",
+      "width": 109,
+      "height": 107,
+      "frameCount": 160,
+      "metadata": {
+        "roomNumber": 20,
+        "akosId": "LFLF_0020_AKOS_0108",
+        "frameCount": 160
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.770Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

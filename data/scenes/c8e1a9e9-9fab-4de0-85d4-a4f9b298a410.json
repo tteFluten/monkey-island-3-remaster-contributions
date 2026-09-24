@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+    "name": "brimbch",
+    "roomNumber": 28,
+    "assets": [
+      "3e31caea-1509-4c21-9b42-62e357db41f8",
+      "581276d1-b9e4-4973-8e35-0ef0d19cbdc0",
+      "dacf1d11-8cf5-4a2b-8fdc-88fa6c7315ff",
+      "46e695e6-ba31-4abf-997d-98c9d16abca9",
+      "390bd9a2-3747-484b-92b3-0fe10c4c529a",
+      "e581f958-32e6-4783-ab1f-fee91617cc87",
+      "afd63762-9931-4016-a0eb-313118cbdc53",
+      "4593bd19-051a-4b20-b5ee-8340e8b9887c",
+      "248cd78c-d285-46b0-b5bb-54f379a1cbd8",
+      "418e8f67-017c-4b6b-bbd7-34c916e0878c",
+      "18d5f9e8-9aa9-4ed2-9e80-f1cf8979d85d"
+    ]
+  },
+  "assets": {
+    "3e31caea-1509-4c21-9b42-62e357db41f8": {
+      "id": "3e31caea-1509-4c21-9b42-62e357db41f8",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "0028_brimbch",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0028_brimbch.png",
+      "originalHash": "78142975ab8ec6ecc09bb0ac6638164e441584b294c991f5c908852089e9fb17",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 28,
+        "originalFile": "0028_brimbch.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.206Z"
+    },
+    "581276d1-b9e4-4973-8e35-0ef0d19cbdc0": {
+      "id": "581276d1-b9e4-4973-8e35-0ef0d19cbdc0",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "0028_blood-island-map-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0028_blood-island-map-object_0000.png",
+      "originalHash": "2e793fbc3f4666cb6362253468efbb4e129e7116049dac898aaae05dc6aeecbb",
+      "width": 56,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 28,
+        "originalFile": "0028_blood-island-map-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.229Z"
+    },
+    "dacf1d11-8cf5-4a2b-8fdc-88fa6c7315ff": {
+      "id": "dacf1d11-8cf5-4a2b-8fdc-88fa6c7315ff",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "0028_brimbeach-burnt-palido_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0028_brimbeach-burnt-palido_0000.png",
+      "originalHash": "8109545e8800f8b932207a54f22ae8a71847f3d13dd95739870f888d790d4ec9",
+      "width": 280,
+      "height": 184,
+      "metadata": {
+        "roomNumber": 28,
+        "originalFile": "0028_brimbeach-burnt-palido_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.246Z"
+    },
+    "46e695e6-ba31-4abf-997d-98c9d16abca9": {
+      "id": "46e695e6-ba31-4abf-997d-98c9d16abca9",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "0028_brimbeach-burnt-palido_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0028_brimbeach-burnt-palido_0001.png",
+      "originalHash": "44c158e71cc9586237624aba6990c8ed37f6b9ec1e55f0aa6e9a415fb3742a74",
+      "width": 280,
+      "height": 184,
+      "metadata": {
+        "roomNumber": 28,
+        "originalFile": "0028_brimbeach-burnt-palido_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.261Z"
+    },
+    "390bd9a2-3747-484b-92b3-0fe10c4c529a": {
+      "id": "390bd9a2-3747-484b-92b3-0fe10c4c529a",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "0028_brimbeach-gate_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0028_brimbeach-gate_0000.png",
+      "originalHash": "474f593135c8ce3c289771e1ca5995128c748714b7ba172bddcd8768e5b8f3f5",
+      "width": 136,
+      "height": 168,
+      "metadata": {
+        "roomNumber": 28,
+        "originalFile": "0028_brimbeach-gate_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.276Z"
+    },
+    "e581f958-32e6-4783-ab1f-fee91617cc87": {
+      "id": "e581f958-32e6-4783-ab1f-fee91617cc87",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "0028_brimbeach-real-mug_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0028_brimbeach-real-mug_0000.png",
+      "originalHash": "3a9a3b9af4b5a5a69dac5f8780b339e8a51964678e5afb4cbb366be012929d8c",
+      "width": 32,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 28,
+        "originalFile": "0028_brimbeach-real-mug_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.291Z"
+    },
+    "afd63762-9931-4016-a0eb-313118cbdc53": {
+      "id": "afd63762-9931-4016-a0eb-313118cbdc53",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "0028_palido-head-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0028_palido-head-object_0000.png",
+      "originalHash": "472afe126784a19a511035a1c6844cd947b2bfb8045158209dc7180cd74081c6",
+      "width": 56,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 28,
+        "originalFile": "0028_palido-head-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.307Z"
+    },
+    "4593bd19-051a-4b20-b5ee-8340e8b9887c": {
+      "id": "4593bd19-051a-4b20-b5ee-8340e8b9887c",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "0028_pink-chest-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0028_pink-chest-anim-object_0000.png",
+      "originalHash": "42d19b51a66c25740e8164e06dac82c7750ede9b6327ea3c653989805f08cf2a",
+      "width": 88,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 28,
+        "originalFile": "0028_pink-chest-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.325Z"
+    },
+    "248cd78c-d285-46b0-b5bb-54f379a1cbd8": {
+      "id": "248cd78c-d285-46b0-b5bb-54f379a1cbd8",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "LFLF_0028_AKOS_0160",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0028_AKOS_0160_frame_0.png",
+      "originalHash": "5d777eb6444ca091883ea156de7bb76651b1ce0b84f56ddc1d91c6b5f05d26bb",
+      "width": 257,
+      "height": 194,
+      "frameCount": 64,
+      "metadata": {
+        "roomNumber": 28,
+        "akosId": "LFLF_0028_AKOS_0160",
+        "frameCount": 64
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.566Z"
+    },
+    "418e8f67-017c-4b6b-bbd7-34c916e0878c": {
+      "id": "418e8f67-017c-4b6b-bbd7-34c916e0878c",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "LFLF_0028_AKOS_0161",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0028_AKOS_0161_frame_0.png",
+      "originalHash": "bffdff178d9557dbd1c0bf1fbc2c2277b4f96bc30760acb8af71299e6a8001fe",
+      "width": 68,
+      "height": 274,
+      "frameCount": 58,
+      "metadata": {
+        "roomNumber": 28,
+        "akosId": "LFLF_0028_AKOS_0161",
+        "frameCount": 58
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.587Z"
+    },
+    "18d5f9e8-9aa9-4ed2-9e80-f1cf8979d85d": {
+      "id": "18d5f9e8-9aa9-4ed2-9e80-f1cf8979d85d",
+      "sceneId": "c8e1a9e9-9fab-4de0-85d4-a4f9b298a410",
+      "name": "LFLF_0028_AKOS_0163",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0028_AKOS_0163_frame_0.png",
+      "originalHash": "7bef78e2fe10d131311522c43f552db205185bc4f95c40bae08f6a253043ca66",
+      "width": 257,
+      "height": 186,
+      "frameCount": 27,
+      "metadata": {
+        "roomNumber": 28,
+        "akosId": "LFLF_0028_AKOS_0163",
+        "frameCount": 27
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.608Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

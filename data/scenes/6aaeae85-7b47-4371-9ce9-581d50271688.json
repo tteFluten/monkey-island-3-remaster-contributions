@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "6aaeae85-7b47-4371-9ce9-581d50271688",
+    "name": "cu-elpol",
+    "roomNumber": 17,
+    "assets": [
+      "21872266-4c2b-4bbc-a824-637b1e06317a"
+    ]
+  },
+  "assets": {
+    "21872266-4c2b-4bbc-a824-637b1e06317a": {
+      "id": "21872266-4c2b-4bbc-a824-637b1e06317a",
+      "sceneId": "6aaeae85-7b47-4371-9ce9-581d50271688",
+      "name": "0017_cu-elpol",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0017_cu-elpol.png",
+      "originalHash": "74761bbec20349bde3c3bdf93583528de1f850f2d7cd9559e7db9785a6a59b00",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 17,
+        "originalFile": "0017_cu-elpol.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:10.474Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

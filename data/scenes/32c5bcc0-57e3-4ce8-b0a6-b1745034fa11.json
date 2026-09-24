@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+    "name": "famcrypt",
+    "roomNumber": 70,
+    "assets": [
+      "28e1f139-40b2-48fd-90d2-997771e6b7d5",
+      "d3280ae4-43e4-4458-8fa9-3dac5b6494df",
+      "e4270d5e-2cee-492b-8f74-dc8f69c63c4a",
+      "f0a2fed9-6028-45b6-8666-bdfdcf5c49ff",
+      "718bf8c9-327e-4d8b-9319-b544af00b202",
+      "1d6ab884-6cd7-49b7-9a6b-1c9f8d09475e",
+      "be3d459d-b47d-4f3d-8f2d-d8412e6728ee",
+      "843d797e-b17d-449c-893d-d3f43137ffd0",
+      "958a2b63-ac80-4ea2-a630-096790f7503f",
+      "e7596a2a-0079-47e1-851c-bf7b8952df40",
+      "5b39664b-9d8d-4d8d-a043-e8ce6ce959ac"
+    ]
+  },
+  "assets": {
+    "28e1f139-40b2-48fd-90d2-997771e6b7d5": {
+      "id": "28e1f139-40b2-48fd-90d2-997771e6b7d5",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "0070_famcrypt",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0070_famcrypt.png",
+      "originalHash": "bc1157bdb4c8209cf20f53321bcf8f83906d3101e68a2fd0d700277a73ab68fb",
+      "width": 1280,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 70,
+        "originalFile": "0070_famcrypt.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.591Z"
+    },
+    "d3280ae4-43e4-4458-8fa9-3dac5b6494df": {
+      "id": "d3280ae4-43e4-4458-8fa9-3dac5b6494df",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "0070_family-crypt-cemetery-door_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0070_family-crypt-cemetery-door_0000.png",
+      "originalHash": "99f263950f2d6da5dde1f17e2e71161fdb83e8163bc2395b3a0cc878faa40dc0",
+      "width": 64,
+      "height": 120,
+      "metadata": {
+        "roomNumber": 70,
+        "originalFile": "0070_family-crypt-cemetery-door_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.604Z"
+    },
+    "e4270d5e-2cee-492b-8f74-dc8f69c63c4a": {
+      "id": "e4270d5e-2cee-492b-8f74-dc8f69c63c4a",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "0070_family-crypt-engagement-band_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0070_family-crypt-engagement-band_0000.png",
+      "originalHash": "b8133ae79bc52ac74c3369986c20d6753567470df292c9f1583ac424ecbe9679",
+      "width": 32,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 70,
+        "originalFile": "0070_family-crypt-engagement-band_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.618Z"
+    },
+    "f0a2fed9-6028-45b6-8666-bdfdcf5c49ff": {
+      "id": "f0a2fed9-6028-45b6-8666-bdfdcf5c49ff",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "0070_family-crypt-skylight_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0070_family-crypt-skylight_0000.png",
+      "originalHash": "80720a318c544c4894c14fd0ae6e97bb57aac3b4c2f4db49d5c7b66370aa35d4",
+      "width": 192,
+      "height": 160,
+      "metadata": {
+        "roomNumber": 70,
+        "originalFile": "0070_family-crypt-skylight_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.631Z"
+    },
+    "718bf8c9-327e-4d8b-9319-b544af00b202": {
+      "id": "718bf8c9-327e-4d8b-9319-b544af00b202",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "0070_family-crypt-stone-coffin_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0070_family-crypt-stone-coffin_0000.png",
+      "originalHash": "b400a7e0570943e5975f0e5a66a0afea64f5f4eb02234ee85eaea70e335b1206",
+      "width": 136,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 70,
+        "originalFile": "0070_family-crypt-stone-coffin_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.645Z"
+    },
+    "1d6ab884-6cd7-49b7-9a6b-1c9f8d09475e": {
+      "id": "1d6ab884-6cd7-49b7-9a6b-1c9f8d09475e",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "LFLF_0070_AKOS_0350",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0070_AKOS_0350_frame_0.png",
+      "originalHash": "0d51bcc9cbd1b6aca3ca13be5b7cc3aa722c7a3a1cb2b9df91893608cc0c056b",
+      "width": 24,
+      "height": 68,
+      "frameCount": 98,
+      "metadata": {
+        "roomNumber": 70,
+        "akosId": "LFLF_0070_AKOS_0350",
+        "frameCount": 98
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.413Z"
+    },
+    "be3d459d-b47d-4f3d-8f2d-d8412e6728ee": {
+      "id": "be3d459d-b47d-4f3d-8f2d-d8412e6728ee",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "LFLF_0070_AKOS_0351",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0070_AKOS_0351_frame_0.png",
+      "originalHash": "ca93246633b209bf15c76b6df8e5a3c6a8e431310ce797952ca125ace0b738ad",
+      "width": 452,
+      "height": 334,
+      "frameCount": 2,
+      "metadata": {
+        "roomNumber": 70,
+        "akosId": "LFLF_0070_AKOS_0351",
+        "frameCount": 2
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.436Z"
+    },
+    "843d797e-b17d-449c-893d-d3f43137ffd0": {
+      "id": "843d797e-b17d-449c-893d-d3f43137ffd0",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "LFLF_0070_AKOS_0352",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0070_AKOS_0352_frame_0.png",
+      "originalHash": "7441cce2beb427cfd8b9bc8cec810d043cd1ebeae0c9c450ee6e15d57757f91c",
+      "width": 452,
+      "height": 334,
+      "frameCount": 1,
+      "metadata": {
+        "roomNumber": 70,
+        "akosId": "LFLF_0070_AKOS_0352",
+        "frameCount": 1
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.459Z"
+    },
+    "958a2b63-ac80-4ea2-a630-096790f7503f": {
+      "id": "958a2b63-ac80-4ea2-a630-096790f7503f",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "LFLF_0070_AKOS_0353",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0070_AKOS_0353_frame_0.png",
+      "originalHash": "e19fddab60937c4f74ab2975c8a9ebb01515c181f1891ceba50ecc2762c242d3",
+      "width": 1,
+      "height": 1,
+      "frameCount": 46,
+      "metadata": {
+        "roomNumber": 70,
+        "akosId": "LFLF_0070_AKOS_0353",
+        "frameCount": 46
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.479Z"
+    },
+    "e7596a2a-0079-47e1-851c-bf7b8952df40": {
+      "id": "e7596a2a-0079-47e1-851c-bf7b8952df40",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "LFLF_0070_AKOS_0354",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0070_AKOS_0354_frame_0.png",
+      "originalHash": "5b9e982ef7a8f45d4179128ea614965e6e2ab1a94bf92a7cd6033ffa719382cd",
+      "width": 79,
+      "height": 160,
+      "frameCount": 178,
+      "metadata": {
+        "roomNumber": 70,
+        "akosId": "LFLF_0070_AKOS_0354",
+        "frameCount": 178
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.499Z"
+    },
+    "5b39664b-9d8d-4d8d-a043-e8ce6ce959ac": {
+      "id": "5b39664b-9d8d-4d8d-a043-e8ce6ce959ac",
+      "sceneId": "32c5bcc0-57e3-4ce8-b0a6-b1745034fa11",
+      "name": "LFLF_0070_AKOS_0355",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0070_AKOS_0355_frame_0.png",
+      "originalHash": "443ff96987b4593747f9c22c723cfcae548f5aedc96d799f183f87697b16a8f9",
+      "width": 196,
+      "height": 207,
+      "frameCount": 17,
+      "metadata": {
+        "roomNumber": 70,
+        "akosId": "LFLF_0070_AKOS_0355",
+        "frameCount": 17
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:28.520Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

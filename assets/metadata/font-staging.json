@@ -1,0 +1,88 @@
+{
+  "package": "source:provided/fonts-6x",
+  "variant": "efmi/sharp",
+  "source_scale": 6,
+  "scale": 4,
+  "resampling": "nearest",
+  "grid": [
+    16,
+    16
+  ],
+  "cell_size": [
+    224,
+    224
+  ],
+  "added_shadow": {
+    "slots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "offset": [
+      4,
+      4
+    ],
+    "color": [
+      0,
+      0,
+      0,
+      255
+    ]
+  },
+  "preserved_shadow_slots": [
+    4
+  ],
+  "files": [
+    {
+      "source": "source:provided/fonts-6x/efmi/sharp/FONT0.NUT_chars.png",
+      "target": "hd/fonts/FONT0.NUT_chars.png",
+      "size": [
+        3584,
+        3584
+      ],
+      "source_sha256": "1a528cef19d2163d383c58013e97cb0535f5b2ea4029d16a5c748620a0dc1c05",
+      "destination_sha256": "e04a5664cee5c95176d8ccf87c3ebb67473191a88b5c9ab69952eb7ff8d21050"
+    },
+    {
+      "source": "source:provided/fonts-6x/efmi/sharp/FONT1.NUT_chars.png",
+      "target": "hd/fonts/FONT1.NUT_chars.png",
+      "size": [
+        3584,
+        3584
+      ],
+      "source_sha256": "c706360e530c4690e22c238d02b5a165a4d08bad12a4f4c36d277305304d5b20",
+      "destination_sha256": "4a378f9bc3ac7e52b958417b4db4a1fd87c1d96596ba8b23f61165e226578bf9"
+    },
+    {
+      "source": "source:provided/fonts-6x/efmi/sharp/FONT2.NUT_chars.png",
+      "target": "hd/fonts/FONT2.NUT_chars.png",
+      "size": [
+        3584,
+        3584
+      ],
+      "source_sha256": "c706360e530c4690e22c238d02b5a165a4d08bad12a4f4c36d277305304d5b20",
+      "destination_sha256": "4a378f9bc3ac7e52b958417b4db4a1fd87c1d96596ba8b23f61165e226578bf9"
+    },
+    {
+      "source": "source:provided/fonts-6x/efmi/sharp/FONT3.NUT_chars.png",
+      "target": "hd/fonts/FONT3.NUT_chars.png",
+      "size": [
+        3584,
+        3584
+      ],
+      "source_sha256": "4a9d89b0b7a89fc985c16057d8c96839ea2a2b26d91179d3fbbdc87746a1a7f4",
+      "destination_sha256": "4666ed85ca35d423caa68e214a1a242ebd5a45a55f2ee22220d95283a296d1e8"
+    },
+    {
+      "source": "source:provided/fonts-6x/efmi/sharp/FONT4.NUT_chars.png",
+      "target": "hd/fonts/FONT4.NUT_chars.png",
+      "size": [
+        3584,
+        3584
+      ],
+      "source_sha256": "ed5d397817269bdc2411cc3912463cbb4d0ba6935e4b227562e745836d345b36",
+      "destination_sha256": "ae53ac39f66c24d84096d9a88eafe359a986e809fc4060787e4536c149129702"
+    }
+  ]
+}

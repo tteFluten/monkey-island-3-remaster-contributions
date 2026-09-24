@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "status": "installed",
+  "original_sha256": "b16ee01b230b446bcb64490c240f409a6823b0b161b086141ad2e9049a12064b",
+  "prepared_sha256": "bce733c4371338869065a69457c5fa122a1f474409d2cf5df5bfb3ae910874d6",
+  "donor_sha256": "0732e0871ebe9c4e16ad4a684436dd64e2c89e06f97170f3b811461c5f0345b2",
+  "source_sha256": "213c915283ad2050a6d44b820c53ef9858c5c4d4191a836da9d55fece656e4f6",
+  "previous_repair": "source:oslo/downloads/voice-recovery-complete/repair.json",
+  "repairs": [
+    {
+      "name": "SKGT333.IMX",
+      "index": 2710,
+      "method": "verified duplicated-sector removal",
+      "payload_sha256": "2698d7157c98d297e5f3b3637c6aa12affbd7ccf76f10515a2f5335796290405",
+      "decoded_sha256": "61a9f3ede771fc3e78f540857ea6d3aa2124a7d7de1b54e829097392a8ca320c",
+      "source_offset": 103967700,
+      "before_shift": 505856,
+      "after_shift": 520192,
+      "removed_bytes": 14336,
+      "anchors": [
+        "SKGT332.IMX",
+        "SKGT334.IMX"
+      ],
+      "accepted_splice": 103968768
+    }
+  ],
+  "total_restored_entries": 772,
+  "remaining_invalid": 26
+}

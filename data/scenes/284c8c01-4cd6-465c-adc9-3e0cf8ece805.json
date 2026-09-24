@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "284c8c01-4cd6-465c-adc9-3e0cf8ece805",
+    "name": "bchclub",
+    "roomNumber": 26,
+    "assets": [
+      "04267762-1b04-4628-a8e6-38b06eabea8b",
+      "f6a924a6-7e1b-4d13-b29a-ca8525421a78",
+      "1445c24e-2d5a-4fdc-83d9-18345c57d69d",
+      "463d19e0-b673-4a31-9a99-e0cac668cb90",
+      "ad385d29-7b7f-4128-952d-504e63088e61",
+      "3b681d9e-84e1-491b-bd8e-682ace9c6d6e",
+      "5a368510-649d-4b90-a344-fee4fdf8a41a"
+    ]
+  },
+  "assets": {
+    "04267762-1b04-4628-a8e6-38b06eabea8b": {
+      "id": "04267762-1b04-4628-a8e6-38b06eabea8b",
+      "sceneId": "284c8c01-4cd6-465c-adc9-3e0cf8ece805",
+      "name": "0026_bchclub",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0026_bchclub.png",
+      "originalHash": "0f63f1e0e51f2a6716accc689b6ef148eaa367a1182e4cb75b9566f44ef9b6d7",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 26,
+        "originalFile": "0026_bchclub.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.077Z"
+    },
+    "f6a924a6-7e1b-4d13-b29a-ca8525421a78": {
+      "id": "f6a924a6-7e1b-4d13-b29a-ca8525421a78",
+      "sceneId": "284c8c01-4cd6-465c-adc9-3e0cf8ece805",
+      "name": "0026_tanning-oil-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0026_tanning-oil-object_0000.png",
+      "originalHash": "3016df5cee2855d68e3a20fceb10a9f0e78ba28444b770c18eabc66b2b53138c",
+      "width": 24,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 26,
+        "originalFile": "0026_tanning-oil-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.092Z"
+    },
+    "1445c24e-2d5a-4fdc-83d9-18345c57d69d": {
+      "id": "1445c24e-2d5a-4fdc-83d9-18345c57d69d",
+      "sceneId": "284c8c01-4cd6-465c-adc9-3e0cf8ece805",
+      "name": "0026_towels-animation-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0026_towels-animation-object_0000.png",
+      "originalHash": "7b3d834169e4d6af2b9da105dd83235327149aefa34ba6b7ea0a977ee4af9b2b",
+      "width": 152,
+      "height": 120,
+      "metadata": {
+        "roomNumber": 26,
+        "originalFile": "0026_towels-animation-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.110Z"
+    },
+    "463d19e0-b673-4a31-9a99-e0cac668cb90": {
+      "id": "463d19e0-b673-4a31-9a99-e0cac668cb90",
+      "sceneId": "284c8c01-4cd6-465c-adc9-3e0cf8ece805",
+      "name": "0026_untouchable-tanning-oil-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0026_untouchable-tanning-oil-object_0000.png",
+      "originalHash": "dd5992bdfaab154f6701f7b4e15b746def13843df3ccddcf7f18884a6c9474fd",
+      "width": 24,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 26,
+        "originalFile": "0026_untouchable-tanning-oil-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.126Z"
+    },
+    "ad385d29-7b7f-4128-952d-504e63088e61": {
+      "id": "ad385d29-7b7f-4128-952d-504e63088e61",
+      "sceneId": "284c8c01-4cd6-465c-adc9-3e0cf8ece805",
+      "name": "LFLF_0026_AKOS_0155",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0026_AKOS_0155_frame_0.png",
+      "originalHash": "cf2316cf5b6f76d6aa4cc9138e7c4bb6be09baaf56b12dd1e0210b7f8e352a62",
+      "width": 68,
+      "height": 274,
+      "frameCount": 56,
+      "metadata": {
+        "roomNumber": 26,
+        "akosId": "LFLF_0026_AKOS_0155",
+        "frameCount": 56
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.324Z"
+    },
+    "3b681d9e-84e1-491b-bd8e-682ace9c6d6e": {
+      "id": "3b681d9e-84e1-491b-bd8e-682ace9c6d6e",
+      "sceneId": "284c8c01-4cd6-465c-adc9-3e0cf8ece805",
+      "name": "LFLF_0026_AKOS_0156",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0026_AKOS_0156_frame_0.png",
+      "originalHash": "5753a34acdd38edbcbe9166038b6671405aa50e9c09dd33829eae16b1ed9a0ef",
+      "width": 74,
+      "height": 87,
+      "frameCount": 34,
+      "metadata": {
+        "roomNumber": 26,
+        "akosId": "LFLF_0026_AKOS_0156",
+        "frameCount": 34
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.351Z"
+    },
+    "5a368510-649d-4b90-a344-fee4fdf8a41a": {
+      "id": "5a368510-649d-4b90-a344-fee4fdf8a41a",
+      "sceneId": "284c8c01-4cd6-465c-adc9-3e0cf8ece805",
+      "name": "LFLF_0026_AKOS_0157",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0026_AKOS_0157_frame_0.png",
+      "originalHash": "b7d7a1d19b953f7d3b94c0038a371bf2ef03b0c774d13833305b488aa10a8ebd",
+      "width": 101,
+      "height": 273,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 26,
+        "akosId": "LFLF_0026_AKOS_0157",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:20.376Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

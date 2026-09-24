@@ -1,0 +1,360 @@
+{
+  "source": "source:provided/coin + cursores",
+  "source_scale": 6,
+  "scale": 4,
+  "variant": "antialiased",
+  "default_pointer": "red",
+  "resampling": "premultiplied-alpha Lanczos",
+  "files": [
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_bullseye-icon_0000.png",
+      "target": "objects/0003_bullseye-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "cc6eaab62e8bfc2bab5ff73af1006f38884702a23655f372918cc3e8c166483a",
+      "destination_sha256": "96abebc450bfb2e4439dd6718c71aeeedb947e155249e496cab7ccdacf4a9731"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_decrement-inventory-arrow_0000.png",
+      "target": "objects/0003_decrement-inventory-arrow_0000.png",
+      "size": [
+        320,
+        160
+      ],
+      "source_sha256": "c4bd79db80cd18b1893dd6254189df38008222accdc436b002668f119ea5ae0f",
+      "destination_sha256": "3160671637a7067db3fda76a6df03b67bf2b185ef1a1cb8a1b2bf660456f914c"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_decrement-inventory-arrow_0001.png",
+      "target": "objects/0003_decrement-inventory-arrow_0001.png",
+      "size": [
+        320,
+        160
+      ],
+      "source_sha256": "a890c3e5453b0df54b733ad4eeb3de6c839e8539d3714be32875f1867e9e77e8",
+      "destination_sha256": "cfbb0b4565bdd32998e889794319b028d4ac6652b00a0704562f7c262e418dfe"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_dialog-decrement-icon_0000.png",
+      "target": "objects/0003_dialog-decrement-icon_0000.png",
+      "size": [
+        128,
+        160
+      ],
+      "source_sha256": "8a71c4409892df256efb11089551c78100f51e3d17e6ce75fd67b0affa13ce99",
+      "destination_sha256": "3059539ccbc2114dcd789cb8023e423b8bb73adaaf4c6c377820d306672e59fe"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_dialog-decrement-icon_0001.png",
+      "target": "objects/0003_dialog-decrement-icon_0001.png",
+      "size": [
+        128,
+        160
+      ],
+      "source_sha256": "a11770a8af6febf01ebc7fbb4b56d4849382bb5ae1e0e3f9811732b2677d34cf",
+      "destination_sha256": "f501f08a6117db4284d780a0c1d5765f49c4d5a98838a3f668fa89ea167034b7"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_dialog-increment-icon_0000.png",
+      "target": "objects/0003_dialog-increment-icon_0000.png",
+      "size": [
+        128,
+        128
+      ],
+      "source_sha256": "386d12566f2fb0818d1270af0dc5cf5d86922961eef0a7a255a969c1eea9fb77",
+      "destination_sha256": "624732a367e27978955580741408cf99d3f3b649529422a5ee962a43acae0c3f"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_dialog-increment-icon_0001.png",
+      "target": "objects/0003_dialog-increment-icon_0001.png",
+      "size": [
+        128,
+        128
+      ],
+      "source_sha256": "4c8d1d0dd9c7dbc4b334d7d2c59598d4e0a03cada84877567ba2249fcb92255e",
+      "destination_sha256": "8b0d81317e2903f6b88e67100bdf31ef1ad7363dedbda04f7c2a6090cf1c3ded"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_east-arrow-icon_0000.png",
+      "target": "objects/0003_east-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "e2033e6832dc2533169a67a6f4cf38ef1e752f5869fd6cced66a7689a867f975",
+      "destination_sha256": "56d01074f682ac52f51cc983794cf1b9863e1b992df3d52578d3811c18badd2b"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_east-arrow-icon_0001.png",
+      "target": "objects/0003_east-arrow-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "e2033e6832dc2533169a67a6f4cf38ef1e752f5869fd6cced66a7689a867f975",
+      "destination_sha256": "56d01074f682ac52f51cc983794cf1b9863e1b992df3d52578d3811c18badd2b"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_increment-inventory-arrow_0000.png",
+      "target": "objects/0003_increment-inventory-arrow_0000.png",
+      "size": [
+        320,
+        160
+      ],
+      "source_sha256": "fd9014ec8676631498cf05a83c4b4d4fd546b3a8159956910c568418cb3d26f2",
+      "destination_sha256": "33f62bf00c2321422eebb32daf8f38fa1312090f2c76f3f11d7f0cb0d59a5e0e"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_next-page-arrow-icon_0000.png",
+      "target": "objects/0003_next-page-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "a3a830494a888d3e054212cf2a6fcad4c9e5dec164f3ffddc6127d1c2d415fd7",
+      "destination_sha256": "599f36e04a1cc943e7d193623cd558129799bb6706218a380acac655a532d15e"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_next-page-arrow-icon_0001.png",
+      "target": "objects/0003_next-page-arrow-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "a3a830494a888d3e054212cf2a6fcad4c9e5dec164f3ffddc6127d1c2d415fd7",
+      "destination_sha256": "599f36e04a1cc943e7d193623cd558129799bb6706218a380acac655a532d15e"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_north-arrow-icon_0000.png",
+      "target": "objects/0003_north-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "86598eaced56bc319d179b1927f64f3c1480aaf4461960513a7af1cb34d90f76",
+      "destination_sha256": "277faf3044c302f154e92ab2fcc02b4c94e1b4d373d54ac9cb8bef285e3a217a"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_north-arrow-icon_0001.png",
+      "target": "objects/0003_north-arrow-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "86598eaced56bc319d179b1927f64f3c1480aaf4461960513a7af1cb34d90f76",
+      "destination_sha256": "277faf3044c302f154e92ab2fcc02b4c94e1b4d373d54ac9cb8bef285e3a217a"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_northeast-arrow-icon_0000.png",
+      "target": "objects/0003_northeast-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "ea1747e6a80f9353210ee655f08d7ba243dc9aad6afc93638d725ae7bd60d093",
+      "destination_sha256": "325b3d007d8e13067f9f5b786613fbf0dacd1abd17df3d91c05776e0c4470ded"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_northeast-arrow-icon_0001.png",
+      "target": "objects/0003_northeast-arrow-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "ea1747e6a80f9353210ee655f08d7ba243dc9aad6afc93638d725ae7bd60d093",
+      "destination_sha256": "325b3d007d8e13067f9f5b786613fbf0dacd1abd17df3d91c05776e0c4470ded"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_northwest-arrow-icon_0000.png",
+      "target": "objects/0003_northwest-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "df948f744925af784d6a1d9deacce84401694feef17e6b1f14d0f5b5c3776c43",
+      "destination_sha256": "96b00aeba207e89cdacbb8d1feb25bd62d1990104e5dad203f6f622de9914454"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_northwest-arrow-icon_0001.png",
+      "target": "objects/0003_northwest-arrow-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "df948f744925af784d6a1d9deacce84401694feef17e6b1f14d0f5b5c3776c43",
+      "destination_sha256": "96b00aeba207e89cdacbb8d1feb25bd62d1990104e5dad203f6f622de9914454"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_prev-page-arrow-icon_0000.png",
+      "target": "objects/0003_prev-page-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "112ae035dafe666f1541cd26b622cb53b8146abe648f8ad61e10bd516b51768d",
+      "destination_sha256": "7ea658baed3b18ef5171e35c69f3e8df9693c9f8a32e068e940b1b274768ba41"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_south-arrow-icon_0000.png",
+      "target": "objects/0003_south-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "f55e706dec80a960d418089ca53db345288e5a806f995fd370bef340a4b4568e",
+      "destination_sha256": "bd2c5ae659af700a2cdb6aae5d05f1d155ae86f775ae0f27d29496099e3c8ad1"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_south-arrow-icon_0001.png",
+      "target": "objects/0003_south-arrow-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "f55e706dec80a960d418089ca53db345288e5a806f995fd370bef340a4b4568e",
+      "destination_sha256": "bd2c5ae659af700a2cdb6aae5d05f1d155ae86f775ae0f27d29496099e3c8ad1"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_southeast-arrow-icon_0000.png",
+      "target": "objects/0003_southeast-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "4d2f3a19010024213803d8a2ea11ec82d621915a183ddfe51e5a0de6d8c0815f",
+      "destination_sha256": "f441c497bb1a8ba1d6d644a6366b7f9e46c51c5d0b5e5f63bfbab9eb935c54c7"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_southeast-arrow-icon_0001.png",
+      "target": "objects/0003_southeast-arrow-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "4d2f3a19010024213803d8a2ea11ec82d621915a183ddfe51e5a0de6d8c0815f",
+      "destination_sha256": "f441c497bb1a8ba1d6d644a6366b7f9e46c51c5d0b5e5f63bfbab9eb935c54c7"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_southwest-arrow-icon_0000.png",
+      "target": "objects/0003_southwest-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "fbf63ea10c11f9feba75e72bc93a4ab6e9d948590a8d3d2081c64b1062dbee9d",
+      "destination_sha256": "8db04d3a7798519b740186758ecf6ae8cec1c12b8b5bdfcc025fd29908c215df"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_southwest-arrow-icon_0001.png",
+      "target": "objects/0003_southwest-arrow-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "fbf63ea10c11f9feba75e72bc93a4ab6e9d948590a8d3d2081c64b1062dbee9d",
+      "destination_sha256": "8db04d3a7798519b740186758ecf6ae8cec1c12b8b5bdfcc025fd29908c215df"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_system-cursor-icon_0001.png",
+      "target": "objects/0003_system-cursor-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "9cc1a195e093d31e0fe06e3a1125c7ebd6bd055d8d72e170e285ca80e07b4d9a",
+      "destination_sha256": "974b53020f624540f6507333cce35efedec0c4b441e343f21a7a9e997e580851"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_system-cursor-icon_0001.png",
+      "target": "objects/0003_system-cursor-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "9cc1a195e093d31e0fe06e3a1125c7ebd6bd055d8d72e170e285ca80e07b4d9a",
+      "destination_sha256": "974b53020f624540f6507333cce35efedec0c4b441e343f21a7a9e997e580851"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_system-wait-icon_0000.png",
+      "target": "objects/0003_system-wait-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "5aa81ef6a0237ddfdf14ce228a47dfe7e37c317b78ed96c7bf264395ff95a79c",
+      "destination_sha256": "2316ecaf6bafbd37c977759c2a9d751c669a3b498f13372a6c2c9f4fc5a8977a"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_west-arrow-icon_0000.png",
+      "target": "objects/0003_west-arrow-icon_0000.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "97cf07b452be830ba14f2a7e638a6d9fd891aa2b2fdb8cefb3e4fab954fc5b0d",
+      "destination_sha256": "a358e87839798b7497c651070322c6a56d85602a3ad51b23854f4b85ffd08a4f"
+    },
+    {
+      "source": "source:provided/coin + cursores/cursors-6x/antialiased/0003_west-arrow-icon_0001.png",
+      "target": "objects/0003_west-arrow-icon_0001.png",
+      "size": [
+        320,
+        224
+      ],
+      "source_sha256": "97cf07b452be830ba14f2a7e638a6d9fd891aa2b2fdb8cefb3e4fab954fc5b0d",
+      "destination_sha256": "a358e87839798b7497c651070322c6a56d85602a3ad51b23854f4b85ffd08a4f"
+    },
+    {
+      "source": "source:provided/coin + cursores/coin-6x/costumes/LFLF_0001_AKOS_0001_aframe_63.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_63.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "caaf3df5c9d9a71460f0973a03ac89c3ef0b817a00fccbdbd737a2eb9469fb15",
+      "destination_sha256": "8dd1ac66865cab907a0d33d393dc444898970ef0d725faf0265329a7375c4a19"
+    },
+    {
+      "source": "source:provided/coin + cursores/coin-6x/costumes/LFLF_0001_AKOS_0001_aframe_64.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_64.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "914ee3a53793acfbcaaf802748f50da94958b6b63dc604bbebf5425efb4dc395",
+      "destination_sha256": "e7c012ac625b0a883bd4797fc8a50947bd7af0c76bd8ed5f7f80c1e9efb1cf77"
+    },
+    {
+      "source": "source:provided/coin + cursores/coin-6x/costumes/LFLF_0001_AKOS_0001_aframe_65.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_65.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "2e515f09d41fa87b6997a57c58d9faba8fd49de767ecb1126c42ad8c8fcc89ee",
+      "destination_sha256": "3927b66086b04fe409ffff467d1e23b404e31759e61fbe8af97dedaa2f204fa3"
+    },
+    {
+      "source": "source:provided/coin + cursores/coin-6x/costumes/LFLF_0001_AKOS_0001_aframe_66.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_66.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "efc5fd167b334d5ff12657dd16a12dc0b693e3a1c2d6e7100ed575e375a4b9ba",
+      "destination_sha256": "69ddb04f289f725f44559ccd53d6e5033da88a6b2093d82cebe86d894a6e296a"
+    },
+    {
+      "source": "source:provided/coin + cursores/coin-6x/costumes/LFLF_0001_AKOS_0001_aframe_67.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_67.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "8a433c3a97fc14993c4750e2761111fad52289a3af7b8c7e6d026b1082a516d0",
+      "destination_sha256": "7f6bf456729239b99b6a11df90c25566caadc1da0736fa9fb398ca2e25de4636"
+    }
+  ]
+}

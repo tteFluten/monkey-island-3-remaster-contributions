@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "042614e1-2a3f-4184-95a6-a28798c585ce",
+    "name": "recipes",
+    "roomNumber": 62,
+    "assets": [
+      "b0d4d107-9152-43c0-854c-50fc5b38e20c",
+      "e826ea41-3bc7-4085-85a4-2c01adffaa1b"
+    ]
+  },
+  "assets": {
+    "b0d4d107-9152-43c0-854c-50fc5b38e20c": {
+      "id": "b0d4d107-9152-43c0-854c-50fc5b38e20c",
+      "sceneId": "042614e1-2a3f-4184-95a6-a28798c585ce",
+      "name": "0062_recipes",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0062_recipes.png",
+      "originalHash": "d8da0ab09e26ea2404de314d7ddcfaaa1e18a37ae85a2f251d01d13f4089051c",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 62,
+        "originalFile": "0062_recipes.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.390Z"
+    },
+    "e826ea41-3bc7-4085-85a4-2c01adffaa1b": {
+      "id": "e826ea41-3bc7-4085-85a4-2c01adffaa1b",
+      "sceneId": "042614e1-2a3f-4184-95a6-a28798c585ce",
+      "name": "0062_recipe-book-alternate-anim-obj_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0062_recipe-book-alternate-anim-obj_0000.png",
+      "originalHash": "c251d766ed31502ec8c949b8cc970fac2406fb2ca0020f7d93a673549585b6f6",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 62,
+        "originalFile": "0062_recipe-book-alternate-anim-obj_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.406Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

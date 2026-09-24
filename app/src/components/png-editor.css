@@ -1,0 +1,28 @@
+.png-editor { position: fixed; inset: 0; width: min(1400px, 96vw); height: 92dvh; max-width: none; max-height: none; margin: auto; padding: 0; border: 1px solid #52707b; border-radius: 10px; color: #eee9d9; background: #112731; box-shadow: 0 24px 90px #0009; }
+.png-editor[open] { display: flex; flex-direction: column; }
+.png-editor::backdrop { background: #071219ce; }
+.png-editor button, .png-editor select { border: 1px solid #52707b; border-radius: 5px; background: #19333f; color: #eee9d9; padding: 8px 12px; font-size: 13px; }
+.png-editor button:hover { background: #284751; }
+.png-editor button:disabled { opacity: .4; }
+.png-editor-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 22px; border-bottom: 1px solid #35505b; }
+.png-editor-header h2 { font: 24px Georgia, serif; margin: 0 0 5px; }
+.png-editor-header p { margin: 0; color: #9aafb4; font-size: 12px; overflow-wrap: anywhere; }
+.png-editor-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 14px 22px 6px; }
+.png-editor-tools label { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.png-editor-tools input { width: 130px; accent-color: #d8b575; padding: 0; }
+.png-editor-tools label span { min-width: 42px; font-variant-numeric: tabular-nums; }
+.png-editor-help { margin: 6px 22px 14px; color: #9aafb4; font-size: 12px; }
+.png-editor-viewport { flex: 1; min-height: 100px; overflow: auto; overscroll-behavior: contain; border-block: 1px solid #35505b; }
+.png-editor-viewport.checker { background-color: #aeb5b2; background-image: conic-gradient(#cdd0c8 25%,transparent 0 50%,#cdd0c8 0 75%,transparent 0); background-size: 28px 28px; }
+.png-editor-viewport.dark { background: #10181e; }
+.png-editor-viewport.light { background: #f4f1e8; }
+.png-editor-stage { display: flex; align-items: center; justify-content: center; min-width: 100%; min-height: 100%; width: max-content; padding: 24px; }
+.png-editor-image { position: relative; flex: none; }
+.png-editor-image canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: crosshair; image-rendering: pixelated; }
+.png-editor-brush { position: absolute; border: 1px solid white; box-shadow: 0 0 0 1px #000; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.png-editor-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding: 14px 22px; font-size: 12px; }
+.png-editor-footer p { margin: 5px 0; color: #9aafb4; }
+.png-editor button.png-editor-save { background: #d8b575; border-color: #d8b575; color: #112731; font-weight: 600; }
+.png-editor-discard { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: #f1d9a7; }
+.png-editor-error { margin: 10px 22px 0; color: #ffc1ad; }
+@media (max-width: 600px) { .png-editor { width: 100vw; height: 100dvh; border-radius: 0; } .png-editor-header, .png-editor-tools, .png-editor-footer { padding: 12px; } .png-editor-help { margin-inline: 12px; } .png-editor-tools { gap: 8px; } }

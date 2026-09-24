@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+    "name": "hotel-ex",
+    "roomNumber": 60,
+    "assets": [
+      "ebaa957f-8515-4a95-abd6-00d2647d6f81",
+      "97dbca91-6adf-4719-b64e-fa7d77ed671b",
+      "ef35c745-b226-49ea-8a29-f87cceac1d36",
+      "1a945148-c5c9-4b0c-a314-e57e429acf87",
+      "711065f5-a6bd-4777-bb4c-f8f4864ef6de",
+      "44c1f0b6-77ef-492a-9bf3-4bda671fd92f",
+      "6649317f-8a3a-40d1-be61-e25709704390",
+      "c30e32b8-963e-42e7-a622-737584a4e1e4",
+      "9ec05f2c-ad85-4b17-9f45-8610025e4cbf",
+      "65c773a5-da17-411f-b372-de325655e2dd",
+      "402337b6-7b24-4995-a3e7-7c362e4535d9",
+      "b7c14c29-e6e6-4971-8289-a28bd2b1abcb",
+      "de725a75-6afc-45b4-ac0d-ba2572f0f315"
+    ]
+  },
+  "assets": {
+    "ebaa957f-8515-4a95-abd6-00d2647d6f81": {
+      "id": "ebaa957f-8515-4a95-abd6-00d2647d6f81",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0060_hotel-ex.png",
+      "originalHash": "565aa4af5dbe8680b2e7ba83ca6a3cbc9c411b02c65c2548d2968ccc766431af",
+      "width": 1280,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.805Z"
+    },
+    "97dbca91-6adf-4719-b64e-fa7d77ed671b": {
+      "id": "97dbca91-6adf-4719-b64e-fa7d77ed671b",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex-barbecue-anim-obj_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0060_hotel-ex-barbecue-anim-obj_0000.png",
+      "originalHash": "c37261a8ae63ef24dcfcc92d8495de9cb980acff156485fc19fb4f8d96862ec0",
+      "width": 344,
+      "height": 248,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex-barbecue-anim-obj_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.819Z"
+    },
+    "ef35c745-b226-49ea-8a29-f87cceac1d36": {
+      "id": "ef35c745-b226-49ea-8a29-f87cceac1d36",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex-column-anim-obj_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0060_hotel-ex-column-anim-obj_0000.png",
+      "originalHash": "396b559535135a1c0d5076a50e097f0a836f8051c39b9a2dcb9b4c6e51648ec1",
+      "width": 296,
+      "height": 312,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex-column-anim-obj_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.836Z"
+    },
+    "1a945148-c5c9-4b0c-a314-e57e429acf87": {
+      "id": "1a945148-c5c9-4b0c-a314-e57e429acf87",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex-pot-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0060_hotel-ex-pot-object_0000.png",
+      "originalHash": "bf9fa90e8fc0dcde6573861c27ae1186a5b530b9379b32687aa8a98fcf8e5c90",
+      "width": 104,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex-pot-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.850Z"
+    },
+    "711065f5-a6bd-4777-bb4c-f8f4864ef6de": {
+      "id": "711065f5-a6bd-4777-bb4c-f8f4864ef6de",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex-pot-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0060_hotel-ex-pot-object_0001.png",
+      "originalHash": "7505acd35b6c3defcdca091d26ef2b225a50e5635051df8233bd7b39cfe58508",
+      "width": 104,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex-pot-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.863Z"
+    },
+    "44c1f0b6-77ef-492a-9bf3-4bda671fd92f": {
+      "id": "44c1f0b6-77ef-492a-9bf3-4bda671fd92f",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex-pot-object_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0060_hotel-ex-pot-object_0002.png",
+      "originalHash": "578157793fbfce555ec3eeb83d1f20d882ae90062083d8169e635e1c097eb21d",
+      "width": 104,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex-pot-object_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.877Z"
+    },
+    "6649317f-8a3a-40d1-be61-e25709704390": {
+      "id": "6649317f-8a3a-40d1-be61-e25709704390",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex-pot-object_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0060_hotel-ex-pot-object_0003.png",
+      "originalHash": "a9b774af61ee9f75db1fb439e366e19b1373e75439735f640538e24306e5cbff",
+      "width": 104,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex-pot-object_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.890Z"
+    },
+    "c30e32b8-963e-42e7-a622-737584a4e1e4": {
+      "id": "c30e32b8-963e-42e7-a622-737584a4e1e4",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex-pot-object_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0060_hotel-ex-pot-object_0004.png",
+      "originalHash": "99ac76bf35bd9511d5ca720be17c965be6526f9130408411a21fd7131ba4dcbd",
+      "width": 104,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex-pot-object_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.904Z"
+    },
+    "9ec05f2c-ad85-4b17-9f45-8610025e4cbf": {
+      "id": "9ec05f2c-ad85-4b17-9f45-8610025e4cbf",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex-stans-sign-1_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0060_hotel-ex-stans-sign-1_0000.png",
+      "originalHash": "6aa2a34e1c1f789901fce2bdcb431099bdc13a14fe0588ae8c969c8d0a0e674c",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex-stans-sign-1_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.919Z"
+    },
+    "65c773a5-da17-411f-b372-de325655e2dd": {
+      "id": "65c773a5-da17-411f-b372-de325655e2dd",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "0060_hotel-ex-stans-sign-1_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0060_hotel-ex-stans-sign-1_0001.png",
+      "originalHash": "188dfb97fc98a4b0f3e843b7bff6585763dc08f62c14a5a3d37cae96501f9172",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 60,
+        "originalFile": "0060_hotel-ex-stans-sign-1_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.932Z"
+    },
+    "402337b6-7b24-4995-a3e7-7c362e4535d9": {
+      "id": "402337b6-7b24-4995-a3e7-7c362e4535d9",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "LFLF_0060_AKOS_0305",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0060_AKOS_0305_frame_0.png",
+      "originalHash": "e409f32c3202e0ab782374033374316a4fff5193778f073ccbd66e149b7e6598",
+      "width": 17,
+      "height": 92,
+      "frameCount": 113,
+      "metadata": {
+        "roomNumber": 60,
+        "akosId": "LFLF_0060_AKOS_0305",
+        "frameCount": 113
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:26.489Z"
+    },
+    "b7c14c29-e6e6-4971-8289-a28bd2b1abcb": {
+      "id": "b7c14c29-e6e6-4971-8289-a28bd2b1abcb",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "LFLF_0060_AKOS_0306",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0060_AKOS_0306_frame_0.png",
+      "originalHash": "8d544d620318f0ff53f2cadddb1f4aba98cddf2ca6723544b7f446f0e92bb5e9",
+      "width": 63,
+      "height": 73,
+      "frameCount": 46,
+      "metadata": {
+        "roomNumber": 60,
+        "akosId": "LFLF_0060_AKOS_0306",
+        "frameCount": 46
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:26.512Z"
+    },
+    "de725a75-6afc-45b4-ac0d-ba2572f0f315": {
+      "id": "de725a75-6afc-45b4-ac0d-ba2572f0f315",
+      "sceneId": "2e6d8825-31b3-47f2-9cac-4863fbd9cc91",
+      "name": "LFLF_0060_AKOS_0307",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0060_AKOS_0307_frame_0.png",
+      "originalHash": "0344e69799e0c938568a7b764158c4d6bb25bb507206cf2c43c06a0c691e52ac",
+      "width": 68,
+      "height": 135,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 60,
+        "akosId": "LFLF_0060_AKOS_0307",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:26.534Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

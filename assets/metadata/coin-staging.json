@@ -1,0 +1,58 @@
+{
+  "source": "source:provided/coins",
+  "source_scale": 6,
+  "scale": 4,
+  "resampling": "premultiplied-alpha Lanczos",
+  "files": [
+    {
+      "source": "source:provided/coins/LFLF_0001_AKOS_0001_aframe_63.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_63.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "1044a91cbbead8babf137d4b389efa2c4d20d63506e9e1dbc62b71f4e5535003",
+      "destination_sha256": "a7ca0f4331f49149ce64ab9bb7019f24d6595ea8f396cd4a47c3b3bcb0cc10fb"
+    },
+    {
+      "source": "source:provided/coins/LFLF_0001_AKOS_0001_aframe_64.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_64.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "1044a91cbbead8babf137d4b389efa2c4d20d63506e9e1dbc62b71f4e5535003",
+      "destination_sha256": "a7ca0f4331f49149ce64ab9bb7019f24d6595ea8f396cd4a47c3b3bcb0cc10fb"
+    },
+    {
+      "source": "source:provided/coins/LFLF_0001_AKOS_0001_aframe_65.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_65.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "3891cb91a204c9c2269475561f7dd1a408dd6f468ff18d92c91257a0fff605fe",
+      "destination_sha256": "831a71b768b8a3a7a99d9a5d1687b885f0ab54b6f1b8b7f168efd1670c850952"
+    },
+    {
+      "source": "source:provided/coins/LFLF_0001_AKOS_0001_aframe_66.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_66.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "4e2dc11db6916940075648df91342870b7359678e49d30f58cbe316223e22ad2",
+      "destination_sha256": "7e65897f705aa3ebf298d83d24b959e719a4abfc92447fd90ea6679bb0efe723"
+    },
+    {
+      "source": "source:provided/coins/LFLF_0001_AKOS_0001_aframe_67.png",
+      "target": "costumes/LFLF_0001_AKOS_0001_aframe_67.png",
+      "size": [
+        464,
+        472
+      ],
+      "source_sha256": "b0244e17910e2a4741976060de0f5786846522cb8bdb93f3b6a8d849433f8c40",
+      "destination_sha256": "e5db3ec029b9137aa101bc7b248534809ab47f76fd2e5b3def1d071566c7e63c"
+    }
+  ]
+}

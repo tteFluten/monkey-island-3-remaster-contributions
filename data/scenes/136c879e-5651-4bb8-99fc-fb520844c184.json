@@ -1,0 +1,682 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "136c879e-5651-4bb8-99fc-fb520844c184",
+    "name": "smglcave",
+    "roomNumber": 80,
+    "assets": [
+      "a44bdb57-e030-42bd-a659-916d781bc29b",
+      "2d2250bb-c936-4e8a-8e99-b683f749eb40",
+      "aa3dd5d0-db87-43f3-adf8-220af9ef6ad1",
+      "6f276d74-d661-460d-bcf5-7a6ca55db7cd",
+      "15fcca71-d4d0-4269-a0f1-9344915db8c5",
+      "99f5b2f2-d7be-45b3-9ad5-e0b055e2555e",
+      "6159ea85-8102-4b85-96ae-69e5bfaa14f8",
+      "dd34302c-d04e-4e12-bc87-f8f96875a60e",
+      "40686019-dc17-471d-b0a0-c36054105ce7",
+      "b34e5010-541e-4d0f-9224-86ddbf3742fb",
+      "7e7f681b-1ee6-4c93-8ad2-a8a66d6b9dd9",
+      "68845d2e-1613-4be8-ab78-85fe91a485d9",
+      "2ea79ca2-c7f4-4eb0-b70d-11116e3de78f",
+      "37b1a655-d89c-4dd3-be8f-cf273ef1bd1f",
+      "5bfa373a-cc21-49d5-9938-5d5ee4eaff2c",
+      "b0b730b9-f0ba-43d2-aec3-500c1695fe41",
+      "04f37af2-e680-45e9-91bb-a5a9eadba468",
+      "571641bb-5fcb-4795-b9d3-3de5555df807",
+      "50426905-6416-49a7-888d-16bf8820b224",
+      "a06e98ed-364e-45b1-a931-7031ac5740cc",
+      "15c4ac1b-c64b-421c-badc-308b826a853f",
+      "9c1c69ab-8dbb-43fb-bd67-cccdd163c359",
+      "142e2314-1a18-4005-a76b-e349430ac80b",
+      "ede1c5c9-fcbe-4c25-b03b-b7f900dde1eb",
+      "26d68b00-c9db-4aaf-b429-e36aba7aff34",
+      "d5159be4-68f0-43f5-8013-be20950fbd84",
+      "64b10d23-15e1-4b8f-8b9e-86907a57f74f",
+      "71411a65-6b92-4f9b-88fc-b579757b72ff",
+      "c745c3e2-0756-4a3d-ba8b-42fcd4a86947",
+      "f5fbc0f7-e417-4c7e-bbb6-bc3b2a177a6a",
+      "238771f8-c46f-4a48-8f71-ed1966e7c391",
+      "7207ea7c-e52d-4803-9453-2fdc6084c8f8",
+      "f992d27e-68fc-4c15-bf1f-138b345d801e",
+      "5f6c8b0f-7346-48ca-a0ab-17312f1874aa",
+      "39ac00c1-a504-46bf-a2fe-e64e61e6f860",
+      "6a73958b-0ab8-4e10-a2fd-335036a1f456",
+      "a2ce36ab-a296-4ee8-875e-8ada541b5bc3",
+      "b3cdb3ce-9118-4c6c-8ef0-7632c540986f"
+    ]
+  },
+  "assets": {
+    "a44bdb57-e030-42bd-a659-916d781bc29b": {
+      "id": "a44bdb57-e030-42bd-a659-916d781bc29b",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_smglcave",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0080_smglcave.png",
+      "originalHash": "da37257872835cf8ee7d19d6554f51634bde76064a85324aedab89f3b3277904",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_smglcave.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.461Z"
+    },
+    "2d2250bb-c936-4e8a-8e99-b683f749eb40": {
+      "id": "2d2250bb-c936-4e8a-8e99-b683f749eb40",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-andres-cards-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-andres-cards-anim-object_0000.png",
+      "originalHash": "3e2345ef1fa6708ac0beb57524c08afdfb64e064d792567bcdae3e1f939c514c",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-andres-cards-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.473Z"
+    },
+    "aa3dd5d0-db87-43f3-adf8-220af9ef6ad1": {
+      "id": "aa3dd5d0-db87-43f3-adf8-220af9ef6ad1",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-andres-cards-anim-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-andres-cards-anim-object_0001.png",
+      "originalHash": "ece9861e8a96498a893a9ddc98d09b9ea0630c37dd7d10b730d888ccb159cba2",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-andres-cards-anim-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.485Z"
+    },
+    "6f276d74-d661-460d-bcf5-7a6ca55db7cd": {
+      "id": "6f276d74-d661-460d-bcf5-7a6ca55db7cd",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-andres-cards-anim-object_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-andres-cards-anim-object_0002.png",
+      "originalHash": "11fdbd0ec66bd07554c43c57df0ca13d53de9414963f27e191def6d705864345",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-andres-cards-anim-object_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.499Z"
+    },
+    "15fcca71-d4d0-4269-a0f1-9344915db8c5": {
+      "id": "15fcca71-d4d0-4269-a0f1-9344915db8c5",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-andres-cards-anim-object_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-andres-cards-anim-object_0003.png",
+      "originalHash": "900c5d297e63c4b36514e8e7213410e3fda41e987bbc46d8034e4e5fc0bd04f7",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-andres-cards-anim-object_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.512Z"
+    },
+    "99f5b2f2-d7be-45b3-9ad5-e0b055e2555e": {
+      "id": "99f5b2f2-d7be-45b3-9ad5-e0b055e2555e",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-andres-cards-anim-object_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-andres-cards-anim-object_0004.png",
+      "originalHash": "9dc83345553baf9776d1494e70fedb0084051afacaa2fd0e83a3bcfde139c6b3",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-andres-cards-anim-object_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.526Z"
+    },
+    "6159ea85-8102-4b85-96ae-69e5bfaa14f8": {
+      "id": "6159ea85-8102-4b85-96ae-69e5bfaa14f8",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-andres-cards-anim-object_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-andres-cards-anim-object_0005.png",
+      "originalHash": "36c0bf7561bb859b9e9d33c526db09aaec2c6506d749e9eb47a89ceb40f3b0a5",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-andres-cards-anim-object_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.540Z"
+    },
+    "dd34302c-d04e-4e12-bc87-f8f96875a60e": {
+      "id": "dd34302c-d04e-4e12-bc87-f8f96875a60e",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-andres-deck_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-andres-deck_0000.png",
+      "originalHash": "3004c1217a8426c4cfff68e7b8c0c7b07c6365f7b71c607c02f45e747da453c1",
+      "width": 32,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-andres-deck_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.556Z"
+    },
+    "40686019-dc17-471d-b0a0-c36054105ce7": {
+      "id": "40686019-dc17-471d-b0a0-c36054105ce7",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-blood-island-volcano_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-blood-island-volcano_0000.png",
+      "originalHash": "ae85077e7c56afdf77dababc49711da92c7ce24615d214648921245f61e883ed",
+      "width": 56,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-blood-island-volcano_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.571Z"
+    },
+    "b34e5010-541e-4d0f-9224-86ddbf3742fb": {
+      "id": "b34e5010-541e-4d0f-9224-86ddbf3742fb",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cards-animation-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cards-animation-object_0000.png",
+      "originalHash": "4cf2e854702518adcd55113debf75ba0dcbf53799b10355fb21da0a52866b37f",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cards-animation-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.586Z"
+    },
+    "7e7f681b-1ee6-4c93-8ad2-a8a66d6b9dd9": {
+      "id": "7e7f681b-1ee6-4c93-8ad2-a8a66d6b9dd9",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cards-animation-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cards-animation-object_0001.png",
+      "originalHash": "128025c840d44b2c4c6f19f000584f58d91d5adb5f0e14352c1243c130245f4b",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cards-animation-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.599Z"
+    },
+    "68845d2e-1613-4be8-ab78-85fe91a485d9": {
+      "id": "68845d2e-1613-4be8-ab78-85fe91a485d9",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cards-animation-object_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cards-animation-object_0002.png",
+      "originalHash": "c64784876fa9ef2488bdcade75ad30bf0323aa93ee8f7420767ce34c7ad0a9b3",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cards-animation-object_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.616Z"
+    },
+    "2ea79ca2-c7f4-4eb0-b70d-11116e3de78f": {
+      "id": "2ea79ca2-c7f4-4eb0-b70d-11116e3de78f",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cards-animation-object_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cards-animation-object_0003.png",
+      "originalHash": "2920052f7009e9dea0e6d01442c97ddeb9340c7eb6afb799d7c00d1c4d5463fe",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cards-animation-object_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.631Z"
+    },
+    "37b1a655-d89c-4dd3-be8f-cf273ef1bd1f": {
+      "id": "37b1a655-d89c-4dd3-be8f-cf273ef1bd1f",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cards-animation-object_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cards-animation-object_0004.png",
+      "originalHash": "adb878c1b84f665f51fe748509f88d24cf74566aa7de3329cf3766947eea2027",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cards-animation-object_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.645Z"
+    },
+    "5bfa373a-cc21-49d5-9938-5d5ee4eaff2c": {
+      "id": "5bfa373a-cc21-49d5-9938-5d5ee4eaff2c",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cards-animation-object_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cards-animation-object_0005.png",
+      "originalHash": "088840f4e1fafa31d39c9a096e1405e831f0d3b078f4bdd81a354c9ee40d1dba",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cards-animation-object_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.659Z"
+    },
+    "b0b730b9-f0ba-43d2-aec3-500c1695fe41": {
+      "id": "b0b730b9-f0ba-43d2-aec3-500c1695fe41",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cruffs-cards-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cruffs-cards-anim-object_0000.png",
+      "originalHash": "891423db7615ea25bcdab2dd6771bf4f19b842c44fccf08f5634b4b69db12a25",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cruffs-cards-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.673Z"
+    },
+    "04f37af2-e680-45e9-91bb-a5a9eadba468": {
+      "id": "04f37af2-e680-45e9-91bb-a5a9eadba468",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cruffs-cards-anim-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cruffs-cards-anim-object_0001.png",
+      "originalHash": "bd5093fa953799a8ee67f0fd68dcb2b9d9ad4adde7e3ad66b9b03ecf1b57f8cb",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cruffs-cards-anim-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.687Z"
+    },
+    "571641bb-5fcb-4795-b9d3-3de5555df807": {
+      "id": "571641bb-5fcb-4795-b9d3-3de5555df807",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cruffs-cards-anim-object_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cruffs-cards-anim-object_0002.png",
+      "originalHash": "cac663133a7f180d43c46b3203bf5fec4bced95dc95fe28bd55f27f01edea021",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cruffs-cards-anim-object_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.700Z"
+    },
+    "50426905-6416-49a7-888d-16bf8820b224": {
+      "id": "50426905-6416-49a7-888d-16bf8820b224",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cruffs-cards-anim-object_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cruffs-cards-anim-object_0003.png",
+      "originalHash": "a0ac2f5b79a9d5477297dd6c50e2c3897a58b2d7306176edf103915f0c815e54",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cruffs-cards-anim-object_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.714Z"
+    },
+    "a06e98ed-364e-45b1-a931-7031ac5740cc": {
+      "id": "a06e98ed-364e-45b1-a931-7031ac5740cc",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cruffs-cards-anim-object_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cruffs-cards-anim-object_0004.png",
+      "originalHash": "06906603adc53303add1ec86f59b1c88aa9c11faed9af1eff806ab32da8dac5e",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cruffs-cards-anim-object_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.727Z"
+    },
+    "15c4ac1b-c64b-421c-badc-308b826a853f": {
+      "id": "15c4ac1b-c64b-421c-badc-308b826a853f",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-cruffs-cards-anim-object_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-cruffs-cards-anim-object_0005.png",
+      "originalHash": "f13150023b828b1872051418928de6bcc2c7191289c335e703b123533c177848",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-cruffs-cards-anim-object_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.740Z"
+    },
+    "9c1c69ab-8dbb-43fb-bd67-cccdd163c359": {
+      "id": "9c1c69ab-8dbb-43fb-bd67-cccdd163c359",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-dark-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-dark-anim-object_0000.png",
+      "originalHash": "f834433f4bf41416fcfab22f369b4717b0f1b994157d6495b1c01e75977da2d2",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-dark-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.753Z"
+    },
+    "142e2314-1a18-4005-a76b-e349430ac80b": {
+      "id": "142e2314-1a18-4005-a76b-e349430ac80b",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-goodsoup-diamond_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-goodsoup-diamond_0000.png",
+      "originalHash": "c72fdbd300affb6532b5f48ee44d9f12de96c52d837090e3432559fe749a171b",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-goodsoup-diamond_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.765Z"
+    },
+    "ede1c5c9-fcbe-4c25-b03b-b7f900dde1eb": {
+      "id": "ede1c5c9-fcbe-4c25-b03b-b7f900dde1eb",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-money-animation-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-money-animation-object_0000.png",
+      "originalHash": "41cd15f9797108abae263c344ac82e39821ce0728ca3d003528a0d6ce6d4c143",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-money-animation-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.778Z"
+    },
+    "26d68b00-c9db-4aaf-b429-e36aba7aff34": {
+      "id": "26d68b00-c9db-4aaf-b429-e36aba7aff34",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-opening-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-opening-anim-object_0000.png",
+      "originalHash": "d473690d8053de324b83de0be85515ecfaf985610b3871945e5483a6d756e4e3",
+      "width": 128,
+      "height": 136,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-opening-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.792Z"
+    },
+    "d5159be4-68f0-43f5-8013-be20950fbd84": {
+      "id": "d5159be4-68f0-43f5-8013-be20950fbd84",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_cave-opening-anim-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_cave-opening-anim-object_0001.png",
+      "originalHash": "c8ea9311dc9a9e36654319cbbb7178466084d8283c2f2b729765c33a651a7075",
+      "width": 128,
+      "height": 136,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_cave-opening-anim-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.805Z"
+    },
+    "64b10d23-15e1-4b8f-8b9e-86907a57f74f": {
+      "id": "64b10d23-15e1-4b8f-8b9e-86907a57f74f",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "0080_smugglers-cave-skull-island-door_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0080_smugglers-cave-skull-island-door_0000.png",
+      "originalHash": "381bc153cdb5918c3392215ebd96b5d098232cde7ce8d07230542cd6f74fe9b0",
+      "width": 88,
+      "height": 144,
+      "metadata": {
+        "roomNumber": 80,
+        "originalFile": "0080_smugglers-cave-skull-island-door_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.818Z"
+    },
+    "71411a65-6b92-4f9b-88fc-b579757b72ff": {
+      "id": "71411a65-6b92-4f9b-88fc-b579757b72ff",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0385",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0385_frame_0.png",
+      "originalHash": "6078f2e7c791427f46898e96fb1050ebe0fc2030bca3d4bba27d472f1bea259d",
+      "width": 32,
+      "height": 25,
+      "frameCount": 63,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0385",
+        "frameCount": 63
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.858Z"
+    },
+    "c745c3e2-0756-4a3d-ba8b-42fcd4a86947": {
+      "id": "c745c3e2-0756-4a3d-ba8b-42fcd4a86947",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0386",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0386_frame_0.png",
+      "originalHash": "1c693338af024d03f8741a4cc43093385b63a928c27c9245ffe0524e66e17fb5",
+      "width": 82,
+      "height": 41,
+      "frameCount": 169,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0386",
+        "frameCount": 169
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.878Z"
+    },
+    "f5fbc0f7-e417-4c7e-bbb6-bc3b2a177a6a": {
+      "id": "f5fbc0f7-e417-4c7e-bbb6-bc3b2a177a6a",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0387",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0387_frame_0.png",
+      "originalHash": "d31777bbf2446a1c645e5402a454bfea359e19d297435a10c607fc4b5a3ce40c",
+      "width": 106,
+      "height": 87,
+      "frameCount": 54,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0387",
+        "frameCount": 54
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.899Z"
+    },
+    "238771f8-c46f-4a48-8f71-ed1966e7c391": {
+      "id": "238771f8-c46f-4a48-8f71-ed1966e7c391",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0388",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0388_frame_0.png",
+      "originalHash": "000fdae26d47f882616c3715e33e750ff5739b685e07fabfef20df72e72eedfe",
+      "width": 56,
+      "height": 137,
+      "frameCount": 67,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0388",
+        "frameCount": 67
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.921Z"
+    },
+    "7207ea7c-e52d-4803-9453-2fdc6084c8f8": {
+      "id": "7207ea7c-e52d-4803-9453-2fdc6084c8f8",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0389",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0389_frame_0.png",
+      "originalHash": "1d8fde3332cc0f46a62d1ceaf1b53596dd7dbc147a36ce8ca221fdc1a61b5a56",
+      "width": 68,
+      "height": 80,
+      "frameCount": 46,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0389",
+        "frameCount": 46
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.940Z"
+    },
+    "f992d27e-68fc-4c15-bf1f-138b345d801e": {
+      "id": "f992d27e-68fc-4c15-bf1f-138b345d801e",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0390",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0390_frame_0.png",
+      "originalHash": "61803e18d25ca4df14407e97a45f042b9a07c5339539e5faf197db03841062bc",
+      "width": 1,
+      "height": 1,
+      "frameCount": 74,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0390",
+        "frameCount": 74
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.961Z"
+    },
+    "5f6c8b0f-7346-48ca-a0ab-17312f1874aa": {
+      "id": "5f6c8b0f-7346-48ca-a0ab-17312f1874aa",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0391",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0391_frame_0.png",
+      "originalHash": "bc97c8cd86d99a3c22a7f1901015dd4d152938a579141459890644122f5f1188",
+      "width": 1,
+      "height": 1,
+      "frameCount": 2,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0391",
+        "frameCount": 2
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.985Z"
+    },
+    "39ac00c1-a504-46bf-a2fe-e64e61e6f860": {
+      "id": "39ac00c1-a504-46bf-a2fe-e64e61e6f860",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0392",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0392_frame_0.png",
+      "originalHash": "deab7e9b0808543a7deb998f94ad344f25abb7c370ceec8acdd3092948bbb3ff",
+      "width": 2,
+      "height": 1,
+      "frameCount": 182,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0392",
+        "frameCount": 182
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.007Z"
+    },
+    "6a73958b-0ab8-4e10-a2fd-335036a1f456": {
+      "id": "6a73958b-0ab8-4e10-a2fd-335036a1f456",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0393",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0393_frame_0.png",
+      "originalHash": "2e152c1dbef784f790db818431e08fb72ef0bd65ec976bbbc62a5cc946bc7fd8",
+      "width": 68,
+      "height": 120,
+      "frameCount": 20,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0393",
+        "frameCount": 20
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.029Z"
+    },
+    "a2ce36ab-a296-4ee8-875e-8ada541b5bc3": {
+      "id": "a2ce36ab-a296-4ee8-875e-8ada541b5bc3",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0394",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0394_frame_0.png",
+      "originalHash": "a1652ea98db2e70437ab56fc5978be2cfb059b6e0971f45c9d73795b7d06633f",
+      "width": 147,
+      "height": 205,
+      "frameCount": 49,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0394",
+        "frameCount": 49
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.050Z"
+    },
+    "b3cdb3ce-9118-4c6c-8ef0-7632c540986f": {
+      "id": "b3cdb3ce-9118-4c6c-8ef0-7632c540986f",
+      "sceneId": "136c879e-5651-4bb8-99fc-fb520844c184",
+      "name": "LFLF_0080_AKOS_0395",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0080_AKOS_0395_frame_0.png",
+      "originalHash": "b1c3f1e61ab03d08b6c45e221451857857c9136372ecb1bc077baa82c76d5abd",
+      "width": 10,
+      "height": 7,
+      "frameCount": 6,
+      "metadata": {
+        "roomNumber": 80,
+        "akosId": "LFLF_0080_AKOS_0395",
+        "frameCount": 6
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:30.072Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}
