@@ -1,0 +1,160 @@
+// Local development bridge. Included inside namespace Scumm in scumm.cpp.
+// Enabled only by an explicit playtest_session setting in the isolated config.
+void ScummEngine::refreshHDRoomBackground() {
+	if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session")) return;
+	// Loading a save bypasses startScene(), including its HD background load.
+	// Refresh on the engine thread before drawing that restored room.
+	if (!isSmushActive() && _currentRoom > 0 && _hdCurrentRoom != _currentRoom && _hdAssetManager->isEnabled()) {
+		_hdBackgroundSurface.free();
+		_hdAssetManager->loadBackground(_currentRoom, _hdBackgroundSurface);
+		_hdCurrentRoom = _currentRoom;
+		_hdCleanBackground.free();
+		free(_hdCleanValid);
+		_hdCleanValid = nullptr;
+		_hdCleanValidSize = 0;
+		_fullRedraw = true;
+	}
+}
+
+void ScummEngine::playtestTick() {
+	if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session"))
+		return;
+	uint32 now = _system->getMillis();
+	if (now - _playtestLastPoll < 100)
+		return;
+	_playtestLastPoll = now;
+	Common::String directory = ConfMan.get("playtest_session");
+	if (directory.empty())
+		return;
+	refreshHDRoomBackground();
+	bool ready = !isPaused() && !isSmushActive() && !_saveLoadFlag &&
+		_currentRoom > 0 && _currentRoom != 87 && !vm.cutSceneStackPointer &&
+		VAR_EGO != 0xFF && VAR(VAR_EGO) > 0 && VAR(VAR_EGO) < _numActors;
+	// Opt-in deterministic walking for native lighting/depth smoke tests. Uses
+	// the normal actor walker, so room scripts and lighting run unchanged.
+	if (ready && getenv("MI3_ENGINE_TEST_INPUT")) {
+		Common::String savePath = directory + "/save-load.txt";
+		FILE *save = fopen(savePath.c_str(), "r");
+		if (save) {
+			int action = 0, slot = 0;
+			int fields = fscanf(save, "%d %d", &action, &slot);
+			fclose(save);
+			remove(savePath.c_str());
+			if (fields == 2 && (action == 1 || action == 2) && slot >= 0 && slot < 100) {
+				_saveLoadFlag = action;
+				_saveLoadSlot = slot;
+				_saveTemporaryState = false;
+				return;
+			}
+		}
+		// Exercise an unmodified cinematic timeline using the normal SAN player.
+		// This opt-in test hook never runs in regular Playtest sessions.
+		Common::String moviePath = directory + "/movie.txt";
+		FILE *movie = fopen(moviePath.c_str(), "r");
+		if (movie) {
+			char name[32] = {};
+			int fields = fscanf(movie, "%31s", name);
+			fclose(movie);
+			remove(moviePath.c_str());
+			if (fields == 1 && !strchr(name, '/') && !strchr(name, '\\') && strstr(name, ".SAN")) {
+				static_cast<ScummEngine_v7 *>(this)->_splayer->play(name, 12);
+				_fullRedraw = true;
+				return;
+			}
+		}
+		Common::String walkPath = directory + "/walk-to.txt";
+		FILE *walk = fopen(walkPath.c_str(), "r");
+		if (walk) {
+			int x = 0, y = 0;
+			int fields = fscanf(walk, "%d %d", &x, &y);
+			fclose(walk);
+			remove(walkPath.c_str());
+			if (fields == 2 && x >= 0 && y >= 0 && x < _roomWidth && y < _roomHeight)
+				_actors[VAR(VAR_EGO)]->startWalkActor(x, y, -1);
+		}
+	}
+	Common::String commandPath = directory + "/command.json";
+	FILE *input = fopen(commandPath.c_str(), "rb");
+	if (input) {
+		char buffer[1024];
+		size_t count = fread(buffer, 1, sizeof(buffer) - 1, input);
+		buffer[count] = 0;
+		fclose(input);
+		Common::JSONValue *command = Common::JSON::parse(buffer);
+		if (command && command->isObject() && command->hasChild("id") && command->child("id")->isIntegerNumber()) {
+			int id = command->child("id")->asIntegerNumber();
+			if (id > _playtestCommandId) {
+				_playtestCommandId = id;
+				_playtestError.clear();
+				if (!ready) {
+					_playtestError = "Game is busy. Finish the opening, cutscene, or menu before retrying.";
+				} else if (!command->hasChild("action") || !command->child("action")->isString() ||
+					!command->hasChild("room") || !command->child("room")->isIntegerNumber()) {
+					_playtestError = "Invalid command";
+				} else {
+					Common::String action = command->child("action")->asString();
+					int room = command->child("room")->asIntegerNumber();
+					if (room < 1 || room > 94) {
+						_playtestError = "Invalid COMI room";
+					} else if (action == "jump") {
+						_actors[VAR(VAR_EGO)]->_room = room;
+						_sound->stopAllSounds();
+						startScene(room, nullptr, 0);
+						_fullRedraw = true;
+					} else if (action == "reload" && room == _currentRoom) {
+						Common::String hdPath = _hdAssetManager->getHDPath();
+						_hdAssetManager->setHDPath(hdPath);
+						Graphics::Surface replacement;
+						if (_hdAssetManager->loadBackground(room, replacement)) {
+							_hdBackgroundSurface.free();
+							_hdBackgroundSurface.copyFrom(replacement);
+							replacement.free();
+							_hdCurrentRoom = room;
+							_hdComposite.free();
+							_fullRedraw = true;
+						} else {
+							_playtestError = "Replacement background could not be loaded";
+						}
+					} else {
+						_playtestError = "Unsupported command or room is not active";
+					}
+				}
+			}
+		}
+		delete command;
+	}
+	// Read-only actor diagnostics identify the exact cels used by live animations.
+	Common::String actors = "[";
+	for (int i = 0; i < _numActors; ++i) {
+		Actor *actor = _actors[i];
+		if (!actor || !actor->_visible || actor->_room != _currentRoom || !actor->_costume)
+			continue;
+		if (actors.size() > 1) actors += ",";
+		actors += Common::String::format("{\"id\":%d,\"costume\":%d,\"frame\":%d,\"walkFrame\":%d,\"standFrame\":%d,\"x\":%d,\"y\":%d,\"cel\":%d,\"cels\":[",
+			i, actor->_costume, actor->_frame, actor->_walkFrame, actor->_standFrame,
+			(int)actor->getPos().x, (int)actor->getPos().y, actor->_hdCurrentCel);
+		for (int limb = 0; limb < actor->_hdNumLimbs && limb < 16; ++limb) {
+			if (limb) actors += ",";
+			actors += Common::String::format("%d", actor->_hdLimbCel[limb]);
+		}
+		actors += "]}";
+	}
+	actors += "]";
+	Common::String status = Common::String::format(
+		"{\"protocol\":1,\"ready\":%s,\"room\":%d,\"commandId\":%d,\"error\":%s,\"backgroundLoaded\":%s,\"width\":%d,\"height\":%d,\"actors\":%s}",
+		ready ? "true" : "false", _currentRoom, _playtestCommandId,
+		Common::JSONValue(_playtestError).stringify().c_str(),
+		_hdBackgroundSurface.getPixels() && _hdCurrentRoom == _currentRoom ? "true" : "false",
+		_hdBackgroundSurface.w, _hdBackgroundSurface.h, actors.c_str());
+	status.deleteLastChar();
+	status += Common::String::format(",\"aspectRatio\":%d,\"outputWidth\":2560,\"outputHeight\":%d,\"viewportWidth\":%d,\"viewportHeight\":%d,\"cameraLeft\":%d,\"mouseRoomX\":%d,\"mouseRoomY\":%d}",
+		hdAspectRatio(), hdAspectRatio() == 169 ? 1440 : 1920, _screenWidth, _screenHeight,
+		_virtscr[kMainVirtScreen].xstart, _virtualMouse.x, _virtualMouse.y);
+	Common::String temporary = directory + "/status.tmp";
+	FILE *output = fopen(temporary.c_str(), "wb");
+	if (output) {
+		fwrite(status.c_str(), 1, status.size(), output);
+		fclose(output);
+		rename(temporary.c_str(), (directory + "/status.json").c_str());
+	}
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "0526b4fc-832a-4925-b5b6-77e622c58b95",
+    "name": "shipcom2",
+    "roomNumber": 41,
+    "assets": [
+      "55eec30c-ba4e-4c1d-9aef-ae8cfca89988"
+    ]
+  },
+  "assets": {
+    "55eec30c-ba4e-4c1d-9aef-ae8cfca89988": {
+      "id": "55eec30c-ba4e-4c1d-9aef-ae8cfca89988",
+      "sceneId": "0526b4fc-832a-4925-b5b6-77e622c58b95",
+      "name": "0041_shipcom2",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0041_shipcom2.png",
+      "originalHash": "5c6578b7de34960b4fc7352aa21f6aa7a6c947cff903004193c7c474066a6954",
+      "width": 1200,
+      "height": 1200,
+      "metadata": {
+        "roomNumber": 41,
+        "originalFile": "0041_shipcom2.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.571Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

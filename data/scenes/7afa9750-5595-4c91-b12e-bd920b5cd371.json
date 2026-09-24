@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "7afa9750-5595-4c91-b12e-bd920b5cd371",
+    "name": "easyhard",
+    "roomNumber": 87,
+    "assets": [
+      "febf8abc-771c-48c3-8e01-4c7a59526466",
+      "d87adb99-4fed-43af-94cd-ba500cb33c64",
+      "971822e2-d61f-4b4b-94f0-cc1df0743489",
+      "0c340ef6-b8b8-44c6-a2df-02e09b726fe8",
+      "3d093daf-6a0f-44ce-8ebe-5036794a0f34",
+      "ef144fcc-979f-43fd-9c9d-8884b3a4c03f"
+    ]
+  },
+  "assets": {
+    "febf8abc-771c-48c3-8e01-4c7a59526466": {
+      "id": "febf8abc-771c-48c3-8e01-4c7a59526466",
+      "sceneId": "7afa9750-5595-4c91-b12e-bd920b5cd371",
+      "name": "0087_easyhard",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0087_easyhard.png",
+      "originalHash": "a3866a244439ceae245852597d4c3f9011997a2ba7cc0631f83057ecaad81d04",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 87,
+        "originalFile": "0087_easyhard.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.416Z"
+    },
+    "d87adb99-4fed-43af-94cd-ba500cb33c64": {
+      "id": "d87adb99-4fed-43af-94cd-ba500cb33c64",
+      "sceneId": "7afa9750-5595-4c91-b12e-bd920b5cd371",
+      "name": "0087_easyhard-choice-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0087_easyhard-choice-object_0000.png",
+      "originalHash": "cdbdc4c2964731e57b990b5fa9feebc888d5084934f6a7a3394386cc684b0386",
+      "width": 360,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 87,
+        "originalFile": "0087_easyhard-choice-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.428Z"
+    },
+    "971822e2-d61f-4b4b-94f0-cc1df0743489": {
+      "id": "971822e2-d61f-4b4b-94f0-cc1df0743489",
+      "sceneId": "7afa9750-5595-4c91-b12e-bd920b5cd371",
+      "name": "0087_easyhard-choice-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0087_easyhard-choice-object_0001.png",
+      "originalHash": "58e7668c4c9e6613a4bd6f9142cccebb7f5a2fd9aedb010b2788ed2215cc2049",
+      "width": 360,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 87,
+        "originalFile": "0087_easyhard-choice-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.441Z"
+    },
+    "0c340ef6-b8b8-44c6-a2df-02e09b726fe8": {
+      "id": "0c340ef6-b8b8-44c6-a2df-02e09b726fe8",
+      "sceneId": "7afa9750-5595-4c91-b12e-bd920b5cd371",
+      "name": "0087_foreign-placard-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0087_foreign-placard-object_0000.png",
+      "originalHash": "b707a6fe8250ac20ed7f02b6789c29e78171978200dce0f8befbd182077e4c3e",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 87,
+        "originalFile": "0087_foreign-placard-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.454Z"
+    },
+    "3d093daf-6a0f-44ce-8ebe-5036794a0f34": {
+      "id": "3d093daf-6a0f-44ce-8ebe-5036794a0f34",
+      "sceneId": "7afa9750-5595-4c91-b12e-bd920b5cd371",
+      "name": "0087_foreign-placard-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0087_foreign-placard-object_0001.png",
+      "originalHash": "3b74737a646e3cd466efbef930fdc02715820e1743e16522372db9d2ea43dfc5",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 87,
+        "originalFile": "0087_foreign-placard-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.473Z"
+    },
+    "ef144fcc-979f-43fd-9c9d-8884b3a4c03f": {
+      "id": "ef144fcc-979f-43fd-9c9d-8884b3a4c03f",
+      "sceneId": "7afa9750-5595-4c91-b12e-bd920b5cd371",
+      "name": "LFLF_0087_AKOS_0440",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0087_AKOS_0440_frame_0.png",
+      "originalHash": "b919ef2d2dca3bd3d88e9f6ed1bb65d07fd03c6a0d5c03d1fe7943c3fb87681c",
+      "width": 1,
+      "height": 1,
+      "frameCount": 1,
+      "metadata": {
+        "roomNumber": 87,
+        "akosId": "LFLF_0087_AKOS_0440",
+        "frameCount": 1
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:31.356Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

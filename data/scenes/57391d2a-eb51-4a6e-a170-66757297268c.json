@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "57391d2a-eb51-4a6e-a170-66757297268c",
+    "name": "elanemap",
+    "roomNumber": 38,
+    "assets": [
+      "8b03f1d2-649c-4c6b-8813-c1bc12b9759f"
+    ]
+  },
+  "assets": {
+    "8b03f1d2-649c-4c6b-8813-c1bc12b9759f": {
+      "id": "8b03f1d2-649c-4c6b-8813-c1bc12b9759f",
+      "sceneId": "57391d2a-eb51-4a6e-a170-66757297268c",
+      "name": "0038_elanemap",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0038_elanemap.png",
+      "originalHash": "11f32fa3eb75391eccc2b2b796f145f6f850c16973ed1e8cdeddd891e373ebbe",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 38,
+        "originalFile": "0038_elanemap.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.168Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

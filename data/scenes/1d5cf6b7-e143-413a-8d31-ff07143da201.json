@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+    "name": "eggbeach",
+    "roomNumber": 75,
+    "assets": [
+      "1cc95329-980e-4cd9-8102-a10b6192f98b",
+      "47cdcb22-38d8-4a1c-a601-24102da37083",
+      "d49b7870-73d8-4475-a142-3dc7c8655218",
+      "d84636b6-4073-4d97-9945-9eb58b59fb44",
+      "2f0bf0ce-f02e-4f2b-8149-ef98558de5dc",
+      "9727283b-b3b1-4d34-9db8-1268abd28d8d",
+      "75ea1f86-6276-4e63-8e5c-ff3f70b089cf",
+      "66c1a360-45ab-4506-8c09-51cb5c77dd49",
+      "97a08754-c3f0-4d1a-9c57-35e339f29e1f",
+      "2c17559d-94fa-4209-8fe4-5e9848e53019",
+      "4c96e409-fe5c-4383-8ce1-4a2b5b4e1253",
+      "72ca80ab-0c39-4e7f-8f33-c044b6e04287",
+      "cd8df00d-f42b-41f6-8e18-781e624c4338",
+      "403543c5-2cb5-40ae-93e9-c02ffa8ba732",
+      "6a36172c-e339-4678-bea8-4b1af6a2d517"
+    ]
+  },
+  "assets": {
+    "1cc95329-980e-4cd9-8102-a10b6192f98b": {
+      "id": "1cc95329-980e-4cd9-8102-a10b6192f98b",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "0075_eggbeach",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0075_eggbeach.png",
+      "originalHash": "6c649f37c90dec7dc3dc708a14632f165641cdb75d6d0f2ef25498e38fce674b",
+      "width": 992,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 75,
+        "originalFile": "0075_eggbeach.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.051Z"
+    },
+    "47cdcb22-38d8-4a1c-a601-24102da37083": {
+      "id": "47cdcb22-38d8-4a1c-a601-24102da37083",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "0075_eggbeach-cushion-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0075_eggbeach-cushion-anim-object_0000.png",
+      "originalHash": "52e2a9ff4d980d018c16f8045e1a4892f9c0470ee4fda06b3297643e82f14adf",
+      "width": 56,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 75,
+        "originalFile": "0075_eggbeach-cushion-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.064Z"
+    },
+    "d49b7870-73d8-4475-a142-3dc7c8655218": {
+      "id": "d49b7870-73d8-4475-a142-3dc7c8655218",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "0075_eggbeach-cushion-anim-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0075_eggbeach-cushion-anim-object_0001.png",
+      "originalHash": "9f700e3ff4dee26921e82210e2573753a9068e634a98d1849fd96b2678e3b4ac",
+      "width": 56,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 75,
+        "originalFile": "0075_eggbeach-cushion-anim-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.078Z"
+    },
+    "d84636b6-4073-4d97-9945-9eb58b59fb44": {
+      "id": "d84636b6-4073-4d97-9945-9eb58b59fb44",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "0075_eggbeach-egg_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0075_eggbeach-egg_0000.png",
+      "originalHash": "4c1f0ef9af5a2df4d0f4676dd4e0aa595c4bf69ec596d9260f0bfbd48318b10c",
+      "width": 32,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 75,
+        "originalFile": "0075_eggbeach-egg_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.091Z"
+    },
+    "2f0bf0ce-f02e-4f2b-8149-ef98558de5dc": {
+      "id": "2f0bf0ce-f02e-4f2b-8149-ef98558de5dc",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "0075_eggbeach-lava_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0075_eggbeach-lava_0000.png",
+      "originalHash": "6b5ada8c760762010058fb249a7d9015d1bcefb51d1c27d4787b71087e805062",
+      "width": 32,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 75,
+        "originalFile": "0075_eggbeach-lava_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.104Z"
+    },
+    "9727283b-b3b1-4d34-9db8-1268abd28d8d": {
+      "id": "9727283b-b3b1-4d34-9db8-1268abd28d8d",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "0075_eggbeach-lighthouse-beam_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0075_eggbeach-lighthouse-beam_0000.png",
+      "originalHash": "b3b478df425f13a076b8ee9a268dbc4c4e8429689598f2c146b9c4bd726fc2ea",
+      "width": 168,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 75,
+        "originalFile": "0075_eggbeach-lighthouse-beam_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.117Z"
+    },
+    "75ea1f86-6276-4e63-8e5c-ff3f70b089cf": {
+      "id": "75ea1f86-6276-4e63-8e5c-ff3f70b089cf",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "0075_eggbeach-lighthouse-beam_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0075_eggbeach-lighthouse-beam_0001.png",
+      "originalHash": "e7096d6fd1c75884a92b4f6594d1c59df967566a36ea8d12d74bd8e1a8797401",
+      "width": 168,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 75,
+        "originalFile": "0075_eggbeach-lighthouse-beam_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.131Z"
+    },
+    "66c1a360-45ab-4506-8c09-51cb5c77dd49": {
+      "id": "66c1a360-45ab-4506-8c09-51cb5c77dd49",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "0075_eggbeach-rubber-tree-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0075_eggbeach-rubber-tree-anim-object_0000.png",
+      "originalHash": "872e3a4f946651bff0da9724d03a2685f91a63c53e6853498baf3edd06b2dfef",
+      "width": 328,
+      "height": 272,
+      "metadata": {
+        "roomNumber": 75,
+        "originalFile": "0075_eggbeach-rubber-tree-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.145Z"
+    },
+    "97a08754-c3f0-4d1a-9c57-35e339f29e1f": {
+      "id": "97a08754-c3f0-4d1a-9c57-35e339f29e1f",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "0075_welshmans-boat_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0075_welshmans-boat_0000.png",
+      "originalHash": "01321163d4f28a6ac9aa3485e49da62b53bd8fad7e35ff50803256deda561607",
+      "width": 232,
+      "height": 192,
+      "metadata": {
+        "roomNumber": 75,
+        "originalFile": "0075_welshmans-boat_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.158Z"
+    },
+    "2c17559d-94fa-4209-8fe4-5e9848e53019": {
+      "id": "2c17559d-94fa-4209-8fe4-5e9848e53019",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "LFLF_0075_AKOS_0368",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0075_AKOS_0368_frame_0.png",
+      "originalHash": "193293eeb08f15a60cd49f377991fd08b7343e776ad52a3f821868a88509321c",
+      "width": 80,
+      "height": 108,
+      "frameCount": 35,
+      "metadata": {
+        "roomNumber": 75,
+        "akosId": "LFLF_0075_AKOS_0368",
+        "frameCount": 35
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.132Z"
+    },
+    "4c96e409-fe5c-4383-8ce1-4a2b5b4e1253": {
+      "id": "4c96e409-fe5c-4383-8ce1-4a2b5b4e1253",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "LFLF_0075_AKOS_0369",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0075_AKOS_0369_frame_0.png",
+      "originalHash": "d0dc0b0ef147b304f09931f3d06de4917f5b761496ce233860bb60048c538bc6",
+      "width": 1,
+      "height": 1,
+      "frameCount": 294,
+      "metadata": {
+        "roomNumber": 75,
+        "akosId": "LFLF_0075_AKOS_0369",
+        "frameCount": 294
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.153Z"
+    },
+    "72ca80ab-0c39-4e7f-8f33-c044b6e04287": {
+      "id": "72ca80ab-0c39-4e7f-8f33-c044b6e04287",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "LFLF_0075_AKOS_0370",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0075_AKOS_0370_frame_0.png",
+      "originalHash": "6a3bf563a2aea4bb47a00a1efe0b21a85daaa58634a45d209ccc77c866b3a4e2",
+      "width": 15,
+      "height": 1,
+      "frameCount": 37,
+      "metadata": {
+        "roomNumber": 75,
+        "akosId": "LFLF_0075_AKOS_0370",
+        "frameCount": 37
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.177Z"
+    },
+    "cd8df00d-f42b-41f6-8e18-781e624c4338": {
+      "id": "cd8df00d-f42b-41f6-8e18-781e624c4338",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "LFLF_0075_AKOS_0372",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0075_AKOS_0372_frame_0.png",
+      "originalHash": "f66b35c0321dfc8a0df45a50b1d618b8bc9b09a8db5eb7a67884669ff1fd6ea7",
+      "width": 101,
+      "height": 271,
+      "frameCount": 26,
+      "metadata": {
+        "roomNumber": 75,
+        "akosId": "LFLF_0075_AKOS_0372",
+        "frameCount": 26
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.198Z"
+    },
+    "403543c5-2cb5-40ae-93e9-c02ffa8ba732": {
+      "id": "403543c5-2cb5-40ae-93e9-c02ffa8ba732",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "LFLF_0075_AKOS_0373",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0075_AKOS_0373_frame_0.png",
+      "originalHash": "90c44fb709427f20a24a45941454425e2bf987f7e98e276ce3d84dbffa48f8af",
+      "width": 101,
+      "height": 271,
+      "frameCount": 64,
+      "metadata": {
+        "roomNumber": 75,
+        "akosId": "LFLF_0075_AKOS_0373",
+        "frameCount": 64
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.219Z"
+    },
+    "6a36172c-e339-4678-bea8-4b1af6a2d517": {
+      "id": "6a36172c-e339-4678-bea8-4b1af6a2d517",
+      "sceneId": "1d5cf6b7-e143-413a-8d31-ff07143da201",
+      "name": "LFLF_0075_AKOS_0374",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0075_AKOS_0374_frame_0.png",
+      "originalHash": "59be44f4aeb62329f278d259edc9c3762d8ccc2b411d2e429f86bc9b038bdc23",
+      "width": 119,
+      "height": 108,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 75,
+        "akosId": "LFLF_0075_AKOS_0374",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.239Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

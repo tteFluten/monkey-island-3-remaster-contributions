@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "643f0b83-974d-4a88-910f-351743311bc6",
+    "name": "clring-b",
+    "roomNumber": 23,
+    "assets": [
+      "7d87959c-332c-457f-a5a1-dcedb6d7e51e",
+      "03bd20aa-fbca-4588-b9df-72a4aafc3665",
+      "15080cff-fdd4-4630-a030-c4ad46500ce2",
+      "937d4918-66a0-4a43-99b6-e11bdbcf5951",
+      "0ffc6c94-e682-4a4a-9019-be243c77cc7e",
+      "3861a037-505f-48c5-b802-6a912acebf34",
+      "ef7590c0-b39e-418f-b06a-f6aaaead7963",
+      "23b5c8a9-47e3-4e91-8ec9-31f182358020",
+      "18c695a9-a102-4fb0-abfe-4a5dd372fbd1",
+      "53fa761b-7dac-48b6-8177-cea7a05094e7",
+      "dfac2a40-2e99-480b-b289-d996be1acef9",
+      "deffa1ec-4739-4cda-8130-34c1ec711418",
+      "0a2066d5-e8f0-4646-9513-fef0fa88bd83",
+      "32065c1e-581c-4af5-a20d-fccc6c6e3927",
+      "410c7af2-69ee-48d3-a546-11fe90d3bd64",
+      "fcc4983f-7ed9-48db-8bd2-42cc7e06752d",
+      "d10e1b4c-46d5-4d91-8bc7-053e1ff89802"
+    ]
+  },
+  "assets": {
+    "7d87959c-332c-457f-a5a1-dcedb6d7e51e": {
+      "id": "7d87959c-332c-457f-a5a1-dcedb6d7e51e",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clring-b",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0023_clring-b.png",
+      "originalHash": "cd3c30a5a8de71b2dcfe12877c45dcfe95dc2dde78821c453aa3e86115a43340",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clring-b.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.747Z"
+    },
+    "03bd20aa-fbca-4588-b9df-72a4aafc3665": {
+      "id": "03bd20aa-fbca-4588-b9df-72a4aafc3665",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-caber-pile-anim-obj_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-caber-pile-anim-obj_0000.png",
+      "originalHash": "0309ec1557a8daf45e2c0f1b97799507ca0b65a25513a75fea3327bb79ce641a",
+      "width": 200,
+      "height": 152,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-caber-pile-anim-obj_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.761Z"
+    },
+    "15080cff-fdd4-4630-a030-c4ad46500ce2": {
+      "id": "15080cff-fdd4-4630-a030-c4ad46500ce2",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-fuse_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-fuse_0000.png",
+      "originalHash": "d26d7763ad833a78941c6e309c7b821a6fd8d02ef2e377be12b06bb3a8dd43c6",
+      "width": 136,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-fuse_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.775Z"
+    },
+    "937d4918-66a0-4a43-99b6-e11bdbcf5951": {
+      "id": "937d4918-66a0-4a43-99b6-e11bdbcf5951",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-keg_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-keg_0000.png",
+      "originalHash": "1dfada9b341c3ca3905f0652071b7c08c2fd675a3a866a18f8c155bb91b6f7ef",
+      "width": 96,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-keg_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.788Z"
+    },
+    "0ffc6c94-e682-4a4a-9019-be243c77cc7e": {
+      "id": "0ffc6c94-e682-4a4a-9019-be243c77cc7e",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-rubber-tree-2_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-rubber-tree-2_0000.png",
+      "originalHash": "1b7ee26fbc5d0064cb37b9b68aabc2a4218f7cd8d8566f4e7a557002c2b65560",
+      "width": 64,
+      "height": 208,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-rubber-tree-2_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.802Z"
+    },
+    "3861a037-505f-48c5-b802-6a912acebf34": {
+      "id": "3861a037-505f-48c5-b802-6a912acebf34",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-rubber-tree-anim-obj_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-rubber-tree-anim-obj_0000.png",
+      "originalHash": "96933403b6176200f31263aa4e8147608c3bfeb1003dc4c45441f0bed88245b6",
+      "width": 224,
+      "height": 464,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-rubber-tree-anim-obj_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.816Z"
+    },
+    "ef7590c0-b39e-418f-b06a-f6aaaead7963": {
+      "id": "ef7590c0-b39e-418f-b06a-f6aaaead7963",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-sawhorse_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-sawhorse_0000.png",
+      "originalHash": "67f773bd7ea292eb37baca62941f192ba3d3e1c8cf1682847b90ecea7d568136",
+      "width": 88,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-sawhorse_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.829Z"
+    },
+    "23b5c8a9-47e3-4e91-8ec9-31f182358020": {
+      "id": "23b5c8a9-47e3-4e91-8ec9-31f182358020",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-sawhorse_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-sawhorse_0001.png",
+      "originalHash": "67e18a34ae82ab5cb5805b183130bea28aeb356efb5cc0d72260eb9ca0f8e94c",
+      "width": 88,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-sawhorse_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.842Z"
+    },
+    "18c695a9-a102-4fb0-abfe-4a5dd372fbd1": {
+      "id": "18c695a9-a102-4fb0-abfe-4a5dd372fbd1",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-sawhorse_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-sawhorse_0002.png",
+      "originalHash": "d3827249ce3dbd76c092f29c2b5bafd847eec4b0556ef5f70899db09475132af",
+      "width": 88,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-sawhorse_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.856Z"
+    },
+    "53fa761b-7dac-48b6-8177-cea7a05094e7": {
+      "id": "53fa761b-7dac-48b6-8177-cea7a05094e7",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-stump_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-stump_0000.png",
+      "originalHash": "4b725468fbf0313224b19117d02c8430f1de8988b33dfd328f54f6efb874c2a1",
+      "width": 104,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-stump_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.869Z"
+    },
+    "dfac2a40-2e99-480b-b289-d996be1acef9": {
+      "id": "dfac2a40-2e99-480b-b289-d996be1acef9",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-tilted-horse_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-tilted-horse_0000.png",
+      "originalHash": "c91e84c69eb3155df5a533a892f9931f4f20014e45cfcd4fadb1046d0078a892",
+      "width": 112,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-tilted-horse_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.883Z"
+    },
+    "deffa1ec-4739-4cda-8130-34c1ec711418": {
+      "id": "deffa1ec-4739-4cda-8130-34c1ec711418",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clearing-b-tree-keg_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clearing-b-tree-keg_0000.png",
+      "originalHash": "b9e348f32e6dbbc5df18ddc364564f68a57ca18d1cf33a3d667ae1f62f260c16",
+      "width": 112,
+      "height": 112,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clearing-b-tree-keg_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.896Z"
+    },
+    "0a2066d5-e8f0-4646-9513-fef0fa88bd83": {
+      "id": "0a2066d5-e8f0-4646-9513-fef0fa88bd83",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_clring-b-caber-door-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_clring-b-caber-door-object_0000.png",
+      "originalHash": "02d5d6b36f6916e52f14f1202f30ea2d6106cd3acdb4e97cfdb512127c1b7b99",
+      "width": 48,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_clring-b-caber-door-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.912Z"
+    },
+    "32065c1e-581c-4af5-a20d-fccc6c6e3927": {
+      "id": "32065c1e-581c-4af5-a20d-fccc6c6e3927",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_keg-shadow_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_keg-shadow_0000.png",
+      "originalHash": "6112e427b175aed6db12113d4ae185929952654ce037344d351702b275cca50f",
+      "width": 120,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_keg-shadow_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.928Z"
+    },
+    "410c7af2-69ee-48d3-a546-11fe90d3bd64": {
+      "id": "410c7af2-69ee-48d3-a546-11fe90d3bd64",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "0023_sawhorse-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0023_sawhorse-anim-object_0000.png",
+      "originalHash": "fb1debad28a356b500accbcefd78ad5149a9ef9aa7f399c35eaae325354e8828",
+      "width": 128,
+      "height": 136,
+      "metadata": {
+        "roomNumber": 23,
+        "originalFile": "0023_sawhorse-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.945Z"
+    },
+    "fcc4983f-7ed9-48db-8bd2-42cc7e06752d": {
+      "id": "fcc4983f-7ed9-48db-8bd2-42cc7e06752d",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "LFLF_0023_AKOS_0141",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0023_AKOS_0141_frame_0.png",
+      "originalHash": "35b1a8cab125f5f53f967339c0b611ff346d003b43553ca150dbd864afc0d9d4",
+      "width": 13,
+      "height": 10,
+      "frameCount": 26,
+      "metadata": {
+        "roomNumber": 23,
+        "akosId": "LFLF_0023_AKOS_0141",
+        "frameCount": 26
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:19.896Z"
+    },
+    "d10e1b4c-46d5-4d91-8bc7-053e1ff89802": {
+      "id": "d10e1b4c-46d5-4d91-8bc7-053e1ff89802",
+      "sceneId": "643f0b83-974d-4a88-910f-351743311bc6",
+      "name": "LFLF_0023_AKOS_0142",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0023_AKOS_0142_frame_0.png",
+      "originalHash": "5056b4fd4462dfb0a9f1de2ce88da5e91dac7cab6e364a020c70ac2acf916a49",
+      "width": 91,
+      "height": 257,
+      "frameCount": 22,
+      "metadata": {
+        "roomNumber": 23,
+        "akosId": "LFLF_0023_AKOS_0142",
+        "frameCount": 22
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:19.924Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

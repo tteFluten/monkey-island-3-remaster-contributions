@@ -1,0 +1,1030 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+    "name": "cannon-v",
+    "roomNumber": 10,
+    "assets": [
+      "a1327264-ec6d-4863-905c-9d7f13f9cefc",
+      "dd700942-f537-4e7d-a5ed-813f2a98fefb",
+      "8a5d3124-a3cf-48e6-a2e1-ae65e8bb4a8b",
+      "8a2fd665-1369-4afc-9b11-9fd2fc9d9063",
+      "7ac2d05c-4bf0-4c9d-b15e-7d165bdd584a",
+      "1807b61b-9320-4a9d-8230-65058de04bf3",
+      "3e4b929e-9b7e-4cc8-bdd1-deb7acf3e602",
+      "843d65cf-4208-466c-b60d-ca6523d793c8",
+      "041c1f92-4da1-4e4b-b4f4-4f35da794d0d",
+      "e0f11603-0777-43fc-b0a7-9c812d4495d5",
+      "bc8abbd3-2e6a-43f7-9612-4590745788a8",
+      "d16c74aa-8eea-4fda-bc5e-bbbb957a85da",
+      "c57b458a-c3cd-40aa-b729-325b3454d415",
+      "5d9df75d-74ea-47cc-894d-0639d4083d37",
+      "5c817dfd-b4ab-476b-b62a-4fe4f2c14673",
+      "b64bc5ff-bb57-441c-a44b-e49879f0e884",
+      "db9c6b76-d76b-45f2-bb81-18af2345b29b",
+      "ad2a2b14-2841-4a3e-a5f9-64d817644524",
+      "5495a69f-9619-492e-b5c5-7946c8fa12db",
+      "cf5fbe54-3006-4338-936a-36a6756f751d",
+      "50acd500-9d7a-44e8-8a11-a2b5943468e4",
+      "3bee4704-2737-4df5-a174-489ddbc388da",
+      "57ed19ce-ae19-4a64-bf29-c6e3a3e5ec66",
+      "2322f333-b30e-4250-85de-ccc95e37829b",
+      "7679572e-0e12-4af5-85d5-5c2a5f2e3520",
+      "f47de4f4-51df-4c03-83a6-2ee5550b35b1",
+      "2922dea5-991a-45ac-aba4-f39c5afb4125",
+      "99dffa22-f300-40dc-91e4-6b9f44bf3d28",
+      "ed3166f0-0c33-4bad-8e8e-d429d8d4c71f",
+      "ac896fac-2ad9-4722-942f-5262236fd2ec",
+      "6fa53246-1058-4e1e-9896-908a63e4dd38",
+      "0c2b969e-d1cd-4d67-b61c-93570731abea",
+      "bb7b7b3b-6ede-41ff-928b-9d5d31921553",
+      "b5205dcb-a265-4a23-be4d-07345d9884b9",
+      "313a3e74-82f2-4d22-bfe6-8bca83748e61",
+      "5f502486-2d5e-44c0-a588-5531c8356752",
+      "86e8db5d-8ff7-411d-84e0-a65464cc7f89",
+      "c0b80b10-5c0a-4274-bf5b-ad0135bb0372",
+      "76fa015e-2175-472f-824b-2ffcb709bee2",
+      "b99750bb-884c-4221-a8ee-e6b58da9b5fd",
+      "be3694b5-0a00-484a-9e97-34b3c454e9c2",
+      "ab3debf6-495e-46f7-9352-042c40af776d",
+      "0c5d86bc-accc-4d8e-b273-de3ba6832bb2",
+      "049fdeeb-0922-44a8-b5a1-090285102631",
+      "d71dda12-618a-4c74-b21c-caca104b479f",
+      "ed75a7cc-c99f-401f-ad7c-cf1f79624e29",
+      "cfd25e52-52fc-4832-be1a-a03d661034b7",
+      "a42bd35a-86ed-40f8-9b24-56c80bd81f32",
+      "873e6e29-cff5-4b47-a890-7612d00e64c5",
+      "59e817c4-a8f2-4fc1-92c1-f3e41010d3c1",
+      "a2d8ab90-4386-462e-ba0b-d41bf759de7c",
+      "fc2e5b17-8765-4304-8797-b1f4f5943a4a",
+      "71b4da2c-a712-4ee5-b808-270c4fd3a01e",
+      "c02a2fb6-b438-476e-9bd9-9561f0bfd814",
+      "0955254e-534b-4241-a860-afa017cef026",
+      "496a37fc-bdd3-4ea1-b27e-6138ed2d6176",
+      "539d1ee3-9dd0-478a-a842-315df8104f1c",
+      "f1ce7d6a-4bfd-414f-a43e-45b024aa346f"
+    ]
+  },
+  "assets": {
+    "a1327264-ec6d-4863-905c-9d7f13f9cefc": {
+      "id": "a1327264-ec6d-4863-905c-9d7f13f9cefc",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_cannon-v",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0010_cannon-v.png",
+      "originalHash": "6a527591fd91faf183ff0326713ebf031e95bc1167b236ea511e733b47cc0fad",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_cannon-v.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.027Z"
+    },
+    "dd700942-f537-4e7d-a5ed-813f2a98fefb": {
+      "id": "dd700942-f537-4e7d-a5ed-813f2a98fefb",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-turret-1_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-turret-1_0000.png",
+      "originalHash": "5a8fd44c279c19a0851f1ace95ff45a6ded7f46136e87ba3e5843b19bb88940e",
+      "width": 24,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-turret-1_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.042Z"
+    },
+    "8a5d3124-a3cf-48e6-a2e1-ae65e8bb4a8b": {
+      "id": "8a5d3124-a3cf-48e6-a2e1-ae65e8bb4a8b",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-turret-2_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-turret-2_0000.png",
+      "originalHash": "d3c4482e05fa6b71ecd12998e754b2b0d2b5d59d83215b2fc2067b804e77dfb8",
+      "width": 24,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-turret-2_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.057Z"
+    },
+    "8a2fd665-1369-4afc-9b11-9fd2fc9d9063": {
+      "id": "8a2fd665-1369-4afc-9b11-9fd2fc9d9063",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-turret-3_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-turret-3_0000.png",
+      "originalHash": "07cc1185c1debdce0782c38c5e712eced696ec6dbb2c139dd087d494b6031b86",
+      "width": 32,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-turret-3_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.071Z"
+    },
+    "7ac2d05c-4bf0-4c9d-b15e-7d165bdd584a": {
+      "id": "7ac2d05c-4bf0-4c9d-b15e-7d165bdd584a",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-10_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-10_0000.png",
+      "originalHash": "e403fc0e447768ce48f5d12cda942d08430f8c783c64f505c72d2caeaa4c0188",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-10_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.085Z"
+    },
+    "1807b61b-9320-4a9d-8230-65058de04bf3": {
+      "id": "1807b61b-9320-4a9d-8230-65058de04bf3",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-11_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-11_0000.png",
+      "originalHash": "4f6776222dcc3382bf9a5b521c8a83bb1494dc3b7d9f6fb07994bc9131b99631",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-11_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.098Z"
+    },
+    "3e4b929e-9b7e-4cc8-bdd1-deb7acf3e602": {
+      "id": "3e4b929e-9b7e-4cc8-bdd1-deb7acf3e602",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-12_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-12_0000.png",
+      "originalHash": "c4c7371e8eebb3c5a097f0a65baa06ff53672cb70586cbaf075fd352cfc3c939",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-12_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.112Z"
+    },
+    "843d65cf-4208-466c-b60d-ca6523d793c8": {
+      "id": "843d65cf-4208-466c-b60d-ca6523d793c8",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-13_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-13_0000.png",
+      "originalHash": "ad07bf8956cf075e8615ec2b0703bc74ea1025e610cb59efe29aa32d70d36471",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-13_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.126Z"
+    },
+    "041c1f92-4da1-4e4b-b4f4-4f35da794d0d": {
+      "id": "041c1f92-4da1-4e4b-b4f4-4f35da794d0d",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-14_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-14_0000.png",
+      "originalHash": "a829150949a54cfd76c1db5ec102265d7a9e1aeff41dbc3c99c9386c59f68c92",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-14_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.139Z"
+    },
+    "e0f11603-0777-43fc-b0a7-9c812d4495d5": {
+      "id": "e0f11603-0777-43fc-b0a7-9c812d4495d5",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-15_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-15_0000.png",
+      "originalHash": "e224e365c57f5d4ea0bad50589ff33e7f7bd93dfa5f0d26cfff39f584bed057d",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-15_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.152Z"
+    },
+    "bc8abbd3-2e6a-43f7-9612-4590745788a8": {
+      "id": "bc8abbd3-2e6a-43f7-9612-4590745788a8",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-16_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-16_0000.png",
+      "originalHash": "def267af73dc28ad966dc2d43490d03970ecd0cc6130b6457a2fb5cc4fb119ec",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-16_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.165Z"
+    },
+    "d16c74aa-8eea-4fda-bc5e-bbbb957a85da": {
+      "id": "d16c74aa-8eea-4fda-bc5e-bbbb957a85da",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-17_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-17_0000.png",
+      "originalHash": "a729b5e743db6e4dbc52dcdfcdbcc65561f7e67b7a4488086cbada49adb7768f",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-17_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.182Z"
+    },
+    "c57b458a-c3cd-40aa-b729-325b3454d415": {
+      "id": "c57b458a-c3cd-40aa-b729-325b3454d415",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-18_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-18_0000.png",
+      "originalHash": "dc0db50c7d0dfbc1d12e8372210a7cb19b3e92c568e734f3b2cc1943d94744d1",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-18_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.197Z"
+    },
+    "5d9df75d-74ea-47cc-894d-0639d4083d37": {
+      "id": "5d9df75d-74ea-47cc-894d-0639d4083d37",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-19_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-19_0000.png",
+      "originalHash": "94b1445e5156c28f42242a405b9ab08ad473dae47c04ac8bba5d64aab6a548cd",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-19_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.212Z"
+    },
+    "5c817dfd-b4ab-476b-b62a-4fe4f2c14673": {
+      "id": "5c817dfd-b4ab-476b-b62a-4fe4f2c14673",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-1_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-1_0000.png",
+      "originalHash": "155c151e25b5f7bead4844169d57bc79c9fd25791a96378faf49e36f63ff2077",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-1_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.227Z"
+    },
+    "b64bc5ff-bb57-441c-a44b-e49879f0e884": {
+      "id": "b64bc5ff-bb57-441c-a44b-e49879f0e884",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-20_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-20_0000.png",
+      "originalHash": "cd13757bdee37c81108f6d6963f8148d6dedcbc4e1c00a56d9c60363b1cf15f8",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-20_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.242Z"
+    },
+    "db9c6b76-d76b-45f2-bb81-18af2345b29b": {
+      "id": "db9c6b76-d76b-45f2-bb81-18af2345b29b",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-21_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-21_0000.png",
+      "originalHash": "7acb7a0f39d11b1ec94669f8ab7959553595940bcbadd251eed0fdaa1b1a94ff",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-21_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.257Z"
+    },
+    "ad2a2b14-2841-4a3e-a5f9-64d817644524": {
+      "id": "ad2a2b14-2841-4a3e-a5f9-64d817644524",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-22_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-22_0000.png",
+      "originalHash": "5f38fcd1deb3028e7fc7e71670e2445f6a1bb45cb3ed474be8619fa028e8e2e9",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-22_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.271Z"
+    },
+    "5495a69f-9619-492e-b5c5-7946c8fa12db": {
+      "id": "5495a69f-9619-492e-b5c5-7946c8fa12db",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-23_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-23_0000.png",
+      "originalHash": "2a1f5fdfc328c1d922b2ee334015c13ab684664150b1218d344f3170a1046b7d",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-23_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.285Z"
+    },
+    "cf5fbe54-3006-4338-936a-36a6756f751d": {
+      "id": "cf5fbe54-3006-4338-936a-36a6756f751d",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-24_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-24_0000.png",
+      "originalHash": "b286379da8842b9414f133795be5edb53400acb40d2a50ff47102984b806fab1",
+      "width": 8,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-24_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.298Z"
+    },
+    "50acd500-9d7a-44e8-8a11-a2b5943468e4": {
+      "id": "50acd500-9d7a-44e8-8a11-a2b5943468e4",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-25_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-25_0000.png",
+      "originalHash": "fc2ddb9560b61130e4f2c7574a8aae959b5ccac83a8935fddf0b3582dfa36204",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-25_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.312Z"
+    },
+    "3bee4704-2737-4df5-a174-489ddbc388da": {
+      "id": "3bee4704-2737-4df5-a174-489ddbc388da",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-26_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-26_0000.png",
+      "originalHash": "38689aed1d3f3c733d4890bd94251a384bbb9a1b02ef19d9022baa34fa6f7406",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-26_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.327Z"
+    },
+    "57ed19ce-ae19-4a64-bf29-c6e3a3e5ec66": {
+      "id": "57ed19ce-ae19-4a64-bf29-c6e3a3e5ec66",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-27_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-27_0000.png",
+      "originalHash": "b0968a5e2df1dddc5fff4ae1767b96c059568991f65d828fb0310c9a6384f7ac",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-27_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.341Z"
+    },
+    "2322f333-b30e-4250-85de-ccc95e37829b": {
+      "id": "2322f333-b30e-4250-85de-ccc95e37829b",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-28_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-28_0000.png",
+      "originalHash": "deddbcbbae0bc79a63ea881e0666d4ccdabc54fd3144f6811b205e34d1cc3dfb",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-28_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.355Z"
+    },
+    "7679572e-0e12-4af5-85d5-5c2a5f2e3520": {
+      "id": "7679572e-0e12-4af5-85d5-5c2a5f2e3520",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-29_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-29_0000.png",
+      "originalHash": "576dff3cf97db9ab3d4e46099de9fbf4c32d4d9def519e422548deb13eae6e15",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-29_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.369Z"
+    },
+    "f47de4f4-51df-4c03-83a6-2ee5550b35b1": {
+      "id": "f47de4f4-51df-4c03-83a6-2ee5550b35b1",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-2_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-2_0000.png",
+      "originalHash": "65d575356739ae19a9b632965301ca45d1644767a867c67cb71a46c6d6d74a6e",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-2_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.382Z"
+    },
+    "2922dea5-991a-45ac-aba4-f39c5afb4125": {
+      "id": "2922dea5-991a-45ac-aba4-f39c5afb4125",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-30_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-30_0000.png",
+      "originalHash": "338f3b8484baacf0fda30e2c7c8929e766caf4b289e5e854ff96d6aab3d40522",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-30_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.396Z"
+    },
+    "99dffa22-f300-40dc-91e4-6b9f44bf3d28": {
+      "id": "99dffa22-f300-40dc-91e4-6b9f44bf3d28",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-31_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-31_0000.png",
+      "originalHash": "3b1dbceda1c8284eaa9c48e8f5c7197d5d1fd69e94e77365942ab791e7105891",
+      "width": 24,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-31_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.409Z"
+    },
+    "ed3166f0-0c33-4bad-8e8e-d429d8d4c71f": {
+      "id": "ed3166f0-0c33-4bad-8e8e-d429d8d4c71f",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-32_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-32_0000.png",
+      "originalHash": "4f02f34f31ef7240499fa99409666cca9e6d370fd148d4076d3c20bc74122aff",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-32_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.423Z"
+    },
+    "ac896fac-2ad9-4722-942f-5262236fd2ec": {
+      "id": "ac896fac-2ad9-4722-942f-5262236fd2ec",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-33_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-33_0000.png",
+      "originalHash": "78d64b272a6c4cee2ef03a6df18e5c0be98cfaa51561e3950932897b6691f318",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-33_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.436Z"
+    },
+    "6fa53246-1058-4e1e-9896-908a63e4dd38": {
+      "id": "6fa53246-1058-4e1e-9896-908a63e4dd38",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-34_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-34_0000.png",
+      "originalHash": "b2a921c5862af0a0597d5ac0f089050b30598a5fd99bffa7c92ae56fb2d4cee8",
+      "width": 8,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-34_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.449Z"
+    },
+    "0c2b969e-d1cd-4d67-b61c-93570731abea": {
+      "id": "0c2b969e-d1cd-4d67-b61c-93570731abea",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-35_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-35_0000.png",
+      "originalHash": "a64e3dbda8ed8a27070383a69c9c111ebd463ee7902a87fc8851bc6e959bda39",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-35_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.464Z"
+    },
+    "bb7b7b3b-6ede-41ff-928b-9d5d31921553": {
+      "id": "bb7b7b3b-6ede-41ff-928b-9d5d31921553",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-36_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-36_0000.png",
+      "originalHash": "c73548640970568f96ff6ce47c32d2cd2215d43d24c771d982366a41f8aa01e8",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-36_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.478Z"
+    },
+    "b5205dcb-a265-4a23-be4d-07345d9884b9": {
+      "id": "b5205dcb-a265-4a23-be4d-07345d9884b9",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-37_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-37_0000.png",
+      "originalHash": "7009d54f231588c1266a9e84afcea16c7509392c2fde5bec19c48fc1b8758eab",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-37_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.492Z"
+    },
+    "313a3e74-82f2-4d22-bfe6-8bca83748e61": {
+      "id": "313a3e74-82f2-4d22-bfe6-8bca83748e61",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-38_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-38_0000.png",
+      "originalHash": "02f461d405d1df11e4ad9cdc092e41128e51986a8b48915e076bc51ae62b5460",
+      "width": 8,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-38_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.505Z"
+    },
+    "5f502486-2d5e-44c0-a588-5531c8356752": {
+      "id": "5f502486-2d5e-44c0-a588-5531c8356752",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-39_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-39_0000.png",
+      "originalHash": "f5a375664e15880c7000e688cb33de08e06b32abdecee9385ae2e6e0e2547331",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-39_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.520Z"
+    },
+    "86e8db5d-8ff7-411d-84e0-a65464cc7f89": {
+      "id": "86e8db5d-8ff7-411d-84e0-a65464cc7f89",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-3_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-3_0000.png",
+      "originalHash": "77b976d0cdd3d16f994c8218c5ffc519c9b3cc9f415a23e30057c55bc46a14ba",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-3_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.536Z"
+    },
+    "c0b80b10-5c0a-4274-bf5b-ad0135bb0372": {
+      "id": "c0b80b10-5c0a-4274-bf5b-ad0135bb0372",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-4_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-4_0000.png",
+      "originalHash": "34f8abacdb61917ec6a0bb327c0c81f3a22553e84bf8676cf98c3b6b15c93313",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-4_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.551Z"
+    },
+    "76fa015e-2175-472f-824b-2ffcb709bee2": {
+      "id": "76fa015e-2175-472f-824b-2ffcb709bee2",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-5_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-5_0000.png",
+      "originalHash": "34e6ac201ba2f0c4c96c6c4adde4975e717327cebd5485d160593fb68c1bfff4",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-5_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.566Z"
+    },
+    "b99750bb-884c-4221-a8ee-e6b58da9b5fd": {
+      "id": "b99750bb-884c-4221-a8ee-e6b58da9b5fd",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-6_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-6_0000.png",
+      "originalHash": "5ce6594e86b9fa0f0753c0e168094bf57300dc0f1d1a7ceb21eff3f12a648068",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-6_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.580Z"
+    },
+    "be3694b5-0a00-484a-9e97-34b3c454e9c2": {
+      "id": "be3694b5-0a00-484a-9e97-34b3c454e9c2",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-7_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-7_0000.png",
+      "originalHash": "799c48e35221659ec8d349e2b6d4525af4390eb1833778be200857f376b5e5f8",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-7_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.595Z"
+    },
+    "ab3debf6-495e-46f7-9352-042c40af776d": {
+      "id": "ab3debf6-495e-46f7-9352-042c40af776d",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-8_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-8_0000.png",
+      "originalHash": "d57ab574b0063afea943c9d2ddab33acd1fabf689bcc3e0da1a8887d6d52929f",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-8_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.610Z"
+    },
+    "0c5d86bc-accc-4d8e-b273-de3ba6832bb2": {
+      "id": "0c5d86bc-accc-4d8e-b273-de3ba6832bb2",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "0010_fort-wall-9_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0010_fort-wall-9_0000.png",
+      "originalHash": "0f2047d4a89a129a52c0738346467a96f6d0ad557fb4dddaebcd25ade31172f8",
+      "width": 16,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 10,
+        "originalFile": "0010_fort-wall-9_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:09.625Z"
+    },
+    "049fdeeb-0922-44a8-b5a1-090285102631": {
+      "id": "049fdeeb-0922-44a8-b5a1-090285102631",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0034",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0034_frame_0.png",
+      "originalHash": "d4bc4e90ff82a8c98d3ef6a5909901bd810fcaf9d86032a5d6c7274bec6fef0b",
+      "width": 6,
+      "height": 1,
+      "frameCount": 200,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0034",
+        "frameCount": 200
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:17.775Z"
+    },
+    "d71dda12-618a-4c74-b21c-caca104b479f": {
+      "id": "d71dda12-618a-4c74-b21c-caca104b479f",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0035",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0035_frame_0.png",
+      "originalHash": "51ad36c549b889cde1031b770d44cfad9bf923e856b04d6828b7d2edcccdaab5",
+      "width": 430,
+      "height": 177,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0035",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:17.797Z"
+    },
+    "ed75a7cc-c99f-401f-ad7c-cf1f79624e29": {
+      "id": "ed75a7cc-c99f-401f-ad7c-cf1f79624e29",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0036",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0036_frame_0.png",
+      "originalHash": "dbfb0eb2722baa0f72854216bc20e6e73ece500cda7803601514fd3a06b97d6b",
+      "width": 154,
+      "height": 154,
+      "frameCount": 1,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0036",
+        "frameCount": 1
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:17.821Z"
+    },
+    "cfd25e52-52fc-4832-be1a-a03d661034b7": {
+      "id": "cfd25e52-52fc-4832-be1a-a03d661034b7",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0037",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0037_frame_0.png",
+      "originalHash": "985a3f6a3a6310a34b98049af1b619ff6708489dfe6b76c1adb6c3c4d6ad5f46",
+      "width": 56,
+      "height": 112,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0037",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:17.848Z"
+    },
+    "a42bd35a-86ed-40f8-9b24-56c80bd81f32": {
+      "id": "a42bd35a-86ed-40f8-9b24-56c80bd81f32",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0038",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0038_frame_0.png",
+      "originalHash": "fd0bae06f6c9a01402999397f5e5b50366a94594243fcdc4bc30f26a022a3f5b",
+      "width": 63,
+      "height": 110,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0038",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:17.871Z"
+    },
+    "873e6e29-cff5-4b47-a890-7612d00e64c5": {
+      "id": "873e6e29-cff5-4b47-a890-7612d00e64c5",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0039",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0039_frame_0.png",
+      "originalHash": "f4e1d76a8937cfb6b5b25abf27df332050c9278baf805f450885d30d87b08262",
+      "width": 62,
+      "height": 102,
+      "frameCount": 19,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0039",
+        "frameCount": 19
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:17.894Z"
+    },
+    "59e817c4-a8f2-4fc1-92c1-f3e41010d3c1": {
+      "id": "59e817c4-a8f2-4fc1-92c1-f3e41010d3c1",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0040",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0040_frame_0.png",
+      "originalHash": "92275c29e2a48c4acb7b95d58bdac58b308d122786aa116c12fa447b51870107",
+      "width": 82,
+      "height": 113,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0040",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:17.920Z"
+    },
+    "a2d8ab90-4386-462e-ba0b-d41bf759de7c": {
+      "id": "a2d8ab90-4386-462e-ba0b-d41bf759de7c",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0041",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0041_frame_0.png",
+      "originalHash": "3b2d3497495800721c3ad1faf8057249529ca39ef3db3dfa324ece145bffe7e6",
+      "width": 37,
+      "height": 50,
+      "frameCount": 13,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0041",
+        "frameCount": 13
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:17.946Z"
+    },
+    "fc2e5b17-8765-4304-8797-b1f4f5943a4a": {
+      "id": "fc2e5b17-8765-4304-8797-b1f4f5943a4a",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0042",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0042_frame_0.png",
+      "originalHash": "5636afbe5311c3dfd4fbefa8298ee3c4b2b57b1364293134a92ce9c391adf0a8",
+      "width": 55,
+      "height": 106,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0042",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:17.978Z"
+    },
+    "71b4da2c-a712-4ee5-b808-270c4fd3a01e": {
+      "id": "71b4da2c-a712-4ee5-b808-270c4fd3a01e",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0043",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0043_frame_0.png",
+      "originalHash": "0fa49f35bad1a26f1c88641a5b0d3e6f5e7f05d4ee8afbd808680a02a7fb59e9",
+      "width": 39,
+      "height": 85,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0043",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.013Z"
+    },
+    "c02a2fb6-b438-476e-9bd9-9561f0bfd814": {
+      "id": "c02a2fb6-b438-476e-9bd9-9561f0bfd814",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0044",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0044_frame_0.png",
+      "originalHash": "d9f74e51521fd3bced34208af8f9580c6d557fe11b2f1da1642e818070388f01",
+      "width": 1,
+      "height": 1,
+      "frameCount": 235,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0044",
+        "frameCount": 235
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.042Z"
+    },
+    "0955254e-534b-4241-a860-afa017cef026": {
+      "id": "0955254e-534b-4241-a860-afa017cef026",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0045",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0045_frame_0.png",
+      "originalHash": "0bca1dafd933991f43f913c097649637024da7d082c1bb6952531c2b961b4eb3",
+      "width": 567,
+      "height": 211,
+      "frameCount": 32,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0045",
+        "frameCount": 32
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.066Z"
+    },
+    "496a37fc-bdd3-4ea1-b27e-6138ed2d6176": {
+      "id": "496a37fc-bdd3-4ea1-b27e-6138ed2d6176",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0046",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0046_frame_0.png",
+      "originalHash": "8f333755f0f7442cd4a6ad29054d3a61921b162ea3e146836da3641efa82c380",
+      "width": 3,
+      "height": 4,
+      "frameCount": 258,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0046",
+        "frameCount": 258
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.092Z"
+    },
+    "539d1ee3-9dd0-478a-a842-315df8104f1c": {
+      "id": "539d1ee3-9dd0-478a-a842-315df8104f1c",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0047",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0047_frame_0.png",
+      "originalHash": "19423512180002558bd89ae70b5eec7d28fdfa422111fd8fb032d89149608ce7",
+      "width": 1,
+      "height": 1,
+      "frameCount": 233,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0047",
+        "frameCount": 233
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.115Z"
+    },
+    "f1ce7d6a-4bfd-414f-a43e-45b024aa346f": {
+      "id": "f1ce7d6a-4bfd-414f-a43e-45b024aa346f",
+      "sceneId": "5de1503f-3c46-4e66-8589-fd35d294ba0c",
+      "name": "LFLF_0010_AKOS_0048",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0010_AKOS_0048_frame_0.png",
+      "originalHash": "d92d72bba4d1fdfa7c8b0ac046b1f3c0e5ba6c1fc3bb31aa9c54afa59ab3c6c1",
+      "width": 43,
+      "height": 60,
+      "frameCount": 99,
+      "metadata": {
+        "roomNumber": 10,
+        "akosId": "LFLF_0010_AKOS_0048",
+        "frameCount": 99
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:18.139Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

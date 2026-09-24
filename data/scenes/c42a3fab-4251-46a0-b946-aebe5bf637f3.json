@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "c42a3fab-4251-46a0-b946-aebe5bf637f3",
+    "name": "pistols",
+    "roomNumber": 24,
+    "assets": [
+      "244424e3-d6c1-4091-8e5b-63f9a9a8bf70",
+      "b525a6a5-e33f-4adb-8b2e-8c3732ec5072"
+    ]
+  },
+  "assets": {
+    "244424e3-d6c1-4091-8e5b-63f9a9a8bf70": {
+      "id": "244424e3-d6c1-4091-8e5b-63f9a9a8bf70",
+      "sceneId": "c42a3fab-4251-46a0-b946-aebe5bf637f3",
+      "name": "0024_pistols",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0024_pistols.png",
+      "originalHash": "272796d74273fd5e0cfb3f3d2fb58cb9676c8663b3c65d2ffe2f6c25e6f82c8f",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 24,
+        "originalFile": "0024_pistols.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:11.984Z"
+    },
+    "b525a6a5-e33f-4adb-8b2e-8c3732ec5072": {
+      "id": "b525a6a5-e33f-4adb-8b2e-8c3732ec5072",
+      "sceneId": "c42a3fab-4251-46a0-b946-aebe5bf637f3",
+      "name": "0024_pistol-case-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0024_pistol-case-anim-object_0000.png",
+      "originalHash": "f586318db9b828f8acbc20c9981be717896c6cd61003acd4c69e24be1abe530c",
+      "width": 384,
+      "height": 256,
+      "metadata": {
+        "roomNumber": 24,
+        "originalFile": "0024_pistol-case-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:12.003Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

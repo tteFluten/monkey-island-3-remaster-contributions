@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "563842bc-4866-4e54-a443-ba639fd35fd3",
+    "name": "m-island",
+    "roomNumber": 94,
+    "assets": [
+      "7a691b5e-890b-4632-94b1-0f0c118f7566"
+    ]
+  },
+  "assets": {
+    "7a691b5e-890b-4632-94b1-0f0c118f7566": {
+      "id": "7a691b5e-890b-4632-94b1-0f0c118f7566",
+      "sceneId": "563842bc-4866-4e54-a443-ba639fd35fd3",
+      "name": "0094_m-island",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0094_m-island.png",
+      "originalHash": "b3d6eaffe343b0014446c05a224b52d48fe44940dab5c311ffefc3f6ac1e772d",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 94,
+        "originalFile": "0094_m-island.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.914Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

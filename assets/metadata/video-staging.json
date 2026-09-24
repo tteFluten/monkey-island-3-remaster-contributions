@@ -1,0 +1,172 @@
+{
+  "createdAt": "20260923T194811696412Z",
+  "audio": "original SAN",
+  "timing": "original SAN; hold final replacement frame if shorter",
+  "records": [
+    {
+      "san": "BBSAN.SAN",
+      "file": "BBSAN.mp4",
+      "source": "source:provided/videos/BBSAN.mp4",
+      "sha256": "24bcf14d03ee4f6604c622a8dab1dd78cd4e4eadb95ea20ca9daaf52e26339d2",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 704,
+      "originalFrames": 704
+    },
+    {
+      "san": "CURSERNG.SAN",
+      "file": "CURSERNG.mp4",
+      "source": "source:provided/videos/CURSERNG.mp4",
+      "sha256": "80f4f45a45cc71eb5d2c89345a8f465d5b33332358ac892363106d17e1cb1c59",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 1171,
+      "originalFrames": 1171
+    },
+    {
+      "san": "FG010GP.SAN",
+      "file": "FG010GP.mp4",
+      "source": "source:provided/videos/FG010GP.mp4",
+      "sha256": "cdf7fe38732561ff58af2a25152c46bc1d9a6ea83d1bf1629fe3032d50d62592",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 20,
+      "originalFrames": 30
+    },
+    {
+      "san": "FINALE.SAN",
+      "file": "FINALE.mp4",
+      "source": "source:provided/videos/FINALE.mp4",
+      "sha256": "638d27448b0cc3c71f3e021fb51c1d0f58a167d9513f425c4a62edf1e6c9acea",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 605,
+      "originalFrames": 595
+    },
+    {
+      "san": "KIS030.SAN",
+      "file": "KIS030.mp4",
+      "source": "source:provided/videos/KIS030.mp4",
+      "sha256": "80aa3e813f5462d1445ceee8287de2c2945622210e946a59828f442d4ab4fc27",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 55,
+      "originalFrames": 55
+    },
+    {
+      "san": "LAVARIDE.SAN",
+      "file": "LAVARIDE.mp4",
+      "source": "source:provided/videos/LAVARIDE.mp4",
+      "sha256": "ad893c54c984d3b54dd202aed8be886b1e133790b259b64f76c02f6cb47b9188",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 697,
+      "originalFrames": 697
+    },
+    {
+      "san": "LIFTCRSE.SAN",
+      "file": "LIFTCRSE.mp4",
+      "source": "source:provided/videos/LIFTCRSE.mp4",
+      "sha256": "c18a395fa26f926e7986e61b02d9d6d15a79dba80fc4d1f6bcb5af1b0ca936c4",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 365,
+      "originalFrames": 365
+    },
+    {
+      "san": "MORESLAW.SAN",
+      "file": "MORESLAW.mp4",
+      "source": "source:provided/videos/MORESLAW.mp4",
+      "sha256": "13abecbc3ad71f5847db1ff7279104be1042da896aa8501c8669a41cd6418161",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 550,
+      "originalFrames": 550
+    },
+    {
+      "san": "NEWBOOTS.SAN",
+      "file": "NEWBOOTS.mp4",
+      "source": "source:provided/videos/NEWBOOTS.mp4",
+      "sha256": "172ea14360cf663b4e82fe6837d40e870b3f2da522424cbc1bf9b5e869f0cda1",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 641,
+      "originalFrames": 641
+    },
+    {
+      "san": "OPENING.SAN",
+      "file": "OPENING.mp4",
+      "source": "source:provided/videos/OPENING.mp4",
+      "sha256": "e3755e64a46a19a41b840ebcad3d2e6dc68bb2eadcc225f413ea26dbae92eacb",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 5053,
+      "originalFrames": 5053
+    },
+    {
+      "san": "SB010.SAN",
+      "file": "SB010.mp4",
+      "source": "source:provided/videos/SB010.mp4",
+      "sha256": "90760c1ae1e35752657e62cf799ad498d1a176a5be282d24b7ec430859b87615",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 42,
+      "originalFrames": 42
+    },
+    {
+      "san": "SB020.SAN",
+      "file": "SB020.mp4",
+      "source": "source:provided/videos/SB020.mp4",
+      "sha256": "1e670bb2788ae10f11655d8c1c0518093c8e9869157fb537fde5a2b16afe1b63",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 45,
+      "originalFrames": 45
+    },
+    {
+      "san": "SINKSHP.SAN",
+      "file": "SINKSHIP.mp4",
+      "source": "source:provided/videos/SINKSHIP.mp4",
+      "sha256": "437b97320537bb1f1986e69aee10b8e99c2a2183f79916dc2b777a7c8a910430",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 526,
+      "originalFrames": 526
+    },
+    {
+      "san": "WRECKSAN.SAN",
+      "file": "WRECKSAN.mp4",
+      "source": "source:provided/videos/WRECKSAN.mp4",
+      "sha256": "c4f89e04393a2f5adb017b566f7d73c47630c46615a5d3424f67a2e13d47501d",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 823,
+      "originalFrames": 823
+    },
+    {
+      "san": "ZAP010.SAN",
+      "file": "ZAP010.mp4",
+      "source": "source:provided/videos/ZAP010.mp4",
+      "sha256": "44ae2af6f8d23081d3b80fa8b7659db73574f321de06a7556d31e7d8fffa9bf5",
+      "width": 2880,
+      "height": 2160,
+      "fps": 12,
+      "frames": 36,
+      "originalFrames": 36
+    }
+  ]
+}

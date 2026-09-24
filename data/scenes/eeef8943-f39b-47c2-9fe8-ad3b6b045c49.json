@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "eeef8943-f39b-47c2-9fe8-ad3b6b045c49",
+    "name": "opdeck2",
+    "roomNumber": 46,
+    "assets": [
+      "49c14772-e342-4641-90f6-928b27dba1ea"
+    ]
+  },
+  "assets": {
+    "49c14772-e342-4641-90f6-928b27dba1ea": {
+      "id": "49c14772-e342-4641-90f6-928b27dba1ea",
+      "sceneId": "eeef8943-f39b-47c2-9fe8-ad3b6b045c49",
+      "name": "0046_opdeck2",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0046_opdeck2.png",
+      "originalHash": "54b4f91647a490304483342991e88a083b209c7ff7a1af00b87e65c9e1d8bc17",
+      "width": 1248,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 46,
+        "originalFile": "0046_opdeck2.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.761Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

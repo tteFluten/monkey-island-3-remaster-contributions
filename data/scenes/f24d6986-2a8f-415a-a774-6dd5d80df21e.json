@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "f24d6986-2a8f-415a-a774-6dd5d80df21e",
+    "name": "closet",
+    "roomNumber": 66,
+    "assets": [
+      "c3de52cc-0553-4942-8b0f-29ca6ae8f6a2",
+      "81955460-c0bb-4569-91cc-c7c3efefcd54",
+      "ec3a8977-99b6-4486-9c6f-114adc1a7a82",
+      "34ed6a82-582f-4c2c-9e26-6e65de96949b",
+      "66712181-abb6-443a-b65c-5a68ae154ae8"
+    ]
+  },
+  "assets": {
+    "c3de52cc-0553-4942-8b0f-29ca6ae8f6a2": {
+      "id": "c3de52cc-0553-4942-8b0f-29ca6ae8f6a2",
+      "sceneId": "f24d6986-2a8f-415a-a774-6dd5d80df21e",
+      "name": "0066_closet",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0066_closet.png",
+      "originalHash": "27e71e9da26445e74a6bbc21291f134c6cb14d8129f04e88bfb1e6a52d476fc1",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 66,
+        "originalFile": "0066_closet.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.933Z"
+    },
+    "81955460-c0bb-4569-91cc-c7c3efefcd54": {
+      "id": "81955460-c0bb-4569-91cc-c7c3efefcd54",
+      "sceneId": "f24d6986-2a8f-415a-a774-6dd5d80df21e",
+      "name": "0066_closet-porthole_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0066_closet-porthole_0000.png",
+      "originalHash": "17393847fd9c38edec7d7e27b2f6ee47b5b7e6beedfb66d0637abaefcd602e6b",
+      "width": 72,
+      "height": 112,
+      "metadata": {
+        "roomNumber": 66,
+        "originalFile": "0066_closet-porthole_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.947Z"
+    },
+    "ec3a8977-99b6-4486-9c6f-114adc1a7a82": {
+      "id": "ec3a8977-99b6-4486-9c6f-114adc1a7a82",
+      "sceneId": "f24d6986-2a8f-415a-a774-6dd5d80df21e",
+      "name": "0066_closet-portrait-nail_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0066_closet-portrait-nail_0000.png",
+      "originalHash": "d233b078e3da82e29ed138bab3ea5c7ad556463422865ecfa09b8410f89d04da",
+      "width": 40,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 66,
+        "originalFile": "0066_closet-portrait-nail_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.962Z"
+    },
+    "34ed6a82-582f-4c2c-9e26-6e65de96949b": {
+      "id": "34ed6a82-582f-4c2c-9e26-6e65de96949b",
+      "sceneId": "f24d6986-2a8f-415a-a774-6dd5d80df21e",
+      "name": "LFLF_0066_AKOS_0331",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0066_AKOS_0331_frame_0.png",
+      "originalHash": "611a3f0f7e813fd2131bdd589fb7033bc890bed1e76d6045a8aced5bdf069b0f",
+      "width": 118,
+      "height": 263,
+      "frameCount": 7,
+      "metadata": {
+        "roomNumber": 66,
+        "akosId": "LFLF_0066_AKOS_0331",
+        "frameCount": 7
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:27.585Z"
+    },
+    "66712181-abb6-443a-b65c-5a68ae154ae8": {
+      "id": "66712181-abb6-443a-b65c-5a68ae154ae8",
+      "sceneId": "f24d6986-2a8f-415a-a774-6dd5d80df21e",
+      "name": "LFLF_0066_AKOS_0332",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0066_AKOS_0332_frame_0.png",
+      "originalHash": "d648ae84603751ebc42a4d39528077b94ade451f0904288649eb1b6f3d2664b4",
+      "width": 63,
+      "height": 222,
+      "frameCount": 21,
+      "metadata": {
+        "roomNumber": 66,
+        "akosId": "LFLF_0066_AKOS_0332",
+        "frameCount": 21
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:27.607Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

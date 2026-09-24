@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "690e050e-2dbf-4894-a3ed-464988c959cc",
+    "name": "endcred",
+    "roomNumber": 93,
+    "assets": [
+      "f6b3683e-ac49-49a8-8ec4-3725477703d8"
+    ]
+  },
+  "assets": {
+    "f6b3683e-ac49-49a8-8ec4-3725477703d8": {
+      "id": "f6b3683e-ac49-49a8-8ec4-3725477703d8",
+      "sceneId": "690e050e-2dbf-4894-a3ed-464988c959cc",
+      "name": "0093_endcred",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0093_endcred.png",
+      "originalHash": "f286819b691073d6fffaa28f5b07ffe376fbb51ea6ef0bc16e5cf0e43355c573",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 93,
+        "originalFile": "0093_endcred.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.879Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

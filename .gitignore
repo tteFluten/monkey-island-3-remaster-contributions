@@ -1,0 +1,42 @@
+# Original game data (not distributable)
+/game-en/
+/game-es/
+/game-full/
+/demo-original/
+/downloads/
+
+# App build artifacts
+/app/node_modules/
+/app/dist/
+
+# Python virtualenv
+tools/venv/
+
+# ISO images
+*.iso
+*.ISO
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Local playtest data, imported masters, and engine build
+/.playtest/
+/.context/
+/upscaled/imported/
+/output/
+/hd_state.log
+
+# Python test caches
+__pycache__/
+
+# Private integration settings and local environments
+.mcp.json
+.claude/
+.env
+.env.*
+!.env.example
+.venv/
+/app/dist-server/

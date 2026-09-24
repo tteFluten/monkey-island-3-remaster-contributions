@@ -1,0 +1,71 @@
+// Floor-only pass: native foreground, HD objects, actors, dialogue and cursor
+// are all composited afterwards. The original z-buffer clips baked foreground.
+if (_game.id == GID_CMI && _currentRoom != 87) {
+    for (int ai = 0; ai < _numActors; ++ai) {
+        Actor *a = _actors[ai];
+        if (!a || !a->_visible || !a->_costume || a->_room != _currentRoom || a->_layer < 0) continue;
+        // Follow the game's shadow-enabled actors, plus the known main walking
+        // costume and Wally. Animated scenery/cursor actors are not casters.
+        if (a->_shadowMode != 3 && a->_costume != 2 && !(_currentRoom == 9 && a->_costume == 25)) continue;
+        if (a->_quiverWidth != visW || a->_quiverHeight != visH || a->_quiverCamera != vs->xstart ||
+            a->_quiverUnder.size() != (uint)(visW * visH) || a->_quiverAfter.size() != a->_quiverUnder.size()) continue;
+        // Native dirty draws may repaint only a talking head. Use the complete
+        // replacement pose's alpha for feet whenever a validated pose exists.
+        Common::Array<byte> silhouette, empty;
+        const byte *under = a->_quiverUnder.data(), *after = a->_quiverAfter.data();
+        for (uint pi = 0; pi < quiverPoses.size(); ++pi) {
+            if (quiverPoses[pi].actor != a) continue;
+            silhouette.resize(visW * visH); empty.resize(visW * visH);
+            memset(silhouette.data(), 0, silhouette.size());
+            memset(empty.data(), 0, empty.size());
+            for (uint di = 0; di < quiverPoses[pi].textures.size(); ++di) {
+                const Actor::QuiverDraw &d = a->_quiverDraws[di];
+                const Graphics::Surface &texture = *quiverPoses[pi].textures[di];
+                if (!texture.getPixels() || d.screenWidth <= 0 || d.screenHeight <= 0) continue;
+                for (int y = MAX(0, d.screenTop); y < MIN(visH, d.screenTop + d.screenHeight); ++y) {
+                    int sy = MIN<int>(texture.h - 1, (2 * (y - d.screenTop) + 1) * texture.h / (2 * d.screenHeight));
+                    const uint32 *row = (const uint32 *)texture.getBasePtr(0, sy);
+                    for (int x = MAX(0, d.screenLeft); x < MIN(visW, d.screenLeft + d.screenWidth); ++x) {
+                        int sx = MIN<int>(texture.w - 1, (2 * (x - d.screenLeft) + 1) * texture.w / (2 * d.screenWidth));
+                        if (d.mirror) sx = texture.w - 1 - sx;
+                        if ((row[sx] >> 24) >= 128) silhouette[y * visW + x] = 200;
+                    }
+                }
+            }
+            under = empty.data(); after = silhouette.data();
+            break;
+        }
+        const HdActorShadow::Footprint shadow = HdActorShadow::footprint(
+            under, after, visW, visH,
+            a->getPos().x - vs->xstart, a->getPos().y,
+            HdActorShadow::groundElevation(a->getPos().x, a->getPos().y, a->getElevation()));
+        if (_hdFrameCount % 120 == 0 && !shadow.valid)
+            hdPrintf("CONTACT-SHADOW-SKIP actor=%d position=%d,%d elevation=%d pose=%d", a->_number,
+                     a->getPos().x, a->getPos().y, a->getElevation(), !silhouette.empty());
+        if (!shadow.valid || !shadow.opacity) continue;
+        int z = -1, lowest = -1;
+        for (uint di = 0; di < a->_quiverDraws.size(); ++di) {
+            const Actor::QuiverDraw &d = a->_quiverDraws[di];
+            if (d.screenTop + d.screenHeight > lowest) {
+                lowest = d.screenTop + d.screenHeight; z = d.z;
+            }
+        }
+        if (a->_quiverDraws.empty()) continue;
+        const float cx = shadow.x * scale, cy = shadow.y * scale;
+        const float rx = shadow.radiusX * scale, ry = shadow.radiusY * scale;
+        const int x0 = MAX(0, (int)(cx - rx)), x1 = MIN(hdW, (int)(cx + rx) + 1);
+        const int y0 = MAX(0, (int)(cy - ry)), y1 = MIN(hdH, (int)(cy + ry) + 1);
+        for (int y = y0; y < y1; ++y) {
+            uint32 *dest = (uint32 *)_hdComposite.getBasePtr(0, y);
+            const byte *mask = z >= 0 && z < _gdi->_numZBuffer ? getMaskBuffer(0, y / scale, z) : nullptr;
+            const float dy = (y + 0.5f - cy) / ry;
+            for (int x = x0; x < x1; ++x) {
+                if (HdObjectDepth::masked(mask, x / scale, vs->xstart & 7)) continue;
+                dest[x] = HdActorShadow::shade(dest[x], (x + 0.5f - cx) / rx, dy, shadow.opacity);
+            }
+        }
+        if (_hdFrameCount % 120 == 0)
+            hdPrintf("CONTACT-SHADOW actor=%d center=%.1f,%.1f radius=%.1f,%.1f opacity=%d", a->_number,
+                     shadow.x, shadow.y, shadow.radiusX, shadow.radiusY, shadow.opacity);
+    }
+}

@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+    "name": "saveload",
+    "roomNumber": 92,
+    "assets": [
+      "7faa1fef-70fa-4a70-8f7f-311fe6cb212f",
+      "11b40497-636a-4f0e-be50-9a2851328229",
+      "f8e1e9b2-2ee0-4752-a632-3982f40e8c26",
+      "400bc05d-7bbe-4747-9d45-17c547a8c86d",
+      "6d459ae6-56e0-4a70-ae99-7df8d39dd9a6",
+      "4a911524-1961-4543-9104-5d7cc5a3ab4a",
+      "8c12db56-7f95-4d28-a60d-3384eed71488",
+      "32c59fb2-069d-412c-84cf-afb318c906c1",
+      "18feeafa-cad7-443b-9796-54b4c9ab066e",
+      "f063b28a-e00a-4fa3-aa26-fe01902cc80f",
+      "3daf96f6-e1c8-488e-b93a-9efbb2203b2b"
+    ]
+  },
+  "assets": {
+    "7faa1fef-70fa-4a70-8f7f-311fe6cb212f": {
+      "id": "7faa1fef-70fa-4a70-8f7f-311fe6cb212f",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0092_saveload.png",
+      "originalHash": "e45b482aa61421cba6c5eedd63e9aa11487949b5780bee3cfd997753cd052e7b",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.713Z"
+    },
+    "11b40497-636a-4f0e-be50-9a2851328229": {
+      "id": "11b40497-636a-4f0e-be50-9a2851328229",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-alternate-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-alternate-anim-object_0000.png",
+      "originalHash": "ecfe27d40f46a326b132a2a787ee7bc0c21adf599499e027cd08e2322c007891",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-alternate-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.728Z"
+    },
+    "f8e1e9b2-2ee0-4752-a632-3982f40e8c26": {
+      "id": "f8e1e9b2-2ee0-4752-a632-3982f40e8c26",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-bookmark-anim-obj_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-bookmark-anim-obj_0000.png",
+      "originalHash": "2e1e03551e99c155ff551c0af8165deb16e594fc45a9cd8a2f8ab266f2bdf869",
+      "width": 56,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-bookmark-anim-obj_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.743Z"
+    },
+    "400bc05d-7bbe-4747-9d45-17c547a8c86d": {
+      "id": "400bc05d-7bbe-4747-9d45-17c547a8c86d",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-checkbox_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-checkbox_0000.png",
+      "originalHash": "ca84ac5932a5a2271ee48af9bfcbfece8f770ecbd8cbe6dce790fea6153e9bc2",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-checkbox_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.756Z"
+    },
+    "6d459ae6-56e0-4a70-ae99-7df8d39dd9a6": {
+      "id": "6d459ae6-56e0-4a70-ae99-7df8d39dd9a6",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-checkbox_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-checkbox_0001.png",
+      "originalHash": "ac247f51da01ed2cafd509c0dbe03f3c1731553eed3bf07185944c2f7f9d089a",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-checkbox_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.769Z"
+    },
+    "4a911524-1961-4543-9104-5d7cc5a3ab4a": {
+      "id": "4a911524-1961-4543-9104-5d7cc5a3ab4a",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-checkbox_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-checkbox_0002.png",
+      "originalHash": "4b1462b5e6cab77d305daa6cb6a2dff624c6d80f8aa492c32c2ef4b01b6c0ffa",
+      "width": 24,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-checkbox_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.782Z"
+    },
+    "8c12db56-7f95-4d28-a60d-3384eed71488": {
+      "id": "8c12db56-7f95-4d28-a60d-3384eed71488",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-slider-bar_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-slider-bar_0000.png",
+      "originalHash": "8c7ecb8c4c4169753d46288b8377d433090ebf8bb016078c4667e1751967d545",
+      "width": 200,
+      "height": 8,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-slider-bar_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.797Z"
+    },
+    "32c59fb2-069d-412c-84cf-afb318c906c1": {
+      "id": "32c59fb2-069d-412c-84cf-afb318c906c1",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-slider-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-slider-object_0000.png",
+      "originalHash": "161be583c638798ab88e577bfebd9d2e0d63f15388462900efc4dde5b30d7c08",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-slider-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.811Z"
+    },
+    "18feeafa-cad7-443b-9796-54b4c9ab066e": {
+      "id": "18feeafa-cad7-443b-9796-54b4c9ab066e",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-slider-object_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-slider-object_0001.png",
+      "originalHash": "af8fa934723030e3bf2a43ba44ffe29ea3d37e53f46626289b946aeb3954e9fa",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-slider-object_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.823Z"
+    },
+    "f063b28a-e00a-4fa3-aa26-fe01902cc80f": {
+      "id": "f063b28a-e00a-4fa3-aa26-fe01902cc80f",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-slot-frame_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-slot-frame_0000.png",
+      "originalHash": "d6f8632841b8c8ad73311b1b1c9dd77bdfe644cd9351cf6b6194795e6cdd90dd",
+      "width": 144,
+      "height": 112,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-slot-frame_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.836Z"
+    },
+    "3daf96f6-e1c8-488e-b93a-9efbb2203b2b": {
+      "id": "3daf96f6-e1c8-488e-b93a-9efbb2203b2b",
+      "sceneId": "c2a00887-2b8b-487e-9e7e-96d4be31f81e",
+      "name": "0092_saveload-slot-frame_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0092_saveload-slot-frame_0001.png",
+      "originalHash": "30827d40a318f7d46379bd52e68267d0490e859c8ee2a6affecb7fa72251a45f",
+      "width": 144,
+      "height": 112,
+      "metadata": {
+        "roomNumber": 92,
+        "originalFile": "0092_saveload-slot-frame_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:19.848Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

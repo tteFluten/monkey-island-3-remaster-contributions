@@ -1,0 +1,449 @@
+{
+  "version": 1,
+  "status": "installed",
+  "original_sha256": "bce733c4371338869065a69457c5fa122a1f474409d2cf5df5bfb3ae910874d6",
+  "prepared_sha256": "b48bb0d7fb84b5d92cb069af8b6c539f20250d6ecda8f360b3d99175d4972db5",
+  "donor_sha256": "0732e0871ebe9c4e16ad4a684436dd64e2c89e06f97170f3b811461c5f0345b2",
+  "external_donor_sha256": "318168bb78ac0cf38e5391e56870996597e800ed6615a5f4c296d6fae216d146",
+  "source_provenance": {
+    "url": "https://archive.org/download/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso",
+    "archive_page": "https://archive.org/details/The_Curse_of_Monkey_Island_LucasArts",
+    "iso_bytes": 571140096,
+    "iso_md5": "9690c4afd612256fcb8c12b647550578",
+    "bundle": {
+      "name": "VOXDISK1.BUN",
+      "offset": 420851712,
+      "size": 150287970,
+      "flags": 0
+    },
+    "directory_offset": 150211670,
+    "count": 3815,
+    "downloaded_bundle_sha256": "318168bb78ac0cf38e5391e56870996597e800ed6615a5f4c296d6fae216d146",
+    "downloaded_ranges": [
+      {
+        "offset": 420851712,
+        "bytes": 8388608,
+        "sha256": "cffe4564cc16c58fa50a36ea984add5bba5d00f4c95ad0e82478309ad28ab3be",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 429240320,
+        "bytes": 8388608,
+        "sha256": "0b675722ac0f2cefcb26188d57ae7170beaf874215f77e41d8bb141530dcb594",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 437628928,
+        "bytes": 8388608,
+        "sha256": "e1b0194069e3129ce7e0db89b53b5793f3684939686ec51ae52bafd101d021ae",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 446017536,
+        "bytes": 8388608,
+        "sha256": "4f073ccb4780a48b3668ee88d36fa868c79f9f951933e392dc3d7d3461434e55",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 454406144,
+        "bytes": 8388608,
+        "sha256": "7866dc6d5664a0f9fa5793f7d2f97f4fb7aa15d5de904ec15e9010925b0f8a15",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 462794752,
+        "bytes": 8388608,
+        "sha256": "c7e4f5c3b1c658e3b1fe45c513b83f746f98ed9512c2294b81bc0d1c08b1cf32",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 471183360,
+        "bytes": 8388608,
+        "sha256": "d033f816f805d2e19a484f6eaa4d40534a7469ecaac4435a942998c9636299ec",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 479571968,
+        "bytes": 8388608,
+        "sha256": "2730618c7fcda4179b48319074d9259a6bedd0ae0dd430202009d673848f20d5",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 487960576,
+        "bytes": 8388608,
+        "sha256": "608e6de1719c1cbb8677c69fef58b04251a5bfe738b6c75e72aa9ac99b2bfe91",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 496349184,
+        "bytes": 8388608,
+        "sha256": "0a4aa03049ef0267ff7507bbf0d45f71a6dc6a4bc0a646d24ab761e13b96ed7e",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 504737792,
+        "bytes": 8388608,
+        "sha256": "9370041775cf0cff919e3615f0c72772188b7e5e8420df4026d4a71cb437f487",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 513126400,
+        "bytes": 8388608,
+        "sha256": "24f338355ba16377b877e4c9f8445b07ec1754d2fa34f3377deface829d7c4c1",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 521515008,
+        "bytes": 8388608,
+        "sha256": "2c4f55f80882f61872a0a7b67dcd6d6f8da2efc429968f903ad757496a10143e",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 529903616,
+        "bytes": 8388608,
+        "sha256": "0917832f08bad76682e927277ad4e4057abbc7bfc255867bf4d5a6e2a30653e4",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 538292224,
+        "bytes": 8388608,
+        "sha256": "e1803e9986913e0c3d52e3ce1c20d6b0bb554cf6b8c14c18d35d5df2b00bf815",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 546680832,
+        "bytes": 8388608,
+        "sha256": "1c0920092f671e7703752166d014a7b3fadf03f281cb4792d3bee23a04e5e388",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 555069440,
+        "bytes": 8388608,
+        "sha256": "bb8ec5ad46d9775ef4937eed800a97af3cca03a593e0e415e2d42fd6fc6abe0c",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      },
+      {
+        "offset": 563458048,
+        "bytes": 7681634,
+        "sha256": "4f0d1098ada809a316d2cc8143fee6ae5c48f7dde586d796bf132bbc19b6c1c1",
+        "url": "https://dn710709.ca.archive.org/0/items/The_Curse_of_Monkey_Island_LucasArts/The%20Curse%20of%20Monkey%20Island%20%28LucasArts%29%20%28Disc%201%29.iso"
+      }
+    ],
+    "verification": "Exact HTTP ranges; whole ISO MD5 is metadata only and was not checked because only VOXDISK1.BUN was downloaded"
+  },
+  "shared_healthy_identical": 3787,
+  "repairs": [
+    {
+      "name": "PDPL361.IMX",
+      "index": 2181,
+      "method": "matching English donor bundle",
+      "donor_offset": 81008506,
+      "size": 53993,
+      "payload_sha256": "95829f658ae4520c3d0a28128eff44534c002ad988cab0243c709d91cca4ab98",
+      "decoded_sha256": "38651485e448f238df79dbb96a7f5cbf7ef726a3762d6f5df986638c6e7c61ce",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL385.IMX",
+      "index": 2204,
+      "method": "matching English donor bundle",
+      "donor_offset": 81535465,
+      "size": 30221,
+      "payload_sha256": "949dd3756a562e2eb0a4f4a115e541de29d4ccc4452e2f3ccd9bbdb168e2209e",
+      "decoded_sha256": "07b6bb5f5be8151f473b237fb39aa794055090ccbd07b811115582878ad36fdd",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL386.IMX",
+      "index": 2205,
+      "method": "matching English donor bundle",
+      "donor_offset": 81565686,
+      "size": 5099,
+      "payload_sha256": "17c2740a337beaf1b7ffeba0dd47a622deaf113f13fe99a7bbb9f8a8809030cb",
+      "decoded_sha256": "3699068751855d2186ea875534f5e902217d3aa1cf563e2a2a9a2db4c915d054",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL387.IMX",
+      "index": 2206,
+      "method": "matching English donor bundle",
+      "donor_offset": 81570785,
+      "size": 29486,
+      "payload_sha256": "b8ac04bb75f0cc14013906d708d93e23061ed8fc0b6d471a9ec09aff17c492ed",
+      "decoded_sha256": "35690c1bc074adfb71940a1cdaa9aab2f5121a54f519d7dbc08dbece6e1ae354",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL388.IMX",
+      "index": 2207,
+      "method": "matching English donor bundle",
+      "donor_offset": 81600271,
+      "size": 14143,
+      "payload_sha256": "ac3bafe30651cd670beccd331522af53d57b75f368fb1a75bc1f0bb2f7eef78d",
+      "decoded_sha256": "d9da0d593c11031f8313be0731dbd030aff9f1076a2f45c84a653b18bd636104",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL389.IMX",
+      "index": 2208,
+      "method": "matching English donor bundle",
+      "donor_offset": 81614414,
+      "size": 17196,
+      "payload_sha256": "151e0bc0d091aaec275c4e1c2ccd584267036fb94302db9f40abd0f2356e2d27",
+      "decoded_sha256": "eb062bf4f88a5d9298060e7b795d9a1fcab384adfcf3d1ff89302468bf21aa95",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL390.IMX",
+      "index": 2209,
+      "method": "matching English donor bundle",
+      "donor_offset": 81631610,
+      "size": 54221,
+      "payload_sha256": "7af92ecac7d100c5d619fe2fb43197bce7d64369b0d80e90ae491a6f4c0ec7cf",
+      "decoded_sha256": "73b51dae100116ca435b8e5f73601c6e451479cb97830f03c871e158f6dc78c5",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL392.IMX",
+      "index": 2210,
+      "method": "matching English donor bundle",
+      "donor_offset": 81685831,
+      "size": 12843,
+      "payload_sha256": "e21f0c5cd19e36f1c9c5b8228e7bcf7da16a33fb9915d0d6d1aacedbdb14fdef",
+      "decoded_sha256": "2945c7d3764d9da1a48d3665ef21c6a6ada5cb358a4740963fd140595c2ebb29",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL393.IMX",
+      "index": 2211,
+      "method": "matching English donor bundle",
+      "donor_offset": 81698674,
+      "size": 94015,
+      "payload_sha256": "56e5cfcccccfb868c90e99fb086c3d1b93974e5f18dc0af2a1e61ec0b67d9ed9",
+      "decoded_sha256": "d5a3ffe8947f722fc7aa497871957e489a3312cd3d35f5cf09a1b275990ea446",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL394.IMX",
+      "index": 2212,
+      "method": "matching English donor bundle",
+      "donor_offset": 81792689,
+      "size": 28823,
+      "payload_sha256": "7d240b5bbc89896ff91437bbe364f805de2dfc79ceb95b5e17baf34bb2b9e6e0",
+      "decoded_sha256": "db0657c9b14b3ca72d5f1b78e96574d01375e3daaef3493a6ecd45d287e91a83",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL395.IMX",
+      "index": 2213,
+      "method": "matching English donor bundle",
+      "donor_offset": 81821512,
+      "size": 14299,
+      "payload_sha256": "b47422e95d86e7c012ff862f5c466da6826b6b09fe73b5d9a56be342ca5d601b",
+      "decoded_sha256": "afffe0868912db14f5c421ce77ed4ef4e6d3e22b873420e465e6af7e57d0011b",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL396.IMX",
+      "index": 2214,
+      "method": "matching English donor bundle",
+      "donor_offset": 81835811,
+      "size": 5633,
+      "payload_sha256": "ed80ed07e91a0903c87abd8d0ca42fce29a8bfbe63480944f23cccc6fb194d8b",
+      "decoded_sha256": "71e2ef5de9b3e83b0ab2970e304b0edaed912f9658b15188c02f23b4fe8be705",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL397.IMX",
+      "index": 2215,
+      "method": "matching English donor bundle",
+      "donor_offset": 81841444,
+      "size": 13853,
+      "payload_sha256": "cb4487ad07b1f0c12fd11ea0de75d28b5c7cf40a70caa4718b7833aa0f7535df",
+      "decoded_sha256": "d32856c9eb67bd9c53aea39cf51f16c3d420cef0922ec1834d61faf19dabc111",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL398.IMX",
+      "index": 2216,
+      "method": "matching English donor bundle",
+      "donor_offset": 81855297,
+      "size": 26692,
+      "payload_sha256": "d55755ac943ef58819497f8a4d5ef3e2f4efbe3519efdad39bad1f7a06ed94ff",
+      "decoded_sha256": "8eb41d95ff7f52486be788ad09ade25eaa99d5778ad61c2d0960abeec6a1efba",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL399.IMX",
+      "index": 2217,
+      "method": "matching English donor bundle",
+      "donor_offset": 81881989,
+      "size": 30302,
+      "payload_sha256": "426cf545c23c78a9140b901ff41e9085a949008c081820029d8556edab4129f5",
+      "decoded_sha256": "c17bfa55e1d5fbfcfbe6b19ead12d350719646797d8c7545f826b8ab5bd86878",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL406.IMX",
+      "index": 2218,
+      "method": "matching English donor bundle",
+      "donor_offset": 81912291,
+      "size": 44964,
+      "payload_sha256": "462caa5ae3124ddc175f54ce1f4ff0350668946edc8d0e42239958f1553e8a0a",
+      "decoded_sha256": "94c24ae1a8b5473685ea8c7030ca05e67312ef611d00f298b521d9aee5921ca9",
+      "previously_unavailable": false,
+      "replaces_alternate_take": true
+    },
+    {
+      "name": "PDPL407.IMX",
+      "index": 2219,
+      "method": "matching English donor bundle",
+      "donor_offset": 81957255,
+      "size": 57900,
+      "payload_sha256": "1a6a4db198e5899acc22cc053f4d32c68a8709182a35ffbd159d9eb593bf947c",
+      "decoded_sha256": "e9e8ea4bc753faf62384649bd909286fcf3a38eecd1dedfab64d84c5da302b1d",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL408.IMX",
+      "index": 2220,
+      "method": "matching English donor bundle",
+      "donor_offset": 82015155,
+      "size": 15888,
+      "payload_sha256": "fbe8b7f4fd27eb545461c7d9c4464fd7a98befd7388087acf3100ccd40dc78f9",
+      "decoded_sha256": "3d85efe43e5d843a609b8a701486a23f864065ceab5bce8c6754c0f7910a65c3",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL409.IMX",
+      "index": 2221,
+      "method": "matching English donor bundle",
+      "donor_offset": 82031043,
+      "size": 26668,
+      "payload_sha256": "25e26eb9f3b1a6a3e95db56b5bdb45b81b6f926b78cb2d0ac0b867e699f6fcfb",
+      "decoded_sha256": "4cfd3d546e2b3428024f06a7df339285e89fd914406ddfc75ca277aeb4d383a7",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "PDPL410.IMX",
+      "index": 2222,
+      "method": "matching English donor bundle",
+      "donor_offset": 82057711,
+      "size": 46767,
+      "payload_sha256": "3c078f85e34e0f0f448a16a21da5d26b5c0273e6a126f48a11ce93d3584af596",
+      "decoded_sha256": "5ad0b6bb39bed48860ce9c1cad848a83ee68d3a4f5be9411e21e0d3a3b9d3102",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "SGSY519.IMX",
+      "index": 2673,
+      "method": "matching English donor bundle",
+      "donor_offset": 102062218,
+      "size": 18205,
+      "payload_sha256": "8d28b903d01877b3f69d81b4202e62fadce29a4553fcde831fbfb18142b92f56",
+      "decoded_sha256": "fea1f7eeb51a7767b333db7b4a1b1eeda7298355454eee57d6d3d410c0614f1f",
+      "previously_unavailable": false,
+      "replaces_alternate_take": true
+    },
+    {
+      "name": "VGVY473.IMX",
+      "index": 3422,
+      "method": "matching English donor bundle",
+      "donor_offset": 134402119,
+      "size": 106151,
+      "payload_sha256": "a864d8bdab8bfcc52bb5eed165d3ee050e22f58b10b1912ccce84bd8c866aeaf",
+      "decoded_sha256": "7db22b1f19810f4e6df5d189e08b41ae812c8d779b273bb6e69ad0ee224bb499",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "VGVY474.IMX",
+      "index": 3423,
+      "method": "matching English donor bundle",
+      "donor_offset": 134508270,
+      "size": 102125,
+      "payload_sha256": "31eaf513d3ca06e7da94d23b03d300696926512ff527e4ae41048ac047024919",
+      "decoded_sha256": "84b92f5674d735fec97e94bf18c56ca60e913f64b2b88c6af923e8865d9735d0",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "VGVY476.IMX",
+      "index": 3424,
+      "method": "matching English donor bundle",
+      "donor_offset": 134610395,
+      "size": 72223,
+      "payload_sha256": "83f262731bd28ad53af5fc8fc6516d09ef25696b25a6247878f9ca18d13f568d",
+      "decoded_sha256": "22533c5d284f01e16c2369bd7a69c27a12b2b7102d299f05ba4978d490f8957c",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "VGVY478.IMX",
+      "index": 3425,
+      "method": "matching English donor bundle",
+      "donor_offset": 134682618,
+      "size": 49850,
+      "payload_sha256": "44f3694cce3017736aacf8296f7f2a6e8d28a7dfd84309ef4c6b734436c772ad",
+      "decoded_sha256": "99d89988be585d98c1dc41c59969870aec9dd83db9aad02acfa1b2b2ce7717e4",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "VGVY479.IMX",
+      "index": 3426,
+      "method": "matching English donor bundle",
+      "donor_offset": 134732468,
+      "size": 74974,
+      "payload_sha256": "171231e1295b21a8111248ff4138c3a57187b8f06bf8b43bffc3bc5e1c9a3063",
+      "decoded_sha256": "d432630138cdece5c902e47baec9c0c8d232fc8f31459fe534b24ef297f66d1e",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "VGVY480.IMX",
+      "index": 3427,
+      "method": "matching English donor bundle",
+      "donor_offset": 134807442,
+      "size": 109041,
+      "payload_sha256": "938c04e17055fead37fd6d050c1dca1bf86f692900a148bf505a768344e4dde9",
+      "decoded_sha256": "479e34d90f309755d048033d4f1ee7d6e93816944aed1bc27f8bed1f74274545",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    },
+    {
+      "name": "VGVY481.IMX",
+      "index": 3428,
+      "method": "matching English donor bundle",
+      "donor_offset": 134916483,
+      "size": 116492,
+      "payload_sha256": "197b1343a39d9bdcbdea1c587141b43fe1712b326eb2d4cd099f236260402fb7",
+      "decoded_sha256": "60cbdfc1c43ccca159fcda0eed9eef2078be33887d6890c6f6dc4603e6c35b75",
+      "previously_unavailable": true,
+      "replaces_alternate_take": false
+    }
+  ],
+  "total_restored_entries": 798,
+  "newly_restored_entries": 26,
+  "remaining_invalid": 0,
+  "all_installed_entries_identical_to_donor": true
+}

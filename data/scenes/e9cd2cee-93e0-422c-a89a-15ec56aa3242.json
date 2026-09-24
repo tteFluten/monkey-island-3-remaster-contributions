@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+    "name": "portrait",
+    "roomNumber": 64,
+    "assets": [
+      "db486615-37c9-45da-bb13-726cebcbaaea",
+      "6bd65e08-8dc8-4833-8356-0da09d4bd4e6",
+      "28b7a315-2a98-4d6e-bc66-7a80cb4ffa72",
+      "1e25f013-3256-4ce2-8143-4e297b27933c",
+      "4b450248-d3ca-436b-a68a-2760e3c8c3a8",
+      "93854c30-400c-45ec-a330-3a2f19ca6892",
+      "7fcc5177-5b99-4022-bb62-8898118cb216",
+      "c2a201ff-69d2-4019-ba29-cede90fe852a",
+      "50c62fb3-0adf-40c2-955b-6ba95ba7f29a",
+      "bcacfe9c-0894-4281-a9de-8b24b8e11022",
+      "a0295d11-7a37-461a-90f3-a71734df499b",
+      "0594c3c2-6142-4434-a657-2fa191b33369",
+      "d461c5b6-0578-4db5-abd1-e7e57f73feb9",
+      "f1ea6b06-92c5-4a63-8470-7aa9c17ea3a4",
+      "450b1ccb-9535-4507-a47d-6c9a41eee2a2",
+      "2b912dc2-0684-4367-b9ed-ae26fe5358b4",
+      "4ccae609-9bd3-4ff2-9c4b-65366c55c31c",
+      "aa0a5c41-9d9c-4a6d-8e10-c18eef7fe506"
+    ]
+  },
+  "assets": {
+    "db486615-37c9-45da-bb13-726cebcbaaea": {
+      "id": "db486615-37c9-45da-bb13-726cebcbaaea",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0064_portrait.png",
+      "originalHash": "77038202aa0d3d0109984c00a338788b2279a301bcba02d651925bff09ea9077",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.541Z"
+    },
+    "6bd65e08-8dc8-4833-8356-0da09d4bd4e6": {
+      "id": "6bd65e08-8dc8-4833-8356-0da09d4bd4e6",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_porthole-portrait-anim-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_porthole-portrait-anim-object_0000.png",
+      "originalHash": "680de6e09219bd45fd17db9e993a72cb6d78b59bc7539e5dae30bb2f6ff13548",
+      "width": 40,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_porthole-portrait-anim-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.555Z"
+    },
+    "28b7a315-2a98-4d6e-bc66-7a80cb4ffa72": {
+      "id": "28b7a315-2a98-4d6e-bc66-7a80cb4ffa72",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-closet-door_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-closet-door_0000.png",
+      "originalHash": "35f79194628fcc7570925d45d3acc9b46983818c310de1f2b34f6f9a70f4ca2a",
+      "width": 112,
+      "height": 304,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-closet-door_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.567Z"
+    },
+    "1e25f013-3256-4ce2-8143-4e297b27933c": {
+      "id": "1e25f013-3256-4ce2-8143-4e297b27933c",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-closet-door_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-closet-door_0001.png",
+      "originalHash": "4e47d30036b625b3a582f542fa244bf2db14a0f26e868f5330e6b5337ecd82df",
+      "width": 112,
+      "height": 304,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-closet-door_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.580Z"
+    },
+    "4b450248-d3ca-436b-a68a-2760e3c8c3a8": {
+      "id": "4b450248-d3ca-436b-a68a-2760e3c8c3a8",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-closet-door_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-closet-door_0002.png",
+      "originalHash": "00113938584d9e120189bc7d52eeb9c3117f5452ae8ee8a928a364667a632527",
+      "width": 112,
+      "height": 304,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-closet-door_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.593Z"
+    },
+    "93854c30-400c-45ec-a330-3a2f19ca6892": {
+      "id": "93854c30-400c-45ec-a330-3a2f19ca6892",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-fallen-face_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-fallen-face_0000.png",
+      "originalHash": "b399aba4d588cbda9681c0df5edc5374f019f220e62d54e25c7d1d8b035cff6f",
+      "width": 48,
+      "height": 32,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-fallen-face_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.610Z"
+    },
+    "7fcc5177-5b99-4022-bb62-8898118cb216": {
+      "id": "7fcc5177-5b99-4022-bb62-8898118cb216",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-fallen-portrait_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-fallen-portrait_0000.png",
+      "originalHash": "686c08aceadb68d357fe7e5149415e1a3e30d3b3565d15de0ee2aa9cc93f7e88",
+      "width": 88,
+      "height": 128,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-fallen-portrait_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.626Z"
+    },
+    "c2a201ff-69d2-4019-ba29-cede90fe852a": {
+      "id": "c2a201ff-69d2-4019-ba29-cede90fe852a",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-fallen-portrait_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-fallen-portrait_0001.png",
+      "originalHash": "1ac148238778d9e454ab7f699e224c9112fc55f2c8b7f5b7f715b498971b6a38",
+      "width": 88,
+      "height": 128,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-fallen-portrait_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.642Z"
+    },
+    "50c62fb3-0adf-40c2-955b-6ba95ba7f29a": {
+      "id": "50c62fb3-0adf-40c2-955b-6ba95ba7f29a",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-fallen-portrait_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-fallen-portrait_0002.png",
+      "originalHash": "ee3d840bd4ed6283460acad3718d36e2930b0e3cb27d6520e3c1ade61b7ec5ef",
+      "width": 88,
+      "height": 128,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-fallen-portrait_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.658Z"
+    },
+    "bcacfe9c-0894-4281-a9de-8b24b8e11022": {
+      "id": "bcacfe9c-0894-4281-a9de-8b24b8e11022",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-guest-room-door_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-guest-room-door_0000.png",
+      "originalHash": "30c50299e13d3e342bcfd3d4b1cafeae720681dbd8f3f08c63905385b3d039fb",
+      "width": 48,
+      "height": 136,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-guest-room-door_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.675Z"
+    },
+    "a0295d11-7a37-461a-90f3-a71734df499b": {
+      "id": "a0295d11-7a37-461a-90f3-a71734df499b",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-porthole-portrait_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-porthole-portrait_0000.png",
+      "originalHash": "32f0dc6e505d6214760584935be70012632ef9058f869b745bc4e299e87c3335",
+      "width": 96,
+      "height": 152,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-porthole-portrait_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.691Z"
+    },
+    "0594c3c2-6142-4434-a657-2fa191b33369": {
+      "id": "0594c3c2-6142-4434-a657-2fa191b33369",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-porthole-portrait_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-porthole-portrait_0001.png",
+      "originalHash": "82320383196fa7567a44fdae60a4fcadf2484b0bf86c601e96c46e36b5851f32",
+      "width": 96,
+      "height": 152,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-porthole-portrait_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.707Z"
+    },
+    "d461c5b6-0578-4db5-abd1-e7e57f73feb9": {
+      "id": "d461c5b6-0578-4db5-abd1-e7e57f73feb9",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-portrait-nail_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-portrait-nail_0000.png",
+      "originalHash": "6dc9bc50016d4590896fe773ca4d16cc3b22fe660d23b8a664e740225dbe19f6",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-portrait-nail_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.724Z"
+    },
+    "f1ea6b06-92c5-4a63-8470-7aa9c17ea3a4": {
+      "id": "f1ea6b06-92c5-4a63-8470-7aa9c17ea3a4",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-portrait-nail_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-portrait-nail_0001.png",
+      "originalHash": "e0fcbdae205bdd5430a727beac3f9e2d6cc3dfab6942d4d3bcff265b6461a6c6",
+      "width": 16,
+      "height": 16,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-portrait-nail_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.739Z"
+    },
+    "450b1ccb-9535-4507-a47d-6c9a41eee2a2": {
+      "id": "450b1ccb-9535-4507-a47d-6c9a41eee2a2",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "0064_portrait-portrait_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0064_portrait-portrait_0000.png",
+      "originalHash": "53296fcc2f1b6ffec5e26ab5ce7991f3ad063e58b9c3f34e2662cb624680e4c2",
+      "width": 72,
+      "height": 136,
+      "metadata": {
+        "roomNumber": 64,
+        "originalFile": "0064_portrait-portrait_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.755Z"
+    },
+    "2b912dc2-0684-4367-b9ed-ae26fe5358b4": {
+      "id": "2b912dc2-0684-4367-b9ed-ae26fe5358b4",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "LFLF_0064_AKOS_0320",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0064_AKOS_0320_frame_0.png",
+      "originalHash": "99d772e8c5b01d6f4ebab2b28fad22eff2514407e04cdbfe8b4d691613fb61cc",
+      "width": 67,
+      "height": 273,
+      "frameCount": 10,
+      "metadata": {
+        "roomNumber": 64,
+        "akosId": "LFLF_0064_AKOS_0320",
+        "frameCount": 10
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:27.241Z"
+    },
+    "4ccae609-9bd3-4ff2-9c4b-65366c55c31c": {
+      "id": "4ccae609-9bd3-4ff2-9c4b-65366c55c31c",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "LFLF_0064_AKOS_0323",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0064_AKOS_0323_frame_0.png",
+      "originalHash": "009d320086e4f0f9741218dce7ea971da7c4cdc674c084504be345d80fc331c3",
+      "width": 37,
+      "height": 17,
+      "frameCount": 1,
+      "metadata": {
+        "roomNumber": 64,
+        "akosId": "LFLF_0064_AKOS_0323",
+        "frameCount": 1
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:27.265Z"
+    },
+    "aa0a5c41-9d9c-4a6d-8e10-c18eef7fe506": {
+      "id": "aa0a5c41-9d9c-4a6d-8e10-c18eef7fe506",
+      "sceneId": "e9cd2cee-93e0-422c-a89a-15ec56aa3242",
+      "name": "LFLF_0064_AKOS_0324",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0064_AKOS_0324_frame_0.png",
+      "originalHash": "866aee4125a507a46cf81d59eb907a8614a42cce3f82b40ddc5cd2bf0826fc2c",
+      "width": 104,
+      "height": 215,
+      "frameCount": 51,
+      "metadata": {
+        "roomNumber": 64,
+        "akosId": "LFLF_0064_AKOS_0324",
+        "frameCount": 51
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:27.293Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

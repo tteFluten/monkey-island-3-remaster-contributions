@@ -1,0 +1,2990 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+    "name": "shipmap",
+    "roomNumber": 39,
+    "assets": [
+      "6113e49e-c733-43ad-bd17-859e4319cc8b",
+      "fb68a06f-cc2b-4254-a969-1d81cabbb361",
+      "4ddf75d4-39a8-472a-a5b0-8ff42b1b6a9c",
+      "635156b7-ef3e-49aa-bfd4-ee6ca215c52c",
+      "87d1d359-0211-434b-baeb-2e4a4c2441b8",
+      "823abf22-168e-402a-abe4-7a7fa07f5807",
+      "96230a7f-b30b-4cd4-a0da-1f3b52fe182d",
+      "12354f55-b817-46dc-8031-20c4518f5d6f",
+      "c7da96e4-1fbe-4639-876f-211d23437b0c",
+      "e2639b9b-a0bf-4977-97f7-d8080631a5ac",
+      "ba02de14-1ae0-43c8-8eb1-478dd64ad6ea",
+      "ca7053b9-1066-4bf3-ae23-b4c9104b0a46",
+      "25a31f7d-475b-49c0-9934-d5e582855114",
+      "4b1125a9-22ca-40d7-8eb0-168fe0e4a599",
+      "47fc10b3-ca43-46f3-b6b6-ead7ae698f3a",
+      "fa29c535-87bb-4faa-80c0-1d3683c74021",
+      "73c1383a-f231-4768-8d06-3b61ec47a292",
+      "da3d8721-3382-46cd-a06a-141607fd8ee5",
+      "e42d9adc-0658-40fd-9c4d-83de5ae25199",
+      "54263ab5-3a9a-44fd-a439-790b77440df5",
+      "fc1b21af-9b98-4afe-8985-79035832e378",
+      "f3bb8cb1-ace8-4480-a889-13d152045bf7",
+      "91c560e6-ab91-4ed4-94d4-07075db1619b",
+      "4f8b4c61-2a0a-4a74-b761-2f91c0bc8ab0",
+      "bef72b5d-bb60-4b82-959b-edc55c7d4662",
+      "e29bcd0d-0835-4ac2-88f2-bbb7c972531a",
+      "8946ddfe-f7c4-4e18-a289-46be3b76ec46",
+      "a3c62cb3-d83d-41d8-b975-d7f17bea6e2a",
+      "f4469ec2-652f-4e94-aa01-b7108ed8dd7c",
+      "944d17bf-d8b4-4bde-a143-dbd8153aba25",
+      "0096bff4-c48b-40f9-a58c-5d41973eba48",
+      "186f8e7c-6166-4815-993a-bd49c146991f",
+      "10c80c70-d57e-48ab-971c-e0ec3346a243",
+      "6ee2a496-1acb-4f48-9de8-4fb031ccf39d",
+      "ba0e8fc1-46c9-42e2-8992-6cceb1527b91",
+      "c2149d7d-f896-4ed3-a1b9-b1167bb5d682",
+      "1720d195-4ad2-4887-8b26-5ff6ce7feac1",
+      "744830d4-14b4-4482-95fa-5b886073def7",
+      "ff3557cd-7191-4b5f-81cd-a095edafe94c",
+      "2269595c-726e-4e2a-b6b3-6930da5a424d",
+      "48cacc8d-187f-4812-899d-3348cf100ea2",
+      "5e6e6edf-bc25-466d-8cfa-a85be0c3f27e",
+      "071a1ecb-1cc3-4975-89f9-ce79ed20c655",
+      "c1a6211b-e190-4c77-9532-b6f5d0eb599a",
+      "b41e720c-5ef5-4115-bb0b-3bd0751a73f7",
+      "079413e3-4e78-4105-bd93-6028734286ec",
+      "a7e3a41c-42c1-428b-82ad-34e160013e4b",
+      "81ba28da-30ce-4111-94af-3f45cb3d07a7",
+      "372de508-23b4-45dd-bf2d-263bf62fef58",
+      "8b8346a8-25db-405a-9d94-3339e1f7b560",
+      "cea0956f-8fcc-4e42-9a53-4181e5cc6eee",
+      "f1509247-7cf9-41e8-bcaf-135e98866d09",
+      "f5ff66b8-6d12-4699-97b9-e13ef65ec699",
+      "e6a5fc96-2a15-4ae1-9b1e-0483e672afe7",
+      "944746de-239c-4ed9-9386-4f8e0ec3a605",
+      "e5e81017-45d9-4173-9fda-824290d8d75d",
+      "be389147-22f4-42ec-8ed1-cc8649910902",
+      "334f6eeb-135d-4d1e-8ea8-0bfee5cf8f1f",
+      "5ccf2287-9fc8-4cf4-bfef-451deaafa79c",
+      "7b84e03c-ac1a-4f6c-a2d7-7a0ea839a4d6",
+      "3b1f3026-4554-4b77-9206-d889adc4cbdd",
+      "1a302b05-57c7-43f7-b670-f6407c7a1e1e",
+      "e105912d-857c-47d8-a162-d78129d61196",
+      "00229c89-629c-4c3e-b5c6-e1995e2498c2",
+      "ab77ab7e-65bd-4f41-92bf-aea9fbb09e1a",
+      "27236bda-995f-4c87-b0ca-fe6ff6ca5a2c",
+      "5640e1e8-7427-4d0e-bb6c-0831f462aac3",
+      "5f297b53-9f73-49f4-922d-4fa5c3c2a0a8",
+      "c0408cf4-3441-4a89-9a7c-eedd6fef1850",
+      "36ec31c8-fd29-496c-b9e8-bc5bc3378bb4",
+      "87165aba-5ada-48d8-8ae4-f03ea4b9c5e3",
+      "6ca3a469-c277-49d7-9c0b-db8c4c20f596",
+      "7d7ce3a3-71a3-4578-b38c-243e6553b541",
+      "5552ae40-d436-4c18-9e5a-e547ff85c293",
+      "1900c5e5-e452-4356-b2c9-de410d1ad219",
+      "f8dc96ac-b57a-4c3f-ab9a-899063d7d7ec",
+      "d3c2f727-1b4d-4e6c-b72e-d3525b3b1864",
+      "695098c5-2cbf-42bd-ac17-113b872401d1",
+      "84dfa3ae-9c94-4420-b928-f09ab3c29a4e",
+      "0e4f6c07-363e-4081-8416-f43024a7c62d",
+      "86658159-ce00-4af4-9432-bb5b5c5c4ed7",
+      "f0eaffff-3310-4fd8-b2c0-75ec63b71697",
+      "919f942f-cbb3-4596-b91f-c2648c3e28f8",
+      "6a9d07f8-bdb1-47ad-bc35-17e2c902b86f",
+      "f76cad31-dc16-4253-a1b7-eb2ff777b5b6",
+      "ec288287-63fc-4a78-83ff-40714195284d",
+      "9dc144ed-aa6e-43ed-ae74-827041ebc964",
+      "5de214a7-f058-4530-9263-b9426e85aa56",
+      "648e7d92-b9bb-4e13-9730-112e3fbae351",
+      "e9ef03f1-e4f3-4f9f-8e5e-a18dc976efca",
+      "24539ff2-3bdb-44f7-abe0-3079e64b2026",
+      "d4386eb0-c72e-429c-974c-392bb2b70887",
+      "aa10dc5b-777b-460d-be5f-0b157910cd15",
+      "8d491225-2c9b-4d92-8c6c-da9f45228ccf",
+      "1057a311-8289-486e-9935-78aafe8add5e",
+      "58d4bd95-7e69-4b05-8caa-362ff7fb0986",
+      "9fcf51d4-48d8-48a7-b3c9-15082bb066f3",
+      "c79fca23-4e7f-47b7-b4d4-f88d8f3344c2",
+      "ba5d2951-0bfd-49e6-bcff-6f7182b61cd0",
+      "c5ec3c39-ca67-4cf3-9c85-2799699bb443",
+      "0a788973-b39c-42b6-a122-c83a52195662",
+      "e1ef1806-052c-421e-9182-9d5bbe1844c9",
+      "af9a15c2-1491-472a-a5fb-93228d046f9a",
+      "c5761371-5cfe-4fba-a492-60b6c1d496d3",
+      "2209ebb1-216b-4b4a-aee1-55fa22710a35",
+      "836c30ed-a642-45c8-b42c-16a6f37285f1",
+      "6d136a01-008e-434a-ae3b-45003d53837d",
+      "f6aa12a1-4a4d-40b0-8f52-4260d55a82ba",
+      "9ade6ace-078b-4616-b9ea-82dfb4309801",
+      "ed0e50ee-0ad1-4c3b-b56c-d76251fb7c13",
+      "745fae6a-4d5f-4e1f-80fb-692e57f50591",
+      "e1aa2af1-594f-492b-bf90-8a6afa5e77be",
+      "1e28969f-cb7e-4ccf-b41d-cb4341237693",
+      "e2e9325d-e281-4928-b58b-21cfd0382310",
+      "861259d7-de9c-4708-af91-0e3d8878cb3d",
+      "576d734b-1773-4912-a250-04dc2dbdb9e9",
+      "0419c522-a3d4-4b28-9052-fb0f4a5f5a5d",
+      "faebf1a7-e666-4c14-9428-120cf6a2e583",
+      "0422efc0-d079-4f38-91de-459fea950b68",
+      "493c9882-f585-476f-92da-f01139b1d43d",
+      "7551f6c5-03a2-42f8-8801-7ce23c339b70",
+      "5c45df6f-2a1b-4891-8036-07d72e49ac63",
+      "0be25619-0ad5-4d5f-adc3-496fc19418ed",
+      "209cb050-42bf-43a4-9816-ead942f11230",
+      "786d29a6-e353-47ac-a8b5-263302b420a9",
+      "6e228c5d-3bd7-4dee-b98d-a4a82aa168d1",
+      "7ddc1631-e031-4fc5-8c6d-31c26a737a22",
+      "32c1648d-f691-4c4d-bf59-54fafbb55521",
+      "0fa253f9-710b-4934-9106-f1022a0619b6",
+      "5e817fe4-3fb1-400c-9919-6cf40b74c3ed",
+      "75f9ca63-0e65-4430-94c1-4eade0016b2d",
+      "41ac3150-5f9b-4c5c-8d4e-6d01eaa4f5ea",
+      "543cd84a-c391-4d4e-8141-64e88e3f750d",
+      "90adbccc-4e4f-453c-a95f-0c7e6d56e078",
+      "914c07c5-08b7-4536-b923-622fafb7f5d5",
+      "f818834d-b5fa-4d52-aa5e-3264e9546abf",
+      "a8fdc0a6-983c-455a-9043-6b8cd2d2fec6",
+      "ced104d9-7cda-4128-91b5-8edacdb48b84",
+      "c2831588-1fd7-4e47-977a-cde902e565a5",
+      "f9b5ebf9-7891-419c-afe5-c2483ee38d52",
+      "193f12f2-c677-4d7a-8585-63e6bf920217",
+      "af9def1b-0d9e-431c-b680-ee1251016ac2",
+      "68d3d2e4-060b-4621-bf2d-9fffbd21245e",
+      "5a8b9c38-2583-4cb3-9bc9-e4092c30228e",
+      "6bbf88fe-df97-4d3b-b3ee-37a714163ed9",
+      "01dff553-bf91-47c3-b820-dc4e74565dd7",
+      "86544e82-2054-42ee-b8c7-abde5bfaaf20",
+      "6116ee34-52bf-4c70-9367-c52a95fd535a",
+      "ddc14870-e8af-4247-bf99-13909ec468d0",
+      "2a1e6b81-8751-41d3-9de0-ae4527b92964",
+      "2f42f086-bc29-49e1-80f7-517bd3d2990a",
+      "3185cbf7-c1c7-48ed-abaf-6be23b4b4de7",
+      "3efe9ca1-4e38-4664-9f7f-3526e4fb756c",
+      "38766182-a265-40ab-9ba9-bb70249bb195",
+      "09bf6e28-8bc4-4bd9-8735-3e92d6eedd09",
+      "f1d2daed-7e9a-44c7-b28a-52a3242db481",
+      "a3e13134-f3ca-4b16-8d34-1bcb90f13e08",
+      "9cc21493-6223-4663-b552-fd1f30e37eba",
+      "4b1aa381-7b1f-49f3-a61c-c49450c54fd5",
+      "0bea9afd-0f84-4268-b3e1-30922c742c7e",
+      "49dbde57-2928-4433-b3db-d9c533e874cc",
+      "910b8c06-6802-4564-a307-809ebce6d854",
+      "52d60642-cba6-4b91-9664-510c719a9c15",
+      "3a7fc46c-2d24-4931-aeca-aa7f4a9011ef",
+      "f69891e7-434e-4ede-8d55-a558db4cd353",
+      "77c5fcfa-76d4-49ce-9040-63ce7d96574e",
+      "87560fe0-590c-4a98-8fe3-df40bf5ab509",
+      "2246af0e-2518-4aaf-8620-6146fd3576f1",
+      "35e8598b-ab9e-404d-a239-7417dea61332",
+      "1f16c73d-aad2-43f5-b9f7-d41fd0c02489",
+      "3a9cb687-2cbf-4853-9fd8-16491424c6c0",
+      "e1addb03-7fcb-4e5f-ab1d-05560df15992"
+    ]
+  },
+  "assets": {
+    "6113e49e-c733-43ad-bd17-859e4319cc8b": {
+      "id": "6113e49e-c733-43ad-bd17-859e4319cc8b",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_shipmap",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0039_shipmap.png",
+      "originalHash": "8f905b6c394cb1698311590a152f56e329f5af8a0d826d44ed8cc453bed9ee26",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_shipmap.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.205Z"
+    },
+    "fb68a06f-cc2b-4254-a969-1d81cabbb361": {
+      "id": "fb68a06f-cc2b-4254-a969-1d81cabbb361",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0000.png",
+      "originalHash": "62be299bc57d3c28bf4cd32d06e3db4d6545c89f99db7f2069828a547e36cdee",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.223Z"
+    },
+    "4ddf75d4-39a8-472a-a5b0-8ff42b1b6a9c": {
+      "id": "4ddf75d4-39a8-472a-a5b0-8ff42b1b6a9c",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0001.png",
+      "originalHash": "7d0068c3eaa1696b1b5b3d512e51d51effdf1b9a9431f4a736e70411b8ea9f13",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.238Z"
+    },
+    "635156b7-ef3e-49aa-bfd4-ee6ca215c52c": {
+      "id": "635156b7-ef3e-49aa-bfd4-ee6ca215c52c",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0002.png",
+      "originalHash": "db48672f9d92ff8d1cd9742aef57dc5805ed673789e5ce3dc5829588d75104b9",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.253Z"
+    },
+    "87d1d359-0211-434b-baeb-2e4a4c2441b8": {
+      "id": "87d1d359-0211-434b-baeb-2e4a4c2441b8",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0003.png",
+      "originalHash": "b23304d40273e6ebe28153f680e258e72fb4495ba1f2affc51a53cbe3fa71589",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.267Z"
+    },
+    "823abf22-168e-402a-abe4-7a7fa07f5807": {
+      "id": "823abf22-168e-402a-abe4-7a7fa07f5807",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0004.png",
+      "originalHash": "33c739074278c5a8928b03bd235269c1923de9e20c5b0112eb2937ccabedcece",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.280Z"
+    },
+    "96230a7f-b30b-4cd4-a0da-1f3b52fe182d": {
+      "id": "96230a7f-b30b-4cd4-a0da-1f3b52fe182d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0005.png",
+      "originalHash": "2022f7cafff155fa5aec3983e0ad2926aa02eb0bcf5cf38da5f443743ec35c9b",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.295Z"
+    },
+    "12354f55-b817-46dc-8031-20c4518f5d6f": {
+      "id": "12354f55-b817-46dc-8031-20c4518f5d6f",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0006.png",
+      "originalHash": "37146cb273e41e6409fab7fd9b122ded62c2a62b54b3bd537939db647915a3d1",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.311Z"
+    },
+    "c7da96e4-1fbe-4639-876f-211d23437b0c": {
+      "id": "c7da96e4-1fbe-4639-876f-211d23437b0c",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0007.png",
+      "originalHash": "9d51c64ef5a8bfdee1cf12d51fc2e4c25beb9023acfdd6f447a1c72c713b649c",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.325Z"
+    },
+    "e2639b9b-a0bf-4977-97f7-d8080631a5ac": {
+      "id": "e2639b9b-a0bf-4977-97f7-d8080631a5ac",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0008.png",
+      "originalHash": "6e86a3b5a01bd9504487aa7ca864a0a27bf7a1808341758ece4e67fd64530c5d",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.338Z"
+    },
+    "ba02de14-1ae0-43c8-8eb1-478dd64ad6ea": {
+      "id": "ba02de14-1ae0-43c8-8eb1-478dd64ad6ea",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-e_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-e_0009.png",
+      "originalHash": "16529b05ea940c701e1fcef2a948ef695fae32224a29f2f7a3d8d146eeed6cc7",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-e_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.352Z"
+    },
+    "ca7053b9-1066-4bf3-ae23-b4c9104b0a46": {
+      "id": "ca7053b9-1066-4bf3-ae23-b4c9104b0a46",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-n_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-n_0000.png",
+      "originalHash": "73f5ca902ef18a3fdf0f56739bee6407f04f91230593b0deabf716c0135b7088",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-n_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.365Z"
+    },
+    "25a31f7d-475b-49c0-9934-d5e582855114": {
+      "id": "25a31f7d-475b-49c0-9934-d5e582855114",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-n_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-n_0001.png",
+      "originalHash": "af55f31baa83762344654cb0a03b4d02bf550d60863841d9ff9b2037dc847086",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-n_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.379Z"
+    },
+    "4b1125a9-22ca-40d7-8eb0-168fe0e4a599": {
+      "id": "4b1125a9-22ca-40d7-8eb0-168fe0e4a599",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-n_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-n_0002.png",
+      "originalHash": "0f1aefa4c4bfb05fcd46eba0a1ae2c2e3085704afdd21b3646049ca5ad3cc415",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-n_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.392Z"
+    },
+    "47fc10b3-ca43-46f3-b6b6-ead7ae698f3a": {
+      "id": "47fc10b3-ca43-46f3-b6b6-ead7ae698f3a",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-n_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-n_0003.png",
+      "originalHash": "bf475d91f1378ef01e1d8835c714af7fef538522f0a35db5f64a79ae35e4ce5c",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-n_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.406Z"
+    },
+    "fa29c535-87bb-4faa-80c0-1d3683c74021": {
+      "id": "fa29c535-87bb-4faa-80c0-1d3683c74021",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-n_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-n_0004.png",
+      "originalHash": "4abc7cacd6a88edfb395bcb406d46695eb1c113301062a5e5b4ef2b9e4c24a54",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-n_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.421Z"
+    },
+    "73c1383a-f231-4768-8d06-3b61ec47a292": {
+      "id": "73c1383a-f231-4768-8d06-3b61ec47a292",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-n_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-n_0005.png",
+      "originalHash": "7e6ef89eba8a235dad978a4a6b110d9c07d81070cf0a8b2c97f59ebb99166142",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-n_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.436Z"
+    },
+    "da3d8721-3382-46cd-a06a-141607fd8ee5": {
+      "id": "da3d8721-3382-46cd-a06a-141607fd8ee5",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-n_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-n_0006.png",
+      "originalHash": "0c98988b36c7a8dbb156159b211fced6c06cef9ae1c6fddb5a32e804de27f7bd",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-n_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.452Z"
+    },
+    "e42d9adc-0658-40fd-9c4d-83de5ae25199": {
+      "id": "e42d9adc-0658-40fd-9c4d-83de5ae25199",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-n_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-n_0007.png",
+      "originalHash": "0b24e52f494e0dfb6aba1f8e3b9e0a68867eb0584577c96a70947c855971ff5a",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-n_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.467Z"
+    },
+    "54263ab5-3a9a-44fd-a439-790b77440df5": {
+      "id": "54263ab5-3a9a-44fd-a439-790b77440df5",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-n_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-n_0008.png",
+      "originalHash": "498a5dae13f65c7e6a045b371b16ee245ce389c3957c6a2fcb80bbf6328553ba",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-n_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.482Z"
+    },
+    "fc1b21af-9b98-4afe-8985-79035832e378": {
+      "id": "fc1b21af-9b98-4afe-8985-79035832e378",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0000.png",
+      "originalHash": "3edeec0397e2fb49f16fa05f19be6507415d54cd6c970fbda5333aa24fde7cc9",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.499Z"
+    },
+    "f3bb8cb1-ace8-4480-a889-13d152045bf7": {
+      "id": "f3bb8cb1-ace8-4480-a889-13d152045bf7",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0001.png",
+      "originalHash": "445e5583b45c5fdf441465204aa1e5a157fd7aa909efd5c06521ad17720dd3f8",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.515Z"
+    },
+    "91c560e6-ab91-4ed4-94d4-07075db1619b": {
+      "id": "91c560e6-ab91-4ed4-94d4-07075db1619b",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0002.png",
+      "originalHash": "209470d0eade4f46942036a679fa4ec2cf0a170580e0a7a8de99f4baca4672f4",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.531Z"
+    },
+    "4f8b4c61-2a0a-4a74-b761-2f91c0bc8ab0": {
+      "id": "4f8b4c61-2a0a-4a74-b761-2f91c0bc8ab0",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0003.png",
+      "originalHash": "c9795b466e7e5f781d6c5244f8d8431a2dfc423db85026e3e5ccd7a76b0cf547",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.546Z"
+    },
+    "bef72b5d-bb60-4b82-959b-edc55c7d4662": {
+      "id": "bef72b5d-bb60-4b82-959b-edc55c7d4662",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0004.png",
+      "originalHash": "76bd81a94509b5d1c1834cd640c9694babaecc1dd0bb315c50868f6344e9a6e8",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.561Z"
+    },
+    "e29bcd0d-0835-4ac2-88f2-bbb7c972531a": {
+      "id": "e29bcd0d-0835-4ac2-88f2-bbb7c972531a",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0005.png",
+      "originalHash": "45fcf57eb270f17e4637be82244daa3d73d0b6c459897c4f3b20eb512eae9363",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.576Z"
+    },
+    "8946ddfe-f7c4-4e18-a289-46be3b76ec46": {
+      "id": "8946ddfe-f7c4-4e18-a289-46be3b76ec46",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0006.png",
+      "originalHash": "1764618e7e4917c16a3d34e06e635fe5a596d26efd6e5f059163b106b4e94307",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.590Z"
+    },
+    "a3c62cb3-d83d-41d8-b975-d7f17bea6e2a": {
+      "id": "a3c62cb3-d83d-41d8-b975-d7f17bea6e2a",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0007.png",
+      "originalHash": "ea1837a74aee4aaf094a087192b57363e633bcae356aa76db33b305f1f311a92",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.604Z"
+    },
+    "f4469ec2-652f-4e94-aa01-b7108ed8dd7c": {
+      "id": "f4469ec2-652f-4e94-aa01-b7108ed8dd7c",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0008.png",
+      "originalHash": "0a9d476ffffc6d1b20c4ec77b434d118d79f969cc919aaa792fcc326b355129f",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.618Z"
+    },
+    "944d17bf-d8b4-4bde-a143-dbd8153aba25": {
+      "id": "944d17bf-d8b4-4bde-a143-dbd8153aba25",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ne_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ne_0009.png",
+      "originalHash": "e7322c87fa20869a11a65922d45780e5dcca2ec08c9eff6bbd2cd7445d9adba5",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ne_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.633Z"
+    },
+    "0096bff4-c48b-40f9-a58c-5d41973eba48": {
+      "id": "0096bff4-c48b-40f9-a58c-5d41973eba48",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0000.png",
+      "originalHash": "4bdf252b38c40e1f7a2f5a4aafa26acfa9177d9522ad346c57ff8daf8414e40a",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.647Z"
+    },
+    "186f8e7c-6166-4815-993a-bd49c146991f": {
+      "id": "186f8e7c-6166-4815-993a-bd49c146991f",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0001.png",
+      "originalHash": "4527e133d98a12abb00e223422a665d89e51ce1afa2aa996407aa4caecc511ef",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.663Z"
+    },
+    "10c80c70-d57e-48ab-971c-e0ec3346a243": {
+      "id": "10c80c70-d57e-48ab-971c-e0ec3346a243",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0002.png",
+      "originalHash": "73b0d43c88b208675499f4a9eb31b9979cee3c42b407b613f84d4690aaedae6c",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.678Z"
+    },
+    "6ee2a496-1acb-4f48-9de8-4fb031ccf39d": {
+      "id": "6ee2a496-1acb-4f48-9de8-4fb031ccf39d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0003.png",
+      "originalHash": "af922091abbfdc86c5ee4b37a3c5168dfeae05a99e39dca2b0403443272dd464",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.693Z"
+    },
+    "ba0e8fc1-46c9-42e2-8992-6cceb1527b91": {
+      "id": "ba0e8fc1-46c9-42e2-8992-6cceb1527b91",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0004.png",
+      "originalHash": "dfea693cd8cdd8ef31028a8e182c099ec1bbd0ea810c8b86d289ad5e75a355d7",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.709Z"
+    },
+    "c2149d7d-f896-4ed3-a1b9-b1167bb5d682": {
+      "id": "c2149d7d-f896-4ed3-a1b9-b1167bb5d682",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0005.png",
+      "originalHash": "eaa0bdaebe3f65561b41cfea0031fdd39631f2f23b4ff979b7e3f6930d04bf6f",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.725Z"
+    },
+    "1720d195-4ad2-4887-8b26-5ff6ce7feac1": {
+      "id": "1720d195-4ad2-4887-8b26-5ff6ce7feac1",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0006.png",
+      "originalHash": "6b79ec4867cf48ed43a24e8613e1933a6ca27798b9f6add87a0797e957246c1c",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.741Z"
+    },
+    "744830d4-14b4-4482-95fa-5b886073def7": {
+      "id": "744830d4-14b4-4482-95fa-5b886073def7",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0007.png",
+      "originalHash": "3a8c86f18155235b8567d53339773b470e5359534ea880e5d95147766b04b697",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.755Z"
+    },
+    "ff3557cd-7191-4b5f-81cd-a095edafe94c": {
+      "id": "ff3557cd-7191-4b5f-81cd-a095edafe94c",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0008.png",
+      "originalHash": "becb98de7da6254d57e0e5be1d6226ee545abbe35cd65649a64c3a5521c53f73",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.770Z"
+    },
+    "2269595c-726e-4e2a-b6b3-6930da5a424d": {
+      "id": "2269595c-726e-4e2a-b6b3-6930da5a424d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nne_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nne_0009.png",
+      "originalHash": "a19e1fa1ac816312117c404dc56d2f245314df3c8a083092f53265f0b06b6636",
+      "width": 40,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nne_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.785Z"
+    },
+    "48cacc8d-187f-4812-899d-3348cf100ea2": {
+      "id": "48cacc8d-187f-4812-899d-3348cf100ea2",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0000.png",
+      "originalHash": "06dedba5e62ae05e376c017f03fc97b85dbd34e952df581093103fd9c3485402",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.798Z"
+    },
+    "5e6e6edf-bc25-466d-8cfa-a85be0c3f27e": {
+      "id": "5e6e6edf-bc25-466d-8cfa-a85be0c3f27e",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0001.png",
+      "originalHash": "f2cbc9a350c608ec8745a4317876dc35faa6f5abaa3729b04015e9c5b30d0865",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.812Z"
+    },
+    "071a1ecb-1cc3-4975-89f9-ce79ed20c655": {
+      "id": "071a1ecb-1cc3-4975-89f9-ce79ed20c655",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0002.png",
+      "originalHash": "9f065a49733a44646b37297652cb452da5366c8549e5b6f45e79da29ac695cc1",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.826Z"
+    },
+    "c1a6211b-e190-4c77-9532-b6f5d0eb599a": {
+      "id": "c1a6211b-e190-4c77-9532-b6f5d0eb599a",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0003.png",
+      "originalHash": "8c12e98fc92980b5d653e5dfa3c57fc123e4c5a79813b9de0b8c363e0da9674c",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.840Z"
+    },
+    "b41e720c-5ef5-4115-bb0b-3bd0751a73f7": {
+      "id": "b41e720c-5ef5-4115-bb0b-3bd0751a73f7",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0004.png",
+      "originalHash": "0d9afb9a6d376879a1b839c3a65646f76d764f1d5b9b005314d0c1ecf6935c5f",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.853Z"
+    },
+    "079413e3-4e78-4105-bd93-6028734286ec": {
+      "id": "079413e3-4e78-4105-bd93-6028734286ec",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0005.png",
+      "originalHash": "aa3c9e3c80ab2204e1cf64b68da7a99d5a3b1937cbae938ae713deb33268964f",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.868Z"
+    },
+    "a7e3a41c-42c1-428b-82ad-34e160013e4b": {
+      "id": "a7e3a41c-42c1-428b-82ad-34e160013e4b",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0006.png",
+      "originalHash": "0481baaef91b0b29dcfeb27eec79c729ebf58721da51870e20fde8febcff73ff",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.884Z"
+    },
+    "81ba28da-30ce-4111-94af-3f45cb3d07a7": {
+      "id": "81ba28da-30ce-4111-94af-3f45cb3d07a7",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0007.png",
+      "originalHash": "188176322e0a5327f3096df53a3574aefad3f4cca45e3aa42bd036aa07bc29cc",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.898Z"
+    },
+    "372de508-23b4-45dd-bf2d-263bf62fef58": {
+      "id": "372de508-23b4-45dd-bf2d-263bf62fef58",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0008.png",
+      "originalHash": "0ebf274ba0f5ed65db183c34dbbe39e5cdb4743491aa8fbe4ec4a1da8c0faed0",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.911Z"
+    },
+    "8b8346a8-25db-405a-9d94-3339e1f7b560": {
+      "id": "8b8346a8-25db-405a-9d94-3339e1f7b560",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nnw_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nnw_0009.png",
+      "originalHash": "7da14d6e21767c96ca125590c1869cc7b0643d84203d694235b1240bfa9fdd06",
+      "width": 48,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nnw_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.925Z"
+    },
+    "cea0956f-8fcc-4e42-9a53-4181e5cc6eee": {
+      "id": "cea0956f-8fcc-4e42-9a53-4181e5cc6eee",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0000.png",
+      "originalHash": "80893fc5ed170465ec068f9e2dfd283dea53ead5462727fe4d671856b711faf5",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.939Z"
+    },
+    "f1509247-7cf9-41e8-bcaf-135e98866d09": {
+      "id": "f1509247-7cf9-41e8-bcaf-135e98866d09",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0001.png",
+      "originalHash": "eb0334a24125c3c52d8d9bf482ba93e61c6afc649713e0230b63e27b305ac1fa",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.954Z"
+    },
+    "f5ff66b8-6d12-4699-97b9-e13ef65ec699": {
+      "id": "f5ff66b8-6d12-4699-97b9-e13ef65ec699",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0002.png",
+      "originalHash": "59f42bcbb69ebb8a485524b6feeedf01fded8b69e35d4a940d57f008fa1e4b5b",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.968Z"
+    },
+    "e6a5fc96-2a15-4ae1-9b1e-0483e672afe7": {
+      "id": "e6a5fc96-2a15-4ae1-9b1e-0483e672afe7",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0003.png",
+      "originalHash": "8e77e4c80c60e98d57412553a71db5c07dbd76bea55433199c0cc9af9c2b4fc1",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.983Z"
+    },
+    "944746de-239c-4ed9-9386-4f8e0ec3a605": {
+      "id": "944746de-239c-4ed9-9386-4f8e0ec3a605",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0004.png",
+      "originalHash": "55af9728ac4b8689eb30f015953d58a35a5fbd54c9220b518b5852a1c0052ea0",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:13.997Z"
+    },
+    "e5e81017-45d9-4173-9fda-824290d8d75d": {
+      "id": "e5e81017-45d9-4173-9fda-824290d8d75d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0005.png",
+      "originalHash": "895918ba2bf43b7b62914ef6ca1318e6c89b792e536f2474b235e73fc59c8d92",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.011Z"
+    },
+    "be389147-22f4-42ec-8ed1-cc8649910902": {
+      "id": "be389147-22f4-42ec-8ed1-cc8649910902",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0006.png",
+      "originalHash": "50d0a4561bf8bdb126d36efc6f0285954b5cd1cf56f93bdf7a51844f6ec375de",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.026Z"
+    },
+    "334f6eeb-135d-4d1e-8ea8-0bfee5cf8f1f": {
+      "id": "334f6eeb-135d-4d1e-8ea8-0bfee5cf8f1f",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0007.png",
+      "originalHash": "f6f1e7cadaa7d03f7d7c1ed51670c439c020f25c3473ca20b5bd1af65df019ea",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.040Z"
+    },
+    "5ccf2287-9fc8-4cf4-bfef-451deaafa79c": {
+      "id": "5ccf2287-9fc8-4cf4-bfef-451deaafa79c",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0008.png",
+      "originalHash": "367f1965038ce11ed747a7a5a2757d22139ef9230e72b0942f08c16797fd6f89",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.056Z"
+    },
+    "7b84e03c-ac1a-4f6c-a2d7-7a0ea839a4d6": {
+      "id": "7b84e03c-ac1a-4f6c-a2d7-7a0ea839a4d6",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nse_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nse_0009.png",
+      "originalHash": "55b08e0148355977f6487796f6daefc8320c62d01a263ef9bc7d1d0deb5ca91f",
+      "width": 80,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nse_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.072Z"
+    },
+    "3b1f3026-4554-4b77-9206-d889adc4cbdd": {
+      "id": "3b1f3026-4554-4b77-9206-d889adc4cbdd",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nsw_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nsw_0000.png",
+      "originalHash": "f642335c320f843b431fcdb626fcd1ab4cad58413a3050b10cb2f69f093bc32c",
+      "width": 72,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nsw_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.088Z"
+    },
+    "1a302b05-57c7-43f7-b670-f6407c7a1e1e": {
+      "id": "1a302b05-57c7-43f7-b670-f6407c7a1e1e",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nsw_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nsw_0001.png",
+      "originalHash": "9be789b30601ba30245bbe982fbc64ed217e390e800942f57c0e0aa6c6535609",
+      "width": 72,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nsw_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.103Z"
+    },
+    "e105912d-857c-47d8-a162-d78129d61196": {
+      "id": "e105912d-857c-47d8-a162-d78129d61196",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nsw_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nsw_0002.png",
+      "originalHash": "cfb4671ccfe68812aca4a66c94589eed0099c5f932f9cca7c003a3d24fc5785d",
+      "width": 72,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nsw_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.118Z"
+    },
+    "00229c89-629c-4c3e-b5c6-e1995e2498c2": {
+      "id": "00229c89-629c-4c3e-b5c6-e1995e2498c2",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nsw_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nsw_0003.png",
+      "originalHash": "e4f9209588f7642a3ebd784f68f26f700624aabf567d85796bfdea5e596ee3b6",
+      "width": 72,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nsw_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.134Z"
+    },
+    "ab77ab7e-65bd-4f41-92bf-aea9fbb09e1a": {
+      "id": "ab77ab7e-65bd-4f41-92bf-aea9fbb09e1a",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nsw_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nsw_0004.png",
+      "originalHash": "fe265f26aebdfb1e2262e38bcedbd145bd136868b17eb4e8672b3152aae29538",
+      "width": 72,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nsw_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.149Z"
+    },
+    "27236bda-995f-4c87-b0ca-fe6ff6ca5a2c": {
+      "id": "27236bda-995f-4c87-b0ca-fe6ff6ca5a2c",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nsw_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nsw_0005.png",
+      "originalHash": "ada8ab2d19c2341402ced2d55707822e68ebd8a2bbfc491992b125fc2064c22b",
+      "width": 72,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nsw_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.165Z"
+    },
+    "5640e1e8-7427-4d0e-bb6c-0831f462aac3": {
+      "id": "5640e1e8-7427-4d0e-bb6c-0831f462aac3",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nsw_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nsw_0006.png",
+      "originalHash": "016e2514a9ac29ad113356efa0a0b8d66e003454cce93f7fe2e6cc01ed18a741",
+      "width": 72,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nsw_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.181Z"
+    },
+    "5f297b53-9f73-49f4-922d-4fa5c3c2a0a8": {
+      "id": "5f297b53-9f73-49f4-922d-4fa5c3c2a0a8",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nsw_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nsw_0007.png",
+      "originalHash": "0ecc6670afc97544a2a5519620b29d9f33f3e9392da9508808d9550997ee4c73",
+      "width": 72,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nsw_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.235Z"
+    },
+    "c0408cf4-3441-4a89-9a7c-eedd6fef1850": {
+      "id": "c0408cf4-3441-4a89-9a7c-eedd6fef1850",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nsw_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nsw_0009.png",
+      "originalHash": "5cda6b12d306bde9fc483f24690161c7fc79fd3c3ecbd436d14b1bde077dfa26",
+      "width": 72,
+      "height": 72,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nsw_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.261Z"
+    },
+    "36ec31c8-fd29-496c-b9e8-bc5bc3378bb4": {
+      "id": "36ec31c8-fd29-496c-b9e8-bc5bc3378bb4",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0000.png",
+      "originalHash": "aef536ee0b90e3b3d6270b44aa00fe33bb20a5d569b36bcc629402ad4f0325f5",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.277Z"
+    },
+    "87165aba-5ada-48d8-8ae4-f03ea4b9c5e3": {
+      "id": "87165aba-5ada-48d8-8ae4-f03ea4b9c5e3",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0001.png",
+      "originalHash": "18a7197fc0d4cd5a5918e07fe6a1f581d3e898f3f1846301df9355024bc1b437",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.292Z"
+    },
+    "6ca3a469-c277-49d7-9c0b-db8c4c20f596": {
+      "id": "6ca3a469-c277-49d7-9c0b-db8c4c20f596",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0002.png",
+      "originalHash": "bf6635e3dec65ba73ce4610cc91da283ee5f622a972b49ab2fdb67b8e767260e",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.307Z"
+    },
+    "7d7ce3a3-71a3-4578-b38c-243e6553b541": {
+      "id": "7d7ce3a3-71a3-4578-b38c-243e6553b541",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0003.png",
+      "originalHash": "29391312d93af80a0f8c737d7a8935319894d4dfd6eda0e1613eeb8a24a447ae",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.322Z"
+    },
+    "5552ae40-d436-4c18-9e5a-e547ff85c293": {
+      "id": "5552ae40-d436-4c18-9e5a-e547ff85c293",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0004.png",
+      "originalHash": "273117f5e3bb8fc1c260789f5ff08f6c761e6976c50d25135490518bbfa71bf2",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.337Z"
+    },
+    "1900c5e5-e452-4356-b2c9-de410d1ad219": {
+      "id": "1900c5e5-e452-4356-b2c9-de410d1ad219",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0005.png",
+      "originalHash": "b49753b1d6c03d4652d89cabff421921e760330a3d95a87cd2f051592fe4474a",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.350Z"
+    },
+    "f8dc96ac-b57a-4c3f-ab9a-899063d7d7ec": {
+      "id": "f8dc96ac-b57a-4c3f-ab9a-899063d7d7ec",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0006.png",
+      "originalHash": "625e2ee9e042182bc9f45fbb734b2ee079d478b2132ec34f5a8144f825c2e1b5",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.369Z"
+    },
+    "d3c2f727-1b4d-4e6c-b72e-d3525b3b1864": {
+      "id": "d3c2f727-1b4d-4e6c-b72e-d3525b3b1864",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0007.png",
+      "originalHash": "86af904fd126cf69679fcd99437ef26874c8f37c254a819e78e6f7c2b31605b1",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.382Z"
+    },
+    "695098c5-2cbf-42bd-ac17-113b872401d1": {
+      "id": "695098c5-2cbf-42bd-ac17-113b872401d1",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0008.png",
+      "originalHash": "b6db74b9cdc6431fb072eea419966a209a29c5d23c695b69d4bf345815586166",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.396Z"
+    },
+    "84dfa3ae-9c94-4420-b928-f09ab3c29a4e": {
+      "id": "84dfa3ae-9c94-4420-b928-f09ab3c29a4e",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-nw_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-nw_0009.png",
+      "originalHash": "ec188a0dcf42dbbcc96340e6956081235efc53f53986d07fb5577bb6bf21985f",
+      "width": 56,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-nw_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.409Z"
+    },
+    "0e4f6c07-363e-4081-8416-f43024a7c62d": {
+      "id": "0e4f6c07-363e-4081-8416-f43024a7c62d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0000.png",
+      "originalHash": "97dfde793b2b1321dd24043019ef4731405d5f095f31aa46cee0d0089a54d47b",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.425Z"
+    },
+    "86658159-ce00-4af4-9432-bb5b5c5c4ed7": {
+      "id": "86658159-ce00-4af4-9432-bb5b5c5c4ed7",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0001.png",
+      "originalHash": "2d9d4098ee991ec000c7cbc18254bcd2b8f5859229296f4abc1aecac99cd64f7",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.443Z"
+    },
+    "f0eaffff-3310-4fd8-b2c0-75ec63b71697": {
+      "id": "f0eaffff-3310-4fd8-b2c0-75ec63b71697",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0002.png",
+      "originalHash": "9cef5a1559652a5ad14eedd0ed69abc5f942308571aa2e8a63b91146a0f11ddd",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.459Z"
+    },
+    "919f942f-cbb3-4596-b91f-c2648c3e28f8": {
+      "id": "919f942f-cbb3-4596-b91f-c2648c3e28f8",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0003.png",
+      "originalHash": "b01d3be8a895833f2be640c4f9953e26624999bd7e8133c798f53d3a411e494d",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.474Z"
+    },
+    "6a9d07f8-bdb1-47ad-bc35-17e2c902b86f": {
+      "id": "6a9d07f8-bdb1-47ad-bc35-17e2c902b86f",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0004.png",
+      "originalHash": "e439ff6cfb0161b7018438d001477d8652da5678d1829f1550ac67b1020f6b16",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.490Z"
+    },
+    "f76cad31-dc16-4253-a1b7-eb2ff777b5b6": {
+      "id": "f76cad31-dc16-4253-a1b7-eb2ff777b5b6",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0005.png",
+      "originalHash": "cf39920dcb779350181655b8347a8dd0ea4789376ef25404fdff26cd0e20a66f",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.508Z"
+    },
+    "ec288287-63fc-4a78-83ff-40714195284d": {
+      "id": "ec288287-63fc-4a78-83ff-40714195284d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0006.png",
+      "originalHash": "8e35838ddeed236d82c9f476f75a0cbe15f924f3490468b4a6e0e6dd886fc8cf",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.525Z"
+    },
+    "9dc144ed-aa6e-43ed-ae74-827041ebc964": {
+      "id": "9dc144ed-aa6e-43ed-ae74-827041ebc964",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0007.png",
+      "originalHash": "3b7ac202e736fb249f8b8a6bbe27722109333f660cdac884679545d3783b1913",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.543Z"
+    },
+    "5de214a7-f058-4530-9263-b9426e85aa56": {
+      "id": "5de214a7-f058-4530-9263-b9426e85aa56",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0008.png",
+      "originalHash": "393b9acfb60a47f1d257b838948ed996234da3003a3494c185f4ba5b3b01d75e",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.560Z"
+    },
+    "648e7d92-b9bb-4e13-9730-112e3fbae351": {
+      "id": "648e7d92-b9bb-4e13-9730-112e3fbae351",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-s_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-s_0009.png",
+      "originalHash": "865341d3f839668bd88183cf3d3411794d65e2a1d89c226d21e4bf47b12e8848",
+      "width": 32,
+      "height": 96,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-s_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.581Z"
+    },
+    "e9ef03f1-e4f3-4f9f-8e5e-a18dc976efca": {
+      "id": "e9ef03f1-e4f3-4f9f-8e5e-a18dc976efca",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-se_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-se_0000.png",
+      "originalHash": "5eb14dc67b11b3fcd476fac4a8344a6c668b681129435b8ac0374596a9d7f7cf",
+      "width": 64,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-se_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.598Z"
+    },
+    "24539ff2-3bdb-44f7-abe0-3079e64b2026": {
+      "id": "24539ff2-3bdb-44f7-abe0-3079e64b2026",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-se_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-se_0001.png",
+      "originalHash": "673ba44da4a11120f2326ef0cbe433d6c062a37916da816d079827895f83c0d2",
+      "width": 64,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-se_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.616Z"
+    },
+    "d4386eb0-c72e-429c-974c-392bb2b70887": {
+      "id": "d4386eb0-c72e-429c-974c-392bb2b70887",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-se_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-se_0002.png",
+      "originalHash": "e23e61f0d7f18d5a0a289183295847e21c791530e2bcf11a467423738f1dd8f7",
+      "width": 64,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-se_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.634Z"
+    },
+    "aa10dc5b-777b-460d-be5f-0b157910cd15": {
+      "id": "aa10dc5b-777b-460d-be5f-0b157910cd15",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-se_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-se_0003.png",
+      "originalHash": "ce55509df2909bd95621ef9f46ddd20813ac4297525f023ced151f6fafc3e126",
+      "width": 64,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-se_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.652Z"
+    },
+    "8d491225-2c9b-4d92-8c6c-da9f45228ccf": {
+      "id": "8d491225-2c9b-4d92-8c6c-da9f45228ccf",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-se_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-se_0004.png",
+      "originalHash": "8cd4f3846d42776630762f8001fccdbd967b77915781b33ec20bd69c449cbfc9",
+      "width": 64,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-se_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.669Z"
+    },
+    "1057a311-8289-486e-9935-78aafe8add5e": {
+      "id": "1057a311-8289-486e-9935-78aafe8add5e",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-se_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-se_0005.png",
+      "originalHash": "725c1f575b0c73d53e0942dca3986014da351a56801b39bed5268533e187d406",
+      "width": 64,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-se_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.685Z"
+    },
+    "58d4bd95-7e69-4b05-8caa-362ff7fb0986": {
+      "id": "58d4bd95-7e69-4b05-8caa-362ff7fb0986",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-se_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-se_0006.png",
+      "originalHash": "3596ba84b97fdde57619677eae489f6b451300f948f50f672c675645bfa0e6e9",
+      "width": 64,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-se_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.700Z"
+    },
+    "9fcf51d4-48d8-48a7-b3c9-15082bb066f3": {
+      "id": "9fcf51d4-48d8-48a7-b3c9-15082bb066f3",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-se_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-se_0007.png",
+      "originalHash": "003b5808e3a5d121e43438e57766f937c5c7f55ef205e6753f0339a7e453893d",
+      "width": 64,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-se_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.716Z"
+    },
+    "c79fca23-4e7f-47b7-b4d4-f88d8f3344c2": {
+      "id": "c79fca23-4e7f-47b7-b4d4-f88d8f3344c2",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-se_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-se_0008.png",
+      "originalHash": "6e1fe9a65cdbba35f42e28cef53a8e1686cf503fcccb03ab7f3a500450c18638",
+      "width": 64,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-se_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.731Z"
+    },
+    "ba5d2951-0bfd-49e6-bcff-6f7182b61cd0": {
+      "id": "ba5d2951-0bfd-49e6-bcff-6f7182b61cd0",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0000.png",
+      "originalHash": "e49ee1a841e5c86493ff8639b58b4ad5d4166a193bd0e6005e4509b36d795771",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.749Z"
+    },
+    "c5ec3c39-ca67-4cf3-9c85-2799699bb443": {
+      "id": "c5ec3c39-ca67-4cf3-9c85-2799699bb443",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0001.png",
+      "originalHash": "e06130b7b7c8a6b3114443097585bbed8b554493c2ac5bc09dc62cd3663b3d82",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.764Z"
+    },
+    "0a788973-b39c-42b6-a122-c83a52195662": {
+      "id": "0a788973-b39c-42b6-a122-c83a52195662",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0002.png",
+      "originalHash": "e860badb185bf15e3d6d303652ebd008be1d8bf38c0b1c1ef9243ea0ceead1f9",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.780Z"
+    },
+    "e1ef1806-052c-421e-9182-9d5bbe1844c9": {
+      "id": "e1ef1806-052c-421e-9182-9d5bbe1844c9",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0003.png",
+      "originalHash": "7ba9aa428380e4bb321452f9770f048d67ac0c70a63dd645a22e309ee75881ba",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.796Z"
+    },
+    "af9a15c2-1491-472a-a5fb-93228d046f9a": {
+      "id": "af9a15c2-1491-472a-a5fb-93228d046f9a",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0004.png",
+      "originalHash": "8eaa31d1a22d119942183dccb5df2be5c108f1b8443b4dc9e36f3a1aca9cf4f4",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.813Z"
+    },
+    "c5761371-5cfe-4fba-a492-60b6c1d496d3": {
+      "id": "c5761371-5cfe-4fba-a492-60b6c1d496d3",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0005.png",
+      "originalHash": "b1e1f18a0f0d97f416913364396ff1300dd640f06f131f7e5844ed28addff3d8",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.830Z"
+    },
+    "2209ebb1-216b-4b4a-aee1-55fa22710a35": {
+      "id": "2209ebb1-216b-4b4a-aee1-55fa22710a35",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0006.png",
+      "originalHash": "1ef274868ce1cf8f7302acfb8fca59de092d7d81fcb89a34df1994f5f8892832",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.845Z"
+    },
+    "836c30ed-a642-45c8-b42c-16a6f37285f1": {
+      "id": "836c30ed-a642-45c8-b42c-16a6f37285f1",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0007.png",
+      "originalHash": "4bebd690b93750c0593292a3f41e7091a20a663424dce1133ddd023b17a49193",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.863Z"
+    },
+    "6d136a01-008e-434a-ae3b-45003d53837d": {
+      "id": "6d136a01-008e-434a-ae3b-45003d53837d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0008.png",
+      "originalHash": "cc87c9f26047e727356431ae54a0a683e3eb753b0a5cbb4ae6d6f60454a5b695",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.878Z"
+    },
+    "f6aa12a1-4a4d-40b0-8f52-4260d55a82ba": {
+      "id": "f6aa12a1-4a4d-40b0-8f52-4260d55a82ba",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-snw_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-snw_0009.png",
+      "originalHash": "a08d20f40ccd4b4a402b31ef99d113b316cba22768ccdf53de95138a9faa889d",
+      "width": 72,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-snw_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.893Z"
+    },
+    "9ade6ace-078b-4616-b9ea-82dfb4309801": {
+      "id": "9ade6ace-078b-4616-b9ea-82dfb4309801",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sse_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sse_0000.png",
+      "originalHash": "b4f3ea2f1b302acdd5c78cb32dcedfbae4f5ec2cea3b402b96cc7f2fd3694470",
+      "width": 48,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sse_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.909Z"
+    },
+    "ed0e50ee-0ad1-4c3b-b56c-d76251fb7c13": {
+      "id": "ed0e50ee-0ad1-4c3b-b56c-d76251fb7c13",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sse_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sse_0002.png",
+      "originalHash": "fd225ada05f91785beba576c102f4f353a1f82cd670451b8ff824d5a05f9edc3",
+      "width": 48,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sse_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.929Z"
+    },
+    "745fae6a-4d5f-4e1f-80fb-692e57f50591": {
+      "id": "745fae6a-4d5f-4e1f-80fb-692e57f50591",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sse_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sse_0003.png",
+      "originalHash": "4262732d67bf9e7ba9446345900c3811cede0eeaa21634b67e0aae597e48e448",
+      "width": 48,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sse_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.944Z"
+    },
+    "e1aa2af1-594f-492b-bf90-8a6afa5e77be": {
+      "id": "e1aa2af1-594f-492b-bf90-8a6afa5e77be",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sse_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sse_0004.png",
+      "originalHash": "ca21411a4598bd3da24f15f622c9e15c08fb0f745b28d1e80da1ad80c2577164",
+      "width": 48,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sse_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.957Z"
+    },
+    "1e28969f-cb7e-4ccf-b41d-cb4341237693": {
+      "id": "1e28969f-cb7e-4ccf-b41d-cb4341237693",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sse_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sse_0005.png",
+      "originalHash": "80a170ad2eec2b6c234e51f51f27955f4d673f5dc5a50998eb0b1c8fa60c4e33",
+      "width": 48,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sse_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.972Z"
+    },
+    "e2e9325d-e281-4928-b58b-21cfd0382310": {
+      "id": "e2e9325d-e281-4928-b58b-21cfd0382310",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sse_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sse_0006.png",
+      "originalHash": "dc49c733c31235e74a8e13200d8885b6184720b70a448cc63cecadb22f5b73fd",
+      "width": 48,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sse_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.985Z"
+    },
+    "861259d7-de9c-4708-af91-0e3d8878cb3d": {
+      "id": "861259d7-de9c-4708-af91-0e3d8878cb3d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sse_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sse_0007.png",
+      "originalHash": "8c065ca22bb2c6084f73d15492b1b615efade2698f9e407c95c3ebe8c11d0b7d",
+      "width": 48,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sse_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:14.999Z"
+    },
+    "576d734b-1773-4912-a250-04dc2dbdb9e9": {
+      "id": "576d734b-1773-4912-a250-04dc2dbdb9e9",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sse_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sse_0008.png",
+      "originalHash": "3b6d64c2fd28f6732f49feff0e0e65ef679ef8ed7503cac08da39d72ec1d25ea",
+      "width": 48,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sse_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.015Z"
+    },
+    "0419c522-a3d4-4b28-9052-fb0f4a5f5a5d": {
+      "id": "0419c522-a3d4-4b28-9052-fb0f4a5f5a5d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sse_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sse_0009.png",
+      "originalHash": "83dc0b4c0307b55597a727e5c5f8580065559fb00267c811e230e93dddb4e599",
+      "width": 48,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sse_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.030Z"
+    },
+    "faebf1a7-e666-4c14-9428-120cf6a2e583": {
+      "id": "faebf1a7-e666-4c14-9428-120cf6a2e583",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0000.png",
+      "originalHash": "3605ea182dfb5c340b802fc686485792e40cf3b39648337405bce8596354c016",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.047Z"
+    },
+    "0422efc0-d079-4f38-91de-459fea950b68": {
+      "id": "0422efc0-d079-4f38-91de-459fea950b68",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0001.png",
+      "originalHash": "b46b660db4ddad8f0f85b9fae26c7d22eea822bad40708e386a6737ed9c0215c",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.064Z"
+    },
+    "493c9882-f585-476f-92da-f01139b1d43d": {
+      "id": "493c9882-f585-476f-92da-f01139b1d43d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0002.png",
+      "originalHash": "53fdd02c31c17e03de9a99b214513f52a50b10fb8b984799d522ed61912ff72f",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.081Z"
+    },
+    "7551f6c5-03a2-42f8-8801-7ce23c339b70": {
+      "id": "7551f6c5-03a2-42f8-8801-7ce23c339b70",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0003.png",
+      "originalHash": "3ff678b9da6d590455718dcfb1a2616037770cbb20a693322baaf2460d359abb",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.096Z"
+    },
+    "5c45df6f-2a1b-4891-8036-07d72e49ac63": {
+      "id": "5c45df6f-2a1b-4891-8036-07d72e49ac63",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0004.png",
+      "originalHash": "742ad08b1ba7ee106a65c14211769b16c57f918e7a31e5508ab1becc71201961",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.112Z"
+    },
+    "0be25619-0ad5-4d5f-adc3-496fc19418ed": {
+      "id": "0be25619-0ad5-4d5f-adc3-496fc19418ed",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0005.png",
+      "originalHash": "70a7d91fee0d5d428ed94a514efa5b07782f35e7b55e89d0e98756fc9e32785a",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.130Z"
+    },
+    "209cb050-42bf-43a4-9816-ead942f11230": {
+      "id": "209cb050-42bf-43a4-9816-ead942f11230",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0006.png",
+      "originalHash": "d5bd7e2cfb6ba2918a98e3adc3ac5e6d544c27fd41e10e45389805a130f796aa",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.145Z"
+    },
+    "786d29a6-e353-47ac-a8b5-263302b420a9": {
+      "id": "786d29a6-e353-47ac-a8b5-263302b420a9",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0007.png",
+      "originalHash": "db9b5851c93d58b7106e15899d6b4ade258efb16720e92a781392907c535c7b6",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.160Z"
+    },
+    "6e228c5d-3bd7-4dee-b98d-a4a82aa168d1": {
+      "id": "6e228c5d-3bd7-4dee-b98d-a4a82aa168d1",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0008.png",
+      "originalHash": "8e4ec387c45b380f772333f637c2671656131555d64757b101e318294be615b4",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.174Z"
+    },
+    "7ddc1631-e031-4fc5-8c6d-31c26a737a22": {
+      "id": "7ddc1631-e031-4fc5-8c6d-31c26a737a22",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-ssw_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-ssw_0009.png",
+      "originalHash": "a01f5e6c256045c3413c8b1af30a11dccea020d60dc94acad7882c8ff5cb9afa",
+      "width": 40,
+      "height": 88,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-ssw_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.189Z"
+    },
+    "32c1648d-f691-4c4d-bf59-54fafbb55521": {
+      "id": "32c1648d-f691-4c4d-bf59-54fafbb55521",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0000.png",
+      "originalHash": "d57feab8b9802af425ccb157e889e27b77d0eeadfac130e0140589b5ec3ac9db",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.207Z"
+    },
+    "0fa253f9-710b-4934-9106-f1022a0619b6": {
+      "id": "0fa253f9-710b-4934-9106-f1022a0619b6",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0001.png",
+      "originalHash": "e558ab8e828442fb5e9db2974f7deb91c04060f23fe64289e481dedee7e0e8c4",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.224Z"
+    },
+    "5e817fe4-3fb1-400c-9919-6cf40b74c3ed": {
+      "id": "5e817fe4-3fb1-400c-9919-6cf40b74c3ed",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0002.png",
+      "originalHash": "7d6141a98c169403e20ed6a0583b20b423a81818842289a2e11a83c8d3e60f63",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.240Z"
+    },
+    "75f9ca63-0e65-4430-94c1-4eade0016b2d": {
+      "id": "75f9ca63-0e65-4430-94c1-4eade0016b2d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0003.png",
+      "originalHash": "e3a6beeba80d05c30a532ae8c3984d3953e0bb5e0c720da4e58ec1032da7ec67",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.257Z"
+    },
+    "41ac3150-5f9b-4c5c-8d4e-6d01eaa4f5ea": {
+      "id": "41ac3150-5f9b-4c5c-8d4e-6d01eaa4f5ea",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0004.png",
+      "originalHash": "2cf835035ea4104cd42deddcc85221055131369cc841a0f6fa294721fefe63f4",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.273Z"
+    },
+    "543cd84a-c391-4d4e-8141-64e88e3f750d": {
+      "id": "543cd84a-c391-4d4e-8141-64e88e3f750d",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0005.png",
+      "originalHash": "70a7614247a7f4827aa4f23ddb322fc8df790d4f104a4eb6849f188345534be1",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.289Z"
+    },
+    "90adbccc-4e4f-453c-a95f-0c7e6d56e078": {
+      "id": "90adbccc-4e4f-453c-a95f-0c7e6d56e078",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0006.png",
+      "originalHash": "27b9a0f18c157bca3b0b452696aae617f40688edec273f872f36bd2790a62ad7",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.305Z"
+    },
+    "914c07c5-08b7-4536-b923-622fafb7f5d5": {
+      "id": "914c07c5-08b7-4536-b923-622fafb7f5d5",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0007.png",
+      "originalHash": "b9f6dbcb6ef896c2b828fbe563ad7a23d6b5863fd57e6c5643eef089808323d0",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.321Z"
+    },
+    "f818834d-b5fa-4d52-aa5e-3264e9546abf": {
+      "id": "f818834d-b5fa-4d52-aa5e-3264e9546abf",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0008.png",
+      "originalHash": "12065b266c462193063fc0b1fdd7effb178d68807eef344144168f981da4ac01",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.337Z"
+    },
+    "a8fdc0a6-983c-455a-9043-6b8cd2d2fec6": {
+      "id": "a8fdc0a6-983c-455a-9043-6b8cd2d2fec6",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-sw_0009",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-sw_0009.png",
+      "originalHash": "804d0d8d83cdf47384bd55e5b3a051680074c59ac6ebc31b94cd4025f9d42511",
+      "width": 72,
+      "height": 80,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-sw_0009.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.353Z"
+    },
+    "ced104d9-7cda-4128-91b5-8edacdb48b84": {
+      "id": "ced104d9-7cda-4128-91b5-8edacdb48b84",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-w_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-w_0000.png",
+      "originalHash": "b48f64c897269d1da14fc5ea6d42f9e590e45bcc36cca2f17c5cb284979c52d9",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-w_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.369Z"
+    },
+    "c2831588-1fd7-4e47-977a-cde902e565a5": {
+      "id": "c2831588-1fd7-4e47-977a-cde902e565a5",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-w_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-w_0001.png",
+      "originalHash": "e934a08c31eeeec2be8161016f67c5375106d7a505bab94d60be6bbff50acf7a",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-w_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.388Z"
+    },
+    "f9b5ebf9-7891-419c-afe5-c2483ee38d52": {
+      "id": "f9b5ebf9-7891-419c-afe5-c2483ee38d52",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-w_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-w_0002.png",
+      "originalHash": "99f466510ae12790f6163ac90112ce6f3d504c840ae6cef1451563fc08023ea8",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-w_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.404Z"
+    },
+    "193f12f2-c677-4d7a-8585-63e6bf920217": {
+      "id": "193f12f2-c677-4d7a-8585-63e6bf920217",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-w_0003",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-w_0003.png",
+      "originalHash": "98b3508f85a1e1210709c41487a105609213eb4bf0e972f6a16f6b9ef7b1ed08",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-w_0003.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.420Z"
+    },
+    "af9def1b-0d9e-431c-b680-ee1251016ac2": {
+      "id": "af9def1b-0d9e-431c-b680-ee1251016ac2",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-w_0004",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-w_0004.png",
+      "originalHash": "eaf54375264353fe122e901911d5874ae0801bf6a0da63f742b1def01c574786",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-w_0004.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.435Z"
+    },
+    "68d3d2e4-060b-4621-bf2d-9fffbd21245e": {
+      "id": "68d3d2e4-060b-4621-bf2d-9fffbd21245e",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-w_0005",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-w_0005.png",
+      "originalHash": "23220e6a130a5356d067cabe4848a3759620002d3a26a371a870a32e684900de",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-w_0005.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.450Z"
+    },
+    "5a8b9c38-2583-4cb3-9bc9-e4092c30228e": {
+      "id": "5a8b9c38-2583-4cb3-9bc9-e4092c30228e",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-w_0006",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-w_0006.png",
+      "originalHash": "a00afc7896cfdc337cbadb7db71cac814bdad135e65924caf9b075547f528c48",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-w_0006.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.466Z"
+    },
+    "6bbf88fe-df97-4d3b-b3ee-37a714163ed9": {
+      "id": "6bbf88fe-df97-4d3b-b3ee-37a714163ed9",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-w_0007",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-w_0007.png",
+      "originalHash": "985b9d0bbc535bd65323025726db786b831ae67e5b3c5acf8bc4ed29e38c5ac2",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-w_0007.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.483Z"
+    },
+    "01dff553-bf91-47c3-b820-dc4e74565dd7": {
+      "id": "01dff553-bf91-47c3-b820-dc4e74565dd7",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "0039_windsock-w_0008",
+      "type": "object",
+      "originalPath": "extracted/objects/0039_windsock-w_0008.png",
+      "originalHash": "11a3aaadc90a8d686eb6186da136c9ab4a825825126c6d44d1d609c37e112802",
+      "width": 72,
+      "height": 56,
+      "metadata": {
+        "roomNumber": 39,
+        "originalFile": "0039_windsock-w_0008.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:15.499Z"
+    },
+    "86544e82-2054-42ee-b8c7-abde5bfaaf20": {
+      "id": "86544e82-2054-42ee-b8c7-abde5bfaaf20",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0218",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0218_frame_0.png",
+      "originalHash": "a4b9d7bf5026caece723813374a0ed68b32d468cd27d6e19fc75a3fb44de1b56",
+      "width": 78,
+      "height": 162,
+      "frameCount": 32,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0218",
+        "frameCount": 32
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.644Z"
+    },
+    "6116ee34-52bf-4c70-9367-c52a95fd535a": {
+      "id": "6116ee34-52bf-4c70-9367-c52a95fd535a",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0219",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0219_frame_0.png",
+      "originalHash": "7ed3a6848724b66fd8c4775583636d0ea5ffb8b607ac7cceecabf5c3b1deded9",
+      "width": 78,
+      "height": 140,
+      "frameCount": 32,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0219",
+        "frameCount": 32
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.667Z"
+    },
+    "ddc14870-e8af-4247-bf99-13909ec468d0": {
+      "id": "ddc14870-e8af-4247-bf99-13909ec468d0",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0220",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0220_frame_0.png",
+      "originalHash": "ef5b9824feb5ca9006e49c425c70cbae0bddefa8f5fed832fbe90c02fbd26e5b",
+      "width": 80,
+      "height": 108,
+      "frameCount": 24,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0220",
+        "frameCount": 24
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.692Z"
+    },
+    "2a1e6b81-8751-41d3-9de0-ae4527b92964": {
+      "id": "2a1e6b81-8751-41d3-9de0-ae4527b92964",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0221",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0221_frame_0.png",
+      "originalHash": "700c92bedbba7f3a99e0873837da7355476c3ac646a836b4711ee148f1bc3655",
+      "width": 78,
+      "height": 140,
+      "frameCount": 32,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0221",
+        "frameCount": 32
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.715Z"
+    },
+    "2f42f086-bc29-49e1-80f7-517bd3d2990a": {
+      "id": "2f42f086-bc29-49e1-80f7-517bd3d2990a",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0222",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0222_frame_0.png",
+      "originalHash": "724393b285b3e3b543197eaff0389c1f9c1bf55d8ba091ad16bbc6ccf416486c",
+      "width": 78,
+      "height": 162,
+      "frameCount": 32,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0222",
+        "frameCount": 32
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.739Z"
+    },
+    "3185cbf7-c1c7-48ed-abaf-6be23b4b4de7": {
+      "id": "3185cbf7-c1c7-48ed-abaf-6be23b4b4de7",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0223",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0223_frame_0.png",
+      "originalHash": "a3bd91155d6a6855f2a1111e01c066da4eb00635a9fb689aeac62898ee1eac40",
+      "width": 78,
+      "height": 162,
+      "frameCount": 32,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0223",
+        "frameCount": 32
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.765Z"
+    },
+    "3efe9ca1-4e38-4664-9f7f-3526e4fb756c": {
+      "id": "3efe9ca1-4e38-4664-9f7f-3526e4fb756c",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0224",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0224_frame_0.png",
+      "originalHash": "f341a52734cb3b7f7a736fc2fbc230bd3950827f4dc1f7bb802d68a3a9adcc0c",
+      "width": 78,
+      "height": 162,
+      "frameCount": 32,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0224",
+        "frameCount": 32
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.788Z"
+    },
+    "38766182-a265-40ab-9ba9-bb70249bb195": {
+      "id": "38766182-a265-40ab-9ba9-bb70249bb195",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0225",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0225_frame_0.png",
+      "originalHash": "39adb3089ce5f19e029a5855d0108ab845974613dbc4fc4db2188abcfea87453",
+      "width": 77,
+      "height": 165,
+      "frameCount": 32,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0225",
+        "frameCount": 32
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.814Z"
+    },
+    "09bf6e28-8bc4-4bd9-8735-3e92d6eedd09": {
+      "id": "09bf6e28-8bc4-4bd9-8735-3e92d6eedd09",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0226",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0226_frame_0.png",
+      "originalHash": "ccb330e9def7b5850934c6c39735d8ba978ec2583d52601c09cda8f7dfc8b648",
+      "width": 78,
+      "height": 162,
+      "frameCount": 32,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0226",
+        "frameCount": 32
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.837Z"
+    },
+    "f1d2daed-7e9a-44c7-b28a-52a3242db481": {
+      "id": "f1d2daed-7e9a-44c7-b28a-52a3242db481",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0227",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0227_frame_0.png",
+      "originalHash": "cd1175406f7a72f2c52d25262aa9577c453aac0987bbf4974e6a3cf62545fa47",
+      "width": 49,
+      "height": 157,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0227",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.863Z"
+    },
+    "a3e13134-f3ca-4b16-8d34-1bcb90f13e08": {
+      "id": "a3e13134-f3ca-4b16-8d34-1bcb90f13e08",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0228",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0228_frame_0.png",
+      "originalHash": "c52dad58e8a02acef765886ed445b1ffcdde6bae0c6a1c67f1329e805e301afa",
+      "width": 76,
+      "height": 160,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0228",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.891Z"
+    },
+    "9cc21493-6223-4663-b552-fd1f30e37eba": {
+      "id": "9cc21493-6223-4663-b552-fd1f30e37eba",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0229",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0229_frame_0.png",
+      "originalHash": "2d1627350bb96ef1594d5ab6cc30925682e88351ccf9a5a0305ba3da177baf83",
+      "width": 78,
+      "height": 115,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0229",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.932Z"
+    },
+    "4b1aa381-7b1f-49f3-a61c-c49450c54fd5": {
+      "id": "4b1aa381-7b1f-49f3-a61c-c49450c54fd5",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0230",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0230_frame_0.png",
+      "originalHash": "fb5d9242b817fbe60110832eec1f1d60855a03e3159da5977f24d14a13e87315",
+      "width": 78,
+      "height": 140,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0230",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.966Z"
+    },
+    "0bea9afd-0f84-4268-b3e1-30922c742c7e": {
+      "id": "0bea9afd-0f84-4268-b3e1-30922c742c7e",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0231",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0231_frame_0.png",
+      "originalHash": "a555a9c4c1ed0b4d9d0ba4556b24618a8b963f2a15de50b816169e76913a0f8b",
+      "width": 80,
+      "height": 114,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0231",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:23.994Z"
+    },
+    "49dbde57-2928-4433-b3db-d9c533e874cc": {
+      "id": "49dbde57-2928-4433-b3db-d9c533e874cc",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0232",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0232_frame_0.png",
+      "originalHash": "0eb7d631a6c6464307ed9b98a171780e46df74a35ac4605b834a3a758bcd4140",
+      "width": 78,
+      "height": 140,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0232",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.024Z"
+    },
+    "910b8c06-6802-4564-a307-809ebce6d854": {
+      "id": "910b8c06-6802-4564-a307-809ebce6d854",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0233",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0233_frame_0.png",
+      "originalHash": "290f3651842e65935c6638773388a93fae97f15d0aa703ec074092320a27031d",
+      "width": 80,
+      "height": 108,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0233",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.051Z"
+    },
+    "52d60642-cba6-4b91-9664-510c719a9c15": {
+      "id": "52d60642-cba6-4b91-9664-510c719a9c15",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0234",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0234_frame_0.png",
+      "originalHash": "94b819df65e9c7e4b59db7b30b05c0945ea4d574765a5d7ebaaa18fcf09c84b6",
+      "width": 78,
+      "height": 140,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0234",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.080Z"
+    },
+    "3a7fc46c-2d24-4931-aeca-aa7f4a9011ef": {
+      "id": "3a7fc46c-2d24-4931-aeca-aa7f4a9011ef",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0235",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0235_frame_0.png",
+      "originalHash": "c24c67038e67729ad1a6146af842094b8303903d6cd718a691a2fef85759fad0",
+      "width": 80,
+      "height": 117,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0235",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.108Z"
+    },
+    "f69891e7-434e-4ede-8d55-a558db4cd353": {
+      "id": "f69891e7-434e-4ede-8d55-a558db4cd353",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0236",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0236_frame_0.png",
+      "originalHash": "af99cae0ad4b9e9e832d8486177cf512eea246765834c0eb545c3e03b4a82f09",
+      "width": 78,
+      "height": 162,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0236",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.133Z"
+    },
+    "77c5fcfa-76d4-49ce-9040-63ce7d96574e": {
+      "id": "77c5fcfa-76d4-49ce-9040-63ce7d96574e",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0237",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0237_frame_0.png",
+      "originalHash": "3e14c4888f60f6aa9787dcc837fa10335fa8a5b44feddeb0d430bde6c40fdd67",
+      "width": 80,
+      "height": 117,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0237",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.158Z"
+    },
+    "87560fe0-590c-4a98-8fe3-df40bf5ab509": {
+      "id": "87560fe0-590c-4a98-8fe3-df40bf5ab509",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0238",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0238_frame_0.png",
+      "originalHash": "7fa4eea4497eeae997eceb8df49ec07392da2fae5fff4b78fa7392144597e2fd",
+      "width": 78,
+      "height": 162,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0238",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.182Z"
+    },
+    "2246af0e-2518-4aaf-8620-6146fd3576f1": {
+      "id": "2246af0e-2518-4aaf-8620-6146fd3576f1",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0239",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0239_frame_0.png",
+      "originalHash": "102ecb009be646fd407504122fa23b5148e3005b3d61d89563e85b4866a89b1e",
+      "width": 80,
+      "height": 117,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0239",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.206Z"
+    },
+    "35e8598b-ab9e-404d-a239-7417dea61332": {
+      "id": "35e8598b-ab9e-404d-a239-7417dea61332",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0240",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0240_frame_0.png",
+      "originalHash": "093e7258f2c2a4dbb02d21c1f07faca5168fb3e91a85d1953c4f3c489b30ea90",
+      "width": 78,
+      "height": 162,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0240",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.235Z"
+    },
+    "1f16c73d-aad2-43f5-b9f7-d41fd0c02489": {
+      "id": "1f16c73d-aad2-43f5-b9f7-d41fd0c02489",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0241",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0241_frame_0.png",
+      "originalHash": "ddc782f43365d69651178523ff6db507c3d66d14031ef660f6e108191343fde2",
+      "width": 80,
+      "height": 122,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0241",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.259Z"
+    },
+    "3a9cb687-2cbf-4853-9fd8-16491424c6c0": {
+      "id": "3a9cb687-2cbf-4853-9fd8-16491424c6c0",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0242",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0242_frame_0.png",
+      "originalHash": "48a8c49c801170f14a29f8cfeb82d82c91ee705324ed9671c2d4b423f8efaf5b",
+      "width": 77,
+      "height": 165,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0242",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.283Z"
+    },
+    "e1addb03-7fcb-4e5f-ab1d-05560df15992": {
+      "id": "e1addb03-7fcb-4e5f-ab1d-05560df15992",
+      "sceneId": "0f0c2d3a-cde7-48ff-bf0b-b7b3c3ee4b81",
+      "name": "LFLF_0039_AKOS_0243",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0039_AKOS_0243_frame_0.png",
+      "originalHash": "31404b3a1ee32a02dda1bf3a18534dafdfc6ffb9cdebd858025971c3ce3501a2",
+      "width": 81,
+      "height": 122,
+      "frameCount": 16,
+      "metadata": {
+        "roomNumber": 39,
+        "akosId": "LFLF_0039_AKOS_0243",
+        "frameCount": 16
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:24.309Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

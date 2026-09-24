@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+    "name": "cemetery",
+    "roomNumber": 67,
+    "assets": [
+      "dfe81ac7-5418-48f7-87b0-4c9e97221cf2",
+      "e1d98519-a105-4707-958b-7bf17546450e",
+      "d40a70b2-ea3d-4545-ad0a-4a286fae548c",
+      "be5e6758-967a-4ddc-bd06-9731a9db478c",
+      "bbe05079-abfb-47d6-8c7a-803ba7c90fd1",
+      "d9c55b90-4596-4ef5-adb9-9a2bbf22b1e0",
+      "bc96dca5-e60d-4c3a-ac01-27e0deea375d",
+      "3a9a90da-bdc4-448d-8dfd-bad641ae2ec6",
+      "9c2575fd-3d78-423f-81eb-4b28604137b3",
+      "76e80858-5901-45e6-9348-ec8471273fd9",
+      "4c0471cd-36fd-49b8-9818-685d1ce75ed5",
+      "532611fb-0c6f-4084-8878-66f13f966e8b"
+    ]
+  },
+  "assets": {
+    "dfe81ac7-5418-48f7-87b0-4c9e97221cf2": {
+      "id": "dfe81ac7-5418-48f7-87b0-4c9e97221cf2",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0067_cemetery.png",
+      "originalHash": "5033274c2f6601953159e5ef69cac90f08b2516c6dabe7468c05ef239173480a",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.818Z"
+    },
+    "e1d98519-a105-4707-958b-7bf17546450e": {
+      "id": "e1d98519-a105-4707-958b-7bf17546450e",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-family-crypt-door_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-family-crypt-door_0000.png",
+      "originalHash": "63de205e4988f71d580448f8e2ea0b819903d4b9b72adfd8fee9738b02f53897",
+      "width": 88,
+      "height": 248,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-family-crypt-door_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.832Z"
+    },
+    "d40a70b2-ea3d-4545-ad0a-4a286fae548c": {
+      "id": "d40a70b2-ea3d-4545-ad0a-4a286fae548c",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-lava-object_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-lava-object_0000.png",
+      "originalHash": "d47d7373a4cf1ff677886df6e2cd5b211a90ee807504bebcb9762af87dd8a46d",
+      "width": 40,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-lava-object_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.845Z"
+    },
+    "be5e6758-967a-4ddc-bd06-9731a9db478c": {
+      "id": "be5e6758-967a-4ddc-bd06-9731a9db478c",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-open-sign_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-open-sign_0000.png",
+      "originalHash": "cdf3bd9159e6ca3ec79fc3dd30ae08a7147c1870e1cdaa90ddab27761437cb3c",
+      "width": 56,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-open-sign_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.859Z"
+    },
+    "bbe05079-abfb-47d6-8c7a-803ba7c90fd1": {
+      "id": "bbe05079-abfb-47d6-8c7a-803ba7c90fd1",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-stan-arrow_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-stan-arrow_0000.png",
+      "originalHash": "5ca479e856aed7bdf153818daa268ffae9695a94202739385a08cdd00035d24f",
+      "width": 48,
+      "height": 40,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-stan-arrow_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.872Z"
+    },
+    "d9c55b90-4596-4ef5-adb9-9a2bbf22b1e0": {
+      "id": "d9c55b90-4596-4ef5-adb9-9a2bbf22b1e0",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-stan-sign_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-stan-sign_0000.png",
+      "originalHash": "7ee0bcad413bc6c99647d228de71de2f59869d08c1f54b27d426860dc16d1e95",
+      "width": 96,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-stan-sign_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.886Z"
+    },
+    "bc96dca5-e60d-4c3a-ac01-27e0deea375d": {
+      "id": "bc96dca5-e60d-4c3a-ac01-27e0deea375d",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-stan-sign_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-stan-sign_0001.png",
+      "originalHash": "8f2a40ceb4fc3495bc3ff73332f9f8ced8b51c168ccc31ebd4e1c0ea7b28660f",
+      "width": 96,
+      "height": 64,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-stan-sign_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.902Z"
+    },
+    "3a9a90da-bdc4-448d-8dfd-bad641ae2ec6": {
+      "id": "3a9a90da-bdc4-448d-8dfd-bad641ae2ec6",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-stans-animation-crypt_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-stans-animation-crypt_0000.png",
+      "originalHash": "1583f3b349403b3b3c1b09452bd8427a9a39a6204aa970ea204a92fcfa913a68",
+      "width": 152,
+      "height": 224,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-stans-animation-crypt_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.928Z"
+    },
+    "9c2575fd-3d78-423f-81eb-4b28604137b3": {
+      "id": "9c2575fd-3d78-423f-81eb-4b28604137b3",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-stans-animation-crypt_0001",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-stans-animation-crypt_0001.png",
+      "originalHash": "cef427fd841253087e63644fe6febff2d9ad441f40a49e9ffdc83e3874257774",
+      "width": 152,
+      "height": 224,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-stans-animation-crypt_0001.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.945Z"
+    },
+    "76e80858-5901-45e6-9348-ec8471273fd9": {
+      "id": "76e80858-5901-45e6-9348-ec8471273fd9",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-stans-animation-crypt_0002",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-stans-animation-crypt_0002.png",
+      "originalHash": "376ffbbd80694b845ef63a95d18e15d390f5c70ce175d31b69d933145ccb320a",
+      "width": 152,
+      "height": 224,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-stans-animation-crypt_0002.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.963Z"
+    },
+    "4c0471cd-36fd-49b8-9818-685d1ce75ed5": {
+      "id": "4c0471cd-36fd-49b8-9818-685d1ce75ed5",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "0067_cemetery-stans-crypt-door_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0067_cemetery-stans-crypt-door_0000.png",
+      "originalHash": "a0ba8d7fc1fd3790daab307ca7f8c81ca8de19327c25d7f24773b087833324bb",
+      "width": 40,
+      "height": 128,
+      "metadata": {
+        "roomNumber": 67,
+        "originalFile": "0067_cemetery-stans-crypt-door_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:16.980Z"
+    },
+    "532611fb-0c6f-4084-8878-66f13f966e8b": {
+      "id": "532611fb-0c6f-4084-8878-66f13f966e8b",
+      "sceneId": "9156910b-1b3c-48bb-988a-d36f9e1e2f9c",
+      "name": "LFLF_0067_AKOS_0333",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0067_AKOS_0333_frame_0.png",
+      "originalHash": "db47492f2ebb247ac99fcea7912a3c160215badaacbf985189995fdc94c2a292",
+      "width": 39,
+      "height": 13,
+      "frameCount": 33,
+      "metadata": {
+        "roomNumber": 67,
+        "akosId": "LFLF_0067_AKOS_0333",
+        "frameCount": 33
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:27.746Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

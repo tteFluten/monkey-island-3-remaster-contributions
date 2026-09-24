@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "04aedc7c-1766-4e97-bb02-bf7ec89afe01",
+    "name": "clifface",
+    "roomNumber": 79,
+    "assets": [
+      "bbb7d0f1-b078-43df-8f93-87be0bf45eac",
+      "39e58bab-5b18-4c9c-ae69-f5958d6b9137"
+    ]
+  },
+  "assets": {
+    "bbb7d0f1-b078-43df-8f93-87be0bf45eac": {
+      "id": "bbb7d0f1-b078-43df-8f93-87be0bf45eac",
+      "sceneId": "04aedc7c-1766-4e97-bb02-bf7ec89afe01",
+      "name": "0079_clifface",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0079_clifface.png",
+      "originalHash": "0497063f2c4d4addae50d17b34513d9734b744b02ea00463020a43f17c73d8c6",
+      "width": 640,
+      "height": 2044,
+      "metadata": {
+        "roomNumber": 79,
+        "originalFile": "0079_clifface.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:18.426Z"
+    },
+    "39e58bab-5b18-4c9c-ae69-f5958d6b9137": {
+      "id": "39e58bab-5b18-4c9c-ae69-f5958d6b9137",
+      "sceneId": "04aedc7c-1766-4e97-bb02-bf7ec89afe01",
+      "name": "LFLF_0079_AKOS_0384",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0079_AKOS_0384_frame_0.png",
+      "originalHash": "f1a4a59c771c1f5c2090560ff69ecad88d0565ea7d485fe9e30fef36dd77ad9a",
+      "width": 230,
+      "height": 205,
+      "frameCount": 14,
+      "metadata": {
+        "roomNumber": 79,
+        "akosId": "LFLF_0079_AKOS_0384",
+        "frameCount": 14
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:29.570Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}

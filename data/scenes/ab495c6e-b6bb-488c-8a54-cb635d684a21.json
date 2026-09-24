@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "ab495c6e-b6bb-488c-8a54-cb635d684a21",
+    "name": "chapter4",
+    "roomNumber": 7,
+    "assets": [
+      "6f663d73-945b-47f1-adcc-f728b9665de2"
+    ]
+  },
+  "assets": {
+    "6f663d73-945b-47f1-adcc-f728b9665de2": {
+      "id": "6f663d73-945b-47f1-adcc-f728b9665de2",
+      "sceneId": "ab495c6e-b6bb-488c-8a54-cb635d684a21",
+      "name": "0007_chapter4",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0007_chapter4.png",
+      "originalHash": "35386f9942ff8f719d7ff3abf124f1e8190e62724f2507b7d9adec1bcb8bb5b8",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 7,
+        "originalFile": "0007_chapter4.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:08.855Z"
+    }
+  },
+  "variants": {},
+  "jobs": {
+    "15e17aa3-5946-4791-9e5d-82d10c9d760b": {
+      "id": "15e17aa3-5946-4791-9e5d-82d10c9d760b",
+      "assetId": "6f663d73-945b-47f1-adcc-f728b9665de2",
+      "tool": "imagelab-generate",
+      "model": "gemini-3.1-pro-image-preview",
+      "prompt": "Remaster the original game background in @1 at high resolution. Preserve its exact composition, camera, perspective, object positions, silhouettes, painted cartoon style, palette and lighting. Clean compression and pixelation while faithfully reconstructing existing contours and painted detail. Do not add, remove, move or redesign elements. No photorealism, new text, crop or camera change.",
+      "params": {
+        "aspect_ratio": "4:3",
+        "image_size": "4k"
+      },
+      "references": [
+        {
+          "position": 1,
+          "assetId": "6f663d73-945b-47f1-adcc-f728b9665de2",
+          "label": "background"
+        }
+      ],
+      "status": "failed",
+      "createdAt": "2026-09-21T22:54:06.248Z",
+      "startedAt": "2026-09-21T22:54:06.256Z",
+      "error": "No image in MCP response: [{\"type\":\"text\",\"text\":\"MCP error -32602: Input validation error: Invalid arguments for tool imagelab-generate: [\\n  {\\n    \\\"code\\\": \\\"invalid_value\\\",\\n    \\\"values\\\": [\\n      \\\"512\\\",\\n      \\\"1K\\\",\\n      \\\"2K\\\",\\n      \\\"4K\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"image_size\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input\\\"\\n  }\\n]\"}]",
+      "completedAt": "2026-09-21T22:54:07.124Z"
+    },
+    "da3a41ef-ed05-48d8-a100-06397d659c8e": {
+      "id": "da3a41ef-ed05-48d8-a100-06397d659c8e",
+      "assetId": "6f663d73-945b-47f1-adcc-f728b9665de2",
+      "tool": "imagelab-generate",
+      "model": "gemini-3.1-pro-image-preview",
+      "prompt": "Remaster the original game background in @1 at high resolution. Preserve its exact composition, camera, perspective, object positions, silhouettes, painted cartoon style, palette and lighting. Clean compression and pixelation while faithfully reconstructing existing contours and painted detail. Do not add, remove, move or redesign elements. No photorealism, new text, crop or camera change.",
+      "params": {
+        "aspect_ratio": "4:3",
+        "image_size": "4k"
+      },
+      "references": [
+        {
+          "position": 1,
+          "assetId": "6f663d73-945b-47f1-adcc-f728b9665de2",
+          "label": "background"
+        }
+      ],
+      "status": "failed",
+      "createdAt": "2026-09-21T22:54:38.819Z",
+      "startedAt": "2026-09-21T22:54:38.827Z",
+      "error": "No image in MCP response: [{\"type\":\"text\",\"text\":\"MCP error -32602: Input validation error: Invalid arguments for tool imagelab-generate: [\\n  {\\n    \\\"code\\\": \\\"invalid_value\\\",\\n    \\\"values\\\": [\\n      \\\"512\\\",\\n      \\\"1K\\\",\\n      \\\"2K\\\",\\n      \\\"4K\\\"\\n    ],\\n    \\\"path\\\": [\\n      \\\"image_size\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input\\\"\\n  }\\n]\"}]",
+      "completedAt": "2026-09-21T22:54:39.640Z"
+    }
+  }
+}

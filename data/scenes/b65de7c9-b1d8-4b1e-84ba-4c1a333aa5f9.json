@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "scene": {
+    "id": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+    "name": "doghouse",
+    "roomNumber": 68,
+    "assets": [
+      "2bf38b46-7751-4ffe-9309-ce089ad3bd8a",
+      "cfc5fa8f-0340-45b6-9d07-827675628e3b",
+      "9deacd98-96fe-439a-80c1-2c0105d15769",
+      "73bd45b6-2c7a-47b9-996a-e1eac686538d",
+      "bc12d34f-ecd1-46ab-b5b7-42675047c833",
+      "7f7630ee-56ec-4cd3-aa44-52ec091ec6f4",
+      "eccf8e99-fb70-4378-a4e0-eb8c4da0672b",
+      "d99f0ae5-22e4-457d-ac02-a82f8ee964dd",
+      "1e6e6196-7dc1-4d66-91fb-5c3a0ddb7301",
+      "bfd5b9ac-f71c-420c-a5be-9e0d362a9d97"
+    ]
+  },
+  "assets": {
+    "2bf38b46-7751-4ffe-9309-ce089ad3bd8a": {
+      "id": "2bf38b46-7751-4ffe-9309-ce089ad3bd8a",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "0068_doghouse",
+      "type": "background",
+      "originalPath": "extracted/backgrounds/0068_doghouse.png",
+      "originalHash": "8742c94f4f8228e621f989c393abc129308538440b531ea8cf39575ca83c719f",
+      "width": 640,
+      "height": 480,
+      "metadata": {
+        "roomNumber": 68,
+        "originalFile": "0068_doghouse.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.015Z"
+    },
+    "cfc5fa8f-0340-45b6-9d07-827675628e3b": {
+      "id": "cfc5fa8f-0340-45b6-9d07-827675628e3b",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "0068_chisel-2_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0068_chisel-2_0000.png",
+      "originalHash": "65ae6ecd0c6e355cd271cab3d350fecc22549a40ff6ad57652fc1c81cebc6cbb",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 68,
+        "originalFile": "0068_chisel-2_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.048Z"
+    },
+    "9deacd98-96fe-439a-80c1-2c0105d15769": {
+      "id": "9deacd98-96fe-439a-80c1-2c0105d15769",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "0068_chisel-3_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0068_chisel-3_0000.png",
+      "originalHash": "8bc426a9cd4472068827e34c0529d4c4925042dfd29193472fd55c447e82d17a",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 68,
+        "originalFile": "0068_chisel-3_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.085Z"
+    },
+    "73bd45b6-2c7a-47b9-996a-e1eac686538d": {
+      "id": "73bd45b6-2c7a-47b9-996a-e1eac686538d",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "0068_dog-house-chisel_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0068_dog-house-chisel_0000.png",
+      "originalHash": "ae9376b15c2c29dea5766b905c0ca6db3a4723f0bb463f95059ee418a98a3bb1",
+      "width": 16,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 68,
+        "originalFile": "0068_dog-house-chisel_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.102Z"
+    },
+    "bc12d34f-ecd1-46ab-b5b7-42675047c833": {
+      "id": "bc12d34f-ecd1-46ab-b5b7-42675047c833",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "0068_dog-house-doggy-treats_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0068_dog-house-doggy-treats_0000.png",
+      "originalHash": "13bc737f31609947ac44956e3db778448cc9f3ed648c96a055cacafbe896a9e2",
+      "width": 64,
+      "height": 24,
+      "metadata": {
+        "roomNumber": 68,
+        "originalFile": "0068_dog-house-doggy-treats_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.117Z"
+    },
+    "7f7630ee-56ec-4cd3-aa44-52ec091ec6f4": {
+      "id": "7f7630ee-56ec-4cd3-aa44-52ec091ec6f4",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "0068_dog-house-door-crack_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0068_dog-house-door-crack_0000.png",
+      "originalHash": "cfc46a99d642bd8cfff5583d2adcdf4a16971eb52fccecc68f8250c997dff5a3",
+      "width": 16,
+      "height": 160,
+      "metadata": {
+        "roomNumber": 68,
+        "originalFile": "0068_dog-house-door-crack_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.133Z"
+    },
+    "eccf8e99-fb70-4378-a4e0-eb8c4da0672b": {
+      "id": "eccf8e99-fb70-4378-a4e0-eb8c4da0672b",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "0068_dog-house-mallet_0000",
+      "type": "object",
+      "originalPath": "extracted/objects/0068_dog-house-mallet_0000.png",
+      "originalHash": "13e9b4d73763ac7afe51c1a212eb03381686078b4db3f3a45d73886f0db379ea",
+      "width": 48,
+      "height": 48,
+      "metadata": {
+        "roomNumber": 68,
+        "originalFile": "0068_dog-house-mallet_0000.png"
+      },
+      "variants": [],
+      "createdAt": "2026-09-21T22:36:17.147Z"
+    },
+    "d99f0ae5-22e4-457d-ac02-a82f8ee964dd": {
+      "id": "d99f0ae5-22e4-457d-ac02-a82f8ee964dd",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "LFLF_0068_AKOS_0334",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0068_AKOS_0334_frame_0.png",
+      "originalHash": "5440eec303a355e943cd3075f51c6be18e764aa519810e413c3711aba2dd9671",
+      "width": 150,
+      "height": 100,
+      "frameCount": 38,
+      "metadata": {
+        "roomNumber": 68,
+        "akosId": "LFLF_0068_AKOS_0334",
+        "frameCount": 38
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:27.838Z"
+    },
+    "1e6e6196-7dc1-4d66-91fb-5c3a0ddb7301": {
+      "id": "1e6e6196-7dc1-4d66-91fb-5c3a0ddb7301",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "LFLF_0068_AKOS_0335",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0068_AKOS_0335_frame_0.png",
+      "originalHash": "3b4e97bfad8e0517dfaa34023b33a47293371bff1dd8aff5ac9fee825d26a5d0",
+      "width": 138,
+      "height": 159,
+      "frameCount": 95,
+      "metadata": {
+        "roomNumber": 68,
+        "akosId": "LFLF_0068_AKOS_0335",
+        "frameCount": 95
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:27.860Z"
+    },
+    "bfd5b9ac-f71c-420c-a5be-9e0d362a9d97": {
+      "id": "bfd5b9ac-f71c-420c-a5be-9e0d362a9d97",
+      "sceneId": "b65de7c9-b1d8-4b1e-84ba-4c1a333aa5f9",
+      "name": "LFLF_0068_AKOS_0336",
+      "type": "character",
+      "originalPath": "extracted/costumes/LFLF_0068_AKOS_0336_frame_0.png",
+      "originalHash": "91818a4886db4fda45d666f5eac57fad32c2eb5cb7a176b5be41f03118117b2c",
+      "width": 134,
+      "height": 109,
+      "frameCount": 126,
+      "metadata": {
+        "roomNumber": 68,
+        "akosId": "LFLF_0068_AKOS_0336",
+        "frameCount": 126
+      },
+      "variants": [],
+      "createdAt": "2026-09-22T00:23:27.882Z"
+    }
+  },
+  "variants": {},
+  "jobs": {}
+}
