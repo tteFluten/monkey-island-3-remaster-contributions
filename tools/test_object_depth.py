@@ -64,6 +64,18 @@ int main() {
         }
         assert(covered == 1); // Keep native low-resolution pixels suppressed.
     }
+    // GPU scene alpha measures foreground opacity, not background opacity.
+    // Successive translucent objects must leave the correct background share.
+    for (unsigned int behind : {0u, 64u, 128u, 255u}) {
+        for (unsigned int alpha = 0; alpha <= 255; ++alpha) {
+            unsigned int scene = (behind << 24) | 0x00203040;
+            unsigned int sprite = (alpha << 24) | 0x00808080;
+            unsigned char noActor = 0, covered = 0;
+            HdObjectDepth::blit(&scene, 1, 1, 1, &sprite, 1, 1, 1,
+                               0, 0, 1, &noActor, &covered);
+            assert((scene >> 24) == alpha + (behind * (255 - alpha) + 127) / 255);
+        }
+    }
     for (int scale : {4, 6}) {
         int w = 4 * scale, h = scale, pitch = w + 2;
         std::vector<unsigned int> dest(pitch * h, 0xff112233);

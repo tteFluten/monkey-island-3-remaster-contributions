@@ -27,51 +27,46 @@ imported, and the Mac engine has been built. Source images and ISOs are unchange
 
 ## Resolution and game behavior
 
-The engine framebuffer is 2560 × 1920 (4× the original 640 × 480).
-Full 6× masters (3840 × 2880 for standard rooms) are preserved separately.
-The 6× renderer was tested, but this Mac was too slow, so runtime rendering and
-all staged assets are back at 4×. The default output is 4:3 at 2560 × 1920.
-In the original options book (**O** or **F5**), **Display** selects **4:3** or
-**16:9**; **Esc** resumes play. The selection persists across launches.
-The 16:9 presentation target is 2560 × 1440: fixed-width scenes occupy
-1920 × 1440 with 320-pixel black margins on each side. Window resizing and
-fullscreen scale that presentation uniformly. On a 3840 × 2160 display, a
-fixed 4:3 scene occupies 2880 × 2160 with side bars.
-The supplied 3840 × 2880 masters and wider/taller room images are preserved.
-Engine copies use four times each **room's** original dimensions, not a fixed
-screen-sized crop. Images with incompatible proportions cannot be applied,
-except for the explicit cannon-room extension described below.
+Every workshop launch and resume starts fullscreen with a **2560 × 1440,
+16:9 presentation canvas**, GPU effects enabled, and display synchronization.
+The original options book (**O** or **F5**) still offers **4:3** during play;
+both modes stay in borderless desktop fullscreen (without a separate macOS Space),
+and the next workshop launch resets presentation to
+16:9. Saved effect and font preferences remain intact. The GPU 4:3 canvas is
+1920 × 1440. Asset textures stay at 4×: a standard room uses
+2560 × 1920 textures and native gameplay remains 640 × 480. High-resolution
+masters are preserved separately. Physical display dimensions are independent
+of both the asset textures and presentation canvas.
 
-Room 9 (cannon) also accepts exact 16:9 artwork with the original composition
-in its centered 4:3 area. Import the full image through Playtest and apply it.
-The importer preserves the full master, stages its central crop at 2560 × 1920,
-and stages a 2560 × 1440 full-width copy under `hd/widescreen/bg_0009.png`.
-In 16:9, the OpenGL backend draws that extended scenery behind the unchanged
-gameplay surface. The added sides are decorative; characters, objects,
-walkboxes, and clicks keep their original center coordinates. In 4:3 only the
-central crop is shown. Inventory, options, and movies keep their existing
-framing. Selecting and applying an ordinary background removes the extension;
-missing or invalid extended artwork falls back to side bars. This is a local
-playtest variant and does not promote the artwork into the canonical pack.
+Any standard 640 × 480 background (excluding menus) accepts exact 16:9 artwork
+with the original composition in its centered 4:3 area. Use the existing
+background import and apply controls. They stage the centered image at
+2560 × 1920 and a full 2560 × 1440 sidecar at `hd/widescreen/bg_NNNN.png`.
+The presentation has a centered 1920 × 1440 gameplay region and 320 pixels of
+additional scenery on either side. Extensions are decorative: native objects,
+characters, walkboxes, and interaction coordinates keep their existing positions.
+Selecting ordinary artwork removes its sidecar; missing or invalid sidecars
+retain the original framing with bars. Staging does not promote artwork into
+the canonical pack or change its master.
 
-In 16:9, horizontal rooms at least 864 pixels wide and exactly 480 pixels tall
-reveal more of their existing panorama. The native viewport is 864 × 480 to
-respect eight-pixel strips; its 3456 × 1920 HD working texture is uniformly
-scaled to the display with 5⅓ native pixels of horizontal overscan at each edge.
-This working texture is not the output resolution. Original room coordinates,
-scripts, walkboxes, HD asset selections, and source images remain intact.
-Narrow, vertical, and two-dimensional rooms and movies keep their existing
-framing. The options book and inventory use the centered 4:3 area, including
-when opened from a panorama; closing either restores the wider viewport.
-Side margins (including cannon extension artwork) are noninteractive; releasing
-a press that began in gameplay releases it at the last valid position. Other
-fixed-width rooms retain side bars. Extended cannon artwork is selected
-separately from the existing 4:3 masters.
+Completed wide scenes uniformly fill taller displays by cropping outer scenery.
+Rendering and pointer input use the same rectangle. Unfinished backgrounds,
+menus, inventory, vertical rooms, and movies preserve their framing; bars are
+acceptable in these cases. The original game region is not stretched.
 
-`hd_aspect_ratio=43` (default) or `169` in `.playtest/scummvm.ini` records the
-selection. Existing engine-status fields retain their meaning; additive
-`aspectRatio`, `outputWidth`, `outputHeight`, `viewportWidth`, `viewportHeight`,
-`cameraLeft`, and mouse-world coordinates expose presentation diagnostics.
+Horizontal panoramas at least 864 pixels wide and exactly 480 pixels tall retain
+their existing 864 × 480 native viewport, camera bounds, and 3456 × 1920 working
+texture. Their 16:9 canvas crops 5⅓ native pixels from each horizontal edge.
+Panoramic, vertical, and two-dimensional rooms are never treated as centered
+background extensions. Inventory and the options book use the centered 4:3
+region and restore the scene framing when closed. Decorative margins reject
+new presses; a release outside gameplay still pairs with its original press.
+
+Engine status retains its existing fields and adds optional `drawableWidth`,
+`drawableHeight`, `renderBackend`, `presentationIntervalMs`, `presentationFps`,
+`renderCpuMs`, and `cameraTop`. The backend is
+reported as `opengl-shaders` or `cpu-effects`; fallback is never counted as GPU
+rendering. Canvas size, native viewport, and actual drawable size are separate.
 
 Run `python3 tools/check_aspect.py --all-panoramas` for native smoke checks using
 copies of the saves and isolated configuration. It uses only engine-local input,
@@ -92,43 +87,83 @@ setting. It checks the displayed side pixels, centered input, both display modes
 inventory, resize/fullscreen, missing/invalid artwork, and reload/save restoration.
 Sidecar failure checks use an isolated copy of the extended artwork.
 
-The engine is built with compiler optimizations and targets 60 Hz presentation.
-The HD pointer updates between native game ticks using small dirty rectangles;
-it no longer waits for a full character/scene redraw. Script, movement, animation,
-audio, and movie timing remain original: this does not synthesize 60 animation
-cels per second or interpolate the supplied 12 fps videos. The old additional
-30 fps sleep has been removed. Actor foreground masks are resolved once per
-rendered row, preserving native occlusion and camera offsets.
+The engine retains the pinned modern ScummVM fork and uses its OpenGL shader,
+texture, and framebuffer classes ([ScummVM graphics settings](https://docs.scummvm.org/en/latest/settings/graphics.html)). Depth of field uses the live original z-planes;
+scene objects and actors remain sharp, including transparent sprite edges.
+In completed 16:9 rooms, blur continues across the side scenery using the
+original depth coverage at each gameplay edge. Both GPU and CPU paths apply it.
+Color grading and vignette follow scene composition, then dialogue, inventory,
+menus, and cursor render without those effects. Existing controls and saved
+settings remain compatible. `hd_gpu_effects=false` selects the CPU reference.
+GPU textures, blur intermediates, background conversion, unchanged depth
+coverage, and costume scaling/lighting are cached. The normal native build uses
+release settings, with symbols retained for profiling. Normal rendering performs no GPU-to-CPU readback; explicit
+screenshots, thumbnails, and visual comparisons can request one.
 
-On this Mac, room-9 testing after loading held about 60 presentation updates per
-second, with typical HD composite times of 7–11 ms instead of the earlier
-60–90 ms. Cold asset loads and room/video transitions can still cause spikes.
-`HD-PRESENT` in the session's `hd_state.log` measures presentation frequency;
-the older `FRAME-TIMING` line measures CPU composite cost, not animation FPS.
-Run `PYTHONPATH=tools tools/venv/bin/python -m unittest test_frame_pacing
-test_object_depth test_actor_lighting test_svg_engine test_ui_staging` for the
-pacing, mask-offset, lighting, SVG, and UI regression checks.
+Scene Look supports global defaults and individual room overrides for **all**
+color, vignette, and depth-of-field controls. Open it with **U**. Press **G** or
+click the panel title to switch between **Global defaults** and **Room**. Room
+values inherit the global setting until edited; an asterisk marks each explicit
+override, including neutral color or focus Off. **Backspace** restores the
+selected room control to inheritance, and **R** restores every control in the
+current room. In Global mode, Backspace restores that control's built-in default.
+Changes save automatically. Existing room overrides stay active while editing
+global defaults. The focus hotkeys follow the selected editing scope; the
+options book's Focus preset edits the global setting.
 
-HD horizontal scrolling rooms now interpolate camera and actor positions between
-native ticks at the 60 Hz presentation rate. Intermediate renders use actor
-copies, the last drawn costume pose, and scratch native buffers/masks; scripts,
-walking, audio, and animation cels retain their original timing. This adds one
-native tick of visual latency (about 83 ms at the beach), without extrapolation
-or frame blending. Mouse world coordinates follow the displayed camera.
-Room changes, large jumps, pauses, dialogue, inventory, menus, and movies bypass
-interpolation. Vertical rooms retain the existing presentation path. Set
-`hd_smooth_motion=false` in the engine configuration to disable it for diagnosis.
-Panorama backgrounds are fully refreshed at native ticks, fixing missing vertical
-strips through static sprites during scrolling.
+Settings stay in `data/color-grades.json`. Schema 2 stores a `global` object and
+sparse `rooms` objects; missing room keys inherit independently. Color keys keep
+their existing names. Focus keys are `depthOfField` (0 Off, 1 Low, 2 High),
+`blurTenths` (0 for the preset, otherwise 5–120 tenths of a native pixel),
+`edgeSoftness` (0–12 native pixels), `blurIntensity` (0–100), and `sceneDepth`
+(1–7). For example, a room can turn off global blur without changing its color:
 
-Validation: `PYTHONPATH=tools tools/venv/bin/python -m unittest test_motion
-test_frame_pacing test_object_depth test_actor_shadow test_actor_lighting`.
-Native room-14 and room-15 walking checks measured approximately 60 presentations/second and
-6–7 ms per intermediate render. A target-position replay matched the normal
-4× compositor pixel-for-pixel (4,915,200 pixels) in both rooms. Room changes and
-opening/closing the game menu also passed. With `MI3_ENGINE_TEST_INPUT=1`,
-creating `motion-check` inside the active session records this comparison in
-`motion-check.json` and two PNGs. The comparison runs while motion is active.
+```json
+{
+  "schemaVersion": 2,
+  "global": {"brightness": 2, "vignetteEnabled": 1, "depthOfField": 2},
+  "rooms": {"9": {"depthOfField": 0}, "61": {"warmth": 6}}
+}
+```
+
+Existing schema-1 room grades retain their appearance, and saved INI focus
+preferences seed the initial global defaults. The first edit saves schema 2 and
+keeps the old file as `color-grades.json.v1.bak`. Loading alone never rewrites it.
+External file edits require a game restart; the running editor refuses to
+silently overwrite a file changed since it was loaded. Save games remain
+independent of these authoring settings.
+
+Drawing-only interpolation covers fixed-room actor motion and continuous
+horizontal, vertical, and scripted camera pans. Scratch buffers and actor clones
+are reused. Native scripts, puzzles, animation cels, audio, and movies retain
+their original timing. Interpolation adds one native tick of visual latency;
+intentional camera cuts, room changes, pauses, menus, and movies reset or bypass
+it. `hd_smooth_motion=false` disables interpolation for comparison.
+
+One fractional scheduler targets 60 presentations per second. With GPU effects
+and display synchronization, it waits after rendering and lets the next display
+refresh complete the swap; the engine adds no second presentation delay.
+Unsynchronized and compatibility rendering use the engine scheduler instead. Verbose tracing is off by default (`hd_trace=false`).
+
+Measure completed swaps, not update requests:
+
+```sh
+MI3_ASPECT_TEST_SAVES=/path/to/copied-fixture-saves \
+  tools/venv/bin/python tools/check_performance.py \
+  --gpu --vsync --fullscreen --effects --room 15 --motion walk \
+  --seconds 60 --runs 3 --output .context/performance/panorama
+MI3_ASPECT_TEST_SAVES=/path/to/copied-fixture-saves \
+  tools/venv/bin/python tools/check_remaster.py --interactions
+```
+
+The benchmark records actual swap intervals, CPU rendering work, asynchronous
+GPU timer results (when available), camera positions, and separate launch/jump
+latencies. Acceptance is 59–61 fps, CPU and GPU p99 at most 16.67 ms, and fewer
+than 1% of intervals over 25 ms. These are measured targets, not a guarantee on
+untested hardware. Native loading and transition stalls remain separate from
+steady motion. `check_remaster.py` saves same-tick CPU/GPU comparisons; the
+native aspect interaction check compares interpolation endpoints pixel-for-pixel.
+Reports and screenshots belong under `.context/` and are not packaged assets.
 
 Room jumps use debugger-style scene transitions with current puzzle state.
 They do not initialize chapter progression, inventory, or every room-specific
@@ -211,8 +246,8 @@ room jumping, movement/camera scrolling, foreground overlap, background reload,
 and original/remaster switching. Browser checks covered desktop and mobile,
 room browsing, asset-library navigation, and console errors.
 
-The Mac config disables VSync because SDL2-compat/SDL3 stalled in OpenGL buffer
-swap on this machine. The engine's existing frame limiter remains active.
+The Mac config enables VSync with the pinned SDL2/OpenGL build. Performance
+checks report completed swaps and identify CPU fallback explicitly.
 A missing-HD message for costumes, fonts, objects, or audio outside the supplied
 test pack is expected. The Topaz pack includes Guybrush's standing and eight-direction walking frames
 and Wally's standing body/head poses. Other dialogue and story poses can still

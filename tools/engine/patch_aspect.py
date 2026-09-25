@@ -19,6 +19,30 @@ def patch(root, edit):
     void drawHDAspectMenu();
     bool _hdAspectMouseDown = false;
     const Graphics::Surface *_hdBackendCursor = nullptr;''')
+    # Inspection labels are authored at the original 640px screen center.
+    # Translate only screen-anchored captions; overhead speech already uses
+    # actor/camera coordinates and must not receive this offset a second time.
+    text = 'engines/scumm/string_v7.cpp'
+    edit(text, '\t\tenqueueText(msg, st.xpos, st.ypos, st.color, st.charset, (TextStyleFlags)flags);', '''        const int textX = _game.id == GID_CMI && _hdScale > 1 && hdAspectRatio() == 169
+            ? HdAspect::centeredTextX(st.xpos, st.center, _screenWidth) : st.xpos;
+        enqueueText(msg, textX, st.ypos, st.color, st.charset, (TextStyleFlags)flags);''')
+    edit(text, '\t\tsubtitlePos.x = _string[0].xpos;', '''        subtitlePos.x = _string[0].xpos;
+        if (_game.id == GID_CMI && _hdScale > 1 && hdAspectRatio() == 169 &&
+            !(a && _string[0].overhead))
+            subtitlePos.x = HdAspect::centeredTextX(subtitlePos.x, _string[0].center, _screenWidth);''')
+    # Constructor clip rectangles are still 640px after a panorama is opened.
+    # Center the original wrapping area for centered captions, preserving line
+    # breaks; other text can use the current viewport without right-edge clipping.
+    for clip in ('_wrappedTextClipRect', '_defaultTextClipRect'):
+        before = '\t\t\tbt.rect = ' + clip + ';'
+        edit(text, before, before + '''
+            if (_game.id == GID_CMI && _hdScale > 1 && hdAspectRatio() == 169 && _screenWidth > 640) {
+                if ((bt.flags & kStyleAlignCenter) && bt.xpos == _screenWidth / 2)
+                    bt.rect.translate((_screenWidth - 640) / 2, 0);
+                else
+                    bt.rect.right += _screenWidth - 640;
+            }''')
+
     # A scrolling viewport also needs its extra feed strip.
     edit('engines/scumm/gfx.h', 'uint16 tdirty[80 + 1];', 'uint16 tdirty[108 + 1];')
     edit('engines/scumm/gfx.h', 'uint16 bdirty[80 + 1];', 'uint16 bdirty[108 + 1];')
@@ -83,7 +107,8 @@ def patch(root, edit):
         // per side; the same rectangle is used to invert pointer coordinates.
         if (ConfMan.hasKey("playtest_session") && ConfMan.getInt("hd_aspect_ratio") == 169 && getHeight()) {
             const int nativeWidth = getWidth() * 480 / getHeight();
-            const HdAspect::Rect rect = HdAspect::game(safeArea.width(), safeArea.height(), 169, nativeWidth);
+            const HdAspect::Rect rect = HdAspect::game(safeArea.width(), safeArea.height(), 169, nativeWidth,
+                nativeWidth >= 864 || (ConfMan.hasKey("hd_wide_background_active") && ConfMan.getBool("hd_wide_background_active")));
             _gameDrawRect = Common::Rect(safeArea.left + rect.x, safeArea.top + rect.y,
                 safeArea.left + rect.x + rect.w, safeArea.top + rect.y + rect.h);
         }

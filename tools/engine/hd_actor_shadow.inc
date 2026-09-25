@@ -37,7 +37,7 @@ if (_game.id == GID_CMI && _currentRoom != 87) {
         }
         const HdActorShadow::Footprint shadow = HdActorShadow::footprint(
             under, after, visW, visH,
-            a->getPos().x - vs->xstart, a->getPos().y,
+            a->getPos().x - vs->xstart, a->getPos().y - _screenTop,
             HdActorShadow::groundElevation(a->getPos().x, a->getPos().y, a->getElevation()));
         if (_hdFrameCount % 120 == 0 && !shadow.valid)
             hdPrintf("CONTACT-SHADOW-SKIP actor=%d position=%d,%d elevation=%d pose=%d", a->_number,
@@ -57,11 +57,14 @@ if (_game.id == GID_CMI && _currentRoom != 87) {
         const int y0 = MAX(0, (int)(cy - ry)), y1 = MIN(hdH, (int)(cy + ry) + 1);
         for (int y = y0; y < y1; ++y) {
             uint32 *dest = (uint32 *)_hdComposite.getBasePtr(0, y);
-            const byte *mask = z >= 0 && z < _gdi->_numZBuffer ? getMaskBuffer(0, y / scale, z) : nullptr;
+            const byte *mask = z >= 0 && z < _gdi->_numZBuffer ? getMaskBuffer(0, y / scale + _screenTop, z) : nullptr;
             const float dy = (y + 0.5f - cy) / ry;
             for (int x = x0; x < x1; ++x) {
                 if (HdObjectDepth::masked(mask, x / scale, vs->xstart & 7)) continue;
-                dest[x] = HdActorShadow::shade(dest[x], (x + 0.5f - cx) / rx, dy, shadow.opacity);
+                const float dx = (x + 0.5f - cx) / rx;
+                dest[x] = HdActorShadow::shade(dest[x], dx, dy, shadow.opacity);
+                if (HdRemaster::state().active && dx * dx + dy * dy < 1.0f)
+                    dest[x] = (dest[x] & 0xffffffu) | (HdRemaster::opacity(shadow.opacity, dest[x] >> 24) << 24);
             }
         }
         if (_hdFrameCount % 120 == 0)

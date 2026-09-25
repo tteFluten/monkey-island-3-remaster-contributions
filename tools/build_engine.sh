@@ -24,11 +24,11 @@ if [[ ! -f "$ENGINE_ROOT/revision" || "$(cat "$ENGINE_ROOT/revision")" != "$REVI
   echo 'Engine source revision mismatch; move .playtest/engine aside and rebuild.' >&2
   exit 1
 fi
-chmod +x "$ENGINE_ROOT/source/config.guess" "$ENGINE_ROOT/source/config.sub"
 python3 "$TASK_ROOT/tools/engine/patch_engine.py" "$ENGINE_ROOT/source"
+chmod +x "$ENGINE_ROOT/source/config.guess" "$ENGINE_ROOT/source/config.sub"
 cd "$ENGINE_ROOT/build"
-bash ../source/configure --disable-all-engines --enable-engine=scumm,scumm-7-8 \
-  --enable-optimizations \
+CXXFLAGS="${CXXFLAGS:-} -DNDEBUG -O3" bash ../source/configure --disable-all-engines --enable-engine=scumm,scumm-7-8 \
+  --enable-release-mode --disable-optimizations --enable-debug \
   --opengl-mode=gl --disable-nasm \
   --with-sdl-prefix="$(brew --prefix sdl2-compat)" \
   --with-png-prefix="$(brew --prefix libpng)" --with-zlib-prefix="$(brew --prefix zlib)"

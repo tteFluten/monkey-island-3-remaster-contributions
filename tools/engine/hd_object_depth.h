@@ -41,10 +41,12 @@ inline unsigned int edgeColor(const unsigned int *source, int pitch, int width,
     return (pixel & 0xff000000) | rgb;
 }
 
-inline void blit(unsigned int *dest, int destPitch, int screenWidth, int screenHeight,
+template<int FixedScale>
+inline void blitScaled(unsigned int *dest, int destPitch, int screenWidth, int screenHeight,
                  const unsigned int *source, int sourcePitch, int width, int height,
-                 int left, int top, int scale, const unsigned char *actors,
+                 int left, int top, int dynamicScale, const unsigned char *actors,
                  unsigned char *hdAlphaMask, bool cleanMatteEdge = false) {
+    const int scale = FixedScale ? FixedScale : dynamicScale;
     for (int y = 0; y < height; ++y) {
         const int dy = top + y;
         if (dy < 0 || dy >= screenHeight) continue;
@@ -66,11 +68,21 @@ inline void blit(unsigned int *dest, int destPitch, int screenWidth, int screenH
                 const unsigned int r = ((pixel & 255) * alpha + (previous & 255) * (255 - alpha) + 127) / 255;
                 const unsigned int g = (((pixel >> 8) & 255) * alpha + ((previous >> 8) & 255) * (255 - alpha) + 127) / 255;
                 const unsigned int b = (((pixel >> 16) & 255) * alpha + ((previous >> 16) & 255) * (255 - alpha) + 127) / 255;
-                dest[dy * destPitch + dx] = r | (g << 8) | (b << 16) | 0xff000000;
+                dest[dy * destPitch + dx] = r | (g << 8) | (b << 16) |
+                    ((alpha + ((previous >> 24) * (255 - alpha) + 127) / 255) << 24);
             }
             hdAlphaMask[dy * screenWidth + dx] = 1;
         }
     }
+}
+inline void blit(unsigned int *dest, int destPitch, int screenWidth, int screenHeight,
+                 const unsigned int *source, int sourcePitch, int width, int height,
+                 int left, int top, int scale, const unsigned char *actors,
+                 unsigned char *hdAlphaMask, bool cleanMatteEdge = false) {
+    if (scale == 4) blitScaled<4>(dest, destPitch, screenWidth, screenHeight, source, sourcePitch,
+        width, height, left, top, scale, actors, hdAlphaMask, cleanMatteEdge);
+    else blitScaled<0>(dest, destPitch, screenWidth, screenHeight, source, sourcePitch,
+        width, height, left, top, scale, actors, hdAlphaMask, cleanMatteEdge);
 }
 }
 #endif

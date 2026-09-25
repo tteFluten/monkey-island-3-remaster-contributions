@@ -1,14 +1,15 @@
 // Included in gfx.cpp. Changes display buffers only, never re-enters a room.
 int ScummEngine::hdAspectRatio() const {
-    return ConfMan.hasKey("hd_aspect_ratio") ? HdAspect::preference(ConfMan.getInt("hd_aspect_ratio")) : 43;
+    return ConfMan.hasKey("hd_aspect_ratio") ? HdAspect::preference(ConfMan.getInt("hd_aspect_ratio")) : 169;
 }
 
 void ScummEngine::publishHDWideBackground(bool movie) {
     if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session")) return;
+    if (movie || isSmushActive()) HdRemaster::state().active = false;
     Common::String path;
-    if (!movie && !isSmushActive() && _currentRoom == 9 && _roomWidth == 640 &&
+    if (!movie && !isSmushActive() && _currentRoom != 87 && _currentRoom != 92 && _roomWidth == 640 &&
         _roomHeight == 480 && hdAspectRatio() == 169 && !hdInventoryOpen())
-        path = ConfMan.get("hd_path") + "/widescreen/bg_0009.png";
+        path = ConfMan.get("hd_path") + Common::String::format("/widescreen/bg_%04d.png", _currentRoom);
     ConfMan.set("hd_wide_background", path, Common::ConfigManager::kTransientDomain);
     ConfMan.setInt("hd_wide_background_revision", _playtestCommandId,
         Common::ConfigManager::kTransientDomain);

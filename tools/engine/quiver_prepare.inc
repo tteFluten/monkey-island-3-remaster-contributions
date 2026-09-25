@@ -5,6 +5,10 @@ struct QuiverPose {
     Actor *actor;
     Common::Array<Graphics::Surface *> textures;
 };
+// Pin decoded surfaces until both scene and coin passes finish. Views borrow
+// pixel storage; no full costume texture is copied for an interpolated frame.
+if (_hdUICostumeManager) _hdUICostumeManager->beginBorrow();
+if (_hdQuiverManager) _hdQuiverManager->beginBorrow();
 Common::Array<QuiverPose> quiverPoses;
 Common::Array<byte> quiverNative, quiverWithoutCoin;
 if (_hdUICostumeManager || (playtestExactRoom(_currentRoom) && _hdQuiverManager && _hdQuiverManager->isEnabled())) {
@@ -43,20 +47,20 @@ if (_hdUICostumeManager || (playtestExactRoom(_currentRoom) && _hdQuiverManager 
             Graphics::Surface *texture = new Graphics::Surface();
             pose.textures.push_back(texture);
             if (coin && d.cel < 63) continue; // Native sparkle captured separately.
-            if (d.costume != a->_costume || !manager->loadCostume(d.costume, d.cel, *texture, d.width * scale, d.height * scale) ||
+            if (d.costume != a->_costume || !manager->loadCostume(d.costume, d.cel, *texture, d.width * scale, d.height * scale, true) ||
                 texture->w != d.width * scale || texture->h != d.height * scale || texture->format.bytesPerPixel != 4) {
                 valid = false; break;
             }
         }
         if (valid) quiverPoses.push_back(pose);
         else for (uint i = 0; i < pose.textures.size(); ++i) {
-            pose.textures[i]->free(); delete pose.textures[i];
+            delete pose.textures[i];
         }
     }
     if (!quiverPoses.empty()) {
         quiverNative.resize(visW * visH);
         for (int y = 0; y < visH; ++y)
-            memcpy(&quiverNative[y * visW], vs->getBasePtr(vs->xstart, y), visW);
+            memcpy(&quiverNative[y * visW], vs->getBasePtr(vs->xstart, y + _screenTop), visW);
         // Unwind front to back, restoring the actual scene under each actor.
         // Later dialogue/foreground changes remain intact. Missing poses were
         // excluded above and retain all their original pixels.

@@ -18,8 +18,12 @@ if (getenv("MI3_ENGINE_TEST_INPUT") && ConfMan.hasKey("playtest_session", "comi"
 				SDL_GetWindowSize(_graphicsManager->getWindow()->getSDLWindow(), &w, &h);
 				FILE *output = fopen((ConfMan.get("playtest_session", "comi") + "/test-window.json").c_str(), "w");
 				if (output) {
-					fprintf(output, "{\"width\":%d,\"height\":%d,\"dpi\":%f}\n", w, h,
-						_graphicsManager->getWindow()->getSdlDpiScalingFactor());
+					fprintf(output, "{\"width\":%d,\"height\":%d,\"dpi\":%f,\"fullscreen\":%s,\"flags\":%u,\"windowedTest\":%s,\"session\":%s}\n", w, h,
+						_graphicsManager->getWindow()->getSdlDpiScalingFactor(),
+                        g_system->getFeatureState(OSystem::kFeatureFullscreenMode) ? "true" : "false",
+                        SDL_GetWindowFlags(_graphicsManager->getWindow()->getSDLWindow()),
+                        SDL_getenv("MI3_ENGINE_TEST_WINDOWED") ? "true" : "false",
+                        ConfMan.hasKey("playtest_session") ? "true" : "false");
 					fclose(output);
 				}
 			} else if (sscanf(command, "fullscreen %d", &key) == 1) {

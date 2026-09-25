@@ -12,5 +12,5 @@ if (quiverCapture) {
     _quiverCamera = screen.xstart;
     _quiverUnder.resize(_quiverWidth * _quiverHeight);
     for (int y = 0; y < _quiverHeight; ++y)
-        memcpy(&_quiverUnder[y * _quiverWidth], screen.getBasePtr(screen.xstart, y), _quiverWidth);
+        memcpy(&_quiverUnder[y * _quiverWidth], screen.getBasePtr(screen.xstart, y + _vm->_screenTop), _quiverWidth);
 }

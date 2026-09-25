@@ -17,10 +17,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Check:
-    def __init__(self, output, aspect=43, hd_path=None, color_grades_path=None):
+    def __init__(self, output, aspect=43, hd_path=None, color_grades_path=None, engine_path=None, config_overrides=None, allow_window=True):
         self.output = output.resolve()
         self.output.mkdir(parents=True, exist_ok=True)
-        for name in ('status.json', 'test-input.txt', 'test-window.json', 'command.json', 'save-load.txt'):
+        for name in ('status.json', 'result.json', 'test-input.txt', 'test-window.json', 'command.json', 'save-load.txt',
+                     'benchmark-start', 'benchmark-stop', 'frames.csv', 'camera-sweep', 'walk-to.txt',
+                     'motion-check', 'motion-check.json'):
             (self.output / name).unlink(missing_ok=True)
         save_source = Path(os.environ.get('MI3_ASPECT_TEST_SAVES', str(ROOT / '.playtest/saves')))
         shutil.copytree(save_source, self.output / 'saves', dirs_exist_ok=True)
@@ -36,12 +38,17 @@ class Check:
             self.config['comi']['hd_path'] = str(hd_path.resolve())
         if color_grades_path is not None:
             self.config['comi']['hd_color_grades_path'] = str(color_grades_path.resolve())
+        for section, values in (config_overrides or {}).items():
+            self.config[section].update(values)
         with (self.output / 'scummvm.ini').open('w') as handle:
             self.config.write(handle)
         self.log = (self.output / 'engine.log').open('w')
-        self.process = subprocess.Popen([str(ROOT / '.playtest/engine/build/scummvm'),
+        environment = dict(os.environ, MI3_ENGINE_TEST_INPUT='1', MI3_ENGINE_TEST_EXCLUSIVE='1')
+        environment.pop('MI3_ENGINE_TEST_WINDOWED', None)
+        if allow_window: environment['MI3_ENGINE_TEST_WINDOWED'] = '1'
+        self.process = subprocess.Popen([str(engine_path or ROOT / '.playtest/engine/build/scummvm'),
             '--config=' + str(self.output / 'scummvm.ini'), '--save-slot=0', 'comi'], cwd=self.output,
-            stdout=self.log, stderr=self.log, env=dict(os.environ, MI3_ENGINE_TEST_INPUT='1', MI3_ENGINE_TEST_EXCLUSIVE='1'))
+            stdout=self.log, stderr=self.log, env=environment)
         try:
             self.wait(lambda: self.state().get('ready'), 'engine ready', 45)
         except BaseException:
@@ -208,11 +215,13 @@ def interactions(check):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT / '.context/widescreen/native')
+    parser.add_argument('--gpu', action='store_true')
     parser.add_argument('--all-panoramas', action='store_true')
     parser.add_argument('--rooms', type=int, nargs='+', help='Check only these rooms, starting in 16:9')
     parser.add_argument('--interactions', action='store_true', help='Save/load, movement, movie and window checks')
     args = parser.parse_args()
-    check = Check(args.output, 169 if args.rooms or args.interactions else 43)
+    check = Check(args.output, 169 if args.rooms or args.interactions else 43,
+                  config_overrides={'comi': {'hd_gpu_effects': str(args.gpu).lower()}})
     try:
         if args.interactions:
             interactions(check)
