@@ -287,3 +287,19 @@ redraw remains a larger, unfinished selection.
 `tools/quiver_cannon_sequence.py` operates on the 14 extracted room-9 cannon cels in `output/topaz-batch/extracted-cannon`. Its separate output is `output/quiver-cannon/cannon-sequence`. This uses [Arrow 2 image-to-SVG](https://docs.quiver.ai/developers/models/image-to-svg) with automatic cropping disabled, padded references, and an inverse padding transform. Provider responses and usage are journaled before validation; uncertain paid requests are never automatically retried. Representative pilots cover the stationary cannon, recoil, and a tiny effect piece. Maximum batch concurrency is two.
 
 Run `prepare`, `pilot`, and (after visual review recorded via `quiver_cannon.review`) `generate`. `status` reports token usage and estimated cost. Both Sharp and the native NanoSVG renderer must pass alignment checks. Raw responses are immutable; documented SVG repairs are bound to the original response hash in `repairs.json`. The `install` command requires all 14 cels accepted and all reviewed hashes intact. It merges only cannon SVGs into the Quiver pack, preserving character art and both Topaz comparison packs. Runtime stays 4×; SVG and 6× PNG masters remain available.
+
+## Source-list passes (`tools/quiver_sources.py`)
+
+`prepare --output DIR KEY...` takes any list of costume/object/layer/background sources;
+`generate --max-usd N` runs one request at a time and reserves a conservative cost before
+each, so the ceiling cannot be exceeded; failed or uncertain requests are never retried.
+`--prompt` switches to prompted redraw (`/svgs/generations`) with the source as reference and a
+loose geometry check (stays on and covers the original path); `sheet` writes original | render
+comparisons. Results are review candidates only; `tools/package_candidates.py` packages chosen
+ones as 4x masters with their runtime copies, rebuilt object layers and aliases.
+
+Findings from the cannon pass: vectorizing nearest-enlarged pixel art traces the pixel staircase
+on thin ropes and loses one-pixel lines; smoothing the input made colours and placement worse.
+Prompted redraw gives soft, reinterpreted ropes/lines on the same path but can drift on very
+narrow canvases. Larger sprites and icons vectorize well.
+

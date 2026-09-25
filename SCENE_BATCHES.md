@@ -280,6 +280,34 @@ At each handoff, report the batch ID, newly installed count, pending review/repa
 
 Creating `output/topaz-scenes/stop-after-current` stops new submissions and drains already-submitted work. Remove that file to resume. Workflow locks prevent a checkpoint run from duplicating the active cannon worker. Job files, images, API credentials and machine paths remain ignored local data.
 
+## Reviewing with scene sheets
+
+`tools/scene_sheets.py` packs a room's artwork into a few labelled review pages instead of hundreds of single-file views. It reads local files only and makes no generation calls.
+
+```sh
+python3 tools/scene_sheets.py build --scene 9                 # room number, scene name or UUID
+python3 tools/scene_sheets.py build --scene 9 --backdrop dark  # also light
+python3 tools/scene_sheets.py build --scene 10 --masters-only --frame-step 4
+python3 tools/scene_sheets.py lookup 9 C3.17 C3.20-24 O2
+# Full cannon scope from the scene-focus audit (shared Guybrush, inventory icons, unplanned cels):
+python3 tools/scene_sheets.py build --scene 9 --scope .context/scene-focus/coverage.json
+```
+
+`--scope` adds every source listed by `tools/audit_scene_focus.py` (or a plain JSON list) and reports any that are not on a sheet. Native cels that were never extracted into `extracted/` are read from the local, ignored `.context/scene-sheets/originals/{indexed,cleaned}/`; its `provenance.json` records where each copy came from. Tiles with no file at all are still drawn and counted.
+
+Pages and indexes are written to the ignored `.context/scene-sheets/<room>-<name>/<mode>[-<backdrop>]/`:
+
+- `compare` mode (default) shows the transparency-restored reference beside the canonical master, and the opaque extracted original when no reference exists. `source` and `master` modes show one side only.
+- Each tile has a short ID: `C3.17` is costume 3, frame 17; `O`, `L` and `B` are objects, object layers and backgrounds. Border colours show the recorded state: green validated/accepted, red rejected, grey no master, amber other.
+- `index.md` has one line per costume or object, giving its pages, frame range, state counts and rejected/missing frames. Read it first; it costs far less than the images.
+- `index.json` records each tile's page and pixel box. It also records the path and SHA-256 of the source, reference and master, the runtime copies exported from that master, and the older default-pack copy (`assets/runtime/<category>/…aframe_N`), which is linked only when it is exactly 4× the source.
+- `lookup` prints those records and the per-file `topaz_scenes.py review` command.
+- Collection covers the scene data plus any costume, object or layer file carrying the room's prefix. Groups missing from the scene data are marked.
+- A coverage check lists every room-named file under `extracted/`, `assets/` and `upscaled/`/`previews/` that no tile references. "Room files not on any sheet: 0" means nothing was left out.
+- Frame sampling (`--frame-step`, `--max-frames`) and `--masters-only` record every omitted frame in the index. Unchanged inputs reuse existing pages.
+
+Pages stay within about 1.15 megapixels, so an image viewer shows every tile without downscaling. Use the sheets to find problems, then open individual files for flagged tiles. A sheet is not a review record: `review --source` still records the exact files inspected. Transparency, animation-in-motion and in-game checks below still apply.
+
 ## Review and game installation
 
 The editor's **Batch outputs → Scene batches** table shows new results and remaining pilot counts. Paid provider files and raw Wonder masters remain separate from runtime PNGs. Previous versions stay available for comparison. Results that fail geometry/color checks are quarantined; they are not silently replaced by old edges.
