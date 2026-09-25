@@ -54,6 +54,12 @@ framing. Selecting and applying an ordinary background removes the extension;
 missing or invalid extended artwork falls back to side bars. This is a local
 playtest variant and does not promote the artwork into the canonical pack.
 
+The pack now includes one such 16:9 cannon image (ImageLab, cropped to exact 16:9 with the room's 4:3
+area centred): `assets/masters/backgrounds/319ae406…png`, with its original JPG under
+`assets/references/imagelab/`. The packaged workshop state selects it for room 9, so a fresh install
+shows the extended scenery in 16:9; an existing local selection is kept on reinstall. Its review status
+is `unreviewed`.
+
 In 16:9, horizontal rooms at least 864 pixels wide and exactly 480 pixels tall
 reveal more of their existing panorama. The native viewport is 864 × 480 to
 respect eight-pixel strips; its 3456 × 1920 HD working texture is uniformly

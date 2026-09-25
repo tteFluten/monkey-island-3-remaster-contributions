@@ -145,3 +145,14 @@ responses, applies a single rectangular clip after rendering (PNG runtime only; 
 not engine-compatible), and `tools/quiver_render.mjs` lowers density only when a wide canvas would
 exceed the pixel limit.
 
+## Rooms 13, 16, 18 and 19 — 2026-09-25
+
+A 200-credit Topaz batch (`output/topaz-scenes/rooms-13-19/batch-01`, same allowance) retried the
+missing and previously rejected cels and objects of these nearly-complete rooms. Only 9 validated and
+were packaged; 90 were rejected again for the same reasons as their existing drafts: Guybrush heads
+lose the chin and neck, the translucent ghost (costume 65) and Guybrush's pink bubble-gum bubble are
+removed by matting, and tiny effects become opaque boxes. The room-19 cannonball object's cleaned input
+still contains its orange background. Retrying Topaz on these populations is not productive; they need
+prompted redraws or input fixes. One request ended in an unknown state and is not retried.
+Allowance remaining after this workspace's journals (760 credits): 691.
+

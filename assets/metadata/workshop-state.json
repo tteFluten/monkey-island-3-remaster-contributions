@@ -10,7 +10,7 @@
     "5f420ca4-000c-4e77-b8ee-57a9d59849b7": "0675e246-f577-42bb-a6a9-cdc96b717353",
     "6f663d73-945b-47f1-adcc-f728b9665de2": "9a753509-9611-4b0a-b96a-5ab1ab3b430d",
     "0aff02c9-8614-432a-a4de-5eb418c06afc": "69fbb262-24d4-449f-ba3b-0c963aedc7aa",
-    "4921c986-44f5-4c33-8f0c-adec6ff6fa6f": "07390e8c-e396-464e-89e4-57167ee27035",
+    "4921c986-44f5-4c33-8f0c-adec6ff6fa6f": "cbbaed3b-3361-427a-93a5-c27e95dbe09e",
     "a1327264-ec6d-4863-905c-9d7f13f9cefc": "5db909ac-cdef-4301-86e1-d4e6b88fbf7f",
     "afda4e02-afa5-4016-b647-a914f4cf611f": "4298d773-d459-4e78-9c9e-b4f407c2ba12",
     "28ed108f-87bb-45c3-b1dd-3f5d3099b812": "9b1a7f14-deb4-4377-98eb-9ad54bd1ff9a",
@@ -1955,6 +1955,27 @@
       },
       "references": [],
       "createdAt": "2026-09-23T19:00:53.172Z",
+      "reviewStatus": "unreviewed",
+      "engineStatus": "untested"
+    },
+    "cbbaed3b-3361-427a-93a5-c27e95dbe09e": {
+      "id": "cbbaed3b-3361-427a-93a5-c27e95dbe09e",
+      "assetId": "4921c986-44f5-4c33-8f0c-adec6ff6fa6f",
+      "filePath": "upscaled/imported/319ae406ee4d5499ebdfebfb6b07b176f630ece221ac86905d90de8d783d44c2.png",
+      "width": 3584,
+      "height": 2016,
+      "mimeType": "image/png",
+      "fileSize": 7868795,
+      "tool": "folder-import",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "319ae406ee4d5499ebdfebfb6b07b176f630ece221ac86905d90de8d783d44c2",
+        "originalFile": "basement-imagelab-1790273621518.jpg",
+        "note": "ImageLab 16:9 cannon room; exact 16:9 crop"
+      },
+      "references": [],
+      "createdAt": "2026-09-25T14:21:05.912Z",
       "reviewStatus": "unreviewed",
       "engineStatus": "untested"
     }
