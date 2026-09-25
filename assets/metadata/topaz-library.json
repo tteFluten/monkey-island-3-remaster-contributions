@@ -24443,6 +24443,12 @@
       "canonical": "costumes/LFLF_0013_AKOS_0064_frame_148.png"
     },
     {
+      "source": "costumes/LFLF_0013_AKOS_0064_frame_149.png",
+      "cleaned_sha256": "877ca7cc94619f77be60b17d9db79144c0f6e6a1ce9c1f7fe4b8d919d48f8cde",
+      "canonical": "costumes/LFLF_0013_AKOS_0064_frame_149.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0013_AKOS_0064_frame_15.png",
       "source_sha256": "76d06557654b33e06c4c617a6e6a36fdd85dd65e3c7e4515f64e14cceaedb49b",
       "size": [
@@ -33397,6 +33403,12 @@
       "canonical": "costumes/LFLF_0016_AKOS_0088_frame_11.png"
     },
     {
+      "source": "costumes/LFLF_0016_AKOS_0088_frame_12.png",
+      "cleaned_sha256": "2b7857b2b3612efca5da1abe2ba234768698a8fb9fa14473b0f479bf450262ee",
+      "canonical": "costumes/LFLF_0016_AKOS_0088_frame_12.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0016_AKOS_0088_frame_13.png",
       "source_sha256": "56a620258a1ebd85595a330657bfc89c104aeff8d89f7a2dfe421b22e1cf3b69",
       "size": [
@@ -36719,6 +36731,12 @@
       "canonical": "costumes/LFLF_0019_AKOS_0102_frame_36.png"
     },
     {
+      "source": "costumes/LFLF_0019_AKOS_0102_frame_37.png",
+      "cleaned_sha256": "c7ad6e93cfc43f8c4e8d0911d07efaa5e4341fd23ab4fa0c8f7669309c76b0f6",
+      "canonical": "costumes/LFLF_0019_AKOS_0102_frame_37.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0019_AKOS_0102_frame_38.png",
       "source_sha256": "a01ebffd74cd554a74ab5af29da53fd730f972b4a3309758a9fff4741675d331",
       "size": [
@@ -37355,6 +37373,12 @@
       "shadow_pixels": 314,
       "cleaned_sha256": "f875c2c10d8b353de1af2412fc059214d250d536844098582ea5251985fd8f91",
       "canonical": "costumes/LFLF_0019_AKOS_0106_frame_24.png"
+    },
+    {
+      "source": "costumes/LFLF_0019_AKOS_0106_frame_25.png",
+      "cleaned_sha256": "d2514cd9f9fd05c97937bcebde633d6e66af0a364d067ca65493cf97c42b5b2d",
+      "canonical": "costumes/LFLF_0019_AKOS_0106_frame_25.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0019_AKOS_0106_frame_26.png",
