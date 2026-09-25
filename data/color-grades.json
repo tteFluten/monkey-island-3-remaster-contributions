@@ -1,8 +1,11 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "global": {"brightness": 0, "contrast": 0, "saturation": 0, "gamma": 100, "warmth": 0, "tint": 0, "vignetteEnabled": 0, "vignetteAmount": 40, "vignetteRadius": 60, "vignetteSoftness": 50, "depthOfField": 0, "blurTenths": 0, "edgeSoftness": 2, "blurIntensity": 100, "sceneDepth": 1},
   "rooms": {
     "9": {"brightness": 0, "contrast": 4, "saturation": 10, "gamma": 100, "warmth": 0, "tint": 8, "vignetteEnabled": 1, "vignetteAmount": 40, "vignetteRadius": 55, "vignetteSoftness": 60},
+    "11": {"brightness": 0, "contrast": 6, "vignetteEnabled": 1, "vignetteAmount": 40, "depthOfField": 0},
     "60": {"brightness": 16, "contrast": 20, "saturation": 0, "gamma": 100, "warmth": 0, "tint": 0, "vignetteEnabled": 1, "vignetteAmount": 65, "vignetteRadius": 55, "vignetteSoftness": 50},
-    "61": {"brightness": 0, "contrast": 0, "saturation": 0, "gamma": 100, "warmth": 0, "tint": 0, "vignetteEnabled": 1, "vignetteAmount": 25, "vignetteRadius": 60, "vignetteSoftness": 50}
+    "61": {"brightness": 0, "contrast": 0, "saturation": 0, "gamma": 100, "warmth": 0, "tint": 0, "vignetteEnabled": 1, "vignetteAmount": 25, "vignetteRadius": 60, "vignetteSoftness": 50},
+    "87": {"brightness": -6, "contrast": 6, "vignetteEnabled": 1, "vignetteAmount": 75, "vignetteRadius": 65}
   }
 }

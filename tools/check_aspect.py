@@ -179,7 +179,9 @@ def interactions(check):
     check.screenshot('panorama-walking')
     print('PASS: panorama edge input, native walking, pixel-identical motion replay', flush=True)
     check.send('key 105')  # Original inventory shortcut.
-    check.wait(lambda: check.state()['viewportWidth'] == 640, 'centered inventory')
+    check.wait(lambda: check.state().get('inventoryOpen'), 'centered inventory')
+    assert check.state()['viewportWidth'] == 864
+    assert check.state()['inventoryOffset'] == 112
     check.screenshot('inventory-169')
     check.send('key 105')
     check.wait(lambda: check.state()['viewportWidth'] == 864, 'panorama after inventory')

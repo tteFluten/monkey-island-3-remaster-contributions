@@ -72,7 +72,7 @@ def main():
         check.select(169)
         sides(check, 'cannon-restored-169')
         check.send('key 105')
-        sides(check, 'inventory-169', expected=False)
+        sides(check, 'inventory-169')
         check.send('key 105')
         sides(check, 'inventory-closed-169')
         check.send('resize 960 800')

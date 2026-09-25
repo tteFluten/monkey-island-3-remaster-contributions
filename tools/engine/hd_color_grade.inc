@@ -238,7 +238,7 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         st.mouseDown = false; _leftBtnPressed = 0; return true;
     }
     if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session") || isSmushActive() ||
-        _currentRoom == 87 || _currentRoom == 92 || hdInventoryOpen()) {
+        _currentRoom == 92 || hdInventoryOpen()) {
         st.panel = false;
         return false;
     }
@@ -321,7 +321,7 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
 
 void ScummEngine::drawHDLookPanel() {
     HdColorGradeState &st = hdColorGradeState();
-    if (_currentRoom == 92 || _currentRoom == 87 || isSmushActive() || hdInventoryOpen()) st.panel = false;
+    if (_currentRoom == 92 || isSmushActive() || hdInventoryOpen()) st.panel = false;
     if (!st.panel || _game.id != GID_CMI || !_hdFontManager || !_hdFontManager->hasFont(3) || !_hdComposite.getPixels())
         return;
     const int room = _currentRoom;

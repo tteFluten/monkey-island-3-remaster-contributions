@@ -25,10 +25,14 @@
       "height": 480,
       "metadata": {
         "roomNumber": 11,
-        "originalFile": "0011_waterln.png"
+        "originalFile": "0011_waterln.png",
+        "finalBackgroundVariant": "waterline-final-2560x1440"
       },
-      "variants": [],
-      "createdAt": "2026-09-21T22:36:09.664Z"
+      "variants": [
+        "waterline-final-2560x1440"
+      ],
+      "createdAt": "2026-09-21T22:36:09.664Z",
+      "approvedVariantId": "waterline-final-2560x1440"
     },
     "bcb252fc-91b4-4d2e-9800-0acb816ab9cc": {
       "id": "bcb252fc-91b4-4d2e-9800-0acb816ab9cc",
@@ -121,6 +125,29 @@
       "createdAt": "2026-09-22T00:23:18.301Z"
     }
   },
-  "variants": {},
+  "variants": {
+    "waterline-final-2560x1440": {
+      "id": "waterline-final-2560x1440",
+      "assetId": "afda4e02-afa5-4016-b647-a914f4cf611f",
+      "filePath": "upscaled/imported/9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 4899211,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd",
+        "originalFile": "0011_waterln-wonder-3-5.png",
+        "finalBackground": true
+      },
+      "references": [],
+      "createdAt": "2026-09-25T19:53:46.720834+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this exact 2560 \u00d7 1440 image as the final room 0011 background."
+    }
+  },
   "jobs": {}
 }

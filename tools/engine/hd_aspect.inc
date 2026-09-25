@@ -7,8 +7,8 @@ void ScummEngine::publishHDWideBackground(bool movie) {
     if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session")) return;
     if (movie || isSmushActive()) HdRemaster::state().active = false;
     Common::String path;
-    if (!movie && !isSmushActive() && _currentRoom != 87 && _currentRoom != 92 && _roomWidth == 640 &&
-        _roomHeight == 480 && hdAspectRatio() == 169 && !hdInventoryOpen())
+    if (!movie && !isSmushActive() && _currentRoom != 92 && _roomWidth == 640 &&
+        _roomHeight == 480 && hdAspectRatio() == 169)
         path = ConfMan.get("hd_path") + Common::String::format("/widescreen/bg_%04d.png", _currentRoom);
     ConfMan.set("hd_wide_background", path, Common::ConfigManager::kTransientDomain);
     ConfMan.setInt("hd_wide_background_revision", _playtestCommandId,
@@ -29,14 +29,14 @@ bool ScummEngine::hdInventoryOpen() const {
 
 void ScummEngine::refreshHDInventoryViewport() {
     if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session") || isSmushActive()) return;
-    const int width = hdInventoryOpen() ? 640 : HdAspect::viewport(hdAspectRatio(), _roomWidth, _roomHeight);
+    const int width = HdAspect::viewport(hdAspectRatio(), _roomWidth, _roomHeight);
     if (width != _screenWidth) refreshHDViewport(false);
 }
 
 void ScummEngine::configureHDViewport(bool movie) {
     if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session")) return;
     publishHDWideBackground(movie);
-    const int width = movie || hdInventoryOpen() ? 640 : HdAspect::viewport(hdAspectRatio(), _roomWidth, _roomHeight);
+    const int width = movie ? 640 : HdAspect::viewport(hdAspectRatio(), _roomWidth, _roomHeight);
     _hdMotionClock.valid = _hdMotionPresented = _hdMotionMoving = false;
     _hdPresentedCursor = Common::Rect();
     _hdBackendCursor = nullptr;

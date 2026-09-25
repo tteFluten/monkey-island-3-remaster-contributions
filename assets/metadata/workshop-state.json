@@ -10,9 +10,9 @@
     "5f420ca4-000c-4e77-b8ee-57a9d59849b7": "0675e246-f577-42bb-a6a9-cdc96b717353",
     "6f663d73-945b-47f1-adcc-f728b9665de2": "9a753509-9611-4b0a-b96a-5ab1ab3b430d",
     "0aff02c9-8614-432a-a4de-5eb418c06afc": "69fbb262-24d4-449f-ba3b-0c963aedc7aa",
-    "4921c986-44f5-4c33-8f0c-adec6ff6fa6f": "cbbaed3b-3361-427a-93a5-c27e95dbe09e",
+    "4921c986-44f5-4c33-8f0c-adec6ff6fa6f": "cannon-final-2560x1440",
     "a1327264-ec6d-4863-905c-9d7f13f9cefc": "5db909ac-cdef-4301-86e1-d4e6b88fbf7f",
-    "afda4e02-afa5-4016-b647-a914f4cf611f": "4298d773-d459-4e78-9c9e-b4f407c2ba12",
+    "afda4e02-afa5-4016-b647-a914f4cf611f": "waterline-final-2560x1440",
     "28ed108f-87bb-45c3-b1dd-3f5d3099b812": "9b1a7f14-deb4-4377-98eb-9ad54bd1ff9a",
     "8eb05ba4-84e0-4331-a4ff-388221b08aaa": "243f162b-66a7-49cc-bbd0-c6ab89912912",
     "3d77636e-df21-4f0d-8556-43657f9ed342": "7cad8e40-2cfb-43d4-97ae-4ee9f4199b28",
@@ -88,7 +88,7 @@
     "873dad9e-1b5d-458d-91b5-ac05da5d0b4e": "04492b1a-7baa-4d7d-aede-aa34a3f8fcc0",
     "bd0c5f00-f125-40ef-bcab-37a0729dbc40": "7640d9a3-76f8-4f15-92cc-b592c0d4bbfa",
     "9600168d-0c33-48de-85c4-f877fecd3824": "f560739c-9172-4d44-991d-0d6fcb6e9fa9",
-    "febf8abc-771c-48c3-8e01-4c7a59526466": "eed2a712-b337-47dc-941a-405d741910dc",
+    "febf8abc-771c-48c3-8e01-4c7a59526466": "easyhard-supplied-5120x2880",
     "6644d363-bcce-45b9-a563-a5c4564f59b0": "04f850cc-2a02-488d-a823-f3fb8bcb7665",
     "60ca3707-ccb3-4473-884e-f8e268c5abe8": "d7b29a26-5856-4a23-ba91-1069b3cf6ff8",
     "8f098284-ba4f-47dd-83ce-42df0490dcb8": "4a326e33-76ac-4388-9d3b-6b58c15faa17",
@@ -238,26 +238,6 @@
       "reviewStatus": "unreviewed",
       "engineStatus": "untested"
     },
-    "07390e8c-e396-464e-89e4-57167ee27035": {
-      "id": "07390e8c-e396-464e-89e4-57167ee27035",
-      "assetId": "4921c986-44f5-4c33-8f0c-adec6ff6fa6f",
-      "filePath": "upscaled/imported/b66d62426df66b153c53bb926f6fdad23d377430c17b62007fdbc497955326f1.png",
-      "width": 3840,
-      "height": 2880,
-      "mimeType": "image/png",
-      "fileSize": 14998740,
-      "tool": "folder-import",
-      "model": "",
-      "prompt": "",
-      "params": {
-        "sha256": "b66d62426df66b153c53bb926f6fdad23d377430c17b62007fdbc497955326f1",
-        "originalFile": "0009_cannon-wonder-3-5.png"
-      },
-      "references": [],
-      "createdAt": "2026-09-23T19:00:52.056Z",
-      "reviewStatus": "unreviewed",
-      "engineStatus": "untested"
-    },
     "5db909ac-cdef-4301-86e1-d4e6b88fbf7f": {
       "id": "5db909ac-cdef-4301-86e1-d4e6b88fbf7f",
       "assetId": "a1327264-ec6d-4863-905c-9d7f13f9cefc",
@@ -275,26 +255,6 @@
       },
       "references": [],
       "createdAt": "2026-09-23T19:00:52.063Z",
-      "reviewStatus": "unreviewed",
-      "engineStatus": "untested"
-    },
-    "4298d773-d459-4e78-9c9e-b4f407c2ba12": {
-      "id": "4298d773-d459-4e78-9c9e-b4f407c2ba12",
-      "assetId": "afda4e02-afa5-4016-b647-a914f4cf611f",
-      "filePath": "upscaled/imported/c765f1739886be526e31fcc36dfd3bc6d222c5a082178ce9164cc008fc21eb12.png",
-      "width": 3840,
-      "height": 2880,
-      "mimeType": "image/png",
-      "fileSize": 14083076,
-      "tool": "folder-import",
-      "model": "",
-      "prompt": "",
-      "params": {
-        "sha256": "c765f1739886be526e31fcc36dfd3bc6d222c5a082178ce9164cc008fc21eb12",
-        "originalFile": "0011_waterln-wonder-3-5.png"
-      },
-      "references": [],
-      "createdAt": "2026-09-23T19:00:52.070Z",
       "reviewStatus": "unreviewed",
       "engineStatus": "untested"
     },
@@ -1798,26 +1758,6 @@
       "reviewStatus": "unreviewed",
       "engineStatus": "untested"
     },
-    "eed2a712-b337-47dc-941a-405d741910dc": {
-      "id": "eed2a712-b337-47dc-941a-405d741910dc",
-      "assetId": "febf8abc-771c-48c3-8e01-4c7a59526466",
-      "filePath": "upscaled/imported/24f3054289bc24d4c69685c7c5095f7c089f872c09044b067b661e5c2b2f7450.png",
-      "width": 3840,
-      "height": 2880,
-      "mimeType": "image/png",
-      "fileSize": 15050921,
-      "tool": "folder-import",
-      "model": "",
-      "prompt": "",
-      "params": {
-        "sha256": "24f3054289bc24d4c69685c7c5095f7c089f872c09044b067b661e5c2b2f7450",
-        "originalFile": "0087_easyhard-wonder-3-5.png"
-      },
-      "references": [],
-      "createdAt": "2026-09-23T19:00:53.113Z",
-      "reviewStatus": "unreviewed",
-      "engineStatus": "untested"
-    },
     "04f850cc-2a02-488d-a823-f3fb8bcb7665": {
       "id": "04f850cc-2a02-488d-a823-f3fb8bcb7665",
       "assetId": "6644d363-bcce-45b9-a563-a5c4564f59b0",
@@ -1958,26 +1898,70 @@
       "reviewStatus": "unreviewed",
       "engineStatus": "untested"
     },
-    "cbbaed3b-3361-427a-93a5-c27e95dbe09e": {
-      "id": "cbbaed3b-3361-427a-93a5-c27e95dbe09e",
+    "cannon-final-2560x1440": {
+      "id": "cannon-final-2560x1440",
       "assetId": "4921c986-44f5-4c33-8f0c-adec6ff6fa6f",
-      "filePath": "upscaled/imported/319ae406ee4d5499ebdfebfb6b07b176f630ece221ac86905d90de8d783d44c2.png",
-      "width": 3584,
-      "height": 2016,
+      "filePath": "upscaled/imported/f7a54cda98ca3ad0419cfcb5bb816ebd6267edb34e04fc4b82dc8aaf7aeaf61e.png",
+      "width": 2560,
+      "height": 1440,
       "mimeType": "image/png",
-      "fileSize": 7868795,
-      "tool": "folder-import",
+      "fileSize": 5422720,
+      "tool": "user-supplied",
       "model": "",
       "prompt": "",
       "params": {
-        "sha256": "319ae406ee4d5499ebdfebfb6b07b176f630ece221ac86905d90de8d783d44c2",
-        "originalFile": "basement-imagelab-1790273621518.jpg",
-        "note": "ImageLab 16:9 cannon room; exact 16:9 crop"
+        "sha256": "f7a54cda98ca3ad0419cfcb5bb816ebd6267edb34e04fc4b82dc8aaf7aeaf61e",
+        "originalFile": "0009_cannon-wonder-3-5.png",
+        "finalBackground": true
       },
       "references": [],
-      "createdAt": "2026-09-25T14:21:05.912Z",
-      "reviewStatus": "unreviewed",
-      "engineStatus": "untested"
+      "createdAt": "2026-09-25T19:20:57.368354+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this exact 2560 \u00d7 1440 image as the final room 0009 background."
+    },
+    "waterline-final-2560x1440": {
+      "id": "waterline-final-2560x1440",
+      "assetId": "afda4e02-afa5-4016-b647-a914f4cf611f",
+      "filePath": "upscaled/imported/9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 4899211,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd",
+        "originalFile": "0011_waterln-wonder-3-5.png",
+        "finalBackground": true
+      },
+      "references": [],
+      "createdAt": "2026-09-25T19:53:46.720834+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this exact 2560 \u00d7 1440 image as the final room 0011 background."
+    },
+    "easyhard-supplied-5120x2880": {
+      "id": "easyhard-supplied-5120x2880",
+      "assetId": "febf8abc-771c-48c3-8e01-4c7a59526466",
+      "filePath": "upscaled/imported/6fd5c540760fb7ba26b139bf0493ea7711fb1e033320a6774e03693e48ca2e8d.png",
+      "width": 5120,
+      "height": 2880,
+      "mimeType": "image/png",
+      "fileSize": 18580635,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "6fd5c540760fb7ba26b139bf0493ea7711fb1e033320a6774e03693e48ca2e8d",
+        "originalFile": "0087_easyhard-wonder-3-5-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-25T21:19:55.080173+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this image as the room 0087 difficulty background."
     }
   }
 }

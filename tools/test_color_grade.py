@@ -15,6 +15,7 @@ class ColorGradeTests(unittest.TestCase):
             binary = Path(directory) / 'grade'
             source.write_text(r'''
 #include "hd_color_grade.h"
+#include "hd_scene_look.h"
 #include <cassert>
 #include <cstdlib>
 #include <initializer_list>
@@ -24,6 +25,22 @@ static unsigned int rgb(int r, int g, int b, int a = 255) {
     return (unsigned)r | ((unsigned)g << 8) | ((unsigned)b << 16) | ((unsigned)a << 24);
 }
 int main() {
+    // The difficulty screen has independent look overrides and inherits global
+    // values only where no room override exists. The options book is excluded.
+    HdSceneLook::Settings settings;
+    assert(HdSceneLook::Settings::roomValid(87));
+    assert(!HdSceneLook::Settings::roomValid(92));
+    settings.set(0, kContrast, 6);
+    settings.set(87, kVignetteOn, 1);
+    settings.set(87, kVignetteAmount, 65);
+    assert(settings.get(87, kContrast) == 6);
+    assert(settings.get(87, kVignetteOn) == 1);
+    assert(settings.get(9, kVignetteOn) == 0);
+    assert(settings.get(0, kVignetteAmount) == 40);
+    settings.reset(87, kVignetteAmount);
+    assert(settings.get(87, kVignetteAmount) == 40);
+    assert(settings.get(87, kVignetteOn) == 1);
+
     // The neutral grade is an exact identity for every color, alpha preserved.
     Grade neutral;
     assert(identity(neutral));

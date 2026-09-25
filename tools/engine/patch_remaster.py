@@ -9,7 +9,7 @@ def patch(root, edit):
     gfx = 'engines/scumm/gfx.cpp'
     edit(gfx, '\tint hdW, hdH;', '''    auto &remaster = HdRemaster::state();
     remaster.active = remaster.available && (!ConfMan.hasKey("hd_gpu_effects") || ConfMan.getBool("hd_gpu_effects")) &&
-        _game.id == GID_CMI && _currentRoom != 87 && _currentRoom != 92 && !hdInventoryOpen() && !_hdVerbSurfaceValid;
+        _game.id == GID_CMI && _currentRoom != 92;
     remaster.ui = remaster.dof = false;
     remaster.background = &_hdBackgroundSurface;
     remaster.viewportWidth = _screenWidth; remaster.viewportHeight = _screenHeight;

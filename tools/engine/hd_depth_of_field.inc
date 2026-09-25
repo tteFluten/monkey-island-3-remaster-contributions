@@ -52,7 +52,7 @@ void ScummEngine::renderHDDepthOfField(int backgroundX, int visW, int visH) {
     dof.active = false;
     const int level = hdDepthOfFieldLevel();
     const Graphics::Surface &bg = _hdBackgroundSurface;
-    if (_game.id != GID_CMI || !level || _currentRoom == 87 || _currentRoom == 92 ||
+    if (_game.id != GID_CMI || !level || _currentRoom == 92 ||
         _gdi->_numZBuffer <= 1 || !bg.getPixels() || _hdCurrentRoom != _currentRoom ||
         (bg.format.bytesPerPixel != 3 && bg.format.bytesPerPixel != 4))
         return;
@@ -166,7 +166,7 @@ bool ScummEngine::handleHDDepthOfFieldEvent(const Common::Event &event) {
     //   [ ] blur   shift+[ ] intensity   ; ' edge softness   shift+; ' depth
     //   \ on/off   shift+\ reset
     if (event.type == Common::EVENT_KEYDOWN && ConfMan.hasKey("playtest_session") && _game.id == GID_CMI &&
-        _currentRoom != 92 && _currentRoom != 87 && !isSmushActive() &&
+        _currentRoom != 92 && !isSmushActive() &&
         !(event.kbd.flags & (Common::KBD_CTRL | Common::KBD_ALT | Common::KBD_META))) {
         const bool shift = (event.kbd.flags & Common::KBD_SHIFT) != 0;
         int blur = 0, edge = 0, intensity = 0, depth = 0;

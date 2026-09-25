@@ -199,6 +199,9 @@ void ScummEngine::playtestTick() {
     status.deleteLastChar();
     status += Common::String::format(",\"presentationFps\":%.3f,\"renderCpuMs\":%.3f,\"cameraTop\":%d}",
         render.fps, render.cpuMs, _screenTop);
+    status.deleteLastChar();
+    status += Common::String::format(",\"inventoryOpen\":%s,\"inventoryOffset\":%d,\"mouseScriptX\":%d,\"cursorObject\":%d}",
+        hdInventoryOpen() ? "true" : "false", hdInventoryOffset(), VAR(VAR_MOUSE_X), _hdCursorObject);
 	Common::String temporary = directory + "/status.tmp";
 	FILE *output = fopen(temporary.c_str(), "wb");
 	if (output) {
