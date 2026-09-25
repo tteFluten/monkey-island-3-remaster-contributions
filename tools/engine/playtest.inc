@@ -62,6 +62,18 @@ void ScummEngine::playtestTick() {
 				return;
 			}
 		}
+        Common::String sweepPath = directory + "/camera-sweep";
+        FILE *sweep = fopen(sweepPath.c_str(), "r");
+        if (sweep) {
+            fclose(sweep);
+            static uint32 nextSweep = 0;
+            static bool farSide = false;
+            if (now >= nextSweep) {
+                farSide = !farSide; nextSweep = now + 3000;
+                panCameraTo(_roomWidth > _screenWidth ? (farSide ? _roomWidth - _screenWidth / 2 : _screenWidth / 2) : camera._cur.x,
+                    _roomHeight > _screenHeight ? (farSide ? _roomHeight - _screenHeight / 2 : _screenHeight / 2) : camera._cur.y);
+            }
+        }
 		Common::String walkPath = directory + "/walk-to.txt";
 		FILE *walk = fopen(walkPath.c_str(), "r");
 		if (walk) {
@@ -123,6 +135,33 @@ void ScummEngine::playtestTick() {
 		}
 		delete command;
 	}
+    // Explicit engine-local benchmark requests; no per-frame disk writes.
+    if (getenv("MI3_ENGINE_TEST_INPUT")) {
+        for (int action = 0; action < 2; ++action) {
+            Common::String request = directory + (action ? "/benchmark-stop" : "/benchmark-start");
+            FILE *trigger = fopen(request.c_str(), "r");
+            if (!trigger) continue;
+            fclose(trigger); remove(request.c_str());
+            auto &metrics = HdRemaster::state();
+            if (!action) {
+                metrics.sampleCount = metrics.droppedSamples = 0;
+                ++metrics.recordSerial;
+                metrics.recording = true;
+            } else {
+                metrics.recording = false;
+                FILE *report = fopen((directory + "/frames.csv").c_str(), "w");
+                if (report) {
+                    fprintf(report, "at_ms,interval_ms,cpu_ms,gpu_ms,room,camera_x,camera_y,native_ms,motion_ms,scene_ms,backend_ms\n");
+                    for (uint i = 0; i < metrics.sampleCount; ++i) {
+                        const auto &sample = metrics.samples[i];
+                        fprintf(report, "%.4f,%.4f,%.4f,%.4f,%d,%d,%d,%.4f,%.4f,%.4f,%.4f\n", sample.at, sample.interval,
+                                sample.cpu, sample.gpu, sample.room, sample.cameraX, sample.cameraY, sample.native, sample.motion, sample.scene, sample.backend);
+                    }
+                    fclose(report);
+                }
+            }
+        }
+    }
 	// Read-only actor diagnostics identify the exact cels used by live animations.
 	Common::String actors = "[";
 	for (int i = 0; i < _numActors; ++i) {
@@ -147,9 +186,19 @@ void ScummEngine::playtestTick() {
 		_hdBackgroundSurface.getPixels() && _hdCurrentRoom == _currentRoom ? "true" : "false",
 		_hdBackgroundSurface.w, _hdBackgroundSurface.h, actors.c_str());
 	status.deleteLastChar();
-	status += Common::String::format(",\"aspectRatio\":%d,\"outputWidth\":2560,\"outputHeight\":%d,\"viewportWidth\":%d,\"viewportHeight\":%d,\"cameraLeft\":%d,\"mouseRoomX\":%d,\"mouseRoomY\":%d}",
-		hdAspectRatio(), hdAspectRatio() == 169 ? 1440 : 1920, _screenWidth, _screenHeight,
+	status += Common::String::format(",\"aspectRatio\":%d,\"outputWidth\":%d,\"outputHeight\":%d,\"viewportWidth\":%d,\"viewportHeight\":%d,\"cameraLeft\":%d,\"mouseRoomX\":%d,\"mouseRoomY\":%d}",
+		hdAspectRatio(), HdRemaster::state().active && hdAspectRatio() == 43 ? 1920 : 2560,
+        HdRemaster::state().active || hdAspectRatio() == 169 ? 1440 : 1920, _screenWidth, _screenHeight,
 		_virtscr[kMainVirtScreen].xstart, _virtualMouse.x, _virtualMouse.y);
+    status.deleteLastChar();
+    const auto &render = HdRemaster::state();
+    status += Common::String::format(",\"waterBackend\":\"%s\"",
+        render.active && render.water ? "opengl-shader" : "original-overlays");
+    status += Common::String::format(",\"drawableWidth\":%d,\"drawableHeight\":%d,\"renderBackend\":\"%s\",\"presentationIntervalMs\":%.3f}",
+        render.drawableWidth, render.drawableHeight, render.active ? "opengl-shaders" : "cpu-effects", render.lastInterval);
+    status.deleteLastChar();
+    status += Common::String::format(",\"presentationFps\":%.3f,\"renderCpuMs\":%.3f,\"cameraTop\":%d}",
+        render.fps, render.cpuMs, _screenTop);
 	Common::String temporary = directory + "/status.tmp";
 	FILE *output = fopen(temporary.c_str(), "wb");
 	if (output) {

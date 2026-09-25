@@ -45,6 +45,16 @@ int main() {
     assert(camera(320, 896, 864, 320, 320) == 432); // fixed script camera
     assert(camera(800, 896, 864, 800, 800) == 464);
     assert(camera(600, 2096, 864, 700, 500) == 600);
+    // Cover crops only decorative edges on a 16:10 display. Pointer mapping
+    // still exposes the entire centered original 4:3 gameplay surface.
+    r = game(2560, 1600, 169, 640, true);
+    assert(r.x > 0 && r.y == 0 && r.h == 1600 && r.x + r.w < 2560);
+    Rect cover = frame(2560, 1600, 169, true);
+    assert(cover.x < 0 && cover.y == 0 && cover.w >= 2560 && cover.h == 1600);
+    r = game(2560, 1600, 169, 864, true);
+    assert(r.x < 0 && r.y == 0 && r.x + r.w >= 2560);
+    r = game(2560, 1440, 169, 640, true);
+    assert(r.x == 320 && r.y == 0 && r.w == 1920 && r.h == 1440);
     Buttons b;
     int x = 12, y = 34;
     assert(!b.accept(false, 1, 0, x, y) && b.pressed == 0);

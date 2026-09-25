@@ -1,12 +1,13 @@
-// Included in gfx.cpp after hd_depth_of_field.inc. Per-room color grades and
-// the playtest Look panel (focus + color). Grades are authoring data kept in
-// the tracked file named by hd_color_grades_path; nothing else is modified.
+// Included in gfx.cpp after hd_depth_of_field.inc. Global Scene Look defaults,
+// individual room overrides, and the editing panel. Settings are kept in
+// the authoring file named by hd_color_grades_path, separate from game saves.
 namespace {
 struct HdColorGradeState {
     bool loaded = false;
     Common::String path, error;
-    HdColorGrade::Grade grades[256];
-    bool present[256] = {};
+    HdSceneLook::Settings settings;
+    Common::String source;
+    bool writable = true, legacy = false, editGlobal = false;
     // Curves for the grade currently applied.
     int lutRoom = -1;
     HdColorGrade::Grade lutGrade;
@@ -29,63 +30,144 @@ HdColorGradeState &hdColorGradeState() {
 enum { kLookColor = 0, kLookFocus = HdColorGrade::kVignetteOn,
     kLookBlur, kLookEdge, kLookIntensity, kLookDepth, kLookVignette,
     kLookRows = kLookVignette + 4 };
-const int kLookWidth = 300, kLookTop = 8, kLookLineHeight = 16;
+const int kLookWidth = 300, kLookTop = 8, kLookLineHeight = 16, kLookExtraLines = 9;
 int hdLookLine(int row) { return row + 2 + (row >= kLookFocus ? 1 : 0) + (row >= kLookVignette ? 1 : 0); }
+
+Common::String hdReadLookFile(const Common::String &path) {
+    Common::String text;
+    FILE *file = fopen(path.c_str(), "rb");
+    if (!file) return text;
+    char buffer[4096]; size_t count;
+    while ((count = fread(buffer, 1, sizeof(buffer), file)) > 0) text += Common::String(buffer, count);
+    fclose(file); return text;
+}
 
 void hdLoadColorGrades(HdColorGradeState &st) {
     st.loaded = true;
+    // Old INI focus preferences supply global defaults until the first save.
+    const char *keys[] = {"hd_depth_of_field", "hd_dof_blur", "hd_dof_edge", "hd_dof_intensity", "hd_dof_depth"};
+    for (int c = HdSceneLook::kFocus; c < HdSceneLook::kControls; ++c)
+        if (ConfMan.hasKey(keys[c - HdSceneLook::kFocus]))
+            st.settings.global.set(c, ConfMan.getInt(keys[c - HdSceneLook::kFocus]));
     st.path = ConfMan.hasKey("hd_color_grades_path") ? ConfMan.get("hd_color_grades_path") : "";
     if (st.path.empty()) return;
-    FILE *file = fopen(st.path.c_str(), "rb");
-    if (!file) return;
-    Common::String text;
-    char buffer[4096];
-    size_t count;
-    while ((count = fread(buffer, 1, sizeof(buffer), file)) > 0) text += Common::String(buffer, count);
-    fclose(file);
-    Common::JSONValue *root = Common::JSON::parse(text.c_str());
-    if (root && root->isObject() && root->hasChild("rooms") && root->child("rooms")->isObject()) {
-        const Common::JSONObject &rooms = root->child("rooms")->asObject();
-        for (Common::JSONObject::const_iterator it = rooms.begin(); it != rooms.end(); ++it) {
-            const int room = atoi(it->_key.c_str());
-            if (room < 1 || room > 255 || !it->_value->isObject()) continue;
-            HdColorGrade::Grade grade;
-            for (int c = 0; c < HdColorGrade::kControls; ++c) {
-                const char *key = HdColorGrade::range(c).key;
-                if (it->_value->hasChild(key) && it->_value->child(key)->isIntegerNumber())
-                    grade.value[c] = HdColorGrade::clampControl(c, (int)it->_value->child(key)->asIntegerNumber());
-            }
-            st.grades[room] = grade;
-            st.present[room] = !HdColorGrade::identity(grade);
+    st.source = hdReadLookFile(st.path);
+    if (st.source.empty()) {
+        Common::FSNode node((Common::Path(st.path)));
+        if (node.exists()) { st.error = "Could not read look settings"; st.writable = false; }
+        return;
+    }
+    Common::JSONValue *root = Common::JSON::parse(st.source.c_str());
+    const int version = root && root->isObject() && root->hasChild("schemaVersion") && root->child("schemaVersion")->isIntegerNumber()
+        ? (int)root->child("schemaVersion")->asIntegerNumber() : 1;
+    if (!root || !root->isObject() || (version != 1 && version != 2) ||
+        !root->hasChild("rooms") || !root->child("rooms")->isObject() ||
+        (root->hasChild("global") && !root->child("global")->isObject())) {
+        st.error = "Invalid look settings; file kept"; st.writable = false; delete root; return;
+    }
+    st.legacy = version == 1;
+    auto readLayer = [](Common::JSONValue *object, HdSceneLook::Layer &layer) {
+        for (int c = 0; c < HdSceneLook::kControls; ++c) {
+            const char *key = HdSceneLook::range(c).key;
+            if (object->hasChild(key) && object->child(key)->isIntegerNumber())
+                layer.set(c, (int)object->child(key)->asIntegerNumber());
         }
-    } else {
-        st.error = "Could not read color grades";
+    };
+    if (root->hasChild("global")) readLayer(root->child("global"), st.settings.global);
+    const Common::JSONObject &rooms = root->child("rooms")->asObject();
+    for (auto it = rooms.begin(); it != rooms.end(); ++it) {
+        char *end = nullptr;
+        const long room = strtol(it->_key.c_str(), &end, 10);
+        if (!end || *end || room <= 0 || room >= 256 || !HdSceneLook::Settings::roomValid(room) || !it->_value->isObject()) continue;
+        auto &layer = st.settings.rooms[room];
+        // v1 room grades were complete snapshots, including omitted neutral
+        // controls. Preserve that appearance when global defaults are added.
+        if (st.legacy) for (int c = 0; c < HdColorGrade::kControls; ++c)
+            layer.set(c, HdColorGrade::range(c).neutral);
+        readLayer(it->_value, layer);
     }
     delete root;
 }
 
-// Rooms in numeric order, neutral rooms omitted, written atomically.
 bool hdSaveColorGrades(HdColorGradeState &st) {
-    if (st.path.empty()) { st.error = "No hd_color_grades_path configured"; return false; }
-    const Common::String temporary = st.path + ".tmp";
-    FILE *file = fopen(temporary.c_str(), "wb");
-    if (!file) { st.error = "Could not write " + st.path; return false; }
-    fprintf(file, "{\n  \"schemaVersion\": 1,\n  \"rooms\": {");
+    if (!st.writable) return false;
+    if (st.path.empty()) { st.error = "No look settings path configured"; return false; }
+    if (hdReadLookFile(st.path) != st.source) {
+        st.error = "File changed; restart to reload"; return false;
+    }
+    // Keep the original v1 file before its first migration, without replacing
+    // an earlier backup or writing anything merely by opening the panel.
+    if (st.legacy) {
+        const Common::String backup = st.path + ".v1.bak";
+        Common::FSNode node((Common::Path(backup)));
+        if (!node.exists()) {
+            FILE *file = fopen(backup.c_str(), "wb");
+            if (!file) { st.error = "Could not back up look settings"; return false; }
+            const bool copied = fwrite(st.source.c_str(), 1, st.source.size(), file) == st.source.size();
+            const bool closed = fclose(file) == 0;
+            if (!copied || !closed) { remove(backup.c_str()); st.error = "Could not back up look settings"; return false; }
+        }
+    }
+    auto layerText = [](const HdSceneLook::Layer &layer, bool all) {
+        Common::String text("{"); bool first = true;
+        for (int c = 0; c < HdSceneLook::kControls; ++c) if (all || layer.has(c)) {
+            text += Common::String::format("%s\"%s\": %d", first ? "" : ", ", HdSceneLook::range(c).key, layer.value[c]);
+            first = false;
+        }
+        return text + "}";
+    };
+    Common::String text = "{\n  \"schemaVersion\": 2,\n  \"global\": " + layerText(st.settings.global, true) + ",\n  \"rooms\": {";
     bool first = true;
-    for (int room = 1; room < 256; ++room) {
-        if (!st.present[room]) continue;
-        fprintf(file, "%s\n    \"%d\": {", first ? "" : ",", room);
-        for (int c = 0; c < HdColorGrade::kControls; ++c)
-            fprintf(file, "%s\"%s\": %d", c ? ", " : "", HdColorGrade::range(c).key, st.grades[room].value[c]);
-        fprintf(file, "}");
+    for (int room = 1; room < 256; ++room) if (st.settings.rooms[room].mask) {
+        text += Common::String::format("%s\n    \"%d\": ", first ? "" : ",", room) + layerText(st.settings.rooms[room], false);
         first = false;
     }
-    fprintf(file, first ? "}\n}\n" : "\n  }\n}\n");
-    const bool written = fclose(file) == 0 && rename(temporary.c_str(), st.path.c_str()) == 0;
-    st.error = written ? "" : "Could not write " + st.path;
-    st.savedAt = g_system->getMillis();
-    return written;
+    text += first ? "}\n}\n" : "\n  }\n}\n";
+    const Common::String temporary = st.path + ".tmp";
+    FILE *file = fopen(temporary.c_str(), "wb");
+    if (!file) { st.error = "Could not write look settings"; return false; }
+    const bool complete = fwrite(text.c_str(), 1, text.size(), file) == text.size();
+    const bool closed = fclose(file) == 0;
+    const bool written = complete && closed && rename(temporary.c_str(), st.path.c_str()) == 0;
+    if (!written) { remove(temporary.c_str()); st.error = "Could not save look settings"; return false; }
+    st.source = text; st.legacy = false; st.error.clear(); st.savedAt = g_system->getMillis(); return true;
 }
+
+int hdSceneLookValue(int room, int control) {
+    auto &st = hdColorGradeState();
+    if (!st.loaded) hdLoadColorGrades(st);
+    return st.settings.get(room, control);
+}
+int hdSceneLookEditRoom(int room) {
+    auto &st = hdColorGradeState();
+    if (!st.loaded) hdLoadColorGrades(st);
+    return st.editGlobal || !HdSceneLook::Settings::roomValid(room) ? 0 : room;
+}
+void hdSaveSceneFocus(int room, int level, const HdDepthOfField::Tuning &tuning, unsigned int changed, bool reset) {
+    auto &st = hdColorGradeState();
+    if (!st.loaded) hdLoadColorGrades(st);
+    const int values[] = {level, tuning.blurTenths, tuning.edge, tuning.intensity, tuning.depth};
+    for (int c = HdSceneLook::kFocus; c < HdSceneLook::kControls; ++c) if (changed & (1u << c)) {
+        if (reset) st.settings.reset(room, c);
+        else st.settings.set(room, c, values[c - HdSceneLook::kFocus]);
+    }
+    hdSaveColorGrades(st);
+}
+int hdLookControl(int row) {
+    return row < kLookFocus ? row : row < kLookVignette ? HdSceneLook::kFocus + row - kLookFocus
+        : HdColorGrade::kVignetteOn + row - kLookVignette;
+}
+}
+
+Common::Point ScummEngine::hdLookPosition() const {
+    const int scale = MAX(1, (int)_hdScale);
+    const int width = _hdComposite.w ? _hdComposite.w / scale : _screenWidth;
+    const auto &presentation = HdRemaster::state();
+    const bool cover = hdAspectRatio() == 169 && (width >= 864 ||
+        (ConfMan.hasKey("hd_wide_background_active") && ConfMan.getBool("hd_wide_background_active")));
+    const HdAspect::Rect visible = HdAspect::visibleGame(presentation.drawableWidth,
+        presentation.drawableHeight, hdAspectRatio(), width, cover);
+    return Common::Point(MAX(visible.x + 8, visible.x + visible.w - kLookWidth - 8), visible.y + kLookTop);
 }
 
 // Grade the composed scene: runs after costumes and native overlays, before
@@ -95,12 +177,25 @@ void ScummEngine::renderHDColorGrade() {
     if (_game.id != GID_CMI) return;
     if (!st.loaded) hdLoadColorGrades(st);
     const int room = _currentRoom;
-    const HdColorGrade::Grade grade = room >= 1 && room <= 255 && !st.bypass
-        ? st.grades[room] : HdColorGrade::Grade();
+    const HdColorGrade::Grade grade = HdSceneLook::Settings::roomValid(room) && !st.bypass
+        ? st.settings.grade(room) : HdColorGrade::Grade();
     // The decorative widescreen extension receives the same scene treatment.
     for (int c = 0; c < HdColorGrade::kControls; ++c)
         ConfMan.setInt(Common::String("hd_wide_look_") + HdColorGrade::range(c).key,
             grade.value[c], Common::ConfigManager::kTransientDomain);
+    auto &remaster = HdRemaster::state();
+    if (remaster.active) {
+        remaster.grade = grade;
+        // Exchange reusable buffers: scene stays intact; following UI draws
+        // use a transparent premultiplied surface and bypass all scene effects.
+        Graphics::Surface previous = remaster.scene;
+        remaster.scene = _hdComposite; _hdComposite = previous;
+        HdRemaster::resize(_hdComposite, remaster.scene.w, remaster.scene.h);
+        memset(_hdComposite.getPixels(), 0, _hdComposite.pitch * _hdComposite.h);
+        remaster.ui = true; remaster.overlay = &_hdComposite;
+        ++remaster.generation;
+        return;
+    }
     if (room < 1 || room > 255 || st.bypass || !_hdComposite.getPixels()) return;
     const bool color = !HdColorGrade::colorIdentity(grade);
     const bool vignette = HdColorGrade::vignetteActive(grade) && !hdInventoryOpen() && room != 92;
@@ -112,7 +207,7 @@ void ScummEngine::renderHDColorGrade() {
     }
     if (vignette) {
         const bool wide = hdAspectRatio() == 169 && (_screenWidth > 640 ||
-            (room == 9 && ConfMan.hasKey("hd_wide_background_active") && ConfMan.getBool("hd_wide_background_active")));
+            (ConfMan.hasKey("hd_wide_background_active") && ConfMan.getBool("hd_wide_background_active")));
         const double canvasWidth = wide ? _hdComposite.h * 16.0 / 9.0 : _hdComposite.w;
         if (st.maskWidth != _hdComposite.w || st.maskHeight != _hdComposite.h || st.maskCanvasWidth != canvasWidth ||
             memcmp(grade.value + HdColorGrade::kVignetteOn, st.maskGrade.value + HdColorGrade::kVignetteOn, 4 * sizeof(int))) {
@@ -163,11 +258,12 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
     if (event.type == Common::EVENT_LBUTTONDOWN) {
         st.mouseDown = true; _leftBtnPressed = 0;
         const int scale = MAX(1, (int)_hdScale);
-        const int left = MAX(8, (int)_hdComposite.w / scale - kLookWidth - 8);
-        const int x = event.mouse.x / scale - left, y = event.mouse.y / scale - kLookTop;
-        if (x < 0 || x >= kLookWidth || y < 0 || y >= (kLookRows + 8) * kLookLineHeight) {
+        const Common::Point position = hdLookPosition();
+        const int x = event.mouse.x / scale - position.x, y = event.mouse.y / scale - position.y;
+        if (x < 0 || x >= kLookWidth || y < 0 || y >= (kLookRows + kLookExtraLines) * kLookLineHeight) {
             st.panel = false; return true;
         }
+        if (y < 4 + kLookLineHeight) { st.editGlobal = !st.editGlobal; st.savedAt = 0; return true; }
         int row = -1;
         for (int r = 0; r < kLookRows; ++r)
             if (y >= 4 + hdLookLine(r) * kLookLineHeight && y < 4 + (hdLookLine(r) + 1) * kLookLineHeight) row = r;
@@ -180,6 +276,12 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         _rightBtnPressed = 0; return true;
     } else if (!key) return false;
     else switch (event.kbd.keycode) {
+    case Common::KEYCODE_r:
+        if (!st.editGlobal && HdSceneLook::Settings::roomValid(_currentRoom)) {
+            st.settings.rooms[_currentRoom].mask = 0; hdSaveColorGrades(st);
+        }
+        return true;
+    case Common::KEYCODE_g: st.editGlobal = !st.editGlobal; st.savedAt = 0; return true;
     case Common::KEYCODE_UP: st.row = (st.row + kLookRows - 1) % kLookRows; return true;
     case Common::KEYCODE_DOWN: st.row = (st.row + 1) % kLookRows; return true;
     case Common::KEYCODE_LEFT: delta = -steps; break;
@@ -191,36 +293,29 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         st.panel = false; return false;
     default: return true;
     }
-    if (st.row < kLookFocus || st.row >= kLookVignette) {
-        const int room = _currentRoom;
-        if (room < 1 || room > 255) return true;
-        const int control = st.row < kLookFocus ? st.row : HdColorGrade::kVignetteOn + st.row - kLookVignette;
-        HdColorGrade::Grade &grade = st.grades[room];
-        if (reset) grade.value[control] = HdColorGrade::range(control).neutral;
-        else grade = HdColorGrade::adjust(grade, control, delta);
-        st.present[room] = !HdColorGrade::identity(grade);
-        hdSaveColorGrades(st);
-        return true;
-    }
-    HdDepthOfFieldState &dof = hdDepthOfFieldState();
-    int level = hdDepthOfFieldLevel();
-    HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning();
-    const HdDepthOfField::Tuning neutral;
-    if (st.row == kLookFocus) {
-        level = reset ? 0 : HdDepthOfField::clampInt(level + (delta > 0 ? 1 : -1), 0, 2);
-        if (level) dof.lastLevel = level;
+    const int room = hdSceneLookEditRoom(_currentRoom), control = hdLookControl(st.row);
+    if (reset) {
+        st.settings.reset(room, control); // Room reset means inheritance, including explicit Off.
+    } else if (control < HdSceneLook::kFocus) {
+        st.settings.set(room, control, st.settings.get(room, control) + delta * HdSceneLook::range(control).step);
     } else {
-        // Adjusting a focus setting turns focus on, like the hotkeys.
-        if (!level) level = dof.lastLevel;
-        const int blur = st.row == kLookBlur ? delta : 0, edge = st.row == kLookEdge ? delta : 0;
-        const int intensity = st.row == kLookIntensity ? delta : 0, depth = st.row == kLookDepth ? delta : 0;
-        if (!reset) tuning = HdDepthOfField::step(level, tuning, blur, edge, intensity, depth);
-        else if (st.row == kLookBlur) tuning.blurTenths = neutral.blurTenths;
-        else if (st.row == kLookEdge) tuning.edge = neutral.edge;
-        else if (st.row == kLookIntensity) tuning.intensity = neutral.intensity;
-        else tuning.depth = neutral.depth;
+        auto &dof = hdDepthOfFieldState();
+        int level = st.settings.get(room, HdSceneLook::kFocus);
+        if (control == HdSceneLook::kFocus) {
+            level = HdDepthOfField::clampInt(level + delta, 0, 2);
+            st.settings.set(room, control, level);
+            if (level) dof.lastLevel = level;
+        } else {
+            if (!level) { level = dof.lastLevel; st.settings.set(room, HdSceneLook::kFocus, level); }
+            const auto tuning = hdDepthOfFieldTuning(room);
+            const auto next = HdDepthOfField::step(level, tuning,
+                control == HdSceneLook::kBlur ? delta : 0, control == HdSceneLook::kEdge ? delta : 0,
+                control == HdSceneLook::kIntensity ? delta : 0, control == HdSceneLook::kDepth ? delta : 0);
+            const int values[] = {next.blurTenths, next.edge, next.intensity, next.depth};
+            st.settings.set(room, control, values[control - HdSceneLook::kBlur]);
+        }
     }
-    hdStoreDepthOfField(level, tuning);
+    hdSaveColorGrades(st);
     return true;
 }
 
@@ -230,9 +325,11 @@ void ScummEngine::drawHDLookPanel() {
     if (!st.panel || _game.id != GID_CMI || !_hdFontManager || !_hdFontManager->hasFont(3) || !_hdComposite.getPixels())
         return;
     const int room = _currentRoom;
-    const HdColorGrade::Grade grade = room >= 1 && room <= 255 ? st.grades[room] : HdColorGrade::Grade();
-    const int level = hdDepthOfFieldLevel();
-    const HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning();
+    if (!st.loaded) hdLoadColorGrades(st);
+    const int editingRoom = hdSceneLookEditRoom(room);
+    const HdColorGrade::Grade grade = st.settings.grade(editingRoom);
+    const int level = st.settings.get(editingRoom, HdSceneLook::kFocus);
+    const HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning(editingRoom);
     const int tenths = HdDepthOfField::blurTenths(level ? level : 1, tuning);
     const int planes = MAX(0, _gdi->_numZBuffer - 1);
     static const char *const levels[] = {"Off", "Low", "High"};
@@ -250,10 +347,11 @@ void ScummEngine::drawHDLookPanel() {
     for (int c = 1; c < 4; ++c)
         values[kLookVignette + c] = Common::String::format("%d%%", grade.value[HdColorGrade::kVignetteOn + c]);
     static const char *const depthNames[] = {"Depth of field", "Blur radius", "Edge softness", "Blur strength", "Scene depth"};
-    Common::String lines[kLookRows + 8];
-    bool accent[kLookRows + 8] = {};
+    Common::String lines[kLookRows + kLookExtraLines];
+    bool accent[kLookRows + kLookExtraLines] = {};
     int count = 0;
-    lines[count++] = Common::String::format("SCENE LOOK   room %d%s", room, st.bypass ? "   (bypassed)" : "");
+    lines[count++] = editingRoom ? Common::String::format("SCENE LOOK   Room %d (* override)", room)
+        : Common::String("SCENE LOOK   Global defaults");
     for (int row = 0; row < kLookRows; ++row) {
         if (row == 0) lines[count++] = "Color correction";
         if (row == kLookFocus) lines[count++] = "Scene depth";
@@ -261,24 +359,29 @@ void ScummEngine::drawHDLookPanel() {
         const char *name = row < kLookFocus ? HdColorGrade::range(row).name
             : row < kLookVignette ? depthNames[row - kLookFocus]
             : HdColorGrade::range(HdColorGrade::kVignetteOn + row - kLookVignette).name;
+        if (editingRoom && st.settings.rooms[editingRoom].has(hdLookControl(row))) values[row] += " *";
         accent[count] = row == st.row;
         lines[count++] = Common::String::format("%s%s\t%s", row == st.row ? "> " : "   ", name, values[row].c_str());
     }
-    lines[count++] = "Click - / +   or Up Down / Left Right";
-    lines[count++] = "Shift x5   Backspace reset   U / Esc close";
-    lines[count++] = "B compare color and vignette";
+    lines[count++] = "Click - / +   Arrows adjust   Shift x5";
+    lines[count++] = editingRoom ? "Backspace inherit   R inherit all" : "Backspace restore default";
+    lines[count++] = "G or click title: Global / Room";
+    lines[count++] = st.bypass ? "B compare (bypassed)   U / Esc close" : "B compare   U / Esc close";
     if (!st.error.empty())
         lines[count++] = st.error;
     else if (st.savedAt && _system->getMillis() - st.savedAt < 2500)
-        lines[count++] = "Saved for this scene";
+        lines[count++] = editingRoom ? "Room settings saved" : "Global defaults saved";
+    else if (!editingRoom && HdSceneLook::Settings::roomValid(room) && st.settings.rooms[room].mask)
+        lines[count++] = "This room also has overrides";
     const int scale = MAX(1, (int)_hdScale);
-    const int left = MAX(8, (int)_hdComposite.w / scale - kLookWidth - 8);
-    drawHDOverlayText(_hdComposite, _hdFontManager, _charset, scale, left, kLookTop, kLookWidth,
+    const Common::Point position = hdLookPosition();
+    const int left = position.x, top = position.y;
+    drawHDOverlayText(_hdComposite, _hdFontManager, _charset, scale, left, top, kLookWidth,
         lines, count, accent, 45, kLookLineHeight, 140);
     const int oldSize = _hdFontManager->getSizePercent();
     _hdFontManager->setSizePercent(45);
     for (int row = 0; row < kLookRows; ++row) {
-        const int y = kLookTop + 4 + hdLookLine(row) * kLookLineHeight;
+        const int y = top + 4 + hdLookLine(row) * kLookLineHeight;
         for (int button = 0; button < 2; ++button) {
             const int x = left + 244 + button * 26;
             _hdComposite.fillRect(Common::Rect(x * scale, y * scale, (x + 22) * scale, (y + 14) * scale),

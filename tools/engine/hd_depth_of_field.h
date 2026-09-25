@@ -166,8 +166,8 @@ inline bool coverage(RowFn row, int planes, int visW, int visH, int cameraBitOff
             const unsigned char *mask = row(y, z);
             if (!mask) continue;
             for (int x = 0; x < visW; ++x)
-                if (mask[(x + cameraBitOffset) / 8] & (0x80 >> ((x + cameraBitOffset) & 7)))
-                    ++plane[y * visW + x];
+                plane[y * visW + x] += (mask[(x + cameraBitOffset) / 8] >>
+                    (7 - ((x + cameraBitOffset) & 7))) & 1;
         }
     bool any = false;
     const int range = total - depth + 1;

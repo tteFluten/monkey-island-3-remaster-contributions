@@ -22,7 +22,7 @@ def patch(root, edit):
     edit(gl, 'namespace OpenGL {',
          'namespace OpenGL {\n\n#include "hd_wide_background.inc"')
     edit(gl, '\t// We only update the screen when there actually have been any changes.',
-         '    updateHDWideBackground();\n\n\t// We only update the screen when there actually have been any changes.')
+         '    const bool previousWide = _hdWideBackground != nullptr;\n    updateHDWideBackground();\n    if (previousWide != (_hdWideBackground != nullptr)) recalculateDisplayAreas();\n\n\t// We only update the screen when there actually have been any changes.')
     edit(gl, '\t// First step: Draw the (virtual) game screen.',
          '    drawHDWideBackground();\n\n\t// First step: Draw the (virtual) game screen.')
     edit(gl, '\t\t_gameScreen->recreate();',

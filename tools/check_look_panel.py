@@ -13,13 +13,15 @@ from check_aspect import Check, ROOT
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--gpu', action='store_true')
     parser.add_argument('--output', type=Path, default=ROOT / '.context/look-panel/native')
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     grades = out / 'color-grades.json'
     grades.write_text(json.dumps({'schemaVersion': 1, 'rooms': {'61': {'warmth': 6}, '15': {'contrast': 4}}}))
-    check = Check(out, 169, color_grades_path=grades)
+    overrides = {'comi': {'hd_gpu_effects': str(args.gpu).lower(), 'hd_depth_of_field': '2', 'hd_dof_depth': '1'}}
+    check = Check(out, 169, color_grades_path=grades, config_overrides=overrides)
     def grade(room=61):
         return json.loads(grades.read_text())['rooms'].get(str(room), {})
     def button(row, plus=True):
@@ -38,11 +40,9 @@ def main():
         button(2)  # Saturation via mouse.
         assert grade()['saturation'] == 5
         button(6, False)  # Focus level down.
-        check.config.read(out / 'scummvm.ini')
-        assert check.config.getint('comi', 'hd_depth_of_field') == 1
+        assert grade()['depthOfField'] == 1
         button(10)  # Scene depth.
-        check.config.read(out / 'scummvm.ini')
-        assert check.config.getint('comi', 'hd_dof_depth') == 2
+        assert grade()['sceneDepth'] == 2
         button(11); button(12); button(13); button(14)
         g = grade()
         assert (g['vignetteEnabled'], g['vignetteAmount'], g['vignetteRadius'], g['vignetteSoftness']) == (1, 45, 65, 55)
@@ -69,13 +69,25 @@ def main():
         check.send('key 98'); check.send('key 27')
         # Reset selected softness without changing the other vignette settings.
         check.send('key 117'); button(14); check.send('key 8')
-        assert grade()['vignetteSoftness'] == 50 and grade()['vignetteAmount'] == 45
+        assert 'vignetteSoftness' not in grade() and grade()['vignetteAmount'] == 45
+        # Global changes preserve room overrides; resetting a single room
+        # control restores inheritance without discarding the other settings.
+        check.send('key 103')  # G: global defaults.
+        button(0)  # Global brightness +2.
+        saved = json.loads(grades.read_text())
+        assert saved['schemaVersion'] == 2 and saved['global']['brightness'] == 2
+        assert grade()['brightness'] == 2 and grade()['warmth'] == 6
+        assert Path(str(grades) + '.v1.bak').exists()
+        check.send('key 103')  # Back to this room, keeping row 0 selected.
+        check.send('key 8')
+        assert 'brightness' not in grade() and grade()['warmth'] == 6
         check.send('key 27')
         print('PASS: U, keyboard/mouse controls, depth, vignette toggle/shape, bypass, reset, room persistence', flush=True)
     finally:
         check.close()
     # Reopen the native engine and verify the same room treatment is loaded.
-    check = Check(out / 'restart', 169, color_grades_path=grades)
+    check = Check(out / 'restart', 169, color_grades_path=grades,
+                  config_overrides={'comi': {'hd_gpu_effects': str(args.gpu).lower()}})
     try:
         check.jump(61)
         check.send('key 117')

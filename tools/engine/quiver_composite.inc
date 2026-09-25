@@ -31,14 +31,19 @@ if (!quiverPoses.empty()) {
             if (!w || !h) continue;
             int left = d.screenLeft * scale;
             int top = d.screenTop * scale;
+            static HdCostumeRaster::Cache rasterCache;
+            rasterCache.scope(_currentRoom, _playtestCommandId);
+            const uint32 *raster = HdRemaster::state().active ? rasterCache.get(
+                (const uint32 *)texture.getPixels(), texture.pitch / 4, texture.w, texture.h,
+                w, h, d.costume, d.cel, d.mirror, cleanHeadMatte, lighting) : nullptr;
             for (int yy = MAX(0, top); yy < MIN(hdH, top + h); ++yy) {
                 const int ny = yy / scale;
                 const byte *nativeRow = !coin && !quiverWithoutCoin.empty()
-                    ? &quiverWithoutCoin[ny * visW] : (const byte *)vs->getBasePtr(vs->xstart, ny);
+                    ? &quiverWithoutCoin[ny * visW] : (const byte *)vs->getBasePtr(vs->xstart, ny + _screenTop);
                 const byte *actorRow = &a->_quiverAfter[ny * visW];
                 // Resolve the z-buffer resource once per row, never once per HD
                 // pixel. Preserve sub-strip camera offsets in the byte lookup.
-                const byte *maskRow = d.z >= 0 && d.z < _gdi->_numZBuffer ? getMaskBuffer(0, ny, d.z) : nullptr;
+                const byte *maskRow = d.z >= 0 && d.z < _gdi->_numZBuffer ? getMaskBuffer(0, ny + _screenTop, d.z) : nullptr;
                 const int maskOffset = vs->xstart & 7;
                 int sourceY = (yy - top) * texture.h / h;
                 uint32 *dest = (uint32 *)_hdComposite.getBasePtr(0, yy);
@@ -50,16 +55,20 @@ if (!quiverPoses.empty()) {
                     if (d.mirror) sourceX = texture.w - 1 - sourceX;
                     // Extend real outline RGB into the soft matte BEFORE room
                     // lighting; retain alpha and the native geometry exactly.
-                    uint32 color = lighting.apply(HdCostumeEdge::sample(
+                    uint32 color = raster ? raster[(yy - top) * w + xx - left] : lighting.apply(HdCostumeEdge::sample(
                         (const uint32 *)texture.getPixels(), texture.pitch / 4,
                         texture.w, texture.h, sourceX, sourceY, cleanHeadMatte));
                     uint32 alpha = color >> 24;
                     if (!alpha) continue;
+                    if (alpha == 255) {
+                        dest[xx] = color; hdAlphaMask[yy * hdW + xx] = 1; continue;
+                    }
                     uint32 previous = dest[xx];
                     uint32 r = ((color & 255) * alpha + (previous & 255) * (255 - alpha) + 127) / 255;
                     uint32 g = (((color >> 8) & 255) * alpha + ((previous >> 8) & 255) * (255 - alpha) + 127) / 255;
                     uint32 b = (((color >> 16) & 255) * alpha + ((previous >> 16) & 255) * (255 - alpha) + 127) / 255;
-                    dest[xx] = r | (g << 8) | (b << 16) | 0xff000000;
+                    dest[xx] = r | (g << 8) | (b << 16) |
+                        ((alpha + ((previous >> 24) * (255 - alpha) + 127) / 255) << 24);
                     hdAlphaMask[yy * hdW + xx] = 1;
                 }
             }
@@ -67,8 +76,12 @@ if (!quiverPoses.empty()) {
                 hdPrintf("QUIVER actor=%d costume=%d cel=%d at=%d,%d size=%d,%d mirror=%d light=%d,%d,%d", a->_number, d.costume, d.cel, left, top, w, h, d.mirror, lighting.channel[0], lighting.channel[1], lighting.channel[2]);
         }
         for (uint i = 0; i < textures.size(); ++i) {
-            textures[i]->free();
             delete textures[i];
         }
     }
+}
+
+if (hdCoinPass) {
+    if (_hdUICostumeManager) _hdUICostumeManager->endBorrow();
+    if (_hdQuiverManager) _hdQuiverManager->endBorrow();
 }

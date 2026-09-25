@@ -34,6 +34,14 @@ export interface EngineState {
   width: number;
   height: number;
   aspectRatio?: 43 | 169;
+  drawableWidth?: number;
+  drawableHeight?: number;
+  renderBackend?: 'opengl-shaders' | 'cpu-effects';
+  waterBackend?: 'opengl-shader' | 'original-overlays';
+  presentationIntervalMs?: number;
+  presentationFps?: number;
+  renderCpuMs?: number;
+  cameraTop?: number;
   outputWidth?: number;
   outputHeight?: number;
   viewportWidth?: number;

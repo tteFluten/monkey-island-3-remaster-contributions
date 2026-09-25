@@ -6,18 +6,35 @@ inline int preference(int value) { return value == 169 ? 169 : 43; }
 inline int viewport(int aspect, int width, int height) {
     return aspect == 169 && width >= 864 && height == 480 ? 864 : 640;
 }
+// Script-authored inspection captions use the original screen center (320).
+// Only screen-anchored text calls this; actor/world positions are already mapped.
+inline int centeredTextX(int x, bool centered, int viewportWidth) {
+    return centered && x == 320 && viewportWidth > 640 ? viewportWidth / 2 : x;
+}
 struct Rect { int x, y, w, h; };
-inline Rect frame(int width, int height, int aspect) {
+inline Rect frame(int width, int height, int aspect, bool cover = false) {
     const int numerator = aspect == 169 ? 16 : 4;
     const int denominator = aspect == 169 ? 9 : 3;
     int w = width, h = width * denominator / numerator;
-    if (h > height) { h = height; w = height * numerator / denominator; }
+    if ((!cover && h > height) || (cover && h < height)) { h = height; w = (height * numerator + (cover ? denominator - 1 : 0)) / denominator; }
     return {(width - w) / 2, (height - h) / 2, w, h};
 }
-inline Rect game(int width, int height, int aspect, int viewportWidth) {
-    const Rect outer = frame(width, height, aspect);
+inline Rect game(int width, int height, int aspect, int viewportWidth, bool cover = false) {
+    const Rect outer = frame(width, height, aspect, cover);
     const int w = outer.h * viewportWidth / 480;
     return {outer.x + (outer.w - w) / 2, outer.y, w, outer.h};
+}
+// Visible native coordinates after the same uniform crop used for drawing
+// and pointer mapping. Round inward so overlay controls stay fully on-screen.
+inline Rect visibleGame(int width, int height, int aspect, int viewportWidth, bool cover = false) {
+    if (width <= 0 || height <= 0) return {0, 0, viewportWidth, 480};
+    const Rect drawn = game(width, height, aspect, viewportWidth, cover);
+    if (drawn.w <= 0 || drawn.h <= 0) return {0, 0, viewportWidth, 480};
+    const int left = drawn.x < 0 ? (-drawn.x * viewportWidth + drawn.w - 1) / drawn.w : 0;
+    const int top = drawn.y < 0 ? (-drawn.y * 480 + drawn.h - 1) / drawn.h : 0;
+    const int right = drawn.x + drawn.w > width ? (width - drawn.x) * viewportWidth / drawn.w : viewportWidth;
+    const int bottom = drawn.y + drawn.h > height ? (height - drawn.y) * 480 / drawn.h : 480;
+    return {left, top, right - left, bottom - top};
 }
 inline int camera(int x, int roomWidth, int viewportWidth, int scriptMin, int scriptMax) {
     const int low = viewportWidth / 2, high = roomWidth - low;
