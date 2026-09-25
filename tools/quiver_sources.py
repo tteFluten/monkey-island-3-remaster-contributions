@@ -110,14 +110,65 @@ def loose(source, rendered):
     return dict(passed=on_path >= .9 and covered >= .8, on_path=on_path, covered=covered, geometry='loose')
 
 
+def strip_rect_clip(raw):
+    """Remove a single axis-aligned rectangle clip; return (svg, rect in viewBox units) to apply after rendering."""
+    import re
+    import xml.etree.ElementTree as ET
+    ns = '{http://www.w3.org/2000/svg}'
+    ET.register_namespace('', ns[1:-1])
+    root = ET.fromstring(raw)
+    clips = [n for n in root.iter() if n.tag.split('}')[-1] == 'clipPath']
+    shapes = [c for c in clips[0]] if len(clips) == 1 else []
+    if len(shapes) != 1 or shapes[0].tag.split('}')[-1] != 'rect':
+        raise ValueError('Only a single rectangular clip can be applied after rendering')
+    rect = shapes[0]
+    move = re.fullmatch(r'\s*translate\(\s*([-\d.e]+)[\s,]+([-\d.e]+)\s*\)\s*', rect.get('transform', 'translate(0 0)'))
+    if not move: raise ValueError('Clip rectangle transform is not a translation')
+    x = float(rect.get('x', 0)) + float(move.group(1)); y = float(rect.get('y', 0)) + float(move.group(2))
+    box = [x, y, x + float(rect.get('width')), y + float(rect.get('height'))]
+    for parent in root.iter():
+        for child in list(parent):
+            if child in clips: parent.remove(child)
+        for attr in [a for a in parent.attrib if a.split('}')[-1] == 'clip-path']: del parent.attrib[attr]
+    view = [float(v) for v in re.split(r'[ ,]+', root.get('viewBox').strip())]
+    return ET.tostring(root, encoding='unicode'), dict(rect=box, view_box=view)
+
+
+def apply_clip(path, clip, record, scale):
+    """Clear alpha outside the clip rectangle, mapped from viewBox units to this render."""
+    canvas = record['reference_canvas']; vx, vy, vw, vh = clip['view_box']
+    unit = canvas['side'] / vw
+    x0, y0, x1, y1 = [round(((v - o) * unit - c) * scale) for v, o, c in
+                      zip(clip['rect'], (vx, vy, vx, vy), (canvas['x'], canvas['y'], canvas['x'], canvas['y']))]
+    with Image.open(path) as im:
+        im = im.convert('RGBA')
+    alpha = Image.new('L', im.size, 0)
+    alpha.paste(im.getchannel('A').crop((x0, y0, x1, y1)), (x0, y0))
+    im.putalpha(alpha); im.save(path)
+
+
 def validate(output, record, generated=False):
     key = record['artwork_sha256']
-    raw, corrections = flatten(json.loads((output/'raw'/f'{key}.json').read_text())['data'][0]['svg'])
+    raw = json.loads((output/'raw'/f'{key}.json').read_text())['data'][0]['svg']
+    clip = None
+    try:
+        raw, corrections = flatten(raw)
+        svg_engine_compatible = True
+    except ValueError as error:
+        if 'Clip flattening' not in str(error): raise
+        # A rectangular clip over curved paths: render unclipped, then clear outside the rectangle.
+        # The PNG is exact; the stored SVG lacks the clip, so it is not used by the engine's SVG path.
+        raw, clip = strip_rect_clip(raw)
+        corrections, svg_engine_compatible = [dict(type='rect-clip-applied-after-render', **clip)], False
     staging = output/'registered'
     (staging/'raw').mkdir(parents=True, exist_ok=True)
     if not (staging/'cleaned').exists(): (staging/'cleaned').symlink_to((output/'cleaned').resolve())
     q.atomic(staging/'raw'/f'{key}.json', {'data': [{'svg': registered_svg(raw, record)}]})
     report = q.validate_one(staging, record)
+    if clip:
+        for scale in (6, 4): apply_clip(staging/f'{scale}x'/f'{key}.png', clip, record, scale)
+        with Image.open(output/'cleaned'/record['source']) as original, Image.open(staging/'6x'/f'{key}.png') as rendered:
+            report.update(q.alignment(original, rendered))
     if generated:
         with Image.open(output/'cleaned'/record['source']) as original, Image.open(staging/'6x'/f'{key}.png') as rendered:
             report.update(loose(original, rendered))
@@ -128,7 +179,7 @@ def validate(output, record, generated=False):
         (output/folder).mkdir(exist_ok=True)
         shutil.copy2(staging/folder/(key + suffix), output/folder/(key + suffix))
     engine = ROOT/'.playtest/engine/source'
-    if record['source'].startswith('costumes/') and engine.exists():
+    if record['source'].startswith('costumes/') and engine.exists() and svg_engine_compatible:
         # Costume SVGs load through the engine's own decoder in exact-frame rooms.
         from quiver_ui import native_renderer
         binary = native_renderer(output)
@@ -143,7 +194,8 @@ def validate(output, record, generated=False):
             report['native'] = (loose if generated else q.alignment)(original, native)
         report['passed'] = report['passed'] and report['native']['passed']
     elif record['source'].startswith('costumes/'):
-        report['native'] = 'not-run: engine source missing'
+        report['native'] = 'not-run: ' + ('engine source missing' if svg_engine_compatible else 'curved clips; PNG runtime only')
+    report['svg_engine_compatible'] = svg_engine_compatible
     report['corrections'] = corrections
     return report
 
@@ -209,6 +261,24 @@ def generate(output, max_usd):
         print(json.dumps(dict(done=True, spent_usd=round(total, 4))), flush=True)
 
 
+def revalidate(output):
+    """Re-check rejected jobs from their saved responses (no request, no cost)."""
+    manifest = json.loads((output/'manifest.json').read_text())
+    with closing(q.journal(output)) as db:
+        for record in manifest['records']:
+            key = record['artwork_sha256']
+            state, details = q.job(db, key)
+            if state != 'rejected' or not (output/'raw'/f'{key}.json').exists(): continue
+            try:
+                report = validate(output, record, 'prompt' in manifest)
+            except Exception as error:
+                print(json.dumps(dict(source=record['source'], still_rejected=str(error)[:200]))); continue
+            details = {k: v for k, v in details.items() if k not in ('validation_error', 'validation', 'revalidated')}
+            q.save_job(db, key, 'geometry_passed' if report['passed'] else 'rejected', **details, validation=report,
+                       revalidated=True)
+            print(json.dumps(dict(source=record['source'], passed=report['passed'])))
+
+
 def status(output):
     manifest = json.loads((output/'manifest.json').read_text())
     with closing(q.journal(output)) as db:
@@ -256,7 +326,7 @@ def sheet(output, page=(1280, 896)):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=('prepare', 'generate', 'status', 'sheet'))
+    parser.add_argument('command', choices=('prepare', 'generate', 'revalidate', 'status', 'sheet'))
     parser.add_argument('keys', nargs='*', help="source keys such as costumes/LFLF_0009_AKOS_0032_frame_0.png")
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-usd', type=float)
@@ -268,6 +338,7 @@ def main():
         elif args.command == 'generate':
             if not args.max_usd or args.max_usd <= 0: parser.error('generate needs a positive --max-usd')
             generate(args.output, args.max_usd)
+        elif args.command == 'revalidate': revalidate(args.output)
         elif args.command == 'status': status(args.output)
         else: sheet(args.output)
 

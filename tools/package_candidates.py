@@ -18,9 +18,12 @@ from quiver_cannon import locked
 from topaz_character_cutouts import digest
 from topaz_scenes import ROOT
 
+ORIGINALS = '.context/scene-sheets/originals/cleaned'  # local cels never extracted into the repo
+
 
 def source_size(root, source, reference):
-    for path in (root/'assets/references/topaz-cleaned'/source, reference, root/'extracted'/source):
+    for path in (root/'assets/references/topaz-cleaned'/source, reference, root/'extracted'/source,
+                 root/ORIGINALS/Path(source).name):
         if path and Path(path).exists():
             with Image.open(path) as image: return image.size
     raise FileNotFoundError(source)
@@ -28,17 +31,20 @@ def source_size(root, source, reference):
 
 def package(root, items, dry_run=False):
     changed, derived = [], []
+    # Check every candidate before writing anything, so a bad item never leaves a partial pack.
+    for item in items:
+        source = item['source']
+        width, height = source_size(root, source, Path(item['reference']) if item.get('reference') else None)
+        with Image.open(item['candidate']) as image:
+            if image.size != (width * 4, height * 4):
+                raise ValueError(f'{source}: candidate {image.size} is not 4x {width}x{height}')
+    if dry_run: return dict(packaged=len(items), derived=[], dry_run=True)
     with locked(root/'.context/topaz-packaging'), tempfile.TemporaryDirectory() as temp:
         pack = Pack(root)
         library = {r['source']: r for r in pack.library['records']}
         for item in items:
             source, candidate = item['source'], Path(item['candidate'])
             reference = Path(item['reference']) if item.get('reference') else None
-            width, height = source_size(root, source, reference)
-            with Image.open(candidate) as image:
-                if image.size != (width * 4, height * 4):
-                    raise ValueError(f'{source}: candidate {image.size} is not 4x {width}x{height}')
-            if dry_run: changed.append(source); continue
             pack.master(source, candidate, item['state'])
             pack.reference(source, reference)
             if reference and source not in pack.known:

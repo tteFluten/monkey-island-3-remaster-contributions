@@ -75,6 +75,23 @@ class QuiverSourcesTests(unittest.TestCase):
         self.assertAlmostEqual(spent, 0.6); self.assertEqual(states[:2], ['geometry_passed'] * 2)
         self.assertIsNone(states[2])
 
+    def test_rectangular_clip_is_applied_after_render(self):
+        qs.prepare(self.output, self.keys[:1], prompt='Redraw {side}')
+        record = json.loads((self.output/'manifest.json').read_text())['records'][0]
+        c = record['reference_canvas']
+        # Curved paths under a band clip: the clip keeps only the top half of the sprite's box.
+        svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {s} {s}"><defs><clipPath id="k">'
+               '<rect transform="translate(0 {y})" width="{s}" height="{h}"/></clipPath></defs>'
+               '<g clip-path="url(#k)"><path d="M{x0} {y0} C{x0} {y0} {x1} {y0} {x1} {y0} L{x1} {y1} L{x0} {y1} Z" fill="#c83232"/></g></svg>'
+               ).format(s=c['side'], y=c['y'], h=15, x0=c['x'] + 2, y0=c['y'] + 2, x1=c['x'] + 18, y1=c['y'] + 28)
+        q.atomic(self.output/'raw'/f"{record['artwork_sha256']}.json", {'data': [{'svg': svg}]})
+        report = qs.validate(self.output, record, generated=True)
+        self.assertFalse(report['svg_engine_compatible'])
+        self.assertEqual(report['corrections'][0]['type'], 'rect-clip-applied-after-render')
+        with Image.open(self.output/'4x'/f"{record['artwork_sha256']}.png") as render:
+            self.assertEqual(render.getpixel((40, 20))[3], 255)   # inside the band
+            self.assertEqual(render.getpixel((40, 100))[3], 0)    # below the band: cleared
+
     def test_failed_request_is_journaled_and_blocks_reruns(self):
         qs.prepare(self.output, self.keys[:1])
         def broken(endpoint, payload=None):

@@ -20414,6 +20414,12 @@
       ]
     },
     {
+      "source": "costumes/LFLF_0011_AKOS_0050_frame_14.png",
+      "cleaned_sha256": "f5677f6819cd8dcde92c7431748d7656ce35c35fa883d3a68fe77052828d3705",
+      "canonical": "costumes/LFLF_0011_AKOS_0050_frame_14.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0011_AKOS_0050_frame_2.png",
       "cleaned_sha256": "d1516a24033532fdd15df274fe5ac593d6f148428ccd226196906d0f13d1c817",
       "canonical": "costumes/LFLF_0011_AKOS_0050_frame_2.png",
@@ -20734,6 +20740,12 @@
         640,
         158
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0051_frame_27.png",
+      "cleaned_sha256": "38dbb0be7e242f4183c5248086e7885627725e6b762e4ab00dccd74f2b423add",
+      "canonical": "costumes/LFLF_0011_AKOS_0051_frame_27.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0051_frame_28.png",
@@ -21581,6 +21593,72 @@
       ]
     },
     {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_10.png",
+      "cleaned_sha256": "3113a36e031a01714b91ec751adf1473ad84c042c179968ac956c045d5d010c3",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_10.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_100.png",
+      "cleaned_sha256": "30c171c9c7c0b915a1e9904dfbd6476e073b3b83dbb00b29f9fc4999db9789cd",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_100.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_101.png",
+      "cleaned_sha256": "6f41195b5e1ed7ebf237b2b6ed4182582b212a35b9967ac3201d6b3132c730c6",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_101.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_102.png",
+      "cleaned_sha256": "cb32f2c69432ac5fa94f3711efe1575fef0d427a27e46509f804f9315e89cddf",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_102.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_103.png",
+      "cleaned_sha256": "41694037c0e4d565c36682a205be97c71f51aff8f0b2359829c335f7dc87bfac",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_103.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_104.png",
+      "cleaned_sha256": "80c88b4928a7c731af786028e470d0535d5013442fd91eb6f5dda724dad5a587",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_104.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_105.png",
+      "cleaned_sha256": "16c6798e04f1a1edc4dafb30873889cfc3f9f0ee6506582f7a007b6932d53961",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_105.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_106.png",
+      "cleaned_sha256": "f61ed667569f65ecd9ef3a774b35eb98bb58b5076ef251deaaf7a501f037e034",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_106.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_107.png",
+      "cleaned_sha256": "04f14cd8c7608f403c798e474d3b33b4d9db40176eaf7a7cda03f90d4dbbb2e6",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_107.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_108.png",
+      "cleaned_sha256": "bbac25e3ac259e3cd50c31ce681c4bb4b34cc5e218ae6861baf6fed67510a106",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_108.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_109.png",
+      "cleaned_sha256": "eaa65f3fb034e15a729aa110c580f66c1e243e775d18f04d4d49810dd7b84340",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_109.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_11.png",
       "cleaned_sha256": "dc30847854afb33cdb7f423554355127734fd0be0ddbb6c81e2e94888703c9ab",
       "canonical": "costumes/LFLF_0011_AKOS_0054_frame_11.png",
@@ -21591,6 +21669,42 @@
         121,
         80
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_110.png",
+      "cleaned_sha256": "cabd560baa2e95275d82b5c113019b84d02d01e8daa39f82346e31c23fe7f7eb",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_110.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_111.png",
+      "cleaned_sha256": "e600c64ef7d9ee95e85c3e35eb2f32e40da3b5260d9109021c02367249f04f78",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_111.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_112.png",
+      "cleaned_sha256": "2d71411504e5e6ea7a56c428193bca7ed0c4f5b6de69b64580145292bcf561e9",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_112.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_114.png",
+      "cleaned_sha256": "5d12642130a7674efde2b245018af726d16ddd0e67b404b42fcce288cbd72639",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_114.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_117.png",
+      "cleaned_sha256": "13c22a07e55ee89f7f3c9c3de738a7fc646af8718181b7a25d384058f7dbffd0",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_117.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_118.png",
+      "cleaned_sha256": "09547f0f877b9cadcaaee6b96bc1ab749eb77ccb1a5696002cf9d5dc47cb3075",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_118.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_12.png",
@@ -21605,6 +21719,24 @@
       ]
     },
     {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_122.png",
+      "cleaned_sha256": "cc21c6c8a9d055d5b346a622dfa43769706cf9271d0ee7de7a32c92cf8bd7889",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_122.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_123.png",
+      "cleaned_sha256": "24bba35aa9e79c2d3712f07e77f549eeb271580d550f13f952fd017df1294df5",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_123.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_124.png",
+      "cleaned_sha256": "e1ca73a24c237b12c6ba08a4de9514d6ebc7c0be7a3e6eb22eee9a4b0644673d",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_124.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_13.png",
       "cleaned_sha256": "706350ffd6923d4d9e720e3abbb486e13e23df3c992056b86cebd926b9c13784",
       "canonical": "costumes/LFLF_0011_AKOS_0054_frame_13.png",
@@ -21615,6 +21747,42 @@
         126,
         78
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_14.png",
+      "cleaned_sha256": "4b7648452615a13126880e1e0e417473e248e427b0e48ffa9e2dddb235582bfe",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_14.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_15.png",
+      "cleaned_sha256": "cc821ce0b4cecc7fcb456828c73fca73ab28d19157c22657306deefc20a8c26b",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_15.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_16.png",
+      "cleaned_sha256": "43501f7c340bb111dfee02933e8931c9de2a3c5d2822bdf63ef7da40de17e41b",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_16.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_17.png",
+      "cleaned_sha256": "36151a0d091c2681d3f461bfb5ca347755f958f4d84d9d5f019ff945542bde5e",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_17.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_18.png",
+      "cleaned_sha256": "d615cf4cdbcc42c23d7c2deed0f01d5cc50b8830baa1d5a114a0e12d42ecf014",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_18.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_19.png",
+      "cleaned_sha256": "014bc66ffc17cba9584bb691fab03981d9d3ef0945be871f9e8499b3d78ddbed",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_19.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_2.png",
@@ -21629,6 +21797,66 @@
       ]
     },
     {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_20.png",
+      "cleaned_sha256": "2358bff2907482573ab19f35ef51c28f20cd5b3ffa3823503849f1bd18a7cc5d",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_20.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_21.png",
+      "cleaned_sha256": "f4ce6308269956a508c34577cfd4940547402c704621bdf0fd3e78dc9edf7250",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_21.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_22.png",
+      "cleaned_sha256": "149df04950f07dcc25a12aef4bf5a1abf5bb4f335b46b69e9c8f6fcc4be0a8ac",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_22.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_23.png",
+      "cleaned_sha256": "f5da482de14207a2fc5a13a477eefd824f5bdd636d12695053790ffe9ffdb489",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_23.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_24.png",
+      "cleaned_sha256": "d38ee7bbb4db7553190a5adb30251a56c73b36f50d5d04af7aa4ebc381cfb718",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_24.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_25.png",
+      "cleaned_sha256": "f822275db375f25b21f4881f715ac574b7147b50bbc34e7c0230b83f1694d40c",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_25.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_26.png",
+      "cleaned_sha256": "a4921a400fe9c1182919db82a6da7d247b56516df01fa0baf2ae6cb8767dc248",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_26.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_27.png",
+      "cleaned_sha256": "8721410f5776057583ffe07805af90b1f43ad6c4ab990b4a1bd7f76cda2d22ac",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_27.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_28.png",
+      "cleaned_sha256": "cc606c2c67433a5a5f4736c274a090d89975ccfa72dc3f8ede42446824281134",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_28.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_29.png",
+      "cleaned_sha256": "472967eb880c3a11a14e1510927e188afedfdfe1d8dcfdc934a17c67ff1db4a7",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_29.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_3.png",
       "cleaned_sha256": "2094f638e18afc3a4a13b2651b9dcb86f22fdddf4b76e58236dce60fee8bc5d6",
       "canonical": "costumes/LFLF_0011_AKOS_0054_frame_3.png",
@@ -21639,6 +21867,66 @@
         91,
         74
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_30.png",
+      "cleaned_sha256": "a40d626b5f8838f517231b455f5c45dfd89f5a392dc35f5c7adbf4a1dbd4e7b4",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_30.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_31.png",
+      "cleaned_sha256": "92ea5810a3f92d95460bbd483abf37e8d37b3a8d49914b91c05dade41e38a0d5",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_31.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_32.png",
+      "cleaned_sha256": "8f8d34a220332c95cab4a825ebf221432c83d0bbdfcf90589c746040fafd1448",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_32.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_33.png",
+      "cleaned_sha256": "508655ac06209755d922918d3832344cbd93d19d06da5231a7ac7892ddb516f4",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_33.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_34.png",
+      "cleaned_sha256": "f7c1577727ee97bbcde4e90d22986b403d8af73f54cc930676970ea39ad716fc",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_34.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_35.png",
+      "cleaned_sha256": "0b7f3a875cbc21b17b3259fc61768f606c1bb92a87a402ed17913c1629337ce1",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_35.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_36.png",
+      "cleaned_sha256": "b0ef2bd720adf00922513e947d11cd23d8175f19ac1636cfb6427f38e06b0e35",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_36.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_37.png",
+      "cleaned_sha256": "f2906ecba4c07e6902e8bfe0c051e5c20e21bc268539ab52e98d23bf23616556",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_37.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_38.png",
+      "cleaned_sha256": "15461ab2e1815407867c8432fe6fd865b7d933c51ef0c957ae8f8c3ad5b55b0c",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_38.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_39.png",
+      "cleaned_sha256": "b9a61d16ee551879a7c09dc20aaa2bd118c9d00fc6b15f6f895f2743261c096d",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_39.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_4.png",
@@ -21653,6 +21941,66 @@
       ]
     },
     {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_40.png",
+      "cleaned_sha256": "822295184a7a7dac7f360ca3000a689739c9452bc08ae0db89b1f204719adc25",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_40.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_41.png",
+      "cleaned_sha256": "7e16ff9119fb476f291b64fa4f7caa04b11591bdf74b2a5ec77f571199bf8629",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_41.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_42.png",
+      "cleaned_sha256": "14caca5adc63f31209f727958c9639a5013246728d11e949f2119c0b45249fd0",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_42.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_43.png",
+      "cleaned_sha256": "41d975cdf90f9c20c7210d474b1e15662439701ce962fcde8e9870646c09e2d2",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_43.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_44.png",
+      "cleaned_sha256": "ac5574db813ff2fb253a56b0facb75a2b57d10ec60dfad2b4f136f9bde7d6adb",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_44.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_45.png",
+      "cleaned_sha256": "227b4dd2c7e6d00ddc370b02492299dc4b696f1caa6d7a84f216bcd366d83311",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_45.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_46.png",
+      "cleaned_sha256": "bac720a92600d0eb9744f262f3a9b917094acf98e3f7b3efac7d803a06b6b739",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_46.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_47.png",
+      "cleaned_sha256": "340c1b3666faace5662888b8342caa88429340906b0ab04bbf36638a59ba7ec2",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_47.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_48.png",
+      "cleaned_sha256": "5840f07d3df107ca6aaa2d72385bf87204742c8237271568486cfba05704e87c",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_48.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_49.png",
+      "cleaned_sha256": "47588fe46d8383273a620e693021952187176d34810de66fe44eb972f3ed8a2c",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_49.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_5.png",
       "cleaned_sha256": "cc2bf511016c86c3cfb1ad65f5c6779f765cd6722e79d8c36336a7eb16df8ad9",
       "canonical": "costumes/LFLF_0011_AKOS_0054_frame_5.png",
@@ -21663,6 +22011,66 @@
         109,
         79
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_50.png",
+      "cleaned_sha256": "da51471e0b1b4890b9fe4ec8dbccaf3fd6ed76f227011e6c9d2b8b711b3cb8c9",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_50.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_51.png",
+      "cleaned_sha256": "7d00a4279e789b0ac5a8295136fe1b53ff7a08e0ed8c4ccc9a4f33616cdf24c4",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_51.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_52.png",
+      "cleaned_sha256": "6338c1b26121f941da9a84038cf9c6adc266a401715729638e143aa89b6e7a8b",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_52.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_53.png",
+      "cleaned_sha256": "6739b931553b92ec8120841eb114e71951f8c84d290405645b5e69dae8e1e303",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_53.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_54.png",
+      "cleaned_sha256": "e7729b42fda7c4383a072e1f2eaa1bed1f79f83e9410d1d796d0f9869e9369cd",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_54.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_55.png",
+      "cleaned_sha256": "f17ca41a1ce23ba58874a4205c2a69560cf0796458b6ec92dc985b104397d7cc",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_55.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_56.png",
+      "cleaned_sha256": "d5707ce4eb09661d4ab1df1393a885eb075137537f9a3a0b98fb05a7c13d69b5",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_56.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_57.png",
+      "cleaned_sha256": "392ae233af2d53eaea090129e9dabcd8617b093a3198d9f7121ebd46ff8ad6af",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_57.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_58.png",
+      "cleaned_sha256": "5f4dc25e1e2719bd5cf0d13d06fe741feeefd83e2aa5cd9f348d84d68505391b",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_58.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_59.png",
+      "cleaned_sha256": "f9a0982e8a1460785398194064b5678a6a9af6564b6d9f4290b82e920fe937c1",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_59.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_6.png",
@@ -21677,6 +22085,66 @@
       ]
     },
     {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_60.png",
+      "cleaned_sha256": "6a8413ab84ddf8163c9ff9c8129d9b33c61ddad584d705d5e9440845466b0144",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_60.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_61.png",
+      "cleaned_sha256": "5a3b240ed29632d5bf506e311d5f1e8f1f8e4af04c8f2e15b04c461fd7ca5a9f",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_61.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_62.png",
+      "cleaned_sha256": "1b0dbb8512b4a9aee1b2f5b64d2641ca1ab510e65653a5ac2915f706174f0ec2",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_62.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_63.png",
+      "cleaned_sha256": "1503b061eb1c898d1f6f373578c92e269a8b3ca4e260ddc1d0a5a00edaecd84c",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_63.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_64.png",
+      "cleaned_sha256": "4fcfdcba7dda1c7cc7774d676cbfc0956a963f0442fda5b5e3990be489a9bfaf",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_64.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_65.png",
+      "cleaned_sha256": "7c8acf95bb7b01f869d81b3abf46494e5609d7c1ea9d0f5a3f2546ead3525087",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_65.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_66.png",
+      "cleaned_sha256": "ff323a5c7fdb1e9f7ff4c6ef8e81a17cf42d9c7f49a07991761c2a7a15146121",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_66.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_67.png",
+      "cleaned_sha256": "4e33c6d975e394a572f08485f9b19a92d0f0ab56f56dc473ebdd1ff416e2fbcb",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_67.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_68.png",
+      "cleaned_sha256": "5151dc8fed16ac0ea920815ad5d496dea6d0a7b4539c525ed4e1eb7fba5ed73f",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_68.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_69.png",
+      "cleaned_sha256": "cf560646b741ffbad2e9fb10c77f841cf1d386a28ce9f3f8163087a7f5c199d0",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_69.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_7.png",
       "cleaned_sha256": "727e1a3e0d636cb803ab9511f5a05c68c97aee29c6bde5b9a4be700bb031ba43",
       "canonical": "costumes/LFLF_0011_AKOS_0054_frame_7.png",
@@ -21687,6 +22155,66 @@
         118,
         82
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_70.png",
+      "cleaned_sha256": "4258fafc8d945697d8468f7cb608b8696f42605707ee1c02b4e0570973c21154",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_70.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_71.png",
+      "cleaned_sha256": "19a4654ee5a32cd093d25c28b7b5d9737444383ba59805c8acaf5ffd333d482b",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_71.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_72.png",
+      "cleaned_sha256": "49e62968e37a219f07a2c300cc7442275d272873a2487cdc5aa0a0e0da34052e",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_72.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_73.png",
+      "cleaned_sha256": "208d07c41f345ab151f76b2ee230a33e285c58ad6ec01df641db46858d71cc0b",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_73.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_74.png",
+      "cleaned_sha256": "2bd276e3bfa71b65ae4ad07e7db6a05cae4a42f204472243e91573badb424b1e",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_74.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_75.png",
+      "cleaned_sha256": "c0853736826adaf83ed893cf6c09b66e6b50f071497c3d481c29a0d6d7a7c590",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_75.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_76.png",
+      "cleaned_sha256": "7cdec195b7c915b6295e3237f928b44a3efab86521cab8643c4007bfd1f9e293",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_76.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_77.png",
+      "cleaned_sha256": "4d24377a69ff781996f0a4f01752ea417180d27599101c866fc458b1f6d00323",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_77.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_78.png",
+      "cleaned_sha256": "36f21750589c690f92265503f610137629a1aa0ca8a2e195e00f76ca2d4cc8e9",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_78.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_79.png",
+      "cleaned_sha256": "b3817f24564b6a13c8f3ef422b67414e5c8805df37a623d59e0d0a084d18d5f9",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_79.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_8.png",
@@ -21701,6 +22229,66 @@
       ]
     },
     {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_80.png",
+      "cleaned_sha256": "5ac2c80b7a26c85dae1de3e60ca131bd507fedbe762083cc05b3d9d8f96476c8",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_80.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_81.png",
+      "cleaned_sha256": "8ba4cc204511fcbbc8e4a7bd89bfa20d08baef910b9988e94483351d13ba8b70",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_81.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_82.png",
+      "cleaned_sha256": "2467203c7a538430d878509890078c5ba74652cf1fb4d6f77300d6d0c6f4820a",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_82.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_83.png",
+      "cleaned_sha256": "6f6ae5ceff56739dbca220f79fbfe7550e8f6c855cfde0ac1840b48c39032370",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_83.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_84.png",
+      "cleaned_sha256": "ff64b0dcfcf983231cac80ad572829d58c3ad03a91f15e64ffed778865327690",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_84.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_85.png",
+      "cleaned_sha256": "2a225ae7818cc93e7754d1902788ed79367755281ad8eb11f234b78f4974219f",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_85.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_86.png",
+      "cleaned_sha256": "bd1fe9a1c0e0379e3f2578c17905b684fa8b821da2eb6f899782b2cbe9163eb2",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_86.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_87.png",
+      "cleaned_sha256": "13f21f7e233d83a2a5c0e27f8d91c87a691d801aa0b4e21274189b729fecc90a",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_87.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_88.png",
+      "cleaned_sha256": "cddf957626664bc722f4d59b589b775a3937dd41d8be575f9d46d5afeca2b7c8",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_88.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_89.png",
+      "cleaned_sha256": "3b5c52587c6d5f7810a96fa42dd90f1ba0b5f6fa8c72ef1fa3ca053b871b5b99",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_89.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0011_AKOS_0054_frame_9.png",
       "cleaned_sha256": "1c252f6862efb45964bc721c3e05e6c7e3ad69832eddcf2d1d8feb64c103876f",
       "canonical": "costumes/LFLF_0011_AKOS_0054_frame_9.png",
@@ -21711,6 +22299,60 @@
         75,
         68
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_90.png",
+      "cleaned_sha256": "43ae151e8ef042a00f7b12de7a8673085e54da137c4b1fd663615f3c7b3e354f",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_90.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_92.png",
+      "cleaned_sha256": "c9adca4d89089e17ee5f44474c53bb4b09e17ea85453716c06731f4e7fe4f455",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_92.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_93.png",
+      "cleaned_sha256": "40369770390eeee7a09cde5f667cd5ab15257a13798c798c6f2bbce889a9a0aa",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_93.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_94.png",
+      "cleaned_sha256": "d7d139dc2c7f7843b5ebb9f571bdf2072ba68d9e4480e93eecc5aa012184cb1e",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_94.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_95.png",
+      "cleaned_sha256": "ac4bf3d68392dce5e562cb8905f30c3b95ee427d42498fb09aa38ff592928139",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_95.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_96.png",
+      "cleaned_sha256": "f716c15279eb8767d5c59b2c4caec0ce5dbf44121100229951586d941e5f2984",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_96.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_97.png",
+      "cleaned_sha256": "c446a794f67edeed49b08835e673ad287fbeee17362dc4e51ec358bc618ae9f1",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_97.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_98.png",
+      "cleaned_sha256": "77267590a9f560bd3656a17ea0a8b2dde8c4238014609a98780e5a699f0e3815",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_98.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0054_frame_99.png",
+      "cleaned_sha256": "32d9ba8fb80f1af110a3f2ac13e5856adba35c08388db5e07278e44589c3cc81",
+      "canonical": "costumes/LFLF_0011_AKOS_0054_frame_99.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0055_frame_0.png",
@@ -21749,6 +22391,60 @@
       ]
     },
     {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_11.png",
+      "cleaned_sha256": "480f558a35a65eb1e75912328947bb0d819f5f0c4997078e331d3805de5b028b",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_11.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_12.png",
+      "cleaned_sha256": "090f37161e942e9d0cfbc463ad97cf2565bdeb6cadb74a712c1e130c85049a0f",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_12.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_13.png",
+      "cleaned_sha256": "90d4eac6379b4aabb5214126bf01f2bd6bff81ffaf35bf810369842693063464",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_13.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_14.png",
+      "cleaned_sha256": "f7eb57597118dd111e7aef35d5661c3f8be91ac25827925e5401689ef7beeaae",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_14.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_15.png",
+      "cleaned_sha256": "aadb870fcbf703c192d49d05db012e5f7bfe36be7a4f600a3e7273dd07edfd13",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_15.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_16.png",
+      "cleaned_sha256": "962f7e27a5056d406031dbd006ea2e21d7df6093a25338b6e3276b91b7674605",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_16.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_17.png",
+      "cleaned_sha256": "3594f7474a840e816dc6b60de346b7ba393491595e92c9323d7c30826917c183",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_17.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_18.png",
+      "cleaned_sha256": "4a006e5e5c06f724a3e1e0992817b9cd1af7b12844217439c861849e74ad6ee3",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_18.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_19.png",
+      "cleaned_sha256": "d558f9c3614533e965887774af353b76975856138154b6fac206edfb374550d3",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_19.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0011_AKOS_0055_frame_2.png",
       "cleaned_sha256": "09bd5c64c109053d583abf5184af50bb1d15a9f9a5ba12f7bedf53679f3e06c5",
       "canonical": "costumes/LFLF_0011_AKOS_0055_frame_2.png",
@@ -21759,6 +22455,60 @@
         93,
         185
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_20.png",
+      "cleaned_sha256": "b822f752ebae0fb31143b43ac13159b1199dcdaa2bb857f4843101426b7131c4",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_20.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_21.png",
+      "cleaned_sha256": "a56d84600b93bd0c97c745c0ec9adfb482a9a0438fcaf3709f83e6a9d3083142",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_21.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_22.png",
+      "cleaned_sha256": "d6b24f320de065df45704f0fd110235251dbbf4ddfab938b28e98d757f27c423",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_22.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_23.png",
+      "cleaned_sha256": "5b814a8dbd1ef6e21bdccc3ae89edda14acaeb4b5c3abf5701cb2e69d5f41d7e",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_23.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_24.png",
+      "cleaned_sha256": "fefa81aba49d12aab0f77fd9650076ee47b94ef543266ced92a8643c08bd979f",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_24.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_25.png",
+      "cleaned_sha256": "628946f7518c2b36a62995f70da8f6fae5c645f9d56a7a4d230a180209dca6ba",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_25.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_26.png",
+      "cleaned_sha256": "b1dbc6b69e42cf9002122e366221e666c585a75de3453bb0cd6ee4a1edb1da8b",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_26.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_27.png",
+      "cleaned_sha256": "a53d3d2899a3e14d39903f8db685cdeb24f39962bb0033fbd6723a710e37502a",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_27.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_28.png",
+      "cleaned_sha256": "805efb3399041ba6f61e2bb3568050f272c40dc8faeec0216a0a699a1c95930f",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_28.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0055_frame_3.png",
@@ -21783,6 +22533,12 @@
         95,
         187
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0055_frame_46.png",
+      "cleaned_sha256": "83ad8e96d82f313f991160e6af46137606297ac6956ece671fe9af8dcc44930f",
+      "canonical": "costumes/LFLF_0011_AKOS_0055_frame_46.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0055_frame_5.png",
@@ -21855,6 +22611,60 @@
         93,
         185
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0056_frame_1.png",
+      "cleaned_sha256": "f5600f994755f0f786e9b72c877f3e1c891c07fbcb8b98ea46f0564653a04ed0",
+      "canonical": "costumes/LFLF_0011_AKOS_0056_frame_1.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0056_frame_2.png",
+      "cleaned_sha256": "f30d43bf945cc29840147bd3d3295dc22732d396b0d70b61096f3144b65d3552",
+      "canonical": "costumes/LFLF_0011_AKOS_0056_frame_2.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0056_frame_3.png",
+      "cleaned_sha256": "75e7ec5b2a1f672560ae27a0979a7bb523daf57afe19b21be94fb44a0e6ddf87",
+      "canonical": "costumes/LFLF_0011_AKOS_0056_frame_3.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0056_frame_4.png",
+      "cleaned_sha256": "b156624b2f05d7963393deb31fe5266e31f87ea7fd1d208b68d102e940b58ebb",
+      "canonical": "costumes/LFLF_0011_AKOS_0056_frame_4.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0056_frame_5.png",
+      "cleaned_sha256": "d6fb78261b92deabc1de9f32f3388207db5342c471aa73eaa8270683e23157ca",
+      "canonical": "costumes/LFLF_0011_AKOS_0056_frame_5.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0056_frame_6.png",
+      "cleaned_sha256": "1816809a43c2565406e4c7bf46596333d8653e155325ccae39da58eb18959379",
+      "canonical": "costumes/LFLF_0011_AKOS_0056_frame_6.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0056_frame_7.png",
+      "cleaned_sha256": "9989eb8b4245926ebb1b29aa73e650a1807f371afc8d3f030703e9b550d15701",
+      "canonical": "costumes/LFLF_0011_AKOS_0056_frame_7.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0056_frame_8.png",
+      "cleaned_sha256": "7336525b2f6de4883bfdd82863429b0c85a5403e53f82f782db51cd3b2ffa482",
+      "canonical": "costumes/LFLF_0011_AKOS_0056_frame_8.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0056_frame_9.png",
+      "cleaned_sha256": "76492f1a31c0976f30cf77cd53747575ecbd4d6135fbaf257d661c8532215a2e",
+      "canonical": "costumes/LFLF_0011_AKOS_0056_frame_9.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0011_AKOS_0057_frame_0.png",
@@ -22450,6 +23260,54 @@
         93,
         184
       ]
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0060_frame_1.png",
+      "cleaned_sha256": "b9912b04c6312f6075d7ee4a0fd57d8516ca4a529802ac8c43ad0607e4a8f5e3",
+      "canonical": "costumes/LFLF_0011_AKOS_0060_frame_1.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0060_frame_2.png",
+      "cleaned_sha256": "8d1e8cc292e1d27b874e3abd4859d8ee499bc732dd4e35c7db760488f232364c",
+      "canonical": "costumes/LFLF_0011_AKOS_0060_frame_2.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0060_frame_3.png",
+      "cleaned_sha256": "24eef489c44613b391e2e3c158405ef0094736fb6992dc58b7bc7b7a48863495",
+      "canonical": "costumes/LFLF_0011_AKOS_0060_frame_3.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0060_frame_4.png",
+      "cleaned_sha256": "2f4e61dfe81fd0d3ec41cab1bef02cf4964b30fa914e03bf52cfdc83e19328c9",
+      "canonical": "costumes/LFLF_0011_AKOS_0060_frame_4.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0060_frame_5.png",
+      "cleaned_sha256": "2a62dc2b05d302d17e05b5d1dddd5837fd2be9ca415021090dfad9fca32b6499",
+      "canonical": "costumes/LFLF_0011_AKOS_0060_frame_5.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0060_frame_7.png",
+      "cleaned_sha256": "33af3fbeb39679e3a8df07e3a7a83d4be09e18dd2050851a1ac1add466629d6d",
+      "canonical": "costumes/LFLF_0011_AKOS_0060_frame_7.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0060_frame_8.png",
+      "cleaned_sha256": "c0e7552b8275f52637a278d643b2b8b92389029e4a2dbc331e10deb79a43bed7",
+      "canonical": "costumes/LFLF_0011_AKOS_0060_frame_8.png",
+      "origin": "local-game-extraction"
+    },
+    {
+      "source": "costumes/LFLF_0011_AKOS_0060_frame_9.png",
+      "cleaned_sha256": "9b26506ca548e4202ddad2fae9729080d2c4091c4e3fac6e3d865b07edf4d874",
+      "canonical": "costumes/LFLF_0011_AKOS_0060_frame_9.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0012_AKOS_0061_frame_0.png",

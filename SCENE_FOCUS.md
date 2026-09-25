@@ -120,3 +120,28 @@ Still flagged in the cannon: 20 Guybrush frames, 10 costume-32 cels, costume 28 
 3 inventory-icon states and costume 31 frame 30. The ropes, smoke and icons need in-game review
 during the cannon sequence and inventory use.
 
+## Waterline pass — 2026-09-25
+
+The waterline sheet (`tools/scene_sheets.py build --scene 11 --scope .context/scene-focus/coverage.json`)
+now reports 14 missing of 1,066 tiles. Remaining: costume 51 frame 2 (a one-pixel line), costume 58
+frames 3–4 (their cleaned inputs still have an opaque black background and need re-cleaning first), and
+11 costume-54 water drops that no method reproduced acceptably; they keep the original fallback.
+
+- **Free repairs:** 22 alpha/water repairs of existing provider output from the focus workspace (Murray
+  costume 57 ripples restored, costumes 51 and 58), packaged as validated.
+- **Topaz batch** (`waterline-02`, 356 credits): 196 missing/rejected room-11 cels, identical inputs
+  submitted once (18 aliases). 118 validated; 12 visually usable character frames kept as `rejected`
+  playable drafts. Water drops failed matting (grey boxes) and were not packaged from Topaz.
+- **Arrow 2 water** (`draft-redraw`, 81 cels): prompted redraw of costumes 49, 51, 57 and 17 costume-54
+  drops as soft painted water on the original shapes, each shifted back onto the source path. Redraws
+  whose placement or content changed were excluded (57 frame 7, several drops). Costume 58 redraws
+  enlarged and reshaped the sack and were not used.
+
+Accounting: `waterline-02` draws on allowance `albuquerque-20260924-3002`; with `fix-01` and `finish-01`
+this workspace's journals total 560 credits, leaving 891. Arrow 2 water usage was about $15.54 (one
+timed-out request is conservatively reserved), after $3.94 on the cannon pass; journals are
+`output/quiver-sources/*/jobs.sqlite`. `tools/quiver_sources.py` gained free `revalidate` for saved
+responses, applies a single rectangular clip after rendering (PNG runtime only; such SVGs are marked
+not engine-compatible), and `tools/quiver_render.mjs` lowers density only when a wide canvas would
+exceed the pixel limit.
+
