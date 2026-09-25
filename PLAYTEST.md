@@ -49,6 +49,12 @@ Selecting ordinary artwork removes its sidecar; missing or invalid sidecars
 retain the original framing with bars. Staging does not promote artwork into
 the canonical pack or change its master.
 
+The pack now includes one such 16:9 cannon image (ImageLab, cropped to exact 16:9 with the room's 4:3
+area centred): `assets/masters/backgrounds/319ae406…png`, with its original JPG under
+`assets/references/imagelab/`. The packaged workshop state selects it for room 9, so a fresh install
+shows the extended scenery in 16:9; an existing local selection is kept on reinstall. Its review status
+is `unreviewed`.
+
 Completed wide scenes uniformly fill taller displays by cropping outer scenery.
 Rendering and pointer input use the same rectangle. Unfinished backgrounds,
 menus, inventory, vertical rooms, and movies preserve their framing; bars are

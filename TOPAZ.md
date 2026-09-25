@@ -165,7 +165,8 @@ Run `audit --repair` alongside a batch to check missing interior coverage. Some
 provider masks have a straight truncation through legs. This optional repair
 recovers alpha using only enhanced RGB separation from the neutral upload matte;
 provider PNGs remain intact. Audits use a separate journal, so they cannot race
-paid-job updates. Every installed frame still requires a visual review:
+paid-job updates. Every installed frame still requires a visual review
+(per-room contact sheets: `tools/scene_sheets.py`, see SCENE_BATCHES.md):
 `review --source costumes/...png` records the exact reviewed hash;
 `install` copies reviewed 4× results into both Topaz packs while the game is stopped.
 Previous versions remain available, and protected-cutouts prevents legacy alpha
@@ -180,3 +181,10 @@ The two tiny cannon particles use `tools/topaz_cannon_effects.py`: nearest-expan
 padded inputs preserve their sub-10-pixel shapes through Wonder; Topaz matting
 happens on the larger output, followed by a premultiplied Lanczos reduction to the
 exact 20×20 / 24×20 runtime canvases. No old RGB or old alpha is restored afterward.
+
+Outputs produced in another workspace can be packaged with
+`tools/import_focus_outputs.py --workspace PATH [--apply]` (dry run by default; hash-checked
+against each job's validation record; existing masters are never overwritten). A reviewed list
+of replacement candidates is packaged with `tools/package_candidates.py LIST.json [--apply]`,
+which requires exact 4x dimensions and records the given state and method.
+
