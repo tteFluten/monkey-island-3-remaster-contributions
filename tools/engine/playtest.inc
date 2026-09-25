@@ -192,6 +192,8 @@ void ScummEngine::playtestTick() {
 		_virtscr[kMainVirtScreen].xstart, _virtualMouse.x, _virtualMouse.y);
     status.deleteLastChar();
     const auto &render = HdRemaster::state();
+    status += Common::String::format(",\"waterBackend\":\"%s\"",
+        render.active && render.water ? "opengl-shader" : "original-overlays");
     status += Common::String::format(",\"drawableWidth\":%d,\"drawableHeight\":%d,\"renderBackend\":\"%s\",\"presentationIntervalMs\":%.3f}",
         render.drawableWidth, render.drawableHeight, render.active ? "opengl-shaders" : "cpu-effects", render.lastInterval);
     status.deleteLastChar();

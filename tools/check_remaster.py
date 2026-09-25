@@ -22,7 +22,7 @@ def main():
         'vignetteEnabled': 1, 'vignetteAmount': 40, 'vignetteRadius': 60, 'vignetteSoftness': 50
     } for room in args.rooms}}))
     check = Check(output, args.aspect, color_grades_path=grades,
-        config_overrides={'comi': {'hd_gpu_effects': 'true', 'hd_depth_of_field': '2', 'hd_dof_blur': '0'},
+        config_overrides={'comi': {'hd_gpu_effects': 'true', 'hd_water_shader': 'false', 'hd_depth_of_field': '2', 'hd_dof_blur': '0'},
                           'scummvm': {'vsync': 'true'}})
     results = []
     try:

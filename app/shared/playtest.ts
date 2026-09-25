@@ -37,6 +37,7 @@ export interface EngineState {
   drawableWidth?: number;
   drawableHeight?: number;
   renderBackend?: 'opengl-shaders' | 'cpu-effects';
+  waterBackend?: 'opengl-shader' | 'original-overlays';
   presentationIntervalMs?: number;
   presentationFps?: number;
   renderCpuMs?: number;

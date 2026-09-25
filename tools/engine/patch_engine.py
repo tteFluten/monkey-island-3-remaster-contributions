@@ -168,4 +168,8 @@ from patch_remaster import patch as patch_remaster
 patch_remaster(root, edit)
 print('Applied 1440p GPU scene effects and reusable motion storage')
 
+from patch_water import patch as patch_water
+patch_water(root, edit)
+print('Applied lightweight ambient water shader')
+
 stamp.write_text(revision + "\n")

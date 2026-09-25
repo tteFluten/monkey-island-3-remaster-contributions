@@ -106,6 +106,70 @@ coverage, and costume scaling/lighting are cached. The normal native build uses
 release settings, with symbols retained for profiling. Normal rendering performs no GPU-to-CPU readback; explicit
 screenshots, thumbnails, and visual comparisons can request one.
 
+Ambient water uses a lightweight GPU shader by default in the waterline (11),
+fort base (14), and town (15). It replaces only the known ambient-water costumes:
+51/59, 73/74, and 80/83 respectively. Their original transparent, depth-clipped
+native pixels supply coverage in the fort and town; the PNG overlays are not drawn or decoded for
+those successful replacements. Character poses containing water (including
+Murray), scripted splashes, and unmapped scenes retain their artwork. Packaged
+PNGs and their provenance remain available for fallback.
+
+The effect adapts the waves in the corrected user-supplied
+[Shadertoy reference](https://www.shadertoy.com/view/fcGSW1): five octaves of
+animated value noise, a detail wave, angle-dependent reflection, and specular
+highlights. Height and normals share the noise calculations using analytic
+derivatives, avoiding the reference's four additional height evaluations for
+finite-difference normals. They render into a reusable 427 × 240 GPU target
+for 16:9 (320 × 240 for 4:3); fine octaves fade according to the sample footprint
+to reduce aliasing. Lighting and reflection run in the 1440p composite.
+The waterline palette blends 65% of its original extracted water color (#0F3333)
+with 35% of the selected painting; other rooms use their own painted water colors.
+Reflection tint follows that palette, and restrained tinted highlights replace
+the reference's bright blue sky and strong white glints. Existing Scene Look
+settings still apply afterward.
+World coordinates keep
+the pattern stable during camera movement. Actors, objects, and UI are protected;
+color grading and vignette also affect the water. Depth of field attenuates the
+fine ripples in blurred scenery. Both aspect ratios share the same effect;
+authored widescreen margins inherit coverage at the original water boundary.
+Water advances between native animation frames, pauses with the game, and uses
+cached scene/UI textures and a native-resolution single-channel coverage texture.
+Only the small procedural target redraws alongside the existing scene composite;
+background, coverage, and blur textures remain cached. It adds one framebuffer
+pass, with no CPU-generated animation textures or GPU readback. The wave
+clock stops while paused or inside the engine overlay; elapsed time does not
+wrap, avoiding a discontinuity in the nonperiodic noise.
+
+The waterline now covers the entire painted water surface. A cached scan of the
+selected background identifies bottom-connected teal water, retaining a guard
+inside the hull boundary. Coverage fades in at the edge; a distorted reflection
+samples the hull painting above each column's waterline, with angle-dependent
+reflectivity and wave-height color variation. This is a lightweight 2D approximation;
+characters are not included in the reflection. If a different painting cannot be
+classified, the renderer falls back to the original sprite coverage. Other rooms
+keep their native water coverage. Hull reflection follows the lightweight
+[2D reflection approach](https://kortham.net/posts/2d-water-reflections/), combined
+with a sky reflection tinted to the room's water palette. This is an
+adaptation to a fixed painted water surface: the demo's flying camera, standalone
+sky, plane intersection, and distance fog do not replace the room or its framing.
+
+A separate unreviewed cleanup draft removes the painted haze from room 11:
+`assets/references/water-cleanup/0011_waterln-clean.png`. Its provenance is in
+`assets/metadata/waterline-cleanup.json`. Import it through the existing background
+folder controls and map it to room 11. The draft is 1448 × 1086 and is upscaled
+for preview; the original 3840 × 2880 canonical master and packaged runtime remain
+intact. This workspace has the draft selected, with the previous runtime/selection
+backed up under `.context/water-cleanup-backup/`.
+
+Set `hd_water_shader=false` under `[comi]` in `.playtest/scummvm.ini` before
+launching to restore the existing overlays; the workshop preserves this setting
+on launch/resume. CPU effects and unavailable GPU shaders retain the original
+overlay path automatically. Status reports `waterBackend` as `opengl-shader`
+when replacing ambient water, otherwise `original-overlays`. Disable water when
+comparing existing color/blur effects against the CPU reference: procedural water
+is intentionally a new GPU-only treatment. The updated engine builds, but full
+runtime regressions and benchmarks remain stopped at the user's request.
+
 Scene Look supports global defaults and individual room overrides for **all**
 color, vignette, and depth-of-field controls. Open it with **U**. Press **G** or
 click the panel title to switch between **Global defaults** and **Room**. Room

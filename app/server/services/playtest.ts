@@ -12,6 +12,17 @@ import { getAllScenes } from './manifest.js';
 import { writeJsonAtomic, readJsonSafe, fileExists, hashFile } from './files.js';
 
 export const ENGINE_REVISION = '43c1d07613e3c34b9c8cfc7ab168575212864d48';
+export function readWaterShader(config: string): boolean {
+  let section = '';
+  let enabled = true;
+  for (const line of config.split(/\r?\n/)) {
+    const heading = /^\s*\[([^\]]+)\]\s*$/.exec(line);
+    if (heading) section = heading[1];
+    const setting = /^\s*hd_water_shader\s*=\s*(true|false|yes|no|1|0)\s*$/i.exec(line);
+    if (section === 'comi' && setting) enabled = /^(true|yes|1)$/i.test(setting[1]);
+  }
+  return enabled;
+}
 export function readAspectRatio(config: string): 43 | 169 {
   let section = '';
   let aspect: 43 | 169 = 43;
@@ -333,7 +344,7 @@ export class PlaytestService extends EventEmitter {
         const aspect = 169; // Every launch starts in the remaster presentation mode.
         const depthOfField = readDepthOfField(previousConfig);
         const tuning = readDepthOfFieldTuning(previousConfig);
-        const displayConfig = config;
+        const displayConfig = config + `hd_water_shader=${readWaterShader(previousConfig)}\n`;
         await fs.writeFile(configPath, displayConfig + `playtest_character_pack=${pack}\nplaytest_scale=${PLAYTEST_SCALE}\nhd_font_size=${fontSize}\nhd_aspect_ratio=${aspect}\nhd_depth_of_field=${depthOfField}\nhd_dof_blur=${tuning.blur}\nhd_dof_edge=${tuning.edge}\nhd_dof_intensity=${tuning.intensity}\nhd_dof_depth=${tuning.depth}\nhd_aspect_ui_path=${path.join(this.root, 'extracted/objects')}\nhd_color_grades_path=${path.join(this.root, 'data/color-grades.json')}\n`);
         this.status.engine = null; this.status.error = null;
         const child = spawn(this.binary(), ['--config=' + configPath, '--debuglevel=0', ...(resume ? [`--save-slot=${resumeSlot}`] : []), 'comi'], { cwd: this.session, stdio: ['ignore', 'pipe', 'pipe'] });

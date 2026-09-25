@@ -4,6 +4,7 @@
 #include "common/hd_color_grade.h"
 #include "common/system.h"
 #include "common/array.h"
+#include "common/hd_water.h"
 
 // Engine/backend handoff, owned by this single-process native runtime. Surfaces
 // are CPU staging buffers; the backend owns all GL objects and their lifetimes.
@@ -14,6 +15,7 @@ struct State {
     double (*highResTime)() = nullptr;
     bool available = false, active = false, ui = false, dof = false;
     bool recording = false, synchronized60 = false;
+    bool water = false, waterPaused = false, waterSurface = false;
     int room = 0, viewportWidth = 640, viewportHeight = 480;
     int drawableWidth = 0, drawableHeight = 0, backgroundX = 0, backgroundY = 0;
     int maskPlanes = 0, maskOffset = 0, maskEdge = 2, maskDepth = 1;
@@ -21,6 +23,7 @@ struct State {
     uint generation = 0, coverageGeneration = 0;
     uint uploadedCoverageGeneration = ~0u;
     Graphics::Surface scene, coverage, reference;
+    Graphics::Surface waterCoverage;
     Common::Array<byte> wideCoverage;
     bool compareReady = false;
     const Graphics::Surface *background = nullptr, *overlay = nullptr;
