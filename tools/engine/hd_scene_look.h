@@ -32,7 +32,7 @@ struct Layer {
 };
 struct Settings {
     Layer global, rooms[256];
-    static bool roomValid(int room) { return room > 0 && room < 256 && room != 87 && room != 92; }
+    static bool roomValid(int room) { return room > 0 && room < 256 && room != 92; }
     int get(int room, int c) const {
         return roomValid(room) && rooms[room].has(c) ? rooms[room].value[c] : global.value[c];
     }

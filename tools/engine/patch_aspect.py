@@ -23,11 +23,11 @@ def patch(root, edit):
     # Translate only screen-anchored captions; overhead speech already uses
     # actor/camera coordinates and must not receive this offset a second time.
     text = 'engines/scumm/string_v7.cpp'
-    edit(text, '\t\tenqueueText(msg, st.xpos, st.ypos, st.color, st.charset, (TextStyleFlags)flags);', '''        const int textX = _game.id == GID_CMI && _hdScale > 1 && hdAspectRatio() == 169
+    edit(text, '\t\tenqueueText(msg, st.xpos, st.ypos, st.color, st.charset, (TextStyleFlags)flags);', '''        const int textX = _game.id == GID_CMI && _hdScale > 1 && !hdInventoryOpen() && !_hdInventoryInputOffset && hdAspectRatio() == 169
             ? HdAspect::centeredTextX(st.xpos, st.center, _screenWidth) : st.xpos;
         enqueueText(msg, textX, st.ypos, st.color, st.charset, (TextStyleFlags)flags);''')
     edit(text, '\t\tsubtitlePos.x = _string[0].xpos;', '''        subtitlePos.x = _string[0].xpos;
-        if (_game.id == GID_CMI && _hdScale > 1 && hdAspectRatio() == 169 &&
+        if (_game.id == GID_CMI && _hdScale > 1 && !hdInventoryOpen() && !_hdInventoryInputOffset && hdAspectRatio() == 169 &&
             !(a && _string[0].overhead))
             subtitlePos.x = HdAspect::centeredTextX(subtitlePos.x, _string[0].center, _screenWidth);''')
     # Constructor clip rectangles are still 640px after a panorama is opened.
@@ -36,7 +36,7 @@ def patch(root, edit):
     for clip in ('_wrappedTextClipRect', '_defaultTextClipRect'):
         before = '\t\t\tbt.rect = ' + clip + ';'
         edit(text, before, before + '''
-            if (_game.id == GID_CMI && _hdScale > 1 && hdAspectRatio() == 169 && _screenWidth > 640) {
+            if (_game.id == GID_CMI && _hdScale > 1 && !hdInventoryOpen() && !_hdInventoryInputOffset && hdAspectRatio() == 169 && _screenWidth > 640) {
                 if ((bt.flags & kStyleAlignCenter) && bt.xpos == _screenWidth / 2)
                     bt.rect.translate((_screenWidth - 640) / 2, 0);
                 else
@@ -61,9 +61,8 @@ def patch(root, edit):
     if '#include "scumm/hd_aspect.inc"' not in (root / gfx).read_text():
         edit(gfx, 'void ScummEngine::initScreens(int b, int h) {',
              '#include "scumm/hd_aspect.inc"\n\nvoid ScummEngine::initScreens(int b, int h) {')
-    # Inventory scripts use the original 640-pixel coordinates. Reconfigure
-    # after scripts, before camera/drawing, keeping rendering and hit tests in
-    # the same centered 4:3 area without restarting the room or inventory.
+    # Reconcile room presentation after scripts without shrinking panoramas
+    # when inventory opens; its UI is centered independently of the scene.
     edit('engines/scumm/scumm.cpp', '\t\twalkActors();\n\t\tmoveCamera();',
          '\t\trefreshHDInventoryViewport();\n\t\twalkActors();\n\t\tmoveCamera();')
     edit(gfx, '\tdrawHDFontSizeMenu();', '\tdrawHDAspectMenu();\n\tdrawHDFontSizeMenu();')

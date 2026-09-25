@@ -122,5 +122,24 @@ class AssetPackTests(unittest.TestCase):
         pack.rollback(self.target, result['transaction'])
         self.assertFalse(plan.exists())
 
+    def test_final_background_retires_only_its_own_local_variants(self):
+        final = dict(id='final', assetId='cannon', params=dict(finalBackground=True))
+        packaged = dict(selections={'cannon': 'final'}, variants={'final': final})
+        metadata = self.root / 'assets/metadata/workshop-state.json'
+        metadata.parent.mkdir(parents=True)
+        metadata.write_text(json.dumps(packaged))
+        old = dict(settings={'characterPack': 'original'},
+                   selections={'cannon': 'old', 'town': 'local'},
+                   variants={'old': dict(assetId='cannon'), 'local': dict(assetId='town')})
+        state_path = self.target_file('.playtest/state.json', json.dumps(old).encode())
+        receipt = pack.install(self.root, self.target)
+        state = json.loads(state_path.read_text())
+        self.assertEqual(state['selections'], {'cannon': 'final', 'town': 'local'})
+        self.assertEqual(state['variants'], {'final': final, 'local': old['variants']['local']})
+        self.assertEqual(state['settings']['characterPack'], 'original')
+        self.assertEqual(pack.install(self.root, self.target)['changed_files'], 0)
+        pack.rollback(self.target, receipt['transaction'])
+        self.assertEqual(json.loads(state_path.read_text()), old)
+
 
 if __name__ == '__main__': unittest.main()

@@ -91,7 +91,7 @@ export function assertAspect(width: number, height: number, originalWidth: numbe
 // Extended artwork keeps each standard room in its centered 4:3 area.
 // Only the decorative side scenery is presented outside the gameplay surface.
 export function wideBackgroundCrop(width: number, height: number, room: Pick<PlaytestRoom, 'room' | 'width' | 'height'>) {
-  if (room.room === 87 || room.room === 92 || room.width !== 640 || room.height !== 480 ||
+  if (room.room === 92 || room.width !== 640 || room.height !== 480 ||
       width <= 0 || height <= 0 || width * 9 !== height * 16) return null;
   const cropWidth = height * 4 / 3;
   return { left: (width - cropWidth) / 2, top: 0, width: cropWidth, height };
@@ -180,8 +180,11 @@ export class PlaytestService extends EventEmitter {
     for (const manifest of await getAllScenes()) {
       for (const asset of Object.values(manifest.assets)) {
         if (asset.type !== 'background' || manifest.scene.roomNumber === undefined) continue;
-        const variants = [...asset.variants.map(id => manifest.variants[id]).filter(Boolean), ...Object.values(this.state.variants).filter(v => v.assetId === asset.id)];
-        result.push({ room: manifest.scene.roomNumber, sceneId: manifest.scene.id, assetId: asset.id, name: manifest.scene.name, originalPath: asset.originalPath, width: asset.width, height: asset.height, variants, selectedVariantId: this.state.selections[asset.id] ?? null });
+        const finalId = asset.metadata?.finalBackgroundVariant;
+        const final = typeof finalId === 'string' ? manifest.variants[finalId] : undefined;
+        if (finalId && !final) throw new Error(`Missing final background for room ${manifest.scene.roomNumber}`);
+        const variants = final ? [final] : [...asset.variants.map(id => manifest.variants[id]).filter(Boolean), ...Object.values(this.state.variants).filter(v => v.assetId === asset.id)];
+        result.push({ room: manifest.scene.roomNumber, sceneId: manifest.scene.id, assetId: asset.id, name: manifest.scene.name, originalPath: asset.originalPath, width: asset.width, height: asset.height, variants, selectedVariantId: final?.id ?? this.state.selections[asset.id] ?? null, finalBackground: !!final });
       }
     }
     return result.sort((a, b) => a.room - b.room);
@@ -253,6 +256,7 @@ export class PlaytestService extends EventEmitter {
         if (!item || typeof item.file !== 'string' || !Number.isInteger(item.room)) throw new Error('Each image needs a room mapping');
         const candidate = scanned.get(item.file), room = rooms.get(item.room);
         if (!candidate || !room || candidate.error) throw new Error(`Invalid image or room: ${item.file}`);
+        if (room.finalBackground) throw new Error(`Room ${room.room} uses its final background; update the canonical artwork instead`);
         if (used.has(room.room)) throw new Error(`Select only one image for room ${room.room}`);
         used.add(room.room);
         if (!wideBackgroundCrop(candidate.width, candidate.height, room))
@@ -290,6 +294,7 @@ export class PlaytestService extends EventEmitter {
   async select(number: number, variantId: unknown) {
     if (this.status.busy) throw new Error('Wait for the current operation');
     const room = await this.room(number);
+    if (room.finalBackground && variantId !== room.selectedVariantId) throw new Error(`Room ${number} uses its final background`);
     if (variantId !== null && (typeof variantId !== 'string' || !room.variants.some(v => v.id === variantId))) throw new Error('Unknown variant for this room');
     this.state.selections[room.assetId] = variantId as string | null;
     await this.save();
@@ -298,6 +303,7 @@ export class PlaytestService extends EventEmitter {
     const variant = room.variants.find(v => v.id === room.selectedVariantId);
     const source = path.join(this.root, variant?.filePath ?? room.originalPath);
     const meta = await sharp(source).metadata();
+    if (room.finalBackground && (meta.width !== 2560 || meta.height !== 1440)) throw new Error(`Room ${room.room} requires its final 2560 × 1440 background`);
     const crop = variant ? wideBackgroundCrop(meta.width ?? 0, meta.height ?? 0, room) : null;
     if (!crop) assertAspect(meta.width ?? 0, meta.height ?? 0, room.width, room.height);
     const destination = path.join(this.local, `hd/backgrounds/bg_${String(room.room).padStart(4, '0')}.png`);
@@ -314,7 +320,8 @@ export class PlaytestService extends EventEmitter {
     // Switching back to any ordinary variant removes obsolete side scenery.
     if (crop) {
       await fs.mkdir(path.dirname(wideDestination), { recursive: true });
-      await sharp(source).resize(2560, 1440).ensureAlpha().png().toFile(wideDestination + '.tmp');
+      if (room.finalBackground) await fs.copyFile(source, wideDestination + '.tmp');
+      else await sharp(source).resize(2560, 1440).ensureAlpha().png().toFile(wideDestination + '.tmp');
       await fs.rename(wideDestination + '.tmp', wideDestination);
     } else await fs.rm(wideDestination, { force: true });
     await fs.rename(temp, destination);

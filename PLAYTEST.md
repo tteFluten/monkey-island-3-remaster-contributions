@@ -38,7 +38,8 @@ and the next workshop launch resets presentation to
 masters are preserved separately. Physical display dimensions are independent
 of both the asset textures and presentation canvas.
 
-Any standard 640 × 480 background (excluding menus) accepts exact 16:9 artwork
+Any standard 640 × 480 background (including difficulty room 0087, excluding
+the options book) accepts exact 16:9 artwork
 with the original composition in its centered 4:3 area. Use the existing
 background import and apply controls. They stage the centered image at
 2560 × 1920 and a full 2560 × 1440 sidecar at `hd/widescreen/bg_NNNN.png`.
@@ -49,30 +50,56 @@ Selecting ordinary artwork removes its sidecar; missing or invalid sidecars
 retain the original framing with bars. Staging does not promote artwork into
 the canonical pack or change its master.
 
-The pack now includes one such 16:9 cannon image (ImageLab, cropped to exact 16:9 with the room's 4:3
-area centred): `assets/masters/backgrounds/319ae406…png`, with its original JPG under
-`assets/references/imagelab/`. The packaged workshop state selects it for room 9, so a fresh install
-shows the extended scenery in 16:9; an existing local selection is kept on reinstall. Its review status
-is `unreviewed`.
+Room 0009 uses the user-approved final `0009_cannon-wonder-3-5.png`, preserved
+unchanged at **2560 × 1440**. Its canonical master is
+`assets/masters/backgrounds/f7a54cda98ca3ad0419cfcb5bb816ebd6267edb34e04fc4b82dc8aaf7aeaf61e.png`.
+Room 0011 likewise uses the approved `0011_waterln-wonder-3-5.png`, with canonical
+master `assets/masters/backgrounds/9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd.png`.
+Each scene's `finalBackgroundVariant` selects its artwork on every launch and
+reinstall, replacing retired local variants. The workshop offers only the final
+background for these rooms. Each 16:9 runtime copy is byte-identical to the supplied
+image; the engine's center texture is derived from that same image for character
+and hotspot alignment. The in-game 4:3 option remains available and shows the
+center of this final artwork. Other rooms retain their existing selection behavior.
+
+Room 0087 uses the supplied `0087_easyhard-wonder-3-5-wonder-3-5.png`.
+The 5120 × 2880 master is preserved; its 2560 × 1440 widescreen export surrounds
+the centered native difficulty controls. The 4:3 mode uses the matching center.
+Press **U** on this screen to edit Scene Look, including color and vignette.
+Changes save as room 87 overrides in `data/color-grades.json`, using the same
+global/room controls as gameplay. Focus affects only authored z-planes; the
+panel reports when none are available. The options book remains excluded.
+Run `tools/venv/bin/python tools/check_difficulty_look.py` for isolated native
+checks, or add `--cpu --aspect 43` to exercise the fallback renderer.
 
 Completed wide scenes uniformly fill taller displays by cropping outer scenery.
 Rendering and pointer input use the same rectangle. Unfinished backgrounds,
-menus, inventory, vertical rooms, and movies preserve their framing; bars are
+the options book, inventory, vertical rooms, and movies preserve their framing; bars are
 acceptable in these cases. The original game region is not stretched.
 
 Horizontal panoramas at least 864 pixels wide and exactly 480 pixels tall retain
 their existing 864 × 480 native viewport, camera bounds, and 3456 × 1920 working
 texture. Their 16:9 canvas crops 5⅓ native pixels from each horizontal edge.
 Panoramic, vertical, and two-dimensional rooms are never treated as centered
-background extensions. Inventory and the options book use the centered 4:3
-region and restore the scene framing when closed. Decorative margins reject
+background extensions. Inventory opens as a centered overlay without changing
+the room viewport, camera, display aspect ratio, widescreen artwork, or GPU
+rendering path. Panoramas retain their 864-pixel viewport; inventory drawing and
+item hit tests share the same centering offset. The options book retains its
+centered 4:3 layout. Decorative margins reject
 new presses; a release outside gameplay still pairs with its original press.
 
 Engine status retains its existing fields and adds optional `drawableWidth`,
 `drawableHeight`, `renderBackend`, `presentationIntervalMs`, `presentationFps`,
 `renderCpuMs`, and `cameraTop`. The backend is
 reported as `opengl-shaders` or `cpu-effects`; fallback is never counted as GPU
-rendering. Canvas size, native viewport, and actual drawable size are separate.
+rendering. Inventory diagnostics also expose `inventoryOpen`, `inventoryOffset`,
+`mouseScriptX`, and `cursorObject`. Canvas size, native viewport, and actual
+drawable size are separate.
+
+Run `tools/venv/bin/python tools/check_inventory.py` with a `comi.s00` fixture
+in `MI3_ASPECT_TEST_SAVES` to check opening, closing, input centering, both aspect
+ratios, fullscreen, and panorama framing. Add `--cpu` to check the fallback path.
+The check copies saves into its isolated session.
 
 Run `python3 tools/check_aspect.py --all-panoramas` for native smoke checks using
 copies of the saves and isolated configuration. It uses only engine-local input,

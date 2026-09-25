@@ -61,6 +61,7 @@ test('extended room art preserves the exact central 4:3 area', () => {
   const room = { room: 9, width: 640, height: 480 };
   assert.deepEqual(wideBackgroundCrop(2560, 1440, room), { left: 320, top: 0, width: 1920, height: 1440 });
   assert.deepEqual(wideBackgroundCrop(2560, 1440, { ...room, room: 10 }), { left: 320, top: 0, width: 1920, height: 1440 });
+  assert.deepEqual(wideBackgroundCrop(5120, 2880, { ...room, room: 87 }), { left: 640, top: 0, width: 3840, height: 2880 });
   assert.equal(wideBackgroundCrop(2560, 1440, { ...room, height: 2044 }), null);
   assert.equal(wideBackgroundCrop(2560, 1440, { ...room, room: 92 }), null);
   assert.equal(wideBackgroundCrop(2560, 1440, { ...room, width: 2096 }), null);
@@ -73,7 +74,7 @@ test('settings reject malformed paths and config injection', () => {
   assert.throws(() => validateSettings({ disc1: '/a', disc2: '/b', backgroundFolder: '/c', characterPack: 'topaz\nhd_path=/tmp' }), /Unknown character pack/);
 });
 
-for (const roomId of [9, 13]) test(`room ${roomId}: wide import stages matching center and sides; ordinary selection removes sides`, async () => {
+for (const roomId of [9, 13, 87]) test(`room ${roomId}: wide import stages matching center and sides; ordinary selection removes sides`, async () => {
   const number = String(roomId).padStart(4, '0');
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'mi3-wide-'));
   const service = new PlaytestService(root);
@@ -208,5 +209,48 @@ test('import, persistence, staging, process commands and original restoration', 
     const exitDeadline = Date.now() + 3000;
     while (service.status.running && Date.now() < exitDeadline) await new Promise(r => setTimeout(r, 50));
     assert.match(service.status.error ?? '', /code 7/);
+  } finally { await service.dispose(); await fs.rm(root, { recursive: true, force: true }); }
+});
+
+test('final room background overrides stale selections and stages the supplied 1440p PNG unchanged', async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'mi3-final-background-'));
+  const service = new PlaytestService(root);
+  try {
+    setProjectRoot(root);
+    await fs.mkdir(path.join(root, 'data/scenes'), { recursive: true });
+    await fs.mkdir(path.join(root, '.playtest'));
+    await fs.mkdir(path.join(root, 'masters'));
+    const source = path.join(root, 'masters/0009_final.png');
+    await sharp({ create: { width: 2560, height: 1440, channels: 3, background: '#123456' } }).png().toFile(source);
+    const final = { id: 'final', assetId: 'asset', filePath: 'masters/0009_final.png', params: { finalBackground: true } };
+    await fs.writeFile(path.join(root, 'data/project.json'), JSON.stringify({ scenes: ['scene'] }));
+    await fs.writeFile(path.join(root, 'data/scenes/scene.json'), JSON.stringify({
+      scene: { id: 'scene', roomNumber: 9, name: 'cannon' },
+      assets: { asset: { id: 'asset', type: 'background', originalPath: 'missing-original.png', width: 640, height: 480, variants: ['final'], metadata: { finalBackgroundVariant: 'final' } } },
+      variants: { final },
+    }));
+    await fs.writeFile(path.join(root, '.playtest/state.json'), JSON.stringify({
+      settings: { disc1: '/a', disc2: '/b', backgroundFolder: path.join(root, 'masters') },
+      selections: { asset: 'retired' }, variants: { retired: { id: 'retired', assetId: 'asset', filePath: 'missing-retired.png' } },
+    }));
+    await service.init();
+    const [room] = await service.rooms();
+    assert.equal(room.finalBackground, true);
+    assert.equal(room.selectedVariantId, 'final');
+    assert.deepEqual(room.variants, [final]);
+    await assert.rejects(service.select(9, null), /final background/);
+    await assert.rejects(service.select(9, 'retired'), /final background/);
+    await assert.rejects(service.importBackgrounds([{ file: '0009_final.png', room: 9 }]), /final background/);
+    await service.apply(9);
+    const wide = path.join(root, '.playtest/hd/widescreen/bg_0009.png');
+    assert.deepEqual(await fs.readFile(wide), await fs.readFile(source));
+    const center = await sharp(path.join(root, '.playtest/hd/backgrounds/bg_0009.png')).metadata();
+    assert.equal(center.width, 2560); assert.equal(center.height, 1920);
+    await service.dispose();
+    const restored = new PlaytestService(root);
+    try { await restored.init(); assert.equal((await restored.rooms())[0].selectedVariantId, 'final'); }
+    finally { await restored.dispose(); }
+    await sharp({ create: { width: 1280, height: 720, channels: 3, background: '#123456' } }).png().toFile(source);
+    await assert.rejects(service.apply(9), /2560 × 1440/);
   } finally { await service.dispose(); await fs.rm(root, { recursive: true, force: true }); }
 });

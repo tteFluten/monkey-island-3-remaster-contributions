@@ -16,6 +16,7 @@ export interface PlaytestRoom {
   height: number;
   variants: Variant[];
   selectedVariantId: string | null;
+  finalBackground?: boolean;
 }
 export interface ImportCandidate {
   file: string;
@@ -42,6 +43,10 @@ export interface EngineState {
   presentationFps?: number;
   renderCpuMs?: number;
   cameraTop?: number;
+  inventoryOpen?: boolean;
+  inventoryOffset?: number;
+  mouseScriptX?: number;
+  cursorObject?: number;
   outputWidth?: number;
   outputHeight?: number;
   viewportWidth?: number;
