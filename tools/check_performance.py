@@ -36,6 +36,7 @@ def main():
     p.add_argument('--runs', type=int, default=3)
     p.add_argument('--gpu', action='store_true')
     p.add_argument('--vsync', action='store_true')
+    p.add_argument('--film', action='store_true', help='Enable subtle vintage film at strength 20')
     p.add_argument('--fullscreen', action='store_true')
     p.add_argument('--effects', action='store_true')
     p.add_argument('--motion', choices=['walk', 'camera', 'idle'], default='walk')
@@ -49,7 +50,8 @@ def main():
     launch_started = time.monotonic()
     check = Check(output, 169, color_grades_path=grades, engine_path=args.engine, allow_window=not args.fullscreen,
         config_overrides={'scummvm': {'vsync': str(args.vsync).lower(), 'fullscreen': str(args.fullscreen).lower(),
-            'last_window_width': '2560', 'last_window_height': '1440'},
+            'last_window_width': '2560', 'last_window_height': '1440',
+            'hd_film_enabled': str(args.film).lower(), 'hd_film_strength': '20'},
             'comi': {'hd_gpu_effects': str(args.gpu).lower(), 'hd_trace': 'false',
                      'hd_depth_of_field': '2' if args.effects else '0', 'hd_dof_blur': '0',
                      'hd_dof_intensity': '100', 'hd_dof_edge': '2', 'hd_dof_depth': '1'}})

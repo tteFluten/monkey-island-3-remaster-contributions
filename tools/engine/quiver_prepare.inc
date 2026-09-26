@@ -4,6 +4,8 @@
 struct QuiverPose {
     Actor *actor;
     bool water = false;
+    bool nativeColorFallback = false;
+    bool topaz = false;
     Common::Array<Graphics::Surface *> textures;
 };
 // Pin decoded surfaces until both scene and coin passes finish. Views borrow
@@ -26,6 +28,8 @@ if (waterRequested) {
     auto &surface = hdWaterSurface();
     if (surface.prepare(_hdBackgroundSurface, _currentRoom, _playtestCommandId, scale)) {
         waterState.water = waterState.waterSurface = true;
+        waterState.waterReflectionIntercept = surface.reflectionIntercept;
+        waterState.waterReflectionSlope = surface.reflectionSlope;
         for (int y = 0; y < visH; ++y) {
             const int sourceY = y + waterState.backgroundY / scale;
             const int sourceX = waterState.backgroundX / scale;
@@ -72,6 +76,17 @@ if (waterRequested || _hdUICostumeManager || (playtestExactRoom(_currentRoom) &&
         if (!manager || !manager->isEnabled()) continue;
         QuiverPose pose;
         pose.actor = a;
+        const Common::String pack = ConfMan.hasKey("playtest_character_pack")
+            ? ConfMan.get("playtest_character_pack") : Common::String();
+        pose.topaz = pack == "topaz" || pack == "topaz-crisp";
+        // Rejected stand-up PNGs retain the original complete silhouette, but
+        // must pass through the same fixed room lighting as adjacent HD cels.
+        if (pose.topaz && _currentRoom == 9 && a->_costume == 3 && a->_quiverDraws.size() == 1 &&
+            (a->_quiverDraws[0].cel == 15 || a->_quiverDraws[0].cel == 16)) {
+            pose.nativeColorFallback = true;
+            quiverPoses.push_back(pose);
+            continue;
+        }
         bool valid = true;
         for (uint di = 0; di < a->_quiverDraws.size(); ++di) {
             const Actor::QuiverDraw &d = a->_quiverDraws[di];

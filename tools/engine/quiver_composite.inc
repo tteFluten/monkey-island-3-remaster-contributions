@@ -6,6 +6,25 @@ if (!quiverPoses.empty()) {
         const bool coin = a->_costume == 1 && a->_layer < 0;
         if (coin != hdCoinPass) continue;
         const HdActorLighting::Tint lighting = coin ? HdActorLighting::Tint() : actorLighting(a);
+        if (quiverPoses[ai].nativeColorFallback) {
+            for (int y = 0; y < visH; ++y) {
+                const byte *native = !quiverWithoutCoin.empty() ? &quiverWithoutCoin[y * visW] :
+                    (const byte *)vs->getBasePtr(vs->xstart, y + _screenTop);
+                for (int x = 0; x < visW; ++x) {
+                    const int offset = y * visW + x;
+                    const byte index = a->_quiverAfter[offset];
+                    if (index == a->_quiverUnder[offset] || native[x] != index) continue;
+                    const byte *rgb = _darkenPalette + index * 3;
+                    const uint32 color = lighting.apply(0xff000000u | rgb[0] | (rgb[1] << 8) | (rgb[2] << 16));
+                    for (int yy = y * scale; yy < MIN(hdH, (y + 1) * scale); ++yy)
+                        for (int xx = x * scale; xx < MIN(hdW, (x + 1) * scale); ++xx) {
+                            *(uint32 *)_hdComposite.getBasePtr(xx, yy) = color;
+                            hdAlphaMask[yy * hdW + xx] = 1;
+                        }
+                }
+            }
+            continue;
+        }
         Common::Array<Graphics::Surface *> &textures = quiverPoses[ai].textures;
         for (uint di = 0; di < textures.size(); ++di) {
             const Actor::QuiverDraw &d = a->_quiverDraws[di];
@@ -23,7 +42,17 @@ if (!quiverPoses.empty()) {
                 }
                 continue;
             }
-            const bool cleanHeadMatte = HdCostumeEdge::guybrushHead(d.costume, d.cel);
+            int edgeTreatment = HdCostumeEdge::guybrushHead(d.costume, d.cel) ? 1 : 0;
+            // The last alpha row of this Topaz head is empty, exposing a line
+            // between the head and torso. Extend its adjacent edge row only
+            // when the original matching body is present at the native join.
+            if (quiverPoses[ai].topaz && _currentRoom == 9 && d.costume == 2 && d.cel == 52)
+                for (uint bi = 0; bi < textures.size(); ++bi) {
+                    const Actor::QuiverDraw &body = a->_quiverDraws[bi];
+                    if (body.cel == 31 && body.mirror == d.mirror &&
+                        d.screenTop + d.screenHeight == body.screenTop + 1)
+                        edgeTreatment = 3;
+                }
             // Bounds come from the original decoder's scale table, not a
             // floating-point approximation of actor scaling.
             int w = d.screenWidth * scale;
@@ -35,7 +64,7 @@ if (!quiverPoses.empty()) {
             rasterCache.scope(_currentRoom, _playtestCommandId);
             const uint32 *raster = HdRemaster::state().active ? rasterCache.get(
                 (const uint32 *)texture.getPixels(), texture.pitch / 4, texture.w, texture.h,
-                w, h, d.costume, d.cel, d.mirror, cleanHeadMatte, lighting) : nullptr;
+                w, h, d.costume, d.cel, d.mirror, edgeTreatment, lighting) : nullptr;
             for (int yy = MAX(0, top); yy < MIN(hdH, top + h); ++yy) {
                 const int ny = yy / scale;
                 const byte *nativeRow = !coin && !quiverWithoutCoin.empty()
@@ -57,7 +86,7 @@ if (!quiverPoses.empty()) {
                     // lighting; retain alpha and the native geometry exactly.
                     uint32 color = raster ? raster[(yy - top) * w + xx - left] : lighting.apply(HdCostumeEdge::sample(
                         (const uint32 *)texture.getPixels(), texture.pitch / 4,
-                        texture.w, texture.h, sourceX, sourceY, cleanHeadMatte));
+                        texture.w, texture.h, sourceX, sourceY, edgeTreatment));
                     uint32 alpha = color >> 24;
                     if (!alpha) continue;
                     if (alpha == 255) {

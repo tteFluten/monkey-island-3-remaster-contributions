@@ -12,6 +12,36 @@ import { getAllScenes } from './manifest.js';
 import { writeJsonAtomic, readJsonSafe, fileExists, hashFile } from './files.js';
 
 export const ENGINE_REVISION = '43c1d07613e3c34b9c8cfc7ab168575212864d48';
+// Film is a global presentation preference, saved by the native shortcut.
+export function readFilmSettings(config: string): { enabled: boolean; strength: number } {
+  const film = { enabled: false, strength: 20 };
+  let section = '';
+  for (const line of config.split(/\r?\n/)) {
+    const heading = /^\s*\[([^\]]+)\]\s*$/.exec(line);
+    if (heading) section = heading[1];
+    if (section !== 'scummvm') continue;
+    const enabled = /^\s*hd_film_enabled\s*=\s*(true|false|yes|no|1|0)\s*$/i.exec(line);
+    if (enabled) film.enabled = /^(true|yes|1)$/i.test(enabled[1]);
+    const strength = /^\s*hd_film_strength\s*=\s*(-?\d+)\s*$/.exec(line);
+    if (strength) film.strength = Math.max(0, Math.min(100, Number(strength[1])));
+  }
+  return film;
+}
+// Keep the global Film Look sliders when regenerating the launch configuration.
+function filmTuningConfig(config: string): string {
+  const values: Record<string, number> = {
+    hd_film_grain: 100, hd_film_dust: 100, hd_film_scratches: 100,
+    hd_film_flicker: 100, hd_film_wobble: 100, hd_film_chromatic: 100,
+  };
+  let section = '';
+  for (const line of config.split(/\r?\n/)) {
+    const heading = /^\s*\[([^\]]+)\]\s*$/.exec(line);
+    if (heading) section = heading[1];
+    const setting = /^\s*(hd_film_grain|hd_film_dust|hd_film_scratches|hd_film_flicker|hd_film_wobble|hd_film_chromatic)\s*=\s*(-?\d+)\s*$/.exec(line);
+    if (section === 'scummvm' && setting) values[setting[1]] = Math.max(0, Math.min(200, Number(setting[2])));
+  }
+  return Object.entries(values).map(([key, value]) => `${key}=${value}\n`).join('');
+}
 export function readWaterShader(config: string): boolean {
   let section = '';
   let enabled = true;
@@ -351,7 +381,8 @@ export class PlaytestService extends EventEmitter {
         const aspect = 169; // Every launch starts in the remaster presentation mode.
         const depthOfField = readDepthOfField(previousConfig);
         const tuning = readDepthOfFieldTuning(previousConfig);
-        const displayConfig = config + `hd_water_shader=${readWaterShader(previousConfig)}\n`;
+        const film = readFilmSettings(previousConfig);
+        const displayConfig = config.replace('[scummvm]\n', `[scummvm]\nhd_film_enabled=${film.enabled}\nhd_film_strength=${film.strength}\n${filmTuningConfig(previousConfig)}`) + `hd_water_shader=${readWaterShader(previousConfig)}\n`;
         await fs.writeFile(configPath, displayConfig + `playtest_character_pack=${pack}\nplaytest_scale=${PLAYTEST_SCALE}\nhd_font_size=${fontSize}\nhd_aspect_ratio=${aspect}\nhd_depth_of_field=${depthOfField}\nhd_dof_blur=${tuning.blur}\nhd_dof_edge=${tuning.edge}\nhd_dof_intensity=${tuning.intensity}\nhd_dof_depth=${tuning.depth}\nhd_aspect_ui_path=${path.join(this.root, 'extracted/objects')}\nhd_color_grades_path=${path.join(this.root, 'data/color-grades.json')}\n`);
         this.status.engine = null; this.status.error = null;
         const child = spawn(this.binary(), ['--config=' + configPath, '--debuglevel=0', ...(resume ? [`--save-slot=${resumeSlot}`] : []), 'comi'], { cwd: this.session, stdio: ['ignore', 'pipe', 'pipe'] });

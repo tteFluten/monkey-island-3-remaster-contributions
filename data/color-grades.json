@@ -1,9 +1,9 @@
 {
   "schemaVersion": 2,
-  "global": {"brightness": 0, "contrast": 0, "saturation": 0, "gamma": 100, "warmth": 0, "tint": 0, "vignetteEnabled": 0, "vignetteAmount": 40, "vignetteRadius": 60, "vignetteSoftness": 50, "depthOfField": 0, "blurTenths": 0, "edgeSoftness": 2, "blurIntensity": 100, "sceneDepth": 1},
+  "global": {"brightness": 0, "contrast": 0, "saturation": 0, "gamma": 100, "warmth": 0, "tint": 0, "vignetteEnabled": 0, "vignetteAmount": 40, "vignetteRadius": 60, "vignetteSoftness": 50, "depthOfField": 0, "blurTenths": 0, "edgeSoftness": 2, "blurIntensity": 100, "sceneDepth": 1, "waterOpacity": 100, "waterWaves": 100, "waterSpeed": 100, "waterDistortion": 100, "waterHighlights": 100, "waterReflection": 8, "shadowOffsetX": -3, "shadowOffsetY": -5, "shadowWidth": 95, "shadowOvalness": 14, "shadowOpacity": 22, "shadowRed": 0, "shadowGreen": 0, "shadowBlue": 0},
   "rooms": {
     "9": {"brightness": 0, "contrast": 4, "saturation": 10, "gamma": 100, "warmth": 0, "tint": 8, "vignetteEnabled": 1, "vignetteAmount": 40, "vignetteRadius": 55, "vignetteSoftness": 60},
-    "11": {"brightness": 0, "contrast": 6, "vignetteEnabled": 1, "vignetteAmount": 40, "depthOfField": 0},
+    "11": {"brightness": 6, "contrast": 12, "saturation": -5, "gamma": 100, "tint": 0, "vignetteEnabled": 1, "vignetteAmount": 50, "depthOfField": 0, "edgeSoftness": 1, "waterOpacity": 95, "waterWaves": 30, "waterSpeed": 180, "waterDistortion": 180, "waterHighlights": 120, "waterReflection": 14},
     "60": {"brightness": 16, "contrast": 20, "saturation": 0, "gamma": 100, "warmth": 0, "tint": 0, "vignetteEnabled": 1, "vignetteAmount": 65, "vignetteRadius": 55, "vignetteSoftness": 50},
     "61": {"brightness": 0, "contrast": 0, "saturation": 0, "gamma": 100, "warmth": 0, "tint": 0, "vignetteEnabled": 1, "vignetteAmount": 25, "vignetteRadius": 60, "vignetteSoftness": 50},
     "87": {"brightness": -6, "contrast": 6, "vignetteEnabled": 1, "vignetteAmount": 75, "vignetteRadius": 65}

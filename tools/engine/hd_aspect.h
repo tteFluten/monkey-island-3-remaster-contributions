@@ -19,7 +19,10 @@ inline Rect frame(int width, int height, int aspect, bool cover = false) {
     if ((!cover && h > height) || (cover && h < height)) { h = height; w = (height * numerator + (cover ? denominator - 1 : 0)) / denominator; }
     return {(width - w) / 2, (height - h) / 2, w, h};
 }
-inline Rect game(int width, int height, int aspect, int viewportWidth, bool cover = false) {
+inline Rect game(int width, int height, int aspect, int viewportWidth, bool cover = false, bool movie = false) {
+    // Keep the selected movie frame intact, with cinematic bars on displays
+    // of a different shape. Source cropping preserves the picture's proportions.
+    if (movie) return frame(width, height, aspect);
     const Rect outer = frame(width, height, aspect, cover);
     const int w = outer.h * viewportWidth / 480;
     return {outer.x + (outer.w - w) / 2, outer.y, w, outer.h};

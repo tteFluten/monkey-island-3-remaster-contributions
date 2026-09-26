@@ -7,6 +7,73 @@ def patch(root, edit):
     for name in ('hd_remaster.h', 'hd_color_grade.h'):
         (root / 'common' / name).write_bytes((here / name).read_bytes())
     gfx = 'engines/scumm/gfx.cpp'
+    # Cannon and post-movie scenes use the final-composite fade; difficulty opens on its completed
+    # HD frame. Its native entry transition otherwise presents 4:3 strip blits
+    # before drawDirtyScreenParts() builds the first HD scene (an entry flash).
+    # Keep fadeOut(0)'s bookkeeping and other rooms' script-selected effects.
+    # Room 1's static logo is skipped, but still hosts the opening movie scripts.
+    edit('engines/scumm/room.cpp', '#include "common/system.h"',
+         '#include "common/system.h"\n#include "common/hd_remaster.h"')
+    edit('engines/scumm/room.cpp',
+         '\tfadeOut(_switchRoomEffect2);\n\t_newEffect = _switchRoomEffect;', '''    if (_game.id == GID_CMI && _currentRoom == 4 && room > 0 && room != 4 && room != 92 &&
+        HdRemaster::state().active && HdRemaster::state().ui && HdRemaster::state().room == 4) {
+        fadeHDPresentation();
+        // Exit scripts may request another presentation before room setup.
+        // Keep the black outgoing frame until the destination is composed.
+        HdRemaster::state().entryRoom = room;
+        HdRemaster::state().entryPrepared = HdRemaster::state().entryComposed = false;
+    }
+    const bool hdCompositeCut = _game.id == GID_CMI && (room == 9 || room == 87 || HdRemaster::state().movieFadePending) && _hdScale > 1 &&
+        _hdAssetManager && _hdAssetManager->isEnabled() && _hdAssetManager->hasBackground(room);
+    const bool hdSkipLogo = _game.id == GID_CMI && _hdScale > 1 && (room == 1 || _currentRoom == 1);
+    fadeOut((hdCompositeCut || hdSkipLogo) ? 0 : _switchRoomEffect2);
+    _newEffect = (hdCompositeCut || hdSkipLogo) ? 0 : _switchRoomEffect;
+    if (hdSkipLogo && room == 1) HdRemaster::state().active = false;''')
+    # Arm before viewport setup can present anything. Wait for a composition
+    # made AFTER the backend has initialized shaders and decoded the sidecar.
+    edit('engines/scumm/room.cpp', '\t_currentRoom = room;', '''\t_currentRoom = room;
+    auto &entry = HdRemaster::state();
+    entry.entryRoom = _game.id == GID_CMI && (room == 87 || (entry.movieFadePending && room != 1 && room != 92)) && _hdScale > 1 &&
+        ConfMan.hasKey("playtest_session") && _hdAssetManager &&
+        _hdAssetManager->isEnabled() && _hdAssetManager->hasBackground(room) ? room : 0;
+    entry.entryPrepared = entry.entryComposed = false;
+    if (entry.entryRoom) entry.active = entry.ui = false;''')
+    # A missing/failed replacement must release the native-art fallback.
+    edit('engines/scumm/room.cpp', '\n}\n\n/**\n * Init some static room data', '''
+    if (HdRemaster::state().entryRoom == room && !_hdBackgroundSurface.getPixels())
+        HdRemaster::state().entryRoom = 0;
+    if (room == 92 || (room != 1 && !_hdBackgroundSurface.getPixels())) {
+        HdRemaster::state().movieFadePending = false;
+        HdRemaster::state().exitFadeOpacity = 0;
+    }
+}
+
+/**
+ * Init some static room data''')
+    edit(gfx, '\t// Step 3: Copy the entire HD composite to the system buffer', '''    if (remaster.entryRoom == _currentRoom && remaster.entryPrepared && _hdCurrentRoom == _currentRoom)
+        remaster.entryComposed = true;
+\t// Step 3: Copy the entire HD composite to the system buffer''')
+    edit('engines/scumm/room.cpp', '\t\tif (_hdAssetManager->hasBackground(room)) {',
+         '''\t\tif (!(_game.id == GID_CMI && room == 1 && _hdScale > 1) && _hdAssetManager->hasBackground(room)) {''')
+    # Room 1 is also the opening movie's script host. Suppress its static logo
+    # artwork without skipping the room scripts or the independent SMUSH output.
+    # Cover both native transition blits and the ordinary HD composition path.
+    edit(gfx, 'void ScummEngine::drawStripToScreen(VirtScreen *vs, int x, int width, int top, int bottom) {',
+         '''void ScummEngine::drawStripToScreen(VirtScreen *vs, int x, int width, int top, int bottom) {
+    if (_game.id == GID_CMI && _currentRoom == 1 && _hdScale > 1) return;''')
+    edit(gfx, 'void ScummEngine::renderHDComposite() {', '''void ScummEngine::renderHDComposite() {
+    if (_game.id == GID_CMI && _currentRoom == 1 && _hdScale > 1) {
+        HdRemaster::state().active = false;
+        // Leave the last presented frame intact until the next movie/room;
+        // this script host must not insert a black placeholder screen.
+        return;
+    }''')
+    edit('engines/scumm/hd_cursor_present.inc', 'void ScummEngine::presentHDCursor() {',
+         '''void ScummEngine::presentHDCursor() {
+    if (_game.id == GID_CMI && _currentRoom == 1 && _hdScale > 1) {
+        _hdPresentedCursor = Common::Rect();
+        return; // No stale scene pixels restored over the hidden logo view.
+    }''')
     edit(gfx, '\tint hdW, hdH;', '''    auto &remaster = HdRemaster::state();
     remaster.active = remaster.available && (!ConfMan.hasKey("hd_gpu_effects") || ConfMan.getBool("hd_gpu_effects")) &&
         _game.id == GID_CMI && _currentRoom != 92;
@@ -52,17 +119,64 @@ def patch(root, edit):
     edit(gl, 'namespace OpenGL {', 'namespace OpenGL {\n\n#include "hd_remaster_gl.inc"')
     (root / 'backends/graphics/opengl/hd_remaster_gl.inc').write_bytes((here / 'hd_remaster_gl.inc').read_bytes())
     edit(gl, 'void OpenGLGraphicsManager::updateScreen() {', '''void OpenGLGraphicsManager::updateScreen() {
-    if (ConfMan.hasKey("playtest_session") && _pipeline) hdRemasterGL().initialize();''')
+    if (ConfMan.hasKey("playtest_session") && _pipeline) hdRemasterGL().initialize();
+    if (HdRemaster::state().exitFadeActive || HdRemaster::state().exitFadeOpacity > 0) _forceRedraw = true;''')
     edit(gl, '\tif (_gameScreen) {\n\t\t_pipeline->drawTexture(_gameScreen->getGLTexture(), _gameDrawRect.left, _gameDrawRect.top, _gameDrawRect.width(), _gameDrawRect.height());', '''\tif (_gameScreen) {
         if (!hdRemasterGL().draw(_pipeline, _targetBuffer, _gameScreen, _hdWideBackground,
-                _gameDrawRect, _windowWidth, _windowHeight, _overlayVisible))
-\t\t_pipeline->drawTexture(_gameScreen->getGLTexture(), _gameDrawRect.left, _gameDrawRect.top, _gameDrawRect.width(), _gameDrawRect.height());''')
+                _gameDrawRect, _windowWidth, _windowHeight, _overlayVisible)) {
+            if (ConfMan.hasKey("playtest_session") && ConfMan.hasKey("hd_movie_active") && ConfMan.getBool("hd_movie_active")) {
+                // Sample the centered 16:9 area of the 4:3 movie. Matching
+                // source/destination ratios gives uniform zoom without stretch.
+                // In 4:3 mode this selects the complete movie texture.
+                const HdAspect::Rect crop = HdAspect::frame(_gameScreen->getWidth(), _gameScreen->getHeight(),
+                    ConfMan.getInt("hd_aspect_ratio"));
+                _pipeline->drawTexture(_gameScreen->getGLTexture(), _gameDrawRect.left, _gameDrawRect.top,
+                    _gameDrawRect.width(), _gameDrawRect.height(),
+                    Common::Rect(crop.x, crop.y, crop.x + crop.w, crop.y + crop.h));
+            } else {
+                _pipeline->drawTexture(_gameScreen->getGLTexture(), _gameDrawRect.left, _gameDrawRect.top,
+                    _gameDrawRect.width(), _gameDrawRect.height());
+            }
+        }''')
+    edit(gl, '    if (previousWide != (_hdWideBackground != nullptr)) recalculateDisplayAreas();', '''    if (previousWide != (_hdWideBackground != nullptr)) recalculateDisplayAreas();
+    auto &entry = HdRemaster::state();
+    if (entry.entryRoom && !_overlayVisible) {
+        // updateHDWideBackground has now attempted the requested 16:9 asset.
+        // Hold the last presented image; never swap an intermediate native or
+        // CPU bootstrap frame. Unsupported GL/missing sidecars still fall back.
+        if (entry.wideRoom != entry.entryRoom) return;
+        if (!entry.entryPrepared) {
+            entry.entryPrepared = true;
+            return;
+        }
+        if (!entry.entryComposed) return;
+        entry.entryRoom = 0;
+        _forceRedraw = true;
+    }''')
     edit(gl, 'void OpenGLGraphicsManager::notifyContextDestroy() {',
          'void OpenGLGraphicsManager::notifyContextDestroy() {\n    hdRemasterGL().destroy();')
     edit(gl, 'OpenGLGraphicsManager::~OpenGLGraphicsManager() {',
          'OpenGLGraphicsManager::~OpenGLGraphicsManager() {\n    hdRemasterGL().destroy();')
     edit(gl, '\t// Update changes to textures.', '\thdRemasterGL().beginFrame();\n\t// Update changes to textures.')
-    edit(gl, '\trefreshScreen();\n', '\thdRemasterGL().endFrame();\n\trefreshScreen();\n')
+    edit(gl, '\trefreshScreen();\n', '''\thdRemasterGL().endFrame();
+    hdRemasterGL().drawExitFade(_pipeline, _targetBuffer, _windowWidth, _windowHeight, _overlayVisible);
+\trefreshScreen();
+''')
+    # Run before release changes movie framing or frees the displayed texture.
+    smush = 'engines/scumm/smush/smush_player.cpp'
+    edit(smush, '#include "scumm/hd_video_support.h"',
+         '#include "scumm/hd_video_support.h"\n#include "common/hd_remaster.h"')
+    edit(smush, '\n\trelease();\n\n\t// Reset mouse state', '''
+    if (_vm->_game.id == GID_CMI && _hdVideoActive && _hdFramesRead > 0 && !_hdVideoFailed &&
+        _vm->_smushVideoShouldFinish && !_vm->_saveLoadFlag && !_vm->shouldQuit())
+        _vm->fadeHDPresentation();
+\trelease();
+
+\t// Reset mouse state''')
+    edit(smush, '\t\t\tif (_updateNeeded && !_hdVideoFailed) {', '''\t\t\tif (_updateNeeded && !_hdVideoFailed) {
+                // A consecutive movie releases the black hold only when its
+                // first decoded frame is ready, never on viewport setup.
+                HdRemaster::state().exitFadeOpacity = 0;''')
     # Reuse interpolation scratch storage and clones for the engine lifetime.
     edit('engines/scumm/scumm.h', '    int _hdMotionDrawCamera = 0;', '''    int _hdMotionDrawCamera = 0, _hdMotionDrawTop = 0;
     Common::Array<byte> _hdMotionFront, _hdMotionBack, _hdMotionMasks, _hdMotionClean, _hdMotionValid;
@@ -74,8 +188,7 @@ def patch(root, edit):
     # Rebuild the clean native reference for vertical/fixed rooms as well.
     edit('engines/scumm/scumm.cpp', '_roomWidth > _screenWidth && _currentRoom != 92)', '/* Fixed, panoramic, and vertical HD rooms. */ _currentRoom != 92)')
     # Disable stale layering as soon as a movie replaces the game surface.
-    edit('engines/scumm/hd_aspect.inc', '    if (movie || isSmushActive()) HdRemaster::state().active = false;',
-         '    if (movie || isSmushActive()) HdRemaster::state().active = false;')
+    # Movie entry independently releases any pending room presentation in hd_aspect.inc.
     manager = 'engines/scumm/hd_costume_manager'
     edit(manager + '.h', 'int svgWidth = 0, int svgHeight = 0);', 'int svgWidth = 0, int svgHeight = 0, bool borrowed = false);')
     edit(manager + '.h', '\tvoid pruneCache();', '''\tvoid pruneCache();

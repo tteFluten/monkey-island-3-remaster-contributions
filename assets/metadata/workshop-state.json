@@ -5,7 +5,7 @@
   "selections": {
     "672ad30e-33de-4ed9-99e3-f4a0204768bd": "ea1f14ab-d612-41f0-b60a-27dcef923f4c",
     "afa87f30-273a-4168-b38f-dcc935351368": "07c6a3bc-874c-4863-8e17-ae3125834dc4",
-    "b27ee864-73b4-45b8-bf6b-3790d2391135": "1b6bfc7d-6d7b-4689-8b42-1a24414dd93a",
+    "b27ee864-73b4-45b8-bf6b-3790d2391135": "chapter1-supplied-2560x1440",
     "37f79c54-c525-411f-942f-448d3edcd66e": "2c2a3340-dca2-45df-bb9f-6b627c16a6c8",
     "5f420ca4-000c-4e77-b8ee-57a9d59849b7": "0675e246-f577-42bb-a6a9-cdc96b717353",
     "6f663d73-945b-47f1-adcc-f728b9665de2": "9a753509-9611-4b0a-b96a-5ab1ab3b430d",
@@ -135,26 +135,6 @@
       },
       "references": [],
       "createdAt": "2026-09-23T19:00:51.990Z",
-      "reviewStatus": "unreviewed",
-      "engineStatus": "untested"
-    },
-    "1b6bfc7d-6d7b-4689-8b42-1a24414dd93a": {
-      "id": "1b6bfc7d-6d7b-4689-8b42-1a24414dd93a",
-      "assetId": "b27ee864-73b4-45b8-bf6b-3790d2391135",
-      "filePath": "upscaled/imported/70648c806aa28c0e45f364c367336ebe52d6fa4318ad8edbf1d1fc9d07ef9035.png",
-      "width": 3840,
-      "height": 2880,
-      "mimeType": "image/png",
-      "fileSize": 16651510,
-      "tool": "folder-import",
-      "model": "",
-      "prompt": "",
-      "params": {
-        "sha256": "70648c806aa28c0e45f364c367336ebe52d6fa4318ad8edbf1d1fc9d07ef9035",
-        "originalFile": "0004_chapter1-wonder-3-5.png"
-      },
-      "references": [],
-      "createdAt": "2026-09-23T19:00:52.000Z",
       "reviewStatus": "unreviewed",
       "engineStatus": "untested"
     },
@@ -1920,28 +1900,6 @@
       "engineStatus": "untested",
       "reviewNotes": "User designated this exact 2560 \u00d7 1440 image as the final room 0009 background."
     },
-    "waterline-final-2560x1440": {
-      "id": "waterline-final-2560x1440",
-      "assetId": "afda4e02-afa5-4016-b647-a914f4cf611f",
-      "filePath": "upscaled/imported/9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd.png",
-      "width": 2560,
-      "height": 1440,
-      "mimeType": "image/png",
-      "fileSize": 4899211,
-      "tool": "user-supplied",
-      "model": "",
-      "prompt": "",
-      "params": {
-        "sha256": "9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd",
-        "originalFile": "0011_waterln-wonder-3-5.png",
-        "finalBackground": true
-      },
-      "references": [],
-      "createdAt": "2026-09-25T19:53:46.720834+00:00",
-      "reviewStatus": "approved",
-      "engineStatus": "untested",
-      "reviewNotes": "User designated this exact 2560 \u00d7 1440 image as the final room 0011 background."
-    },
     "easyhard-supplied-5120x2880": {
       "id": "easyhard-supplied-5120x2880",
       "assetId": "febf8abc-771c-48c3-8e01-4c7a59526466",
@@ -1962,6 +1920,49 @@
       "reviewStatus": "approved",
       "engineStatus": "untested",
       "reviewNotes": "User designated this image as the room 0087 difficulty background."
+    },
+    "chapter1-supplied-2560x1440": {
+      "id": "chapter1-supplied-2560x1440",
+      "assetId": "b27ee864-73b4-45b8-bf6b-3790d2391135",
+      "filePath": "upscaled/imported/587ed3b9962af22e619462f5ae7893262d2566d31976c61bf2570b05a06aeebb.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5693488,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "587ed3b9962af22e619462f5ae7893262d2566d31976c61bf2570b05a06aeebb",
+        "originalFile": "0004_chapter1-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-26T14:48:20.964616+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this image as the room 0004 chapter background."
+    },
+    "waterline-final-2560x1440": {
+      "id": "waterline-final-2560x1440",
+      "assetId": "afda4e02-afa5-4016-b647-a914f4cf611f",
+      "filePath": "upscaled/imported/d2cf60fd6a6c07a56788b042300e618c8977525cc1a20f2f3c83cc4802ba631f.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 4914590,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "d2cf60fd6a6c07a56788b042300e618c8977525cc1a20f2f3c83cc4802ba631f",
+        "originalFile": "0011_waterln-wonder-3-5.png",
+        "finalBackground": true
+      },
+      "references": [],
+      "createdAt": "2026-09-26T15:34:25.232190+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User-supplied corrected 2560 \u00d7 1440 room 0011 background, shared by scene rendering and water reflections."
     }
   }
 }

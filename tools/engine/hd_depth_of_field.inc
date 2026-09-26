@@ -14,7 +14,7 @@ struct HdDepthOfFieldState {
     uint cpuCoverageGeneration = ~0u;
     std::vector<bool> rows;
     int visW = 0, visH = 0, intensity = 100;
-    bool active = false;
+    bool active = false, wideFocus = false;
     // Live-tuning readout and the level restored by the on/off hotkey.
     uint32 hudUntil = 0;
     int lastLevel = 2;
@@ -118,6 +118,10 @@ void ScummEngine::renderHDDepthOfField(int backgroundX, int visW, int visH) {
         hdPrintf("DEPTH-OF-FIELD room=%d level=%d radius=%d planes=%d blur=%dx%d factor=%d built=%ums",
             dof.room, level, radius, _gdi->_numZBuffer, dof.blurW, dof.blurH, dof.factor, _system->getMillis() - start);
     }
+    // The decorative 16:9 painting uses one full-width focus map. Apply its
+    // center crop here as well, including background restoration under costumes.
+    dof.wideFocus = visW == 640 && hdAspectRatio() == 169 &&
+        ConfMan.hasKey("hd_wide_background_active") && ConfMan.getBool("hd_wide_background_active");
     dof.visW = visW;
     dof.visH = visH;
     dof.intensity = tuning.intensity;
@@ -134,7 +138,8 @@ void ScummEngine::renderHDDepthOfField(int backgroundX, int visW, int visH) {
             continue;
         uint32 *dst = (uint32 *)_hdComposite.getBasePtr(0, y);
         for (int x = 0; x < _hdComposite.w; ++x) {
-            const int alpha = HdDepthOfField::coverageAt(dof.coverage.data(), visW, visH, scale, x, y) *
+            const int alpha = HdDepthOfField::coverageAt(dof.coverage.data(), visW, visH, scale,
+                dof.wideFocus ? (x * 6 + visW * scale) / 8 : x, y) *
                 dof.intensity / 100;
             if (!alpha) continue;
             dst[x] = HdDepthOfField::mix(dst[x], HdDepthOfField::sample(dof.blur.data(), dof.blurW, dof.blurH,
@@ -151,7 +156,8 @@ uint32 ScummEngine::hdDepthOfFieldBackground(int x, int y, int backgroundX, uint
     const HdDepthOfFieldState &dof = hdDepthOfFieldState();
     if (!dof.active || x < 0 || y < 0 || y >= dof.height || backgroundX < 0 || backgroundX >= dof.width)
         return sharp;
-    const int alpha = HdDepthOfField::coverageAt(dof.coverage.data(), dof.visW, dof.visH, dof.scale, x, y) *
+    const int alpha = HdDepthOfField::coverageAt(dof.coverage.data(), dof.visW, dof.visH, dof.scale,
+        dof.wideFocus ? (x * 6 + dof.visW * dof.scale) / 8 : x, y) *
         dof.intensity / 100;
     if (!alpha) return sharp;
     return HdDepthOfField::mix(sharp, HdDepthOfField::sample(dof.blur.data(), dof.blurW, dof.blurH,
@@ -185,7 +191,7 @@ bool ScummEngine::handleHDDepthOfFieldEvent(const Common::Event &event) {
         HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning(room);
         unsigned int changed = 0;
         if (reset) {
-            for (int c = HdSceneLook::kFocus; c < HdSceneLook::kControls; ++c) changed |= 1u << c;
+            for (int c = HdSceneLook::kFocus; c < HdSceneLook::kWaterOpacity; ++c) changed |= 1u << c;
         } else if (toggle) {
             if (level) dof.lastLevel = level;
             level = level ? 0 : dof.lastLevel;
