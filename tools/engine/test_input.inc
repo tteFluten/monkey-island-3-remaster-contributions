@@ -40,7 +40,12 @@ if (getenv("MI3_ENGINE_TEST_INPUT") && ConfMan.hasKey("playtest_session", "comi"
             } else if (sscanf(command, "film-time %d", &key) == 1) {
                 HdFilm::state().testTick = key;
                 ++HdFilm::state().revision;
-            } else if (sscanf(command, "key %d %d", &key, &modifiers) >= 1) {
+			} else if (sscanf(command, "wheel %d", &y) == 1) {
+                SDL_Event native = {};
+                native.type = SDL_MOUSEWHEEL;
+                native.wheel.y = y;
+                SDL_PushEvent(&native);
+			} else if (sscanf(command, "key %d %d", &key, &modifiers) >= 1) {
 				SDL_Event native = {};
 				native.type = SDL_KEYDOWN;
 				native.key.keysym.sym = (SDL_Keycode)key;

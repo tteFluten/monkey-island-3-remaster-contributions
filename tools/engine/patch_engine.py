@@ -14,6 +14,9 @@ fingerprint = hashlib.sha256()
 for source in sorted(Path(__file__).parent.iterdir()):
     if source.suffix in ('.py', '.h', '.inc', '.cpp'):
         fingerprint.update(source.name.encode()); fingerprint.update(source.read_bytes())
+# The embedded scene picker catalog must also be rebuilt when names change.
+from patch_scene_jump import catalog_header, patch as patch_scene_jump
+fingerprint.update(catalog_header().encode())
 stamp = root / '.mi3-patches'
 revision = fingerprint.hexdigest()
 if stamp.exists():
@@ -175,5 +178,8 @@ print('Applied lightweight ambient water shader')
 from patch_film import patch as patch_film
 patch_film(root, edit)
 print('Applied optional final vintage-film presentation')
+
+patch_scene_jump(root, edit)
+print('Applied native J-key scene navigation')
 
 stamp.write_text(revision + "\n")
