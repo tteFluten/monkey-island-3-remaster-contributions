@@ -424,6 +424,31 @@ Reports and screenshots belong under `.context/` and are not packaged assets.
 Room jumps use debugger-style scene transitions with current puzzle state.
 They do not initialize chapter progression, inventory, or every room-specific
 script condition. Use normal gameplay and saves for progression testing.
+
+Press **J** in a ready gameplay room to open the native **Jump to Scene** picker.
+Its 81 destinations come from the scene manifests, ordered by room number;
+logos, chapter cards, difficulty selection, credits, and save/load screens
+(rooms 1–8, 87–88, 91–93) are excluded. Gameplay close-ups and maps are included.
+**Up/Down** or the mouse wheel selects a row; **Page Up/Page Down** moves 12 rows;
+**Enter** or clicking a row jumps. **J/Esc** closes without jumping, and choosing
+the current room closes without restarting its scripts. Opening selects and
+reveals the current room. The panel shows room numbers and manifest names in
+both 4:3 and 16:9, including panoramic rooms.
+
+The picker replaces Scene Look, consumes gameplay input, and leaves running
+scripts unpaused. It cannot open during a cinematic, scripted cutscene,
+inventory, options book, save/load, or invalid player state. A pending jump is
+discarded if the engine becomes busy or the source room changes before it runs.
+Native and workshop jumps share the same engine-thread transition. The catalog
+is embedded during engine patching, so the browser need not be open. Rebuild
+after changing scene names. This feature is enabled by `playtest_session`.
+
+Run `python3 -m unittest discover -s tools -p 'test_scene_jump.py'` for catalog
+and request-lifecycle checks. With a built runtime and a copied cannon save in
+`MI3_ASPECT_TEST_SAVES`, run `tools/venv/bin/python tools/check_scene_jump.py`
+for isolated keyboard/mouse, overlay, and aspect-ratio checks. Screenshots and
+test saves stay under `.context/scene-jump/native/`.
+
 Backgrounds are replaced throughout the imported pack. The cannon-room test pack
 also includes the 105 supplied costume frames and four objects processed with
 Topaz. Other characters, masks and interface text retain their original assets.

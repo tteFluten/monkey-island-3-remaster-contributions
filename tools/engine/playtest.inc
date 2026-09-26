@@ -1,5 +1,25 @@
 // Local development bridge. Included inside namespace Scumm in scumm.cpp.
 // Enabled only by an explicit playtest_session setting in the isolated config.
+bool ScummEngine::playtestReadyForJump() {
+	return _game.id == GID_CMI && ConfMan.hasKey("playtest_session") &&
+		!isPaused() && !isSmushActive() && !_saveLoadFlag &&
+		_currentRoom > 0 && _currentRoom != 87 && _currentRoom != 92 &&
+		!hdInventoryOpen() && !vm.cutSceneStackPointer &&
+		VAR_EGO != 0xFF && VAR(VAR_EGO) > 0 && VAR(VAR_EGO) < _numActors;
+}
+
+bool ScummEngine::playtestJumpToRoom(int room) {
+	if (!playtestReadyForJump() || room < 1 || room > 94) return false;
+	// Preserve the debugger-style transition shared by the workshop and J menu.
+	// No save is loaded, and inventory / puzzle variables are left to room scripts.
+	_hdSceneJump.close();
+	_actors[VAR(VAR_EGO)]->_room = room;
+	_sound->stopAllSounds();
+	startScene(room, nullptr, 0);
+	_fullRedraw = true;
+	return true;
+}
+
 void ScummEngine::refreshHDRoomBackground() {
 	if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session")) return;
 	// Loading a save bypasses startScene(), including its HD background load.
@@ -19,6 +39,12 @@ void ScummEngine::refreshHDRoomBackground() {
 void ScummEngine::playtestTick() {
 	if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session"))
 		return;
+	// Menu requests run at the same safe loop boundary as workshop commands,
+	// independently of the bridge's disk polling interval.
+	if (_hdSceneJump.open) {
+		const int destination = _hdSceneJump.takePending(playtestReadyForJump(), _currentRoom);
+		if (destination) playtestJumpToRoom(destination);
+	}
 	uint32 now = _system->getMillis();
 	if (now - _playtestLastPoll < 100)
 		return;
@@ -27,9 +53,7 @@ void ScummEngine::playtestTick() {
 	if (directory.empty())
 		return;
 	refreshHDRoomBackground();
-	bool ready = !isPaused() && !isSmushActive() && !_saveLoadFlag &&
-		_currentRoom > 0 && _currentRoom != 87 && !vm.cutSceneStackPointer &&
-		VAR_EGO != 0xFF && VAR(VAR_EGO) > 0 && VAR(VAR_EGO) < _numActors;
+	bool ready = playtestReadyForJump();
 	// Opt-in deterministic walking for native lighting/depth smoke tests. Uses
 	// the normal actor walker, so room scripts and lighting run unchanged.
 	if (ready && getenv("MI3_ENGINE_TEST_INPUT")) {
@@ -109,10 +133,7 @@ void ScummEngine::playtestTick() {
 					if (room < 1 || room > 94) {
 						_playtestError = "Invalid COMI room";
 					} else if (action == "jump") {
-						_actors[VAR(VAR_EGO)]->_room = room;
-						_sound->stopAllSounds();
-						startScene(room, nullptr, 0);
-						_fullRedraw = true;
+						if (!playtestJumpToRoom(room)) _playtestError = "Game is busy. Retry when ready.";
 					} else if (action == "reload" && room == _currentRoom) {
 						Common::String hdPath = _hdAssetManager->getHDPath();
 						_hdAssetManager->setHDPath(hdPath);
