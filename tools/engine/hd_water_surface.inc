@@ -1,4 +1,4 @@
-// A cached native-resolution depth mask for the full waterline surface. Trace
+// A cached native-resolution depth mask for the full cannon/waterline surface. Trace
 // bottom-connected water in two dimensions so painted reflections don't stop
 // a column early. Regenerate only when artwork changes.
 struct HdWaterSurface {
@@ -9,7 +9,7 @@ struct HdWaterSurface {
     bool valid = false;
 
     bool prepare(const Graphics::Surface &background, int currentRoom, int currentRevision, int currentScale) {
-        if (currentRoom != 11 || currentScale <= 0 ||
+        if (!HdWater::fullSurface(currentRoom) || currentScale <= 0 ||
             background.w != 640 * currentScale || background.h != 480 * currentScale)
             return false;
         if (pixels == background.getPixels() && room == currentRoom && revision == currentRevision && scale == currentScale)
@@ -22,13 +22,19 @@ struct HdWaterSurface {
         for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
             byte r, g, b;
             background.format.colorToRGB(background.getPixel(x * scale + scale / 2, y * scale + scale / 2), r, g, b);
-            water[y * width + x] = HdWater::waterlineColor(r, g, b) ? 1 : 0;
+            // The cannon view's sea starts below its authored horizon. The
+            // similarly teal sky and fort must never join its water region.
+            water[y * width + x] = (currentRoom != 10 || y >= height * 3 / 8) &&
+                HdWater::waterlineColor(r, g, b) ? 1 : 0;
         }
         Common::Array<int> pending, shoreline;
         shoreline.resize(width);
         for (int x = 0; x < width; ++x) {
             shoreline[x] = height;
-            const int seed = (height - 1) * width + x;
+            // The cannon view is enclosed by a wooden gunport, including the
+            // bottom edge. Seed its sea from the interior instead of the rail.
+            if (currentRoom == 10 && (x < width / 3 || x >= width * 2 / 3)) continue;
+            const int seed = (currentRoom == 10 ? height * 2 / 3 : height - 1) * width + x;
             if (water[seed]) { water[seed] = 2; pending.push_back(seed); }
         }
         for (uint i = 0; i < pending.size(); ++i) {
@@ -46,7 +52,8 @@ struct HdWaterSurface {
         // plane must not: reflecting around every pixel step shears the hull.
         // Fit one continuous sloping line through the visible water boundary.
         double count = 0, sumX = 0, sumY = 0, sumXX = 0, sumXY = 0;
-        for (int x = 0; x < width; ++x) if (shoreline[x] < height) {
+        for (int x = 0; x < width; ++x) if (shoreline[x] < height &&
+                (currentRoom != 10 || (x >= width / 4 && x < width * 3 / 4))) {
             const double px = x + 0.5, py = shoreline[x];
             ++count; sumX += px; sumY += py; sumXX += px * px; sumXY += px * py;
         }
@@ -54,6 +61,28 @@ struct HdWaterSurface {
         reflectionSlope = denominator > 0 ? (count * sumXY - sumX * sumY) / denominator : 0;
         reflectionIntercept = count > 0 ? (sumY - reflectionSlope * sumX) / count : height;
         unsigned covered = 0;
+        if (currentRoom == 10) {
+            // Unlike the open waterline, keep all four gunport edges and any
+            // enclosed dry detail. Distance to dry paint softens refraction
+            // before it reaches the wood, rather than filling whole columns.
+            Common::Array<uint16> edge;
+            edge.resize(width * height);
+            for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
+                const int i = y * width + x;
+                edge[i] = water[i] != 2 || !x || !y || x == width - 1 || y == height - 1 ? 0 :
+                    MIN<uint16>(255, MIN(edge[i - 1], edge[i - width]) + 1);
+            }
+            for (int y = height - 2; y >= 1; --y) for (int x = width - 2; x >= 1; --x) {
+                const int i = y * width + x;
+                edge[i] = MIN<uint16>(edge[i], MIN(edge[i + 1], edge[i + width]) + 1);
+                if (edge[i] > 2) {
+                    depth[i] = edge[i] - 2;
+                    ++covered;
+                }
+            }
+            valid = covered >= (unsigned)(width * 20);
+            return valid;
+        }
         for (int x = 0; x < width; ++x) {
             const int shore = shoreline[x];
             // Fill the entire water column, including warm highlights and

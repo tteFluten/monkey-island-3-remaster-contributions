@@ -40318,5 +40318,69 @@
         "original_pixels_restored": false
       }
     }
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_12.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_12.png",
+    "sha256": "ea76cf66610d6837d41f837b8df904f9b59147f92c4c1ef2e7cbb600facb7774",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_14.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_14.png",
+    "sha256": "506a81928d117b0a885302688f17353acdfc5c2cb49a4bba6835e84f73e6bf5b",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_15.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_15.png",
+    "sha256": "47fdae64e3af700a9f97a51a8977b39895626162d1ed85e7503a9a1c8cff2a90",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_16.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_16.png",
+    "sha256": "91bfdbe9a0a73921a145fef2cc81c1932e778f6ed7a00dd2f0df07d89f89730d",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_17.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_17.png",
+    "sha256": "5b39ca4172c764c2d9b5baae73f7fdf958b9ebdaed6cae824c4f688c21c38ced",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0041_frame_2.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0041_frame_2.png",
+    "sha256": "c7112c55d6da2bc7c1a39ca90f12c89bfcfd8cec05bec1e4a84b8247deaea642",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0041_frame_8.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0041_frame_8.png",
+    "sha256": "9170aef5839515974b0e0bbda966709575444a9b555657a7a1732963def7dbb5",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0041_frame_10.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0041_frame_10.png",
+    "sha256": "bfb440cf254949e77c7093c4f1bf21353508bb6ed8e708b922b8207e4372d818",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
   }
 }

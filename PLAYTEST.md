@@ -54,8 +54,19 @@ Frame wobble and Chromatic aberration with the existing arrows or −/+ buttons;
 **Shift** adjusts faster. The six individual effect controls range from 0–200%,
 with 100% as their baseline. Chromatic aberration adds subtle red/blue separation
 across the whole picture, including centrally placed character costumes, with
-slightly more separation toward the edges. It runs after costumes, objects and
-UI are composed; source artwork and costume transparency are unchanged. Set it
+slightly more separation toward the edges. Rendered fonts are excluded from
+chromatic aberration: dialogue, labels, response choices, difficulty/options text,
+look panels, and cinematic subtitles record glyph coverage, including outlines
+and antialiased edges. The final pass also protects displaced samples so colored
+copies cannot leak outside letters. Inventory centering and movie cropping apply
+the same transforms to that coverage. Backend dialogs and OSD text are drawn
+after a separate scene-only chromatic pass when those overlays are visible;
+the remaining film effects still run at final presentation. Settings retain the
+same chromatic strength for backgrounds, objects and costumes. Coverage textures
+are reused, cleared for each composed frame, and uploaded without GPU readback.
+Text already baked into background art or a video image remains image content;
+it has no font-renderer coverage. Source artwork and costume transparency are
+unchanged. Set it
 to 0% to disable just that effect. Its global INI key is `hd_film_chromatic`.
 **Backspace** resets the selected control, **R** resets film settings, and **B**
 temporarily bypasses film for comparison. Settings save immediately to the global
@@ -181,7 +192,8 @@ coverage, and costume scaling/lighting are cached. The normal native build uses
 release settings, with symbols retained for profiling. Normal rendering performs no GPU-to-CPU readback; explicit
 screenshots, thumbnails, and visual comparisons can request one.
 
-Ambient water uses a lightweight GPU shader by default in the waterline (11),
+Ambient water uses a lightweight GPU shader by default in the cannon aiming
+view (10) and waterline (11),
 where **W** opens its live tuning page. Adjust water strength, wave height,
 speed, distortion, highlights, and mirrored-background reflection opacity
 with **−/+** or the arrow keys (**Shift** ×5). **W** or a click on the section
@@ -192,6 +204,19 @@ inheritance for one control, and **R** restores inheritance for all water contro
 without clearing the room's color or vignette settings. Reflection defaults to
 8%; the remaining controls default to 100%. Setting speed to zero freezes the
 waves, and setting strength to zero reveals the painted water.
+
+The cannon view shares the waterline shader, sea palette, and initial water
+tuning. Its 32-frame ambient ripple costume (45) is removed from the rendered
+scene and skipped during HD texture preloading. Source artwork stays archived
+for compatibility rendering. Cannonballs, impact splashes, boats, and their
+destruction sequences remain native/scripted effects. A cached mask traces the
+painted sea below the horizon inside the gunport; it excludes the sky, fort,
+wooden sides, and lower rail, and softens distortion at those boundaries.
+Scene 10 has its own Water overrides, so later tuning does not change scene 11.
+Its selected background is the user-supplied `0010_cannon-v-wonder-3-5.png`,
+preserved as a 2560 × 1440 master with matching widescreen output and a centered
+4:3 runtime crop. The prior background remains archived as an alternate.
+The engine has been rebuilt; this extension has not been visually verified.
 
 The shader also operates in
 fort base (14), and town (15). It replaces only the known ambient-water costumes:
@@ -222,18 +247,35 @@ fine ripples in blurred scenery. Both aspect ratios share the same effect;
 authored widescreen margins inherit coverage at the original water boundary.
 Water advances between native animation frames, pauses with the game, and uses
 cached scene/UI textures and a native-resolution single-channel coverage texture.
-On entering the cannon (0009) or waterline (0011) room, only the immediately visible character poses load on
+On entering any room, only the immediately visible character poses load on
 demand. Future PNG poses from the selected pack decode on one background worker,
 with at most one result waiting for the engine thread to insert into the existing
 bounded cache. Visible costumes are queued before later scripted room costumes;
 shader-replaced water frames are skipped. Room changes do not wait for that
-worker. Missing frames and unavailable worker threads retain on-demand loading,
-and SVG poses still rasterize at their actual draw dimensions. Both rooms also
-skip the unused legacy costume prewarm when the selected exact pack is enabled.
-Other rooms retain their current loading behavior until this rollout is validated.
-This removes room-wide animation
-decoding from the entry path; background decoding and first-pose loading can
-still cause a smaller transition delay. No measured speedup is claimed yet.
+worker; queued work from the previous room is discarded, including late decoded
+results, so it cannot evict the new room's textures. Missing frames and unavailable
+worker threads retain on-demand loading, and SVG poses still rasterize at their
+actual draw dimensions. All rooms also skip the unused legacy costume prewarm
+when the selected exact pack covers that room. Topaz and Topaz Crisp cover every
+scene; other packs retain their existing room coverage and native fallbacks.
+This removes room-wide animation decoding from the entry path.
+
+Room backgrounds and 16:9 sidecars share a separate 256 MiB decoded-image LRU
+cache. The destination's PNG decode starts on one background worker before the
+outgoing room scripts/fade. Idle presentation ticks then prefetch the nearest
+higher/lower room IDs and their available sidecars; this is speculative numeric
+lookahead, not an exit map. All scenes use the same loader, including save
+restoration. Cached images avoid repeat PNG decoding; the original gameplay
+background, full-width artwork and reflections retain their own correct sources.
+Speculative results use spare cache space without evicting already-loaded images;
+demand loads evict the least recently used images when the budget is reached.
+Live asset reloads invalidate the cache and discard stale worker results.
+Only decoding/conversion runs on the worker; surface ownership and GPU uploads
+stay on the main thread. A cold destination waits for its own in-flight decode,
+or loads on demand if it was not prefetched or a worker could not be started.
+It never waits for a different room's speculative job or shows the preceding
+room's painting while loading. First-pose loading, cold images, surface copies
+and GPU uploads can still delay transitions. No measured speedup is claimed yet.
 
 Entering HD cannon room 0009 skips the native black/strip-wipe transition.
 In GPU mode, the first completed scene starts a single one-second smooth fade-in
@@ -493,8 +535,9 @@ The MP4 audio track is not played. Escape still skips a cinematic.
 
 Movies follow the options book's **Display** setting: in **16:9**, the backend
 zooms uniformly into a centered 16:9 crop of the 4:3 framebuffer, removing 12.5%
-from the top and bottom without stretching. Composited subtitles follow the same
-uniform zoom. In **4:3**, the complete original framing remains. Only HD pictures are displayed. Native SAN files
+from the top and bottom without stretching. Subtitles are laid out inside the
+visible crop with 5% inset margins, so the zoom cannot cut off their lower lines.
+In **4:3**, the complete original framing remains. Only HD pictures are displayed. Native SAN files
 remain necessary for audio, subtitles, and timing; their original video frames
 are never presented. In widescreen mode, the selected 16:9 frame fits within
 the display, with cinematic black bars above and below on taller screens.
@@ -525,9 +568,12 @@ The replacement decoder advances on every native frame, including frames the
 display scheduler skips, so display drops do not accumulate picture/audio drift.
 HD cinematic subtitles use the same sharp font sheets as gameplay, drawn at
 the final framebuffer resolution after the movie is decoded. They honor the
-in-game text-size preference (65% by default), proportional letter spacing,
-native timing and colors, and hard black shadows. Missing sheets and unsupported
-CJK/RTL text retain native subtitle rendering. The subtitles setting remains
+in-game text-size preference with an approximately 80% movie-specific multiplier
+(65% becomes 50%), proportional letter spacing, native timing and colors, and
+hard black shadows. Dialogue wraps and centers above the visible picture's lower
+edge; non-dialogue captions keep their relative vertical placement. Gameplay
+text sizing is restored after each subtitle pass. Missing sheets and unsupported
+CJK/RTL text retain native glyphs within the same safe layout bounds. The subtitles setting remains
 available. Rebuild the engine after updating the cinematic font renderer.
 Run `python3 -m unittest discover -s tools -p 'test_video_staging.py'` to check
 staging validation, naming, backup behavior, and subtitle compositing.
@@ -806,6 +852,17 @@ The cannon itself (costume 26) now has all 14 animation cels processed directly
 at 4× with Wonder 3.5 High. Run `tools/venv/bin/python tools/stage_cannon.py`
 with the game stopped to install them in both Topaz packs. This is separate
 from character-border variants and from the reviewed UI samples.
+
+The aiming view in room 0010 uses a separate barrel (costume 35) with 16 poses.
+HD motion presentation now tracks those pose changes even when the actor's
+position stays fixed. Between native ticks, it interpolates the barrel bounds
+at HD precision and blends the aligned endpoint textures with alpha-aware color
+mixing. The original artwork, aim variables, hit testing, firing, and animation
+timing remain unchanged. Missing replacement art uses the current exact pose;
+room changes, pauses, mirrored poses, and large aim jumps reset interpolation.
+This uses the existing `hd_smooth_motion` setting and presentation cadence.
+The native engine has been rebuilt; visual smoothness and performance have not
+been measured for this change.
 
 ## Damaged speech entries
 

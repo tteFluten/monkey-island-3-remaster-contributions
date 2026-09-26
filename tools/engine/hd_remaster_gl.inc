@@ -512,9 +512,9 @@ void main() {
             _effect->setUniform1f("waterSurface", s.waterSurface ? 1 : 0);
             _effect->setUniform("waterTuning", Math::Vector4d(s.waterOpacity / 100.0f,
                 s.waterDistortion / 100.0f, s.waterHighlights / 100.0f, s.waterReflection / 100.0f));
-            // Room 11's extracted original water is #0F3333. Other rooms keep
+            // The cannon sea shares room 11's #0F3333 water treatment. Other rooms keep
             // their own painted palette; artwork and saved Scene Look stay intact.
-            _effect->setUniform("waterPalette", s.room == 11
+            _effect->setUniform("waterPalette", HdWater::fullSurface(s.room)
                 ? Math::Vector4d(15.0f/255, 51.0f/255, 51.0f/255, 0.65f)
                 : Math::Vector4d(0, 0, 0, 0));
             _canvas->setSize(canvasW, canvasH);

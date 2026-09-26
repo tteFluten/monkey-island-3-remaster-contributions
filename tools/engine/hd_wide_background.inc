@@ -28,19 +28,13 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
     static Graphics::Surface raw;
     static Common::String rawKey;
     if (rawKey != sourceKey || !raw.getPixels()) {
-        Common::FSNode node((Common::Path(path)));
-        Common::SeekableReadStream *file = node.createReadStream();
-        if (!file) return;
-        Image::PNGDecoder decoder;
-        const bool loaded = decoder.loadStream(*file); delete file;
-        const Graphics::Surface *source = decoder.getSurface();
-        if (!loaded || !source || source->w != 2560 || source->h != 1440) {
+        Graphics::Surface decoded;
+        if (!HdBackground::cache().load(path, decoded)) return;
+        if (decoded.w != 2560 || decoded.h != 1440) {
+            decoded.free();
             warning("HD widescreen: invalid background %s", path.c_str()); return;
         }
-        Graphics::Surface *converted = source->convertTo(Graphics::PixelFormat::createFormatRGBA32(),
-            decoder.getPalette().data(), decoder.getPalette().size());
-        if (!converted) return;
-        raw.free(); raw = *converted; delete converted; rawKey = sourceKey;
+        raw.free(); raw = decoded; rawKey = sourceKey;
     }
     Graphics::Surface *pixels = new Graphics::Surface();
     pixels->copyFrom(raw);

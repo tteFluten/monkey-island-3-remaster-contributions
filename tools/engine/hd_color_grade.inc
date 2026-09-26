@@ -43,7 +43,7 @@ int hdLookLine(int row) { return row + 2 + ((hdColorGradeState().waterPage || hd
 void hdCycleLookPage(int room) {
     auto &st = hdColorGradeState();
     if (st.filmPage) { st.filmPage = false; st.shadowPage = true; }
-    else if (st.shadowPage) { st.shadowPage = false; st.waterPage = room == 11; }
+    else if (st.shadowPage) { st.shadowPage = false; st.waterPage = HdWater::fullSurface(room); }
     else if (st.waterPage) st.waterPage = false;
     else st.filmPage = true;
     st.row = 0;
@@ -195,7 +195,7 @@ void ScummEngine::renderHDColorGrade() {
     if (_game.id != GID_CMI) return;
     if (!st.loaded) hdLoadColorGrades(st);
     const int room = _currentRoom;
-    if (room != 11) st.waterBypass = false;
+    if (!HdWater::fullSurface(room)) st.waterBypass = false;
     const HdColorGrade::Grade grade = HdSceneLook::Settings::roomValid(room) && !st.bypass
         ? st.settings.grade(room) : HdColorGrade::Grade();
     // The decorative widescreen extension receives the same scene treatment.
@@ -267,11 +267,11 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         st.panel = false;
         return false;
     }
-    if (_currentRoom != 11 && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
+    if (!HdWater::fullSurface(_currentRoom) && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
     if (!st.loaded) hdLoadColorGrades(st);
     const bool key = event.type == Common::EVENT_KEYDOWN;
     if (key && (event.kbd.flags & (Common::KBD_CTRL | Common::KBD_ALT | Common::KBD_META))) return false;
-    if (key && _currentRoom == 11 && event.kbd.keycode == Common::KEYCODE_w) {
+    if (key && HdWater::fullSurface(_currentRoom) && event.kbd.keycode == Common::KEYCODE_w) {
         st.waterPage = !st.panel || !st.waterPage; st.filmPage = st.shadowPage = false;
         st.panel = true; st.row = 0; _fullRedraw = true;
         return true;
@@ -384,7 +384,7 @@ void ScummEngine::drawHDLookPanel() {
     if (!st.panel || _game.id != GID_CMI || !_hdFontManager || !_hdFontManager->hasFont(3) || !_hdComposite.getPixels())
         return;
     const int room = _currentRoom;
-    if (room != 11 && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
+    if (!HdWater::fullSurface(room) && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
     const int rows = hdLookRows();
     if (!st.loaded) hdLoadColorGrades(st);
     const int editingRoom = st.filmPage ? 0 : hdSceneLookEditRoom(room);
@@ -427,7 +427,7 @@ void ScummEngine::drawHDLookPanel() {
         : Common::String::format("%s   Global defaults", title);
     for (int row = 0; row < rows; ++row) {
         if (row == 0) lines[count++] = st.filmPage ? "Film texture   Tab: Shadows"
-            : st.shadowPage ? (room == 11 ? "Shadows   Tab: Water" : "Shadows   Tab: Scene Look")
+            : st.shadowPage ? (HdWater::fullSurface(room) ? "Shadows   Tab: Water" : "Shadows   Tab: Scene Look")
             : st.waterPage ? "Water shader   Tab: Scene Look" : "Color correction   Tab: Film";
         if (!st.waterPage && !st.filmPage && !st.shadowPage && row == kLookFocus) lines[count++] = "Scene depth";
         if (!st.waterPage && !st.filmPage && !st.shadowPage && row == kLookVignette) lines[count++] = "Vignette";
