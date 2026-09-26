@@ -1,4 +1,5 @@
-// Included in the OpenGL backend. Every effect runs before the UI/cursor pass.
+// Included in the OpenGL backend. Scene effects precede UI; the brief entry
+// fade covers the completed canvas while leaving the later cursor pass clear.
 #if !USE_FORCED_GLES
 class HdRemasterGL {
     Graphics::Surface _previousUI;
@@ -28,6 +29,9 @@ class HdRemasterGL {
     uint _querySamples[8] = {}, _querySerial = 0, _querySlot = 0;
     double _cpuStarted = 0;
     bool _hasGrade = false, _attempted = false;
+    int _presentedRoom = -1;
+    double _sceneFadeStarted = -1;
+    Texture *_fadeBlack = nullptr;
 
     static void upload(Texture *&texture, const Graphics::Surface &pixels, bool linear = true) {
         if (!texture) {
@@ -51,6 +55,27 @@ public:
         GL_CALL(glReadPixels(0, 0, pixels.w, pixels.h, GL_RGBA, GL_UNSIGNED_BYTE, pixels.getPixels()));
         _lastPipeline->setFramebuffer(_lastScreen); _lastPipeline->activate();
         return true;
+    }
+    void drawExitFade(Pipeline *normal, Framebuffer *screen, int width, int height, bool overlay) {
+        const float opacity = HdRemaster::state().exitFadeOpacity;
+        if (opacity <= 0 || overlay) return;
+        if (!_fadeBlack) {
+            Graphics::Surface pixel;
+            pixel.create(1, 1, Graphics::PixelFormat::createFormatRGBA32());
+            *(uint32 *)pixel.getPixels() = 0xffffffff;
+            upload(_fadeBlack, pixel, false);
+            pixel.free();
+        }
+        // Cover the complete final presentation, including film and subtitles.
+        // A full black hold also hides viewport changes during movie release.
+        normal->setFramebuffer(screen); normal->activate();
+        screen->enableScissorTest(false);
+        screen->enableBlend(Framebuffer::kBlendModePremultipliedTransparency);
+        normal->setColor(0, 0, 0, opacity);
+        normal->drawTexture(*_fadeBlack, 0, 0, width, height);
+        normal->setColor(1, 1, 1, 1);
+        screen->enableBlend(Framebuffer::kBlendModeOpaque);
+        screen->enableScissorTest(true);
     }
     void beginFrame() {
         _cpuStarted = HdRemaster::milliseconds();
@@ -100,11 +125,17 @@ void main() { uv = texCoordIn; color = blendColorIn; gl_Position = projection * 
 varying vec2 uv;
 varying vec4 color;
 uniform sampler2D shaderTexture, backgroundTexture, blurTexture, coverageTexture, curveTexture, waterTexture, waterPatternTexture;
+uniform sampler2D reflectionTexture;
 uniform vec4 backgroundRect, canvasRect, coverageRect;
+uniform vec4 focusRect, blurRect;
+uniform vec4 reflectionRect;
+uniform vec2 reflectionTexel;
+uniform vec2 reflectionPlane; // intercept and slope in reflection texture coordinates
 uniform vec4 waterPatternRect;
 uniform vec4 waterPalette; // Original room color and its blend with the painting.
 uniform vec2 waterTexel;
 uniform float waterEnabled, waterSurface;
+uniform vec4 waterTuning; // opacity, distortion, highlights, mirrored background opacity
 uniform vec4 vignette; // enabled, amount, inner radius, softness
 uniform float saturation, dofIntensity, backgroundOnly;
 vec3 waterSky(vec3 direction, vec3 palette) {
@@ -132,22 +163,22 @@ void main() {
     float visibility = mix(1.0 - scene.a, 1.0, backgroundOnly);
     float focus = 0.0;
     if (dofIntensity > 0.0) {
-        focus = texture2D(coverageTexture, coverageRect.xy + uv * coverageRect.zw).r * dofIntensity;
+        focus = texture2D(coverageTexture, focusRect.xy + uv * focusRect.zw).r * dofIntensity;
         float amount = focus * visibility;
-        rgb += (texture2D(blurTexture, bgUV).rgb - texture2D(backgroundTexture, bgUV).rgb) * amount;
+        rgb += (texture2D(blurTexture, blurRect.xy + uv * blurRect.zw).rgb - texture2D(backgroundTexture, bgUV).rgb) * amount;
     }
     if (waterEnabled > 0.0) {
         float coverage = texture2D(waterTexture, coverageRect.xy + uv * coverageRect.zw).r;
         float depth = coverage * 255.0;
         float mask = waterSurface > 0.5 ? smoothstep(0.0, 2.5, depth) : coverage;
-        float amount = mask * visibility * (1.0 - focus);
+        float amount = mask * visibility * (1.0 - focus) * waterTuning.x;
         if (amount > 0.001) {
             // Height and normals come from the small GPU wave target. Reflect
             // and light them at presentation resolution for sharp highlights.
             vec4 pattern = texture2D(waterPatternTexture, waterPatternRect.xy + uv * waterPatternRect.zw);
             float calmEdge = waterSurface > 0.5 ? smoothstep(2.0, 16.0, depth) : 1.0;
             vec3 normal = normalize(mix(vec3(0.0, 1.0, 0.0), pattern.rgb * 2.0 - 1.0, calmEdge));
-            vec2 offset = normal.xz * vec2(2.0, 1.0) * waterTexel * mask;
+            vec2 offset = normal.xz * vec2(3.5, 1.75) * waterTexel * mask * waterTuning.y;
             vec3 base = texture2D(backgroundTexture, bgUV).rgb;
             vec3 painted = texture2D(backgroundTexture, bgUV + offset).rgb;
             vec3 palette = mix(painted, waterPalette.rgb, waterPalette.a);
@@ -155,21 +186,29 @@ void main() {
             vec3 view = normalize(vec3(0.0, viewHeight, 1.0));
             vec3 light = normalize(vec3(0.6, 0.85, -0.35));
             float diffuse = clamp(dot(normal, light), 0.0, 1.0);
-            float fresnel = mix(0.08, 0.85, pow(1.0 - clamp(dot(normal, view), 0.0, 1.0), 3.0));
+            float fresnel = mix(0.16, 0.9, pow(1.0 - clamp(dot(normal, view), 0.0, 1.0), 3.0));
             vec3 reflection = waterSky(reflect(-view, normal), palette);
-            if (waterSurface > 0.5) {
-                // A 2D hull reflection from the existing painting, mirrored
-                // around this column's waterline. Never sample actors or UI.
-                vec2 reflectionUV = bgUV + vec2(normal.x * 16.0 * calmEdge,
-                    -2.0 * (depth + 1.0) + normal.z * 3.0 * calmEdge) * waterTexel;
-                reflectionUV = clamp(reflectionUV, waterTexel * 0.5, vec2(1.0) - waterTexel * 0.5);
-                reflection = mix(reflection, texture2D(backgroundTexture, reflectionUV).rgb * vec3(0.72, 0.86, 0.9), 0.55);
-            }
-            vec3 body = palette * (0.9 + 0.2 * pattern.a);
+            // Give moving crests/troughs readable contrast without lifting
+            // the whole painted surface or weakening shoreline coverage.
+            vec3 body = palette * (0.72 + 0.65 * pattern.a);
             vec3 water = mix(body * (0.8 + 0.25 * diffuse), reflection, fresnel);
-            float specular = pow(clamp(dot(normal, normalize(light + view)), 0.0, 1.0), 96.0);
+            if (waterSurface > 0.5) {
+                // Mirror the painting around one continuous water plane.
+                // The detailed coverage mask must not bend the reflected hull.
+                // Keep its opacity separate
+                // from wave lighting so stronger ripples don't make a solid
+                // mirrored hull. Never sample actors or UI.
+                vec2 reflectionUV = reflectionRect.xy + uv * reflectionRect.zw;
+                float mirrorY = reflectionPlane.x + reflectionPlane.y * reflectionUV.x;
+                reflectionUV.y = 2.0 * mirrorY - reflectionUV.y;
+                reflectionUV += normal.xz * vec2(24.0, 5.0) * calmEdge * waterTuning.y * reflectionTexel;
+                reflectionUV = clamp(reflectionUV, reflectionTexel * 0.5, vec2(1.0) - reflectionTexel * 0.5);
+                vec3 mirroredBackground = texture2D(reflectionTexture, reflectionUV).rgb * vec3(0.72, 0.86, 0.9);
+                water = mix(water, mirroredBackground, waterTuning.w);
+            }
+            float specular = pow(clamp(dot(normal, normalize(light + view)), 0.0, 1.0), 48.0);
             vec3 highlight = mix(palette / max(max(palette.r, max(palette.g, palette.b)), 0.04), vec3(1.0), 0.25);
-            water += highlight * specular * 0.22;
+            water += highlight * specular * 0.42 * waterTuning.z;
             water = mix(base, water, calmEdge);
             rgb += (water - base) * amount;
         }
@@ -187,6 +226,7 @@ varying vec4 color;
 uniform vec4 waterWorld;
 uniform vec2 waterSampleStep;
 uniform float waterSeconds;
+uniform float waterWaveStrength;
 vec4 waterHash(vec4 n) {
     return fract(sin(n) * 43333.333);
 }
@@ -220,9 +260,10 @@ void main() {
     }
     vec3 detail = waterNoise(vec3(flow * 1.8, waterSeconds * 0.4));
     wave += 0.12 * vec3(detail.x, detail.yz * 1.8);
-    vec3 normal = normalize(vec3(-wave.y, 1.0, -wave.z));
+    vec3 normal = normalize(vec3(-wave.y * 1.8 * waterWaveStrength, 1.0, -wave.z * 1.8 * waterWaveStrength));
     // RGB: encoded normal, A: wave height; no alpha blending on this target.
-    gl_FragColor = vec4(normal * 0.5 + 0.5, clamp(wave.x, 0.0, 1.0)) * color;
+    float height = 0.35 + (wave.x - 0.35) * waterWaveStrength;
+    gl_FragColor = vec4(normal * 0.5 + 0.5, clamp(height, 0.0, 1.0)) * color;
 }
 )GLSL";
         const char *blur = R"GLSL(
@@ -280,6 +321,7 @@ void main() {
         _effect->setUniform("curveTexture", 4); _blurShader->setUniform("shaderTexture", 0);
         _effect->setUniform("waterTexture", 5);
         _effect->setUniform("waterPatternTexture", 6);
+        _effect->setUniform("reflectionTexture", 7);
         _maskPipeline->setColor(1,1,1,1); _effects->setColor(1,1,1,1); _blurPipeline->setColor(1,1,1,1);
         _canvas = new TextureTarget(); _blur[0] = new TextureTarget(); _blur[1] = new TextureTarget();
         _cover[0] = new TextureTarget(); _cover[1] = new TextureTarget();
@@ -293,6 +335,7 @@ void main() {
         HdRemaster::state().available = true;
     }
     void destroy() {
+        delete _fadeBlack; _fadeBlack = nullptr;
         HdRemaster::state().available = HdRemaster::state().active = false;
         _lastPipeline = nullptr; _lastScreen = nullptr;
         Pipeline::disable();
@@ -321,11 +364,13 @@ void main() {
         const int canvasW = ConfMan.getInt("hd_aspect_ratio") == 169 ? 2560 : 1920;
         const int canvasH = 1440;
         const int gameW = s.viewportWidth * 3, left = (canvasW - gameW) / 2;
+        const bool wideFocus = wide && canvasW == 2560 && s.viewportWidth == 640;
+        const Math::Vector4d frameRect(float(left)/canvasW, 0, float(gameW)/canvasW, 1);
         const double waterNow = HdRemaster::milliseconds();
         if (_waterRoom != s.room) { _waterRoom = s.room; _waterTime = 0; _waterLast = 0; }
         const bool animateWater = s.water && !s.waterPaused && !overlay;
         if (animateWater && _waterLast && waterNow - _waterLast < 100)
-            _waterTime += (waterNow - _waterLast) * 0.001;
+            _waterTime += (waterNow - _waterLast) * 0.001 * s.waterSpeed / 100.0;
         _waterLast = waterNow;
         // Value noise is not periodic: keep elapsed seconds rather than wrapping
         // a phase, which would visibly jump the moving surface every minute.
@@ -416,7 +461,7 @@ void main() {
                 _effect->setUniform("backgroundRect", Math::Vector4d(float(s.backgroundX)/bg.w, float(s.backgroundY)/bg.h,
                     float(s.scene.w)/bg.w, float(s.scene.h)/bg.h));
             }
-            if (wide && s.dof && canvasW == 2560 &&
+            if (wideFocus && s.dof &&
                 (_wideSource != wide || _wideRoom != s.room || _wideRevision != s.revision || _wideRadius != s.radius)) {
                 _wideSource = wide; _wideRoom = s.room; _wideRevision = s.revision; _wideRadius = s.radius;
                 const int bw = 1280, bh = 720;
@@ -442,6 +487,7 @@ void main() {
                 _waterPattern->setSize(patternW, patternH);
                 _waterPipeline->setFramebuffer(_waterPattern); _waterPipeline->activate();
                 _waterShader->setUniform1f("waterSeconds", _waterTime);
+                _waterShader->setUniform1f("waterWaveStrength", s.waterWaves / 100.0f);
                 _waterShader->setUniform("waterWorld", Math::Vector4d(float(s.backgroundX)/s.scale - float(left)/3,
                     float(s.backgroundY)/s.scale, float(canvasW)/3, s.viewportHeight));
                 _waterShader->setUniform("waterSampleStep", Math::Vector2d(float(canvasW)/(3 * patternW * 52),
@@ -451,8 +497,21 @@ void main() {
             }
             bind(_lut, 4);
             if (s.water) bind(_water, 5);
+            // Keep one full-width reflection source across both drawing passes.
+            // The center's working texture remains separate for native masks/DoF.
+            const bool wideReflection = wide && canvasW == 2560 && s.viewportWidth == 640;
+            if (s.water) bind(wideReflection ? &wide->getGLTexture() : _background, 7);
+            // Express the same native-space plane in the full 16:9 texture or
+            // the fallback background; both center and side passes share it.
+            _effect->setUniform("reflectionPlane", wideReflection
+                ? Math::Vector2d((s.waterReflectionIntercept - s.waterReflectionSlope * left / 3.0f) / s.viewportHeight,
+                    s.waterReflectionSlope * canvasW / (3.0f * s.viewportHeight))
+                : Math::Vector2d(s.waterReflectionIntercept * s.scale / s.background->h,
+                    s.waterReflectionSlope * s.background->w / s.background->h));
             _effect->setUniform1f("waterEnabled", s.water ? 1 : 0);
             _effect->setUniform1f("waterSurface", s.waterSurface ? 1 : 0);
+            _effect->setUniform("waterTuning", Math::Vector4d(s.waterOpacity / 100.0f,
+                s.waterDistortion / 100.0f, s.waterHighlights / 100.0f, s.waterReflection / 100.0f));
             // Room 11's extracted original water is #0F3333. Other rooms keep
             // their own painted palette; artwork and saved Scene Look stay intact.
             _effect->setUniform("waterPalette", s.room == 11
@@ -466,7 +525,11 @@ void main() {
                 _effect->setUniform1f("backgroundOnly", 1);
                 _effect->setUniform("canvasRect", Math::Vector4d(0,0,1,1));
                 _effect->setUniform("backgroundRect", Math::Vector4d(0,0,1,1));
-                // Extend the original left/right depth boundary into decorative scenery.
+                _effect->setUniform("reflectionRect", Math::Vector4d(0,0,1,1));
+                _effect->setUniform("reflectionTexel", Math::Vector2d(3.0f/canvasW, 3.0f/canvasH));
+                // Focus spans the full painting; water retains its native boundary mapping.
+                _effect->setUniform("focusRect", Math::Vector4d(0,0,1,1));
+                _effect->setUniform("blurRect", Math::Vector4d(0,0,1,1));
                 _effect->setUniform("coverageRect", Math::Vector4d(-float(left)/gameW,0,float(canvasW)/gameW,1));
                 if (s.dof || s.water) bind(&wide->getGLTexture(), 1);
                 if (s.dof) { bind(_wideBlur[0]->getTexture(), 2); bind(_cover[0]->getTexture(), 3); }
@@ -476,15 +539,30 @@ void main() {
             }
             _effect->setUniform1f("backgroundOnly", 0);
             _effect->setUniform("coverageRect", Math::Vector4d(0,0,1,1));
+            _effect->setUniform("focusRect", wideFocus ? frameRect : Math::Vector4d(0,0,1,1));
             if (s.dof || s.water) {
                 bind(_background, 1);
-                if (s.dof) { bind(_blur[0]->getTexture(), 2); bind(_cover[0]->getTexture(), 3); }
-                _effect->setUniform("backgroundRect", Math::Vector4d(float(s.backgroundX)/s.background->w, float(s.backgroundY)/s.background->h,
-                    float(s.scene.w)/s.background->w, float(s.scene.h)/s.background->h));
+                const Math::Vector4d bgRect(float(s.backgroundX)/s.background->w, float(s.backgroundY)/s.background->h,
+                    float(s.scene.w)/s.background->w, float(s.scene.h)/s.background->h);
+                if (s.dof) {
+                    // Sample the same full-width blur in both passes, preventing
+                    // a clamped 4:3 blur edge through the middle of the painting.
+                    bind(wideFocus ? _wideBlur[0]->getTexture() : _blur[0]->getTexture(), 2);
+                    bind(_cover[0]->getTexture(), 3);
+                }
+                _effect->setUniform("backgroundRect", bgRect);
+                _effect->setUniform("blurRect", wideFocus ? frameRect : bgRect);
             }
             _effect->setUniform1f("dofIntensity", s.dof ? s.intensity / 100.0f : 0);
             _effect->setUniform("waterPatternRect", Math::Vector4d(float(left)/canvasW,0,float(gameW)/canvasW,1));
             _effect->setUniform("waterTexel", Math::Vector2d(float(s.scale)/s.background->w, float(s.scale)/s.background->h));
+            _effect->setUniform("reflectionRect", wideReflection
+                ? Math::Vector4d(float(left)/canvasW, 0, float(gameW)/canvasW, 1)
+                : Math::Vector4d(float(s.backgroundX)/s.background->w, float(s.backgroundY)/s.background->h,
+                    float(s.scene.w)/s.background->w, float(s.scene.h)/s.background->h));
+            _effect->setUniform("reflectionTexel", wideReflection
+                ? Math::Vector2d(3.0f/canvasW, 3.0f/canvasH)
+                : Math::Vector2d(float(s.scale)/s.background->w, float(s.scale)/s.background->h));
             _effect->setUniform("canvasRect", (wide || s.viewportWidth > 640)
                 ? Math::Vector4d(float(left)/canvasW,0,float(gameW)/canvasW,1)
                 : Math::Vector4d(0,0,1,1));
@@ -515,7 +593,30 @@ void main() {
         // The same centered game rectangle also drives inverse mouse mapping.
         const float h = gameRect.height(), w = h * canvasW / canvasH;
         const float x = gameRect.left + (gameRect.width() - w) * 0.5f;
+        // Reveal the completed cannon/post-movie scene together, rather than animating
+        // individual PNG palettes. Start AFTER its first composition/uploads;
+        // loading time must not consume or lengthen this presentation-only fade.
+        const double fadeNow = HdRemaster::milliseconds();
+        const bool movieReveal = s.movieFadePending && !overlay && !s.exitFadeActive;
+        if (_presentedRoom != s.room || movieReveal) {
+            _presentedRoom = s.room;
+            _sceneFadeStarted = (s.room == 9 || movieReveal) ? fadeNow : -1;
+            if (movieReveal) {
+                s.movieFadePending = false;
+                s.exitFadeOpacity = 0;
+            }
+        }
+        float sceneGain = 1.0f;
+        if (_sceneFadeStarted >= 0) {
+            const float progress = CLIP(float((fadeNow - _sceneFadeStarted) / 1000.0), 0.0f, 1.0f);
+            sceneGain = progress * progress * (3.0f - 2.0f * progress);
+            if (progress >= 1.0f) _sceneFadeStarted = -1;
+        }
+        // This includes background, side extensions, costumes and scene UI.
+        // Keep cached pixels untouched; restore white before drawing the cursor.
+        normal->setColor(sceneGain, sceneGain, sceneGain, 1.0f);
         normal->drawTexture(*_canvas->getTexture(), x, gameRect.top, w, h);
+        normal->setColor(1.0f, 1.0f, 1.0f, 1.0f);
         screen->enableScissorTest(true);
         return true;
     }
@@ -524,6 +625,7 @@ void main() {
 class HdRemasterGL {
 public:
     bool snapshot(Graphics::Surface &) { return false; }
+    void drawExitFade(Pipeline *, Framebuffer *, int, int, bool) {}
     void beginFrame() {}
     void endFrame() {}
     void initialize() {}

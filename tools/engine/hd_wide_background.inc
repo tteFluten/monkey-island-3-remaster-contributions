@@ -58,7 +58,7 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
             uint32 *row = (uint32 *)pixels->getBasePtr(0, y);
             for (int x = 0; x < pixels->w; ++x) {
                 const int coverage = HdDepthOfField::coverageAt(remaster.wideCoverage.data(), remaster.viewportWidth,
-                    remaster.viewportHeight, 3, CLIP(x - 320, 0, 1919), y) * remaster.intensity / 100;
+                    remaster.viewportHeight, 3, x * 3 / 4, y) * remaster.intensity / 100;
                 if (coverage) row[x] = HdDepthOfField::mix(row[x], HdDepthOfField::sample(blurred.data(), bw, bh, 2, x, y), coverage);
             }
         }

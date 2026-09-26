@@ -37,3 +37,49 @@ def patch(root, edit):
          'actor->_costume && !HdSceneVisibility::nativePaletteEffect(_currentRoom, actor->_costume))',
          '''actor->_costume && !HdSceneVisibility::nativePaletteEffect(_currentRoom, actor->_costume) &&
                         !(remaster.water && HdWater::ambient(_currentRoom, actor->_costume)))''')
+
+    # Cannon and waterline defer future HD animation frames, including scripted
+    # poses not used until later. Decode them off the engine thread, using the
+    # existing exact-pack batch decoder. Keep the rollout explicit in one place.
+    (root / 'engines/scumm/hd_room_prefetch.inc').write_bytes((here / 'hd_room_prefetch.inc').read_bytes())
+    edit(manager, '    void preloadRoomCostumes(int room) {', '''private:
+    struct RoomPrefetch;
+    RoomPrefetch *_roomPrefetch = nullptr;
+    void stopRoomPrefetch();
+public:
+    static bool usesAsyncRoomLoading(int room) { return room == 9 || room == 11; }
+    void queueRoomCostume(int room, int costume);
+    void queueRoomCostumes(int room);
+    void prefetchRoomStep(int room);
+    void preloadRoomCostumes(int room) {''')
+    implementation = 'engines/scumm/hd_costume_manager.cpp'
+    edit(implementation, 'HdCostumeManager::~HdCostumeManager() {',
+         'HdCostumeManager::~HdCostumeManager() {\n    stopRoomPrefetch();')
+    edit(implementation, 'int HdCostumeManager::preloadCostumeRange(',
+         '#include "scumm/hd_room_prefetch.inc"\n\nint HdCostumeManager::preloadCostumeRange(')
+    gfx = 'engines/scumm/gfx.cpp'
+    edit(gfx, '''            // Decode the selected visible costumes during room loading. This
+            // uses the existing bounded cache and batch decoder; no unrelated
+            // room textures are decoded on the presentation deadline.''', '''            // Cannon and waterline queue future poses asynchronously.
+            // Other rooms retain their existing bounded-cache prewarm.''')
+    edit(gfx, '''            if (playtestExactRoom(_currentRoom) && _hdQuiverManager && _hdQuiverManager->isEnabled())
+                _hdQuiverManager->preloadRoomCostumes(_currentRoom);''', '''            if (!HdCostumeManager::usesAsyncRoomLoading(_currentRoom) && playtestExactRoom(_currentRoom) && _hdQuiverManager && _hdQuiverManager->isEnabled())
+                _hdQuiverManager->preloadRoomCostumes(_currentRoom);''')
+    edit(gfx, '                        _hdQuiverManager->preloadCostumeRange(actor->_costume, 0, 65535);', '''                    {
+                        if (HdCostumeManager::usesAsyncRoomLoading(_currentRoom)) _hdQuiverManager->queueRoomCostume(_currentRoom, actor->_costume);
+                        else _hdQuiverManager->preloadCostumeRange(actor->_costume, 0, 65535);
+                    }''')
+    edit(gfx, '\t\t\thdPrintf("ROOM CHANGE: entering room %d, %d objects:", _currentRoom, _numLocalObjects);', '''            // Visible costumes go first; later scripted poses follow them.
+            if (HdCostumeManager::usesAsyncRoomLoading(_currentRoom) && _hdQuiverManager && _hdQuiverManager->isEnabled())
+                _hdQuiverManager->queueRoomCostumes(_currentRoom);
+\t\t\thdPrintf("ROOM CHANGE: entering room %d, %d objects:", _currentRoom, _numLocalObjects);''')
+    edit(gfx, '''\t\t\tint prewarmCostumes = 0;
+\t\t\tif (_hdCostumeManager && _hdCostumeManager->isEnabled()) {''', '''\t\t\tint prewarmCostumes = 0;
+            // The selected exact pack does not draw legacy sprites.
+\t\t\tif (!(HdCostumeManager::usesAsyncRoomLoading(_currentRoom) && _hdQuiverManager && _hdQuiverManager->isEnabled()) &&
+                _hdCostumeManager && _hdCostumeManager->isEnabled()) {''')
+    # Poll before presentation, even for a static scene. A pending job returns
+    # immediately; only completed jobs join and transfer their pixel storage.
+    edit('engines/scumm/scumm.cpp',
+         '            if (hdPresentation) { presentHDMotion(); presentHDCursor(); }', '''            if (_hdQuiverManager) _hdQuiverManager->prefetchRoomStep(_currentRoom);
+            if (hdPresentation) { presentHDMotion(); presentHDCursor(); }''')

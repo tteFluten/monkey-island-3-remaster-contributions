@@ -5,7 +5,11 @@ int ScummEngine::hdAspectRatio() const {
 
 void ScummEngine::publishHDWideBackground(bool movie) {
     if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session")) return;
-    if (movie || isSmushActive()) HdRemaster::state().active = false;
+    if (movie || isSmushActive()) {
+        HdRemaster::state().active = false;
+        HdRemaster::state().entryRoom = 0; // Movies own their presentation.
+    }
+    HdRemaster::state().wideRoom = _currentRoom;
     Common::String path;
     if (!movie && !isSmushActive() && _currentRoom != 92 && _roomWidth == 640 &&
         _roomHeight == 480 && hdAspectRatio() == 169)
@@ -35,12 +39,36 @@ void ScummEngine::refreshHDInventoryViewport() {
 
 void ScummEngine::configureHDViewport(bool movie) {
     if (_game.id != GID_CMI || !ConfMan.hasKey("playtest_session")) return;
+    const bool previousMovie = ConfMan.hasKey("hd_movie_active") && ConfMan.getBool("hd_movie_active");
+    ConfMan.setBool("hd_movie_active", movie, Common::ConfigManager::kTransientDomain);
     publishHDWideBackground(movie);
+    auto &presentation = HdRemaster::state();
+    if (previousMovie && !movie && presentation.available &&
+        (!ConfMan.hasKey("hd_gpu_effects") || ConfMan.getBool("hd_gpu_effects"))) {
+        // Arm, but do not start, the fade until the next completed scene.
+        // A following movie leaves it pending; returning to this same room
+        // must rebuild its composition before the backend reveals it.
+        presentation.movieFadePending = true;
+        if (_currentRoom != 1 && _currentRoom != 92 && _hdBackgroundSurface.getPixels()) {
+            presentation.entryRoom = _currentRoom;
+            presentation.entryPrepared = presentation.entryComposed = false;
+            presentation.active = presentation.ui = false;
+        }
+    }
     const int width = movie ? 640 : HdAspect::viewport(hdAspectRatio(), _roomWidth, _roomHeight);
     _hdMotionClock.valid = _hdMotionPresented = _hdMotionMoving = false;
     _hdPresentedCursor = Common::Rect();
     _hdBackendCursor = nullptr;
-    if (_screenWidth == width) return;
+    if (_screenWidth == width) {
+        // Fixed rooms and movies both use 640 native pixels. Refresh the
+        // backend rectangle even when no framebuffer allocation changes.
+        if (previousMovie != movie) {
+            _system->beginGFXTransaction();
+            _system->endGFXTransaction();
+            _fullRedraw = _completeScreenRedraw = true;
+        }
+        return;
+    }
     _screenWidth = width;
     initScreens(0, _screenHeight);
     _textSurface.free();
@@ -62,6 +90,28 @@ void ScummEngine::configureHDViewport(bool movie) {
     _system->initSize(width * MAX(1, _hdScale), _screenHeight * MAX(1, _hdScale), &format);
     _system->endGFXTransaction();
     _fullRedraw = _completeScreenRedraw = true;
+}
+
+void ScummEngine::fadeHDPresentation() {
+    auto &presentation = HdRemaster::state();
+    if (!presentation.available || !ConfMan.hasKey("playtest_session") ||
+        (ConfMan.hasKey("hd_gpu_effects") && !ConfMan.getBool("hd_gpu_effects"))) return;
+    // Keep the outgoing texture and its geometry until completely black.
+    // Poll input without advancing scripts, decoding or rebuilding the scene.
+    presentation.exitFadeActive = true;
+    const double started = HdRemaster::milliseconds();
+    do {
+        parseEvents();
+        const float progress = CLIP(float((HdRemaster::milliseconds() - started) / 1000.0), 0.0f, 1.0f);
+        presentation.exitFadeOpacity = progress * progress * (3.0f - 2.0f * progress);
+        _system->updateScreen();
+        if (progress >= 1.0f) break;
+        _system->delayMillis(10);
+    } while (!shouldQuit());
+    presentation.exitFadeActive = false;
+    // The first completed destination frame releases this black hold.
+    presentation.exitFadeOpacity = 1.0f;
+    presentation.movieFadePending = true;
 }
 
 void ScummEngine::refreshHDViewport(bool movie) {

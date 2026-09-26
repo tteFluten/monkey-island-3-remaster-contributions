@@ -4,6 +4,10 @@
 auto actorLighting = [&](Actor *a) {
     HdActorLighting::Tint neutral;
     if (_game.id != GID_CMI || !a->_costume) return neutral;
+    // The cannon intro animates native palette brightness independently of
+    // screen transitions. Keep its HD artwork fully colored from the first
+    // pose, with the room's established warm tint and unchanged image alpha.
+    if (_currentRoom == 9) return neutral.enhanced(true);
     const byte *costume = getResourceAddress(rtCostume, a->_costume);
     if (!costume) return neutral;
     const byte *akpl = findResourceData(MKTAG('A','K','P','L'), costume);
@@ -21,7 +25,7 @@ auto actorLighting = [&](Actor *a) {
     }
     const unsigned int *stableUsage = a->_hdLightingSamples.update(_currentRoom, a->_costume, mapping, usage);
     const HdActorLighting::Tint native = HdActorLighting::fromPalette(_darkenPalette, _currentPalette, stableUsage);
-    const HdActorLighting::Tint applied = native.enhanced(_currentRoom == 9);
+    const HdActorLighting::Tint applied = native.enhanced();
     if (_hdFrameCount % 30 == 0)
         hdPrintf("LIGHTING actor=%d position=%d,%d native=%d,%d,%d applied=%d,%d,%d", a->_number,
                  a->getPos().x, a->getPos().y, native.channel[0], native.channel[1], native.channel[2],

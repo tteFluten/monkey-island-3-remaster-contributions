@@ -172,4 +172,8 @@ from patch_water import patch as patch_water
 patch_water(root, edit)
 print('Applied lightweight ambient water shader')
 
+from patch_film import patch as patch_film
+patch_film(root, edit)
+print('Applied optional final vintage-film presentation')
+
 stamp.write_text(revision + "\n")

@@ -4,8 +4,18 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import sharp from 'sharp';
-import { PlaytestService, roomFromFilename, assertAspect, wideBackgroundCrop, validateSettings, readFontSize, readAspectRatio, readDepthOfField, readDepthOfFieldTuning } from './playtest.js';
+import { PlaytestService, roomFromFilename, assertAspect, wideBackgroundCrop, validateSettings, readFontSize, readAspectRatio, readDepthOfField, readDepthOfFieldTuning, readFilmSettings } from './playtest.js';
 import { setProjectRoot } from './manifest.js';
+
+test('film opt-in and strength survive relaunch only from global settings', () => {
+  assert.deepEqual(readFilmSettings(''), { enabled: false, strength: 20 });
+  assert.deepEqual(readFilmSettings('[comi]\nhd_film_enabled=true\nhd_film_strength=80'), { enabled: false, strength: 20 });
+  assert.deepEqual(readFilmSettings('[scummvm]\r\nhd_film_enabled = true\r\nhd_film_strength = 35\r\n[comi]\nhd_film_enabled=false'), { enabled: true, strength: 35 });
+  assert.deepEqual(readFilmSettings('[scummvm]\nhd_film_enabled=no\nhd_film_strength=0'), { enabled: false, strength: 0 });
+  assert.deepEqual(readFilmSettings('[scummvm]\nhd_film_strength=-5'), { enabled: false, strength: 0 });
+  assert.deepEqual(readFilmSettings('[scummvm]\nhd_film_strength=110'), { enabled: false, strength: 100 });
+  assert.deepEqual(readFilmSettings('[scummvm]\nhd_film_enabled=invalid\nhd_film_strength=20oops'), { enabled: false, strength: 20 });
+});
 
 test('aspect preference defaults to 4:3 and reads only the COMI section', () => {
   assert.equal(readAspectRatio(''), 43);
@@ -177,6 +187,7 @@ test('import, persistence, staging, process commands and original restoration', 
     assert.match(launchConfig, /vsync=true/);
     assert.match(launchConfig, /last_window_width=2560/);
     assert.match(launchConfig, /hd_trace=false/);
+    assert.deepEqual(readFilmSettings(launchConfig), { enabled: false, strength: 20 });
     // Per-room grades are tracked authoring data edited from the in-game Look panel.
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), new RegExp(`hd_color_grades_path=${path.join(root, 'data/color-grades.json')}`));
     await assert.rejects(service.launch(), /already running/);
@@ -199,6 +210,9 @@ test('import, persistence, staging, process commands and original restoration', 
     assert.equal((await packRestored.snapshot()).settings.characterPack, 'original');
     // An executable that exits immediately must clear running state and expose failure.
     await fs.appendFile(path.join(root, '.playtest/scummvm.ini'), 'hd_font_size=75\nhd_aspect_ratio=43\nhd_depth_of_field=2\nhd_dof_blur=35\n');
+    const savedFilmConfig = (await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'))
+      .replace('hd_film_enabled=false', 'hd_film_enabled=true').replace('hd_film_strength=20', 'hd_film_strength=35');
+    await fs.writeFile(path.join(root, '.playtest/scummvm.ini'), savedFilmConfig);
     await fs.writeFile(binary, '#!/bin/sh\nexit 7\n');
     await service.launch();
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /hd_font_size=75/);
@@ -206,6 +220,7 @@ test('import, persistence, staging, process commands and original restoration', 
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /hd_depth_of_field=2/);
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /hd_dof_blur=35\nhd_dof_edge=2\nhd_dof_intensity=100\nhd_dof_depth=1/);
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /last_window_height=1440/);
+    assert.deepEqual(readFilmSettings(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8')), { enabled: true, strength: 35 });
     const exitDeadline = Date.now() + 3000;
     while (service.status.running && Date.now() < exitDeadline) await new Promise(r => setTimeout(r, 50));
     assert.match(service.status.error ?? '', /code 7/);

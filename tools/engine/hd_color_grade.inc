@@ -14,6 +14,8 @@ struct HdColorGradeState {
     HdColorGrade::Lut lut;
     // Look panel: open state, selected row, before/after comparison.
     bool panel = false, bypass = false, mouseDown = false;
+    bool waterPage = false, filmPage = false, shadowPage = false;
+    bool waterBypass = false, shadowBypass = false;
     int row = 0;
     uint32 savedAt = 0;
     Common::Array<byte> vignette;
@@ -31,7 +33,21 @@ enum { kLookColor = 0, kLookFocus = HdColorGrade::kVignetteOn,
     kLookBlur, kLookEdge, kLookIntensity, kLookDepth, kLookVignette,
     kLookRows = kLookVignette + 4 };
 const int kLookWidth = 300, kLookTop = 8, kLookLineHeight = 16, kLookExtraLines = 9;
-int hdLookLine(int row) { return row + 2 + (row >= kLookFocus ? 1 : 0) + (row >= kLookVignette ? 1 : 0); }
+int hdLookRows() {
+    const auto &st = hdColorGradeState();
+    return st.filmPage ? HdFilm::kControls : st.shadowPage ? HdSceneLook::kControls - HdSceneLook::kShadowX
+        : st.waterPage ? HdSceneLook::kShadowX - HdSceneLook::kWaterOpacity : kLookRows;
+}
+int hdLookLine(int row) { return row + 2 + ((hdColorGradeState().waterPage || hdColorGradeState().filmPage || hdColorGradeState().shadowPage) ? 0 : (row >= kLookFocus ? 1 : 0) + (row >= kLookVignette ? 1 : 0)); }
+
+void hdCycleLookPage(int room) {
+    auto &st = hdColorGradeState();
+    if (st.filmPage) { st.filmPage = false; st.shadowPage = true; }
+    else if (st.shadowPage) { st.shadowPage = false; st.waterPage = room == 11; }
+    else if (st.waterPage) st.waterPage = false;
+    else st.filmPage = true;
+    st.row = 0;
+}
 
 Common::String hdReadLookFile(const Common::String &path) {
     Common::String text;
@@ -46,7 +62,7 @@ void hdLoadColorGrades(HdColorGradeState &st) {
     st.loaded = true;
     // Old INI focus preferences supply global defaults until the first save.
     const char *keys[] = {"hd_depth_of_field", "hd_dof_blur", "hd_dof_edge", "hd_dof_intensity", "hd_dof_depth"};
-    for (int c = HdSceneLook::kFocus; c < HdSceneLook::kControls; ++c)
+    for (int c = HdSceneLook::kFocus; c < HdSceneLook::kWaterOpacity; ++c)
         if (ConfMan.hasKey(keys[c - HdSceneLook::kFocus]))
             st.settings.global.set(c, ConfMan.getInt(keys[c - HdSceneLook::kFocus]));
     st.path = ConfMan.hasKey("hd_color_grades_path") ? ConfMan.get("hd_color_grades_path") : "";
@@ -147,13 +163,15 @@ void hdSaveSceneFocus(int room, int level, const HdDepthOfField::Tuning &tuning,
     auto &st = hdColorGradeState();
     if (!st.loaded) hdLoadColorGrades(st);
     const int values[] = {level, tuning.blurTenths, tuning.edge, tuning.intensity, tuning.depth};
-    for (int c = HdSceneLook::kFocus; c < HdSceneLook::kControls; ++c) if (changed & (1u << c)) {
+    for (int c = HdSceneLook::kFocus; c < HdSceneLook::kWaterOpacity; ++c) if (changed & (1u << c)) {
         if (reset) st.settings.reset(room, c);
         else st.settings.set(room, c, values[c - HdSceneLook::kFocus]);
     }
     hdSaveColorGrades(st);
 }
 int hdLookControl(int row) {
+    if (hdColorGradeState().waterPage) return HdSceneLook::kWaterOpacity + row;
+    if (hdColorGradeState().shadowPage) return HdSceneLook::kShadowX + row;
     return row < kLookFocus ? row : row < kLookVignette ? HdSceneLook::kFocus + row - kLookFocus
         : HdColorGrade::kVignetteOn + row - kLookVignette;
 }
@@ -177,6 +195,7 @@ void ScummEngine::renderHDColorGrade() {
     if (_game.id != GID_CMI) return;
     if (!st.loaded) hdLoadColorGrades(st);
     const int room = _currentRoom;
+    if (room != 11) st.waterBypass = false;
     const HdColorGrade::Grade grade = HdSceneLook::Settings::roomValid(room) && !st.bypass
         ? st.settings.grade(room) : HdColorGrade::Grade();
     // The decorative widescreen extension receives the same scene treatment.
@@ -184,6 +203,12 @@ void ScummEngine::renderHDColorGrade() {
         ConfMan.setInt(Common::String("hd_wide_look_") + HdColorGrade::range(c).key,
             grade.value[c], Common::ConfigManager::kTransientDomain);
     auto &remaster = HdRemaster::state();
+    remaster.waterOpacity = st.waterBypass ? 0 : st.settings.get(room, HdSceneLook::kWaterOpacity);
+    remaster.waterWaves = st.settings.get(room, HdSceneLook::kWaterWaves);
+    remaster.waterSpeed = st.settings.get(room, HdSceneLook::kWaterSpeed);
+    remaster.waterDistortion = st.settings.get(room, HdSceneLook::kWaterDistortion);
+    remaster.waterHighlights = st.settings.get(room, HdSceneLook::kWaterHighlights);
+    remaster.waterReflection = st.settings.get(room, HdSceneLook::kWaterReflection);
     if (remaster.active) {
         remaster.grade = grade;
         // Exchange reusable buffers: scene stays intact; following UI draws
@@ -242,15 +267,22 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         st.panel = false;
         return false;
     }
+    if (_currentRoom != 11 && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
     if (!st.loaded) hdLoadColorGrades(st);
     const bool key = event.type == Common::EVENT_KEYDOWN;
     if (key && (event.kbd.flags & (Common::KBD_CTRL | Common::KBD_ALT | Common::KBD_META))) return false;
+    if (key && _currentRoom == 11 && event.kbd.keycode == Common::KEYCODE_w) {
+        st.waterPage = !st.panel || !st.waterPage; st.filmPage = st.shadowPage = false;
+        st.panel = true; st.row = 0; _fullRedraw = true;
+        return true;
+    }
     if (key && (event.kbd.keycode == Common::KEYCODE_u || event.kbd.keycode == Common::KEYCODE_BACKQUOTE)) {
         st.panel = !st.panel;
         _fullRedraw = true;
         return true;
     }
     if (!st.panel) return false;
+    const int rows = hdLookRows();
     const int steps = key && (event.kbd.flags & Common::KBD_SHIFT) ? 5 : 1;
     int delta = 0;
     bool reset = false;
@@ -260,12 +292,15 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         const int scale = MAX(1, (int)_hdScale);
         const Common::Point position = hdLookPosition();
         const int x = event.mouse.x / scale - position.x, y = event.mouse.y / scale - position.y;
-        if (x < 0 || x >= kLookWidth || y < 0 || y >= (kLookRows + kLookExtraLines) * kLookLineHeight) {
+        if (x < 0 || x >= kLookWidth || y < 0 || y >= (rows + kLookExtraLines) * kLookLineHeight) {
             st.panel = false; return true;
         }
-        if (y < 4 + kLookLineHeight) { st.editGlobal = !st.editGlobal; st.savedAt = 0; return true; }
+        if (y < 4 + kLookLineHeight) { if (!st.filmPage) st.editGlobal = !st.editGlobal; st.savedAt = 0; return true; }
+        if (y < 4 + 2 * kLookLineHeight) {
+            hdCycleLookPage(_currentRoom); return true;
+        }
         int row = -1;
-        for (int r = 0; r < kLookRows; ++r)
+        for (int r = 0; r < rows; ++r)
             if (y >= 4 + hdLookLine(r) * kLookLineHeight && y < 4 + (hdLookLine(r) + 1) * kLookLineHeight) row = r;
         if (row < 0) return true;
         st.row = row;
@@ -276,27 +311,51 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         _rightBtnPressed = 0; return true;
     } else if (!key) return false;
     else switch (event.kbd.keycode) {
+    case Common::KEYCODE_TAB: hdCycleLookPage(_currentRoom); return true;
     case Common::KEYCODE_r:
-        if (!st.editGlobal && HdSceneLook::Settings::roomValid(_currentRoom)) {
-            st.settings.rooms[_currentRoom].mask = 0; hdSaveColorGrades(st);
+        if (st.filmPage) { HdFilm::reset(); st.savedAt = _system->getMillis(); return true; }
+        if (st.shadowPage) {
+            const int room = hdSceneLookEditRoom(_currentRoom);
+            for (int c = HdSceneLook::kShadowX; c < HdSceneLook::kControls; ++c)
+                st.settings.reset(room, c);
+            st.shadowBypass = false;
+            hdSaveColorGrades(st);
+        } else if (!st.editGlobal && HdSceneLook::Settings::roomValid(_currentRoom)) {
+            if (st.waterPage) {
+                for (int c = HdSceneLook::kWaterOpacity; c < HdSceneLook::kShadowX; ++c)
+                    st.settings.reset(_currentRoom, c);
+            } else st.settings.rooms[_currentRoom].mask = 0;
+            hdSaveColorGrades(st);
         }
         return true;
-    case Common::KEYCODE_g: st.editGlobal = !st.editGlobal; st.savedAt = 0; return true;
-    case Common::KEYCODE_UP: st.row = (st.row + kLookRows - 1) % kLookRows; return true;
-    case Common::KEYCODE_DOWN: st.row = (st.row + 1) % kLookRows; return true;
+    case Common::KEYCODE_g: if (!st.filmPage) st.editGlobal = !st.editGlobal; st.savedAt = 0; return true;
+    case Common::KEYCODE_UP: st.row = (st.row + rows - 1) % rows; return true;
+    case Common::KEYCODE_DOWN: st.row = (st.row + 1) % rows; return true;
     case Common::KEYCODE_LEFT: delta = -steps; break;
     case Common::KEYCODE_RIGHT: delta = steps; break;
     case Common::KEYCODE_BACKSPACE: case Common::KEYCODE_DELETE: reset = true; break;
-    case Common::KEYCODE_b: st.bypass = !st.bypass; return true;
+    case Common::KEYCODE_b:
+        if (st.filmPage) { HdFilm::state().bypass = !HdFilm::state().bypass; ++HdFilm::state().revision; }
+        else if (st.waterPage) st.waterBypass = !st.waterBypass;
+        else if (st.shadowPage) st.shadowBypass = !st.shadowBypass;
+        else st.bypass = !st.bypass;
+        return true;
     case Common::KEYCODE_ESCAPE: st.panel = false; return true;
     case Common::KEYCODE_o: case Common::KEYCODE_F5: case Common::KEYCODE_i:
         st.panel = false; return false;
     default: return true;
     }
+    if (st.filmPage) {
+        const auto &r = HdFilm::range(st.row);
+        HdFilm::set(st.row, reset ? r.neutral : HdFilm::get(st.row) + delta * r.step);
+        st.savedAt = _system->getMillis();
+        return true;
+    }
     const int room = hdSceneLookEditRoom(_currentRoom), control = hdLookControl(st.row);
+    if (st.shadowPage) st.shadowBypass = false;
     if (reset) {
         st.settings.reset(room, control); // Room reset means inheritance, including explicit Off.
-    } else if (control < HdSceneLook::kFocus) {
+    } else if (control < HdSceneLook::kFocus || control >= HdSceneLook::kWaterOpacity) {
         st.settings.set(room, control, st.settings.get(room, control) + delta * HdSceneLook::range(control).step);
     } else {
         auto &dof = hdDepthOfFieldState();
@@ -325,8 +384,10 @@ void ScummEngine::drawHDLookPanel() {
     if (!st.panel || _game.id != GID_CMI || !_hdFontManager || !_hdFontManager->hasFont(3) || !_hdComposite.getPixels())
         return;
     const int room = _currentRoom;
+    if (room != 11 && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
+    const int rows = hdLookRows();
     if (!st.loaded) hdLoadColorGrades(st);
-    const int editingRoom = hdSceneLookEditRoom(room);
+    const int editingRoom = st.filmPage ? 0 : hdSceneLookEditRoom(room);
     const HdColorGrade::Grade grade = st.settings.grade(editingRoom);
     const int level = st.settings.get(editingRoom, HdSceneLook::kFocus);
     const HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning(editingRoom);
@@ -346,32 +407,52 @@ void ScummEngine::drawHDLookPanel() {
     values[kLookVignette] = grade.value[HdColorGrade::kVignetteOn] ? "On" : "Off";
     for (int c = 1; c < 4; ++c)
         values[kLookVignette + c] = Common::String::format("%d%%", grade.value[HdColorGrade::kVignetteOn + c]);
+    if (st.waterPage) for (int row = 0; row < rows; ++row)
+        values[row] = Common::String::format("%d%%", st.settings.get(editingRoom, hdLookControl(row)));
+    if (st.shadowPage) for (int row = 0; row < rows; ++row) {
+        const int control = hdLookControl(row), value = st.settings.get(editingRoom, control);
+        values[row] = control <= HdSceneLook::kShadowY ? Common::String::format("%+d px", value)
+            : control < HdSceneLook::kShadowRed ? Common::String::format("%d%%", value)
+            : Common::String::format("%d", value);
+    }
+    if (st.filmPage) for (int row = 0; row < rows; ++row)
+        values[row] = row == HdFilm::kEnabled ? Common::String(HdFilm::get(row) ? "On" : "Off")
+            : Common::String::format("%d%%", HdFilm::get(row));
     static const char *const depthNames[] = {"Depth of field", "Blur radius", "Edge softness", "Blur strength", "Scene depth"};
     Common::String lines[kLookRows + kLookExtraLines];
     bool accent[kLookRows + kLookExtraLines] = {};
     int count = 0;
-    lines[count++] = editingRoom ? Common::String::format("SCENE LOOK   Room %d (* override)", room)
-        : Common::String("SCENE LOOK   Global defaults");
-    for (int row = 0; row < kLookRows; ++row) {
-        if (row == 0) lines[count++] = "Color correction";
-        if (row == kLookFocus) lines[count++] = "Scene depth";
-        if (row == kLookVignette) lines[count++] = "Vignette";
-        const char *name = row < kLookFocus ? HdColorGrade::range(row).name
+    const char *title = st.filmPage ? "FILM LOOK" : st.waterPage ? "WATER SHADER" : st.shadowPage ? "CHARACTER SHADOWS" : "SCENE LOOK";
+    lines[count++] = editingRoom ? Common::String::format("%s   Room %d (* override)", title, room)
+        : Common::String::format("%s   Global defaults", title);
+    for (int row = 0; row < rows; ++row) {
+        if (row == 0) lines[count++] = st.filmPage ? "Film texture   Tab: Shadows"
+            : st.shadowPage ? (room == 11 ? "Shadows   Tab: Water" : "Shadows   Tab: Scene Look")
+            : st.waterPage ? "Water shader   Tab: Scene Look" : "Color correction   Tab: Film";
+        if (!st.waterPage && !st.filmPage && !st.shadowPage && row == kLookFocus) lines[count++] = "Scene depth";
+        if (!st.waterPage && !st.filmPage && !st.shadowPage && row == kLookVignette) lines[count++] = "Vignette";
+        const char *name = st.filmPage ? HdFilm::range(row).name : (st.waterPage || st.shadowPage) ? HdSceneLook::range(hdLookControl(row)).name : row < kLookFocus ? HdColorGrade::range(row).name
             : row < kLookVignette ? depthNames[row - kLookFocus]
             : HdColorGrade::range(HdColorGrade::kVignetteOn + row - kLookVignette).name;
         if (editingRoom && st.settings.rooms[editingRoom].has(hdLookControl(row))) values[row] += " *";
         accent[count] = row == st.row;
         lines[count++] = Common::String::format("%s%s\t%s", row == st.row ? "> " : "   ", name, values[row].c_str());
     }
+    if (st.shadowPage) {
+        lines[count++] = "X: right +   Y: down +";
+        lines[count++] = "Ovalness: 5 flat / 100 round";
+    }
     lines[count++] = "Click - / +   Arrows adjust   Shift x5";
-    lines[count++] = editingRoom ? "Backspace inherit   R inherit all" : "Backspace restore default";
-    lines[count++] = "G or click title: Global / Room";
-    lines[count++] = st.bypass ? "B compare (bypassed)   U / Esc close" : "B compare   U / Esc close";
-    if (!st.error.empty())
+    lines[count++] = st.filmPage ? "Backspace default   R reset film"
+        : st.shadowPage ? (editingRoom ? "Backspace / R: inherit shadows" : "Backspace default   R reset shadows")
+        : editingRoom ? (st.waterPage ? "Backspace inherit   R inherit water" : "Backspace inherit   R inherit all") : "Backspace restore default";
+    lines[count++] = st.filmPage ? "Global: all rooms, UI and movies" : "G or click title: Global / Room";
+    lines[count++] = (st.filmPage ? HdFilm::state().bypass : st.waterPage ? st.waterBypass : st.shadowPage ? st.shadowBypass : st.bypass) ? "B compare (bypassed)   U / Esc close" : "B compare   U / Esc close";
+    if (!st.filmPage && !st.error.empty())
         lines[count++] = st.error;
     else if (st.savedAt && _system->getMillis() - st.savedAt < 2500)
         lines[count++] = editingRoom ? "Room settings saved" : "Global defaults saved";
-    else if (!editingRoom && HdSceneLook::Settings::roomValid(room) && st.settings.rooms[room].mask)
+    else if (!st.filmPage && !editingRoom && HdSceneLook::Settings::roomValid(room) && st.settings.rooms[room].mask)
         lines[count++] = "This room also has overrides";
     const int scale = MAX(1, (int)_hdScale);
     const Common::Point position = hdLookPosition();
@@ -380,7 +461,7 @@ void ScummEngine::drawHDLookPanel() {
         lines, count, accent, 45, kLookLineHeight, 140);
     const int oldSize = _hdFontManager->getSizePercent();
     _hdFontManager->setSizePercent(45);
-    for (int row = 0; row < kLookRows; ++row) {
+    for (int row = 0; row < rows; ++row) {
         const int y = top + 4 + hdLookLine(row) * kLookLineHeight;
         for (int button = 0; button < 2; ++button) {
             const int x = left + 244 + button * 26;

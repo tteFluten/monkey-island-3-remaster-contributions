@@ -129,24 +129,24 @@
     "waterline-final-2560x1440": {
       "id": "waterline-final-2560x1440",
       "assetId": "afda4e02-afa5-4016-b647-a914f4cf611f",
-      "filePath": "upscaled/imported/9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd.png",
+      "filePath": "upscaled/imported/d2cf60fd6a6c07a56788b042300e618c8977525cc1a20f2f3c83cc4802ba631f.png",
       "width": 2560,
       "height": 1440,
       "mimeType": "image/png",
-      "fileSize": 4899211,
+      "fileSize": 4914590,
       "tool": "user-supplied",
       "model": "",
       "prompt": "",
       "params": {
-        "sha256": "9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd",
+        "sha256": "d2cf60fd6a6c07a56788b042300e618c8977525cc1a20f2f3c83cc4802ba631f",
         "originalFile": "0011_waterln-wonder-3-5.png",
         "finalBackground": true
       },
       "references": [],
-      "createdAt": "2026-09-25T19:53:46.720834+00:00",
+      "createdAt": "2026-09-26T15:34:25.232190+00:00",
       "reviewStatus": "approved",
       "engineStatus": "untested",
-      "reviewNotes": "User designated this exact 2560 \u00d7 1440 image as the final room 0011 background."
+      "reviewNotes": "User-supplied corrected 2560 \u00d7 1440 room 0011 background, shared by scene rendering and water reflections."
     }
   },
   "jobs": {}

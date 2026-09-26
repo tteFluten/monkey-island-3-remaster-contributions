@@ -15,6 +15,7 @@ def patch(root, edit):
     void refreshHDRoomBackground();
     void configureHDViewport(bool movie = false);
     void refreshHDViewport(bool movie);
+    void fadeHDPresentation();
     bool handleHDAspectEvent(const Common::Event &event);
     void drawHDAspectMenu();
     bool _hdAspectMouseDown = false;
@@ -78,8 +79,9 @@ def patch(root, edit):
     if (ConfMan.hasKey("playtest_session") && _currentRoom != 92 &&
         lastKeyHit.keycode == Common::KEYCODE_o && lastKeyHit.hasFlags(0))
         lastKeyHit = Common::KeyState(Common::KEYCODE_F5, 319);''')
-    # Movies keep their established 640x480 framing even when launched from a
-    # panorama. Restore the viewport only after releasing the movie buffers.
+    # Movies keep their native 640x480 buffers; the backend crops their
+    # presentation to 16:9 with uniform zoom. Release restores the movie flag for
+    # completion, Escape, and decoder failure. Missing SANs return before entry.
     smush = 'engines/scumm/smush/smush_player.cpp'
     edit(smush, '\t// Check for HD video replacement', '\t_vm->refreshHDViewport(true);\n\n\t// Check for HD video replacement')
     edit(smush, '\t_vm->_gdi->_numStrips = _origNumStrips;', '\t_vm->_gdi->_numStrips = _origNumStrips;\n\t_vm->refreshHDViewport(false);')
@@ -107,7 +109,8 @@ def patch(root, edit):
         if (ConfMan.hasKey("playtest_session") && ConfMan.getInt("hd_aspect_ratio") == 169 && getHeight()) {
             const int nativeWidth = getWidth() * 480 / getHeight();
             const HdAspect::Rect rect = HdAspect::game(safeArea.width(), safeArea.height(), 169, nativeWidth,
-                nativeWidth >= 864 || (ConfMan.hasKey("hd_wide_background_active") && ConfMan.getBool("hd_wide_background_active")));
+                nativeWidth >= 864 || (ConfMan.hasKey("hd_wide_background_active") && ConfMan.getBool("hd_wide_background_active")),
+                ConfMan.hasKey("hd_movie_active") && ConfMan.getBool("hd_movie_active"));
             _gameDrawRect = Common::Rect(safeArea.left + rect.x, safeArea.top + rect.y,
                 safeArea.left + rect.x + rect.w, safeArea.top + rect.y + rect.h);
         }
@@ -115,6 +118,15 @@ def patch(root, edit):
 \t\tif (getOverlayHeight()) {''')
     # Block before SDL edge clamping, which otherwise activates edge objects.
     sdl = 'backends/graphics/sdl/sdl-graphics.cpp'
+    # SDL applies this rectangle as a physical OS pointer confinement in
+    # fullscreen, before notifyMousePosition sees any events. Fixed-width
+    # rooms retain a 4:3 gameplay rectangle, but the pointer must reach all of
+    # the 16:9 presentation. Keep virtual input mapping and margin rejection
+    # below unchanged; this applies to every room and refreshes on resizing,
+    # aspect changes and GUI transitions through notifyActiveAreaChanged.
+    edit(sdl, '\t_window->setMouseRect(_activeArea.drawRect);', '''    const bool widePointer = !_overlayInGUI && ConfMan.hasKey("playtest_session") &&
+        ConfMan.getInt("hd_aspect_ratio") == 169;
+    _window->setMouseRect(widePointer ? Common::Rect(_windowWidth, _windowHeight) : _activeArea.drawRect);''')
     edit(sdl, '\tmouse.y = (int)(mouse.y * dpiScale + 0.5f);', '''\tmouse.y = (int)(mouse.y * dpiScale + 0.5f);
     if (ConfMan.hasKey("playtest_session") && ConfMan.getInt("hd_aspect_ratio") == 169 &&
         !_overlayInGUI && !_activeArea.drawRect.contains(mouse)) {

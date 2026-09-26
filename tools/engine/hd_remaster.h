@@ -16,6 +16,16 @@ struct State {
     bool available = false, active = false, ui = false, dof = false;
     bool recording = false, synchronized60 = false;
     bool water = false, waterPaused = false, waterSurface = false;
+    int waterOpacity = 100, waterWaves = 100, waterSpeed = 100;
+    int waterDistortion = 100, waterHighlights = 100, waterReflection = 8;
+    float waterReflectionIntercept = 0, waterReflectionSlope = 0;
+    // Room entry is published only after backend setup and a complete engine
+    // composition agree. This prevents a CPU/4:3 bootstrap frame flashing first.
+    int entryRoom = 0, wideRoom = 0;
+    bool entryPrepared = false, entryComposed = false;
+    bool movieFadePending = false;
+    bool exitFadeActive = false;
+    float exitFadeOpacity = 0;
     int room = 0, viewportWidth = 640, viewportHeight = 480;
     int drawableWidth = 0, drawableHeight = 0, backgroundX = 0, backgroundY = 0;
     int maskPlanes = 0, maskOffset = 0, maskEdge = 2, maskDepth = 1;

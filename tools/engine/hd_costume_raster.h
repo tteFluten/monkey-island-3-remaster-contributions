@@ -50,7 +50,7 @@ public:
             int sx = x * sw / w; if (mirror) sx = sw - 1 - sx;
             const int sy = y * sh / h;
             const unsigned int raw = source[sy * pitch + sx];
-            e.pixels[y * w + x] = raw >> 24 ? tint.apply(matte == 2 ? HdObjectDepth::edgeColor(source, pitch, sw, sh, sx, sy) : HdCostumeEdge::sample(source, pitch, sw, sh, sx, sy, matte)) : 0;
+            e.pixels[y * w + x] = (raw >> 24 || (matte == 3 && sy == sh - 1)) ? tint.apply(matte == 2 ? HdObjectDepth::edgeColor(source, pitch, sw, sh, sx, sy) : HdCostumeEdge::sample(source, pitch, sw, sh, sx, sy, matte)) : 0;
         }
         return e.pixels.data();
     }

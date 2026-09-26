@@ -38,6 +38,41 @@ and the next workshop launch resets presentation to
 masters are preserved separately. Physical display dimensions are independent
 of both the asset textures and presentation canvas.
 
+**Vintage film trial:** press **F** to toggle a subtle Cuphead-inspired
+film treatment, including during menus and movies. It adds monochrome grain at
+24 Hz, sparse dust and fine scratches, gentle exposure variation, and subpixel
+frame wobble after the complete image (including dialogue, inventory and cursor).
+Game timing and interaction coordinates are unchanged; black bars stay black.
+The grain mixes fine noise with a soft two-pixel texture so it remains visible
+on Retina displays. Dust and scratches are faint but readable; frame wobble
+and exposure flicker remain gentle. Pressing **F** shows **Film: On/Off** briefly
+so the current state is clear.
+Open **Scene Look** with **U**, then press **Tab** (or click the section heading)
+to open **Film Look**. Film is always global, even when Scene Look is editing a
+room. Adjust Film effect, Overall strength, Grain, Dust, Scratches, Flicker,
+Frame wobble and Chromatic aberration with the existing arrows or −/+ buttons;
+**Shift** adjusts faster. The six individual effect controls range from 0–200%,
+with 100% as their baseline. Chromatic aberration adds subtle red/blue separation
+across the whole picture, including centrally placed character costumes, with
+slightly more separation toward the edges. It runs after costumes, objects and
+UI are composed; source artwork and costume transparency are unchanged. Set it
+to 0% to disable just that effect. Its global INI key is `hd_film_chromatic`.
+**Backspace** resets the selected control, **R** resets film settings, and **B**
+temporarily bypasses film for comparison. Settings save immediately to the global
+engine INI and survive workshop relaunches. **Tab** continues to Character Shadows,
+then Water in room 11, then Scene Look; **F** remains the global on/off shortcut.
+The effect is opt-in and the workshop retains the native shortcut's preference
+on relaunch. In the engine INI's global `[scummvm]` section, use
+`hd_film_enabled=true` and `hd_film_strength=20` for the subtle preset. Strength
+is clamped to 0–100; zero and disabled both bypass the pass exactly. The effect
+has independent GPU resources and bypasses unavailable shader support.
+
+Run `tools/venv/bin/python tools/check_film.py` with a cannon fixture in
+`MI3_ASPECT_TEST_SAVES` for isolated native checks and matching before/after
+captures. Add `--motion` for a sampled three-second film preview. Captures go to
+`.context/film-check/`; all test saves and settings are isolated. For paired GPU
+timings, run `tools/check_performance.py --gpu --vsync` with and without `--film`.
+
 Any standard 640 × 480 background (including difficulty room 0087, excluding
 the options book) accepts exact 16:9 artwork
 with the original composition in its centered 4:3 area. Use the existing
@@ -54,7 +89,7 @@ Room 0009 uses the user-approved final `0009_cannon-wonder-3-5.png`, preserved
 unchanged at **2560 × 1440**. Its canonical master is
 `assets/masters/backgrounds/f7a54cda98ca3ad0419cfcb5bb816ebd6267edb34e04fc4b82dc8aaf7aeaf61e.png`.
 Room 0011 likewise uses the approved `0011_waterln-wonder-3-5.png`, with canonical
-master `assets/masters/backgrounds/9bcc9b74b0c891d2e9e172c6795c28ef5d7969f586449ffd940b1346a3f6c4fd.png`.
+master `assets/masters/backgrounds/d2cf60fd6a6c07a56788b042300e618c8977525cc1a20f2f3c83cc4802ba631f.png`.
 Each scene's `finalBackgroundVariant` selects its artwork on every launch and
 reinstall, replacing retired local variants. The workshop offers only the final
 background for these rooms. Each 16:9 runtime copy is byte-identical to the supplied
@@ -74,8 +109,12 @@ checks, or add `--cpu --aspect 43` to exercise the fallback renderer.
 
 Completed wide scenes uniformly fill taller displays by cropping outer scenery.
 Rendering and pointer input use the same rectangle. Unfinished backgrounds,
-the options book, inventory, vertical rooms, and movies preserve their framing; bars are
-acceptable in these cases. The original game region is not stretched.
+the options book, inventory, and vertical rooms preserve their framing; bars are
+acceptable in these cases. The original gameplay region is not stretched. Movies
+zoom uniformly into a centered 16:9 crop, preserving proportions while removing
+12.5% from the top and bottom of the 4:3 picture. The 4:3 mode shows the complete
+frame. The 16:9 crop fits within the display without additional zoom, leaving
+cinematic black bars above and below on taller screens.
 
 Horizontal panoramas at least 864 pixels wide and exactly 480 pixels tall retain
 their existing 864 × 480 native viewport, camera bounds, and 3456 × 1920 working
@@ -85,7 +124,11 @@ background extensions. Inventory opens as a centered overlay without changing
 the room viewport, camera, display aspect ratio, widescreen artwork, or GPU
 rendering path. Panoramas retain their 864-pixel viewport; inventory drawing and
 item hit tests share the same centering offset. The options book retains its
-centered 4:3 layout. Decorative margins reject
+centered 4:3 layout. In 16:9 mode, OS mouse confinement spans the full window
+in every scene, including fixed-width rooms, inventory and the options book.
+The presentation cursor can cross the side artwork freely; native hotspot
+coordinates remain unchanged. Returning to 4:3 or the engine GUI restores its
+normal pointer boundary. Decorative margins reject
 new presses; a release outside gameplay still pairs with its original press.
 
 Engine status retains its existing fields and adds optional `drawableWidth`,
@@ -123,8 +166,13 @@ Sidecar failure checks use an isolated copy of the extended artwork.
 The engine retains the pinned modern ScummVM fork and uses its OpenGL shader,
 texture, and framebuffer classes ([ScummVM graphics settings](https://docs.scummvm.org/en/latest/settings/graphics.html)). Depth of field uses the live original z-planes;
 scene objects and actors remain sharp, including transparent sprite edges.
-In completed 16:9 rooms, blur continues across the side scenery using the
-original depth coverage at each gameplay edge. Both GPU and CPU paths apply it.
+In completed 16:9 rooms, the focus mask spans the full painting instead of
+repeating the last 4:3 mask column across each margin. The center and sides use
+matching focus coordinates; the GPU also samples one full-width blurred painting
+to avoid a blur seam at the old 4:3 boundary. This is an artistic horizontal
+remapping of the original depth coverage, not new depth data for the extensions.
+The CPU fallback uses the same focus mapping. Native 4:3 and panoramic room masks
+keep their original coordinates. Water coverage is independent of focus.
 Color grading and vignette follow scene composition, then dialogue, inventory,
 menus, and cursor render without those effects. Existing controls and saved
 settings remain compatible. `hd_gpu_effects=false` selects the CPU reference.
@@ -134,6 +182,18 @@ release settings, with symbols retained for profiling. Normal rendering performs
 screenshots, thumbnails, and visual comparisons can request one.
 
 Ambient water uses a lightweight GPU shader by default in the waterline (11),
+where **W** opens its live tuning page. Adjust water strength, wave height,
+speed, distortion, highlights, and mirrored-background reflection opacity
+with **−/+** or the arrow keys (**Shift** ×5). **W** or a click on the section
+heading switches between Water and Scene Look; **U/Esc** closes the panel.
+Changes save as room overrides in `data/color-grades.json`; **G** switches to
+global defaults. **B** compares against the painted water, **Backspace** restores
+inheritance for one control, and **R** restores inheritance for all water controls
+without clearing the room's color or vignette settings. Reflection defaults to
+8%; the remaining controls default to 100%. Setting speed to zero freezes the
+waves, and setting strength to zero reveals the painted water.
+
+The shader also operates in
 fort base (14), and town (15). It replaces only the known ambient-water costumes:
 51/59, 73/74, and 80/83 respectively. Their original transparent, depth-clipped
 native pixels supply coverage in the fort and town; the PNG overlays are not drawn or decoded for
@@ -151,9 +211,10 @@ for 16:9 (320 × 240 for 4:3); fine octaves fade according to the sample footpri
 to reduce aliasing. Lighting and reflection run in the 1440p composite.
 The waterline palette blends 65% of its original extracted water color (#0F3333)
 with 35% of the selected painting; other rooms use their own painted water colors.
-Reflection tint follows that palette, and restrained tinted highlights replace
-the reference's bright blue sky and strong white glints. Existing Scene Look
-settings still apply afterward.
+Reflection tint follows that palette. Stronger wave slopes, crest/trough contrast,
+and broader tinted highlights make the motion visible over the painting; hull
+reflections and refraction follow those ripples. The shoreline still fades gently
+into the painted boundary. Existing Scene Look settings still apply afterward.
 World coordinates keep
 the pattern stable during camera movement. Actors, objects, and UI are protected;
 color grading and vignette also affect the water. Depth of field attenuates the
@@ -161,17 +222,73 @@ fine ripples in blurred scenery. Both aspect ratios share the same effect;
 authored widescreen margins inherit coverage at the original water boundary.
 Water advances between native animation frames, pauses with the game, and uses
 cached scene/UI textures and a native-resolution single-channel coverage texture.
+On entering the cannon (0009) or waterline (0011) room, only the immediately visible character poses load on
+demand. Future PNG poses from the selected pack decode on one background worker,
+with at most one result waiting for the engine thread to insert into the existing
+bounded cache. Visible costumes are queued before later scripted room costumes;
+shader-replaced water frames are skipped. Room changes do not wait for that
+worker. Missing frames and unavailable worker threads retain on-demand loading,
+and SVG poses still rasterize at their actual draw dimensions. Both rooms also
+skip the unused legacy costume prewarm when the selected exact pack is enabled.
+Other rooms retain their current loading behavior until this rollout is validated.
+This removes room-wide animation
+decoding from the entry path; background decoding and first-pose loading can
+still cause a smaller transition delay. No measured speedup is claimed yet.
+
+Entering HD cannon room 0009 skips the native black/strip-wipe transition.
+In GPU mode, the first completed scene starts a single one-second smooth fade-in
+of the whole frame: background, side extensions, characters and scene UI appear
+together. The fade runs only on final presentation, leaving cached artwork and
+the cursor unchanged. Loading time precedes the fade; it does not wait for future
+animation frames or add script delays. Normal redraws, aspect changes and scene
+settings do not restart it. After a movie finishes or is skipped, the next
+completed HD scene uses the same one-second fade, including a return to the
+same room. Consecutive movies do not consume the pending scene fade. The
+backend holds intermediate room-entry frames until the new composition is
+ready, so loading does not show an unfaded scene first. Other room changes and
+original-art fallback retain their native transitions. Leaving the HD Chapter 1
+card (0004) fades the full presentation to black over one second before the next
+scene fades in. Skipping an HD movie with Escape uses the same fade-out while
+retaining the movie's existing crop and display rectangle. Viewport restoration
+happens behind black, preventing a resized last frame from flashing on screen.
+These transitions have been built but not visually verified.
+
+The difficulty screen (room 0087, `easyhard`) opens directly on its completed HD
+composition. Its native entry wipe/dissolve is bypassed when replacement artwork
+is available. Presentation additionally waits for shader initialization, decoding
+of the requested 16:9 background, and a complete scene composition made after
+that setup. The previous frame stays visible until the full-width scene is ready;
+no temporary 4:3/CPU frame is swapped first. Missing artwork or unavailable GPU
+shaders retain the fallback path; movies release the room-entry hold.
+Difficulty-selection scripts retain their behavior. The earlier transition-only
+fix did not resolve the reported flash; this startup fix is not visually verified.
+
+The static room-0001 logo (`0001_logo-wonder-3-5`) is skipped during HD playback:
+its background is not decoded, native/HD drawing is bypassed, and its entry/exit
+screen effects are disabled. No replacement black screen is inserted; the last
+presented frame stays until the next movie or room is ready. Room 0001 still runs
+the original opening-movie script. The source artwork and pack provenance remain
+available in the workshop archive.
+
 Only the small procedural target redraws alongside the existing scene composite;
 background, coverage, and blur textures remain cached. It adds one framebuffer
 pass, with no CPU-generated animation textures or GPU readback. The wave
 clock stops while paused or inside the engine overlay; elapsed time does not
 wrap, avoiding a discontinuity in the nonperiodic noise.
 
-The waterline now covers the entire painted water surface. A cached scan of the
-selected background identifies bottom-connected teal water, retaining a guard
-inside the hull boundary. Coverage fades in at the edge; a distorted reflection
-samples the hull painting above each column's waterline, with angle-dependent
-reflectivity and wave-height color variation. This is a lightweight 2D approximation;
+The waterline now covers the entire painted water surface. A cached flood fill of
+the selected background follows bottom-connected teal water around painted
+highlights, then fills each column below that shoreline. Yellow reflections no
+longer truncate coverage into rectangular gaps. A guard remains inside the hull
+boundary. Coverage fades in at the edge; a distorted reflection
+samples the hull painting mirrored around one smooth, fitted waterline at 8%
+opacity by default, separately from the stronger wave lighting and highlights.
+The detailed mask controls coverage only, so hull-edge pixel steps no longer
+shear the reflected planks and portholes. The shader composites over the
+painted water and beneath actors and UI. In 16:9, both the center and side passes
+sample the same full 2560 × 1440 background for reflections, with the center mapped
+to its matching region of that image. The 4:3 working texture is used only as a
+reflection fallback when no widescreen texture is active. This is a lightweight 2D approximation;
 characters are not included in the reflection. If a different painting cannot be
 classified, the renderer falls back to the original sprite coverage. Other rooms
 keep their native water coverage. Hull reflection follows the lightweight
@@ -374,6 +491,17 @@ decodes to the current 2560 × 1920 game framebuffer without cropping. The
 original SAN files supply audio, subtitles, timing, and the return to gameplay.
 The MP4 audio track is not played. Escape still skips a cinematic.
 
+Movies follow the options book's **Display** setting: in **16:9**, the backend
+zooms uniformly into a centered 16:9 crop of the 4:3 framebuffer, removing 12.5%
+from the top and bottom without stretching. Composited subtitles follow the same
+uniform zoom. In **4:3**, the complete original framing remains. Only HD pictures are displayed. Native SAN files
+remain necessary for audio, subtitles, and timing; their original video frames
+are never presented. In widescreen mode, the selected 16:9 frame fits within
+the display, with cinematic black bars above and below on taller screens.
+Playback completion or skipping restores the room's presentation, including
+panoramas, and fades the next completed HD scene in over one second using the
+opening scene's smooth fade. Source videos are never re-encoded.
+
 To restage the pack, install FFmpeg with `brew install ffmpeg`, then run
 `python3 tools/stage_videos.py [source-folder]`. The script validates every
 movie before copying, maps `SINKSHP.SAN` to `SINKSHIP.mp4`, records hashes in
@@ -385,8 +513,13 @@ config can override this for a manually launched engine.
 `FG010GP.mp4` omits ten trailing black frames, and `FINALE.mp4` includes ten
 extra trailing black frames. The native timeline remains authoritative: a
 shorter replacement holds its last frame and a longer one ends with the SAN.
-Missing or initially undecodable replacements use the original movie. Movie
-playback starting at a nonzero native offset also uses the original.
+Missing or undecodable HD movies are skipped with a clear on-screen message;
+the game never falls back to the old footage. Decoder errors after playback
+starts also skip the remaining movie. A clean end of the supplied shorter HD
+clip still holds its final image through the native tail. Unsupported nonzero
+native movie offsets are skipped with the same message (normal COMI scripts
+start each cinematic at frame zero). Keep the original SAN files for their
+audio, subtitles, and timing data.
 
 The replacement decoder advances on every native frame, including frames the
 display scheduler skips, so display drops do not accumulate picture/audio drift.
@@ -401,6 +534,9 @@ staging validation, naming, backup behavior, and subtitle compositing.
 For native smoke tests launched with `MI3_ENGINE_TEST_INPUT=1`, write a SAN
 filename such as `SINKSHP.SAN` to the isolated session's `movie.txt` to play it
 through the normal movie player. The hook is disabled in regular sessions.
+Run `tools/venv/bin/python tools/check_movies.py` for isolated native checks of
+both aspect ratios, HD-only playback, missing/broken-HD messages,
+skipped/completed playback, and room restoration. Screenshots and results are saved under `.context/movie-check/`.
 
 ## Character comparisons
 
@@ -514,14 +650,57 @@ it, then close and reopen the panel in both aspect modes.
 
 ## Character lighting
 
+Guybrush's opening stand-up animation in room 0009 uses costume 3, stored under
+room 0001. Its Topaz frames 15 and 16 have invalid alpha masks that cut off the
+lower legs and feet; both are already marked rejected. The Topaz and Topaz Crisp
+loaders exclude those two PNG replacements and preserve the complete native
+poses for those frames. Other stand-up frames and animation timing are unchanged.
+Rejected masters/runtime PNGs remain archived for repair, and other character
+packs are unaffected. Restart after rebuilding to refresh the frame index.
+
+In room 0009 those two native poses use the base palette plus the same fixed
+warm actor tint as adjacent HD frames, avoiding a flash from the live intro
+palette. Their captured native silhouette and occlusion remain intact.
+For the standing Topaz head 52/body 31 pair, the renderer also extends the
+head's penultimate row into its empty final alpha row. This closes the thin
+line underneath the head without repositioning either cel or changing PNGs.
+The repair requires the matching body and original one-pixel overlap, and
+applies to mirrored poses as well as the software and GPU compositors.
+
 Characters also receive procedural contact shadows on the floor. The solid
-ellipses follow the feet of complete costume poses, scale with the character,
-and become wider/fainter with physical elevation. They sit 3 native pixels
-higher beneath the feet and are 20% larger than the initial oval footprint. Scripted scene-aligned poses
-such as Wally's use their painted feet rather than treating drawing-origin
-metadata as a jump. Grounded shadows use uniform 38/255 (15%) black opacity
+ellipses use the actor's ground Y, scale with the character, and become
+wider/fainter with physical elevation. Walking poses no longer move the shadow
+up/down as their lowest visible costume pixels change. They sit 3 native pixels
+above the ground anchor and are 20% larger than the initial oval footprint.
+Scripted scene-aligned poses such as Wally's calibrate a fixed anchor from the
+first valid painted feet, stored in room coordinates and refreshed on room,
+costume, or artwork-reload changes. Camera movement and actual movement across
+the ground still move the shadow; the Position Y control adds to that anchor. Grounded shadows use uniform 38/255 (15%) black opacity
 inside the oval, with a hard edge and no spread into the surrounding corners.
-No shadow image assets or blur passes are required.
+No shadow image assets or blur passes are required. These remain the default
+appearance until the shadow controls are adjusted.
+
+Open **U → Tab → Tab** from Scene Look for **Character Shadows**. Use arrows or
+−/+ buttons to adjust, with **Shift** for five steps. **G** switches between
+Global defaults and the current room; changes save immediately in
+`data/color-grades.json` and persist across launches.
+
+| Control | Range | Default |
+| --- | --- | --- |
+| Position X / Y | −80 to +80 original game pixels; positive is right/down | 0 / 0 |
+| Width | 25–300% of the character's automatic footprint | 100% |
+| Ovalness | Height as 5–100% of width; low is flat, 100% is circular | 24% |
+| Opacity | 0–100%; zero hides the shadow | 15% |
+| Color red / green / blue | 0–255 per channel | 0 / 0 / 0 (black) |
+
+The keys are `shadowOffsetX`, `shadowOffsetY`, `shadowWidth`, `shadowOvalness`,
+`shadowOpacity`, `shadowRed`, `shadowGreen`, and `shadowBlue` in the global or
+room layer. **Backspace** resets one control, **R** resets only the shadow page
+(to defaults globally, or inheritance for a room), and **B** temporarily hides
+shadows for comparison. Editing a shadow value exits that comparison. Offsets
+move the rendered shadow relative to the feet; actor movement and hit areas stay
+unchanged. The same settings feed both CPU and GPU composition in 4:3 and 16:9.
+These controls were built without running tests or visual validation.
 
 This pass runs beneath native foreground, HD objects, characters, text and the
 cursor, and uses captured native depth masks. It covers eligible shadow-enabled
@@ -531,14 +710,14 @@ room 9; placement in other scenes depends on their native pose/depth data.
 Run `python3 -m unittest discover -s tools -p 'test_actor_shadow.py'` for footprint,
 scripted origin, elevation, edge/prop exclusion, uniform opacity and oval-boundary tests.
 
-HD character artwork uses half the previous exaggerated lighting strength:
-squared native gains blend 50% toward neutral, with brightening capped. In the
-cannon room, Guybrush and Wally share the same warm orange RGB proportions
-(255, 233, 198); their live native luminance controls brightness independently.
-Walking between the grate, floor and dark corner still changes the shading,
-without switching one character to a different hue. Other rooms retain their
-native color direction at the reduced strength.
-Fades still reach true black, and replacement image alpha is unchanged.
+HD character artwork outside room 0009 uses half the previous exaggerated
+lighting strength: squared native gains blend 50% toward neutral, with
+brightening capped. In the cannon room, all HD costume poses use the fixed warm
+RGB tint (255, 233, 198) at full brightness from their first frame. Native palette
+fades and spatial darkening no longer turn these PNGs black or gradually reveal
+their colors after the intro. Pose animation and image alpha are unchanged.
+Other rooms retain their native color direction at the reduced strength, and
+their fades still reach true black.
 The compositor samples native actor colors once per room/costume/palette mapping
 so talking, turning, and overlapping another actor cannot change the sample
 weights and cause hue jumps. Live palette lighting continues to update using
@@ -546,8 +725,8 @@ those stable samples. Original fallback poses keep their native shading.
 Loading a save clears the samples and uses the restored original palette state;
 there is no separate lighting state in saves.
 
-Live verification in room 9 covered Guybrush's warm shaded tint and its changes
-between areas of the cannon room. The periodic `LIGHTING` entries in
+Earlier live verification in room 9 covered the former varying warm tint;
+the fixed-color change has been built but not visually verified. The periodic `LIGHTING` entries in
 `hd_state.log` include actor position and native/applied RGB gains (255 is neutral);
 `QUIVER` entries also include `light=R,G,B`. With `MI3_ENGINE_TEST_INPUT=1`,
 writing `x y` to the session's `walk-to.txt` requests a normal actor walk for
