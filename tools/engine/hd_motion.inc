@@ -22,13 +22,26 @@ void ScummEngine::captureHDMotion() {
     _hdMotionCamera.sample(camera._cur.x, camera._cur.y, _currentRoom, reset);
     _hdMotionMoving = _hdMotionCamera.moving;
     _hdMotionActors.resize(_numActors);
+    bool cannonFound = false;
     for (int i = 0; i < _numActors; ++i) {
         Actor *a = _actors[i];
         bool visible = a->_visible && a->_room == _currentRoom && a->_layer >= 0;
         _hdMotionActors[i].sample(a->getPos().x, a->getPos().y,
             visible ? a->_costume : -1, reset || !visible);
         if (visible && _hdMotionActors[i].moving) _hdMotionMoving = true;
+        if (enabled && _currentRoom == 10 && visible && a->_costume == 35 &&
+            playtestExactRoom(_currentRoom) && a->_quiverDraws.size() == 1) {
+            const Actor::QuiverDraw &d = a->_quiverDraws[0];
+            HdMotion::CannonPose pose;
+            pose.cel = d.cel; pose.left = d.screenLeft; pose.top = d.screenTop;
+            pose.width = d.screenWidth; pose.height = d.screenHeight;
+            pose.sourceWidth = d.width; pose.sourceHeight = d.height; pose.mirror = d.mirror;
+            _hdMotionCannon.sample(pose, a->_number, _playtestCommandId, reset);
+            cannonFound = true;
+            if (_hdMotionCannon.moving) _hdMotionMoving = true;
+        }
     }
+    if (!cannonFound) _hdMotionCannon = HdMotion::CannonAim();
     _hdMotionFonts = _hdFontChars;
     if (_hdFrameCount % 120 == 0 && enabled)
         hdPrintf("HD-MOTION native interval=%ums moving=%d camera=%d", _hdMotionClock.interval, _hdMotionMoving, camera._cur.x);
@@ -50,6 +63,7 @@ void ScummEngine::presentHDMotion() {
             fclose(file); remove(request.c_str()); verify = true; fraction = 1024;
         }
     }
+    _hdMotionFraction = fraction;
     // Scratch copies isolate hit testing, saves, script coordinates, masks and
     // dirty-strip bookkeeping from intermediate display positions.
     VirtScreen &screen = _virtscr[kMainVirtScreen];

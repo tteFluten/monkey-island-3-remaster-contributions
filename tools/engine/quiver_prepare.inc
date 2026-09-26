@@ -6,6 +6,7 @@ struct QuiverPose {
     bool water = false;
     bool nativeColorFallback = false;
     bool topaz = false;
+    Graphics::Surface cannonFrom;
     Common::Array<Graphics::Surface *> textures;
 };
 // Pin decoded surfaces until both scene and coin passes finish. Views borrow
@@ -13,7 +14,8 @@ struct QuiverPose {
 if (_hdUICostumeManager) _hdUICostumeManager->beginBorrow();
 if (_hdQuiverManager) _hdQuiverManager->beginBorrow();
 Common::Array<QuiverPose> quiverPoses;
-Common::Array<byte> quiverNative, quiverWithoutCoin;
+Common::Array<byte> quiverNative, quiverWithoutCoin, quiverWithoutWater;
+bool quiverHasWater = false;
 auto &waterState = HdRemaster::state();
 const bool waterRequested = waterState.active && HdWater::room(_currentRoom) &&
     (!ConfMan.hasKey("hd_water_shader") || ConfMan.getBool("hd_water_shader"));
@@ -64,6 +66,7 @@ if (waterRequested || _hdUICostumeManager || (playtestExactRoom(_currentRoom) &&
             QuiverPose pose;
             pose.actor = a; pose.water = true;
             quiverPoses.push_back(pose);
+            quiverHasWater = true;
             waterState.water = true;
             continue; // No PNG decode, upload or replacement draw for water.
         }
@@ -98,7 +101,20 @@ if (waterRequested || _hdUICostumeManager || (playtestExactRoom(_currentRoom) &&
                 valid = false; break;
             }
         }
-        if (valid) quiverPoses.push_back(pose);
+        if (valid) {
+            if (_hdInterpolating && _currentRoom == 10 && a->_costume == 35 &&
+                a->_number == _hdMotionCannon.actor && _hdMotionCannon.moving &&
+                a->_quiverDraws.size() == 1 && a->_quiverDraws[0].cel == _hdMotionCannon.to.cel) {
+                const auto &from = _hdMotionCannon.from;
+                // Borrow both endpoint textures under the existing cache pin.
+                if (!manager->loadCostume(35, from.cel, pose.cannonFrom,
+                        from.sourceWidth * scale, from.sourceHeight * scale, true) ||
+                    pose.cannonFrom.w != from.sourceWidth * scale ||
+                    pose.cannonFrom.h != from.sourceHeight * scale || pose.cannonFrom.format.bytesPerPixel != 4)
+                    pose.cannonFrom = Graphics::Surface(); // Missing art keeps the current exact pose.
+            }
+            quiverPoses.push_back(pose);
+        }
         else for (uint i = 0; i < pose.textures.size(); ++i) {
             delete pose.textures[i];
         }
@@ -107,11 +123,19 @@ if (waterRequested || _hdUICostumeManager || (playtestExactRoom(_currentRoom) &&
         quiverNative.resize(visW * visH);
         for (int y = 0; y < visH; ++y)
             memcpy(&quiverNative[y * visW], vs->getBasePtr(vs->xstart, y + _screenTop), visW);
+        // Shader water replaces these native sprites completely. Keep a
+        // separate foreground reference with only water removed: otherwise
+        // invisible ripples still occlude the cannonball and other HD actors.
+        // Retain every other actor, text and foreground pixel for clipping.
+        if (quiverHasWater) quiverWithoutWater = quiverNative;
         // Unwind front to back, restoring the actual scene under each actor.
         // Later dialogue/foreground changes remain intact. Missing poses were
         // excluded above and retain all their original pixels.
         for (int ai = (int)quiverPoses.size() - 1; ai >= 0; --ai) {
             Actor *a = quiverPoses[ai].actor;
+            if (quiverPoses[ai].water)
+                QuiverNative::removeActor(quiverWithoutWater.data(), a->_quiverUnder.data(),
+                                          a->_quiverAfter.data(), quiverWithoutWater.size());
             if (quiverPoses[ai].water && !waterState.waterSurface)
                 for (int y = 0; y < visH; ++y)
                     HdWater::coverage((byte *)waterState.waterCoverage.getBasePtr(0, y),

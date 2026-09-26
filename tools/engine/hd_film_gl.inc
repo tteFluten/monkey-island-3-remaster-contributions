@@ -3,7 +3,9 @@
 class HdFilmGL {
     Shader *_shader = nullptr;
     ShaderPipeline *_pipeline = nullptr;
-    Texture *_frame = nullptr;
+    Texture *_frame = nullptr, *_textMask = nullptr;
+    uint _textGeneration = ~0u;
+    bool _capturedBeforeUI = false;
     bool _attempted = false;
     uint _revision = 0;
 
@@ -22,7 +24,9 @@ varying vec4 color;
 void main() { uv = texCoordIn; color = blendColorIn; gl_Position = projection * position; }
 )GLSL";
         const char *fragment = R"GLSL(
-uniform sampler2D shaderTexture;
+uniform sampler2D shaderTexture, textMaskTexture;
+uniform vec4 textScreenRect, textSourceRect;
+uniform float textEnabled, chromaticOnly;
 uniform vec2 textureSize;
 uniform vec4 contentRect;
 uniform float filmTick, amount, pixelScale;
@@ -40,6 +44,13 @@ float softGrain(vec2 p) {
     f = f * f * (3.0 - 2.0 * f);
     return mix(mix(hash(cell), hash(cell + vec2(1.0, 0.0)), f.x),
                mix(hash(cell + vec2(0.0, 1.0)), hash(cell + vec2(1.0)), f.x), f.y) * 2.0 - 1.0;
+}
+float textAt(vec2 pixel) {
+    if (textEnabled < 0.5) return 0.0;
+    vec2 p = (pixel - textScreenRect.xy) / textScreenRect.zw;
+    if (p.x < 0.0 || p.y < 0.0 || p.x > 1.0 || p.y > 1.0) return 0.0;
+    vec2 textUV = textSourceRect.xy + vec2(p.x, 1.0 - p.y) * textSourceRect.zw;
+    return step(0.001, texture2D(textMaskTexture, textUV).r);
 }
 void main() {
     vec2 pixel = uv * textureSize;
@@ -67,9 +78,13 @@ void main() {
             * (amount * filmChromatic * pixelScale);
         vec2 redPixel = clamp(samplePixel + fringe, contentRect.xy + 0.5, contentRect.zw - 0.5);
         vec2 bluePixel = clamp(samplePixel - fringe, contentRect.xy + 0.5, contentRect.zw - 0.5);
-        rgb.r = texture2D(shaderTexture, redPixel / textureSize).r;
-        rgb.b = texture2D(shaderTexture, bluePixel / textureSize).b;
+        // Protect both the original glyph and either displaced sample: this
+        // prevents colored copies leaking outside its antialiased outline.
+        float text = max(textAt(samplePixel), max(textAt(redPixel), textAt(bluePixel)));
+        rgb.r = mix(texture2D(shaderTexture, redPixel / textureSize).r, rgb.r, text);
+        rgb.b = mix(texture2D(shaderTexture, bluePixel / textureSize).b, rgb.b, text);
     }
+    if (chromaticOnly > 0.5) { gl_FragColor = vec4(rgb, original.a) * color; return; }
     float luma = dot(rgb, vec3(0.299, 0.587, 0.114));
     float taper = smoothstep(0.0, 0.08, luma) * (1.0 - smoothstep(0.92, 1.0, luma));
     vec2 p = pixel / pixelScale;
@@ -102,6 +117,7 @@ void main() {
         _pipeline = new ShaderPipeline(_shader);
         _pipeline->setColor(1, 1, 1, 1);
         _shader->setUniform("shaderTexture", 0);
+        _shader->setUniform("textMaskTexture", 1);
         _frame = new Texture(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE);
         _frame->enableLinearFiltering(true);
         _frame->setWrapMode(kWrapModeEdge);
@@ -131,17 +147,22 @@ public:
         if (_pipeline) Pipeline::disable();
         delete _pipeline; _pipeline = nullptr; _shader = nullptr;
         delete _frame; _frame = nullptr; _attempted = false;
+        delete _textMask; _textMask = nullptr; _textGeneration = ~0u;
+        _capturedBeforeUI = false;
     }
     void draw(Pipeline *normal, Framebuffer *screen, const Common::Rect &gameRect,
-              int width, int height, bool overlay, bool wide) {
+              int width, int height, bool overlay, bool wide,
+              bool chromaticPass = false, bool skipChromatic = false) {
         const bool captureRequested = HdFilm::state().capture;
-        HdFilm::state().capture = false;
+        if (!chromaticPass) HdFilm::state().capture = false;
         const bool active = HdFilm::enabled() && HdFilm::strength() > 0;
+        if (chromaticPass && (!active || !HdFilm::get(HdFilm::kChromatic))) return;
         if ((!active && !captureRequested) || !normal || !screen || width <= 0 || height <= 0) return;
         normal->setFramebuffer(screen); normal->activate();
         GLint viewport[4]; GL_CALL(glGetIntegerv(GL_VIEWPORT, viewport));
         if (viewport[2] <= 0 || viewport[3] <= 0) return;
-        if (captureRequested) capture("/film-before.png", viewport);
+        if (captureRequested && !_capturedBeforeUI) capture("/film-before.png", viewport);
+        if (captureRequested && chromaticPass) _capturedBeforeUI = true;
         if (active) {
             initialize();
             if (_pipeline && _frame->setSize(viewport[2], viewport[3])) {
@@ -156,6 +177,34 @@ public:
                     left = gameRect.left + (gameRect.width() - w) * 0.5f; right = left + w;
                 }
                 const float sx = float(viewport[2]) / width, sy = float(viewport[3]) / height;
+                const auto &text = HdFilmText::state();
+                const bool hasText = text.any && text.mask.getPixels();
+                if (hasText) {
+                    if (!_textMask) {
+                        _textMask = new Texture(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE);
+                        _textMask->enableLinearFiltering(true);
+                        _textMask->setWrapMode(kWrapModeEdge);
+                    }
+                    if (_textGeneration != text.generation) {
+                        _textMask->setSize(text.mask.w, text.mask.h);
+                        _textMask->updateArea(Common::Rect(text.mask.w, text.mask.h), text.mask);
+                        _textGeneration = text.generation;
+                    }
+                    GL_CALL(glActiveTexture(GL_TEXTURE1)); _textMask->bind();
+                    GL_CALL(glActiveTexture(GL_TEXTURE0));
+                }
+                Math::Vector4d textSource(0, 0, 1, 1);
+                if (hasText && ConfMan.hasKey("hd_movie_active") && ConfMan.getBool("hd_movie_active")) {
+                    const HdAspect::Rect crop = HdAspect::frame(text.mask.w, text.mask.h, ConfMan.getInt("hd_aspect_ratio"));
+                    textSource = Math::Vector4d(float(crop.x)/text.mask.w, float(crop.y)/text.mask.h,
+                        float(crop.w)/text.mask.w, float(crop.h)/text.mask.h);
+                }
+                _shader->setUniform1f("textEnabled", hasText ? 1.0f : 0.0f);
+                _shader->setUniform("textSourceRect", textSource);
+                _shader->setUniform("textScreenRect", Math::Vector4d(gameRect.left * sx, (height - gameRect.bottom) * sy,
+                    MAX(1.0f, gameRect.width() * sx), MAX(1.0f, gameRect.height() * sy)));
+                _shader->setUniform1f("chromaticOnly", chromaticPass ? 1.0f : 0.0f);
+                GLboolean scissorEnabled; GL_CALL(glGetBooleanv(GL_SCISSOR_TEST, &scissorEnabled));
                 _pipeline->setFramebuffer(screen); _pipeline->activate();
                 screen->enableScissorTest(false);
                 screen->enableBlend(Framebuffer::kBlendModeDisabled);
@@ -170,15 +219,17 @@ public:
                 _shader->setUniform("filmTuning", Math::Vector4d(HdFilm::get(HdFilm::kGrain) / 100.0f,
                     HdFilm::get(HdFilm::kDust) / 100.0f, HdFilm::get(HdFilm::kScratches) / 100.0f,
                     HdFilm::get(HdFilm::kFlicker) / 100.0f));
-                _shader->setUniform1f("filmWobble", HdFilm::get(HdFilm::kWobble) / 100.0f);
-                _shader->setUniform1f("filmChromatic", HdFilm::get(HdFilm::kChromatic) / 100.0f);
+                _shader->setUniform1f("filmWobble", chromaticPass ? 0.0f : HdFilm::get(HdFilm::kWobble) / 100.0f);
+                _shader->setUniform1f("filmChromatic", skipChromatic ? 0.0f : HdFilm::get(HdFilm::kChromatic) / 100.0f);
                 _shader->setUniform1f("pixelScale", MAX(0.5f, (bottom - top) * sy / 1440.0f));
                 _pipeline->drawTexture(*_frame, 0, 0, width, height);
                 normal->setFramebuffer(screen); normal->activate();
                 screen->enableBlend(Framebuffer::kBlendModeOpaque);
+                screen->enableScissorTest(scissorEnabled);
             }
         }
-        if (captureRequested) capture("/film-after.png", viewport);
+        if (captureRequested && !chromaticPass) capture("/film-after.png", viewport);
+        if (!chromaticPass) _capturedBeforeUI = false;
     }
 };
 #else
@@ -186,7 +237,7 @@ class HdFilmGL {
 public:
     bool needsRedraw() { return false; }
     void destroy() {}
-    void draw(Pipeline *, Framebuffer *, const Common::Rect &, int, int, bool, bool) {}
+    void draw(Pipeline *, Framebuffer *, const Common::Rect &, int, int, bool, bool, bool = false, bool = false) {}
 };
 #endif
 static HdFilmGL &hdFilmGL() { static HdFilmGL renderer; return renderer; }

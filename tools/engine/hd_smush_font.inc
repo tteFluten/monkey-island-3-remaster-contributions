@@ -5,10 +5,15 @@ public:
 		if (_vm->_game.id != GID_CMI || _vm->_useCJKMode || _direction < 0 ||
 			!_vm->_hdFontManager || !_vm->_hdFontManager->hasFont(slot)) return false;
 		_hdSlot = slot;
+		_hdPreviousSize = _vm->_hdFontManager->getSizePercent();
+		_vm->_hdFontManager->setSizePercent(HdMovieText::sizePercent(_hdPreviousSize));
 		_hdGlyphs = &glyphs;
 		return true;
 	}
-	void endHD() { _hdGlyphs = nullptr; _hdFraction = 0; }
+	void endHD() {
+		if (_hdGlyphs) _vm->_hdFontManager->setSizePercent(_hdPreviousSize);
+		_hdGlyphs = nullptr; _hdFraction = 0;
+	}
 	bool usesFractionalWidths() const override { return _hdGlyphs != nullptr; }
 	int getCharWidth100(uint16 chr) const override {
 		return NutRenderer::getCharWidth(chr & 0xff) *
@@ -18,6 +23,7 @@ public:
 
 private:
 	int _hdSlot = -1, _hdFraction = 0;
+	int _hdPreviousSize = 65;
 	Common::Array<HdMovieGlyph> *_hdGlyphs = nullptr;
 	int hdMetric(int value) const {
 		return _hdGlyphs ? _vm->_hdFontManager->scaleMetric(value) : value;

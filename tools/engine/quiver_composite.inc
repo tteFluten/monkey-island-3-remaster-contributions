@@ -9,6 +9,7 @@ if (!quiverPoses.empty()) {
         if (quiverPoses[ai].nativeColorFallback) {
             for (int y = 0; y < visH; ++y) {
                 const byte *native = !quiverWithoutCoin.empty() ? &quiverWithoutCoin[y * visW] :
+                    !quiverWithoutWater.empty() ? &quiverWithoutWater[y * visW] :
                     (const byte *)vs->getBasePtr(vs->xstart, y + _screenTop);
                 for (int x = 0; x < visW; ++x) {
                     const int offset = y * visW + x;
@@ -60,15 +61,32 @@ if (!quiverPoses.empty()) {
             if (!w || !h) continue;
             int left = d.screenLeft * scale;
             int top = d.screenTop * scale;
+            unsigned int cannonFraction = 1024;
+            const Graphics::Surface &cannonFrom = quiverPoses[ai].cannonFrom;
+            if (cannonFrom.getPixels()) {
+                cannonFraction = _hdMotionFraction;
+                const auto &from = _hdMotionCannon.from;
+                const auto &to = _hdMotionCannon.to;
+                // Align the two barrel poses to interpolated bounds before
+                // blending their pixels, so the base and outline move together.
+                left = HdMotion::Track::mix(from.left * scale, to.left * scale, cannonFraction);
+                top = HdMotion::Track::mix(from.top * scale, to.top * scale, cannonFraction);
+                w = HdMotion::Track::mix(from.width * scale, to.width * scale, cannonFraction);
+                h = HdMotion::Track::mix(from.height * scale, to.height * scale, cannonFraction);
+            }
             static HdCostumeRaster::Cache rasterCache;
             rasterCache.scope(_currentRoom, _playtestCommandId);
             const uint32 *raster = HdRemaster::state().active ? rasterCache.get(
                 (const uint32 *)texture.getPixels(), texture.pitch / 4, texture.w, texture.h,
                 w, h, d.costume, d.cel, d.mirror, edgeTreatment, lighting) : nullptr;
+            const uint32 *cannonRaster = cannonFraction < 1024 && HdRemaster::state().active ? rasterCache.get(
+                (const uint32 *)cannonFrom.getPixels(), cannonFrom.pitch / 4, cannonFrom.w, cannonFrom.h,
+                w, h, 35, _hdMotionCannon.from.cel, _hdMotionCannon.from.mirror, 0, lighting) : nullptr;
             for (int yy = MAX(0, top); yy < MIN(hdH, top + h); ++yy) {
                 const int ny = yy / scale;
                 const byte *nativeRow = !coin && !quiverWithoutCoin.empty()
-                    ? &quiverWithoutCoin[ny * visW] : (const byte *)vs->getBasePtr(vs->xstart, ny + _screenTop);
+                    ? &quiverWithoutCoin[ny * visW] : !coin && !quiverWithoutWater.empty()
+                    ? &quiverWithoutWater[ny * visW] : (const byte *)vs->getBasePtr(vs->xstart, ny + _screenTop);
                 const byte *actorRow = &a->_quiverAfter[ny * visW];
                 // Resolve the z-buffer resource once per row, never once per HD
                 // pixel. Preserve sub-strip camera offsets in the byte lookup.
@@ -87,6 +105,14 @@ if (!quiverPoses.empty()) {
                     uint32 color = raster ? raster[(yy - top) * w + xx - left] : lighting.apply(HdCostumeEdge::sample(
                         (const uint32 *)texture.getPixels(), texture.pitch / 4,
                         texture.w, texture.h, sourceX, sourceY, edgeTreatment));
+                    if (cannonFraction < 1024) {
+                        int oldX = (xx - left) * cannonFrom.w / w;
+                        if (_hdMotionCannon.from.mirror) oldX = cannonFrom.w - 1 - oldX;
+                        const int oldY = (yy - top) * cannonFrom.h / h;
+                        const uint32 oldColor = cannonRaster ? cannonRaster[(yy - top) * w + xx - left] :
+                            lighting.apply(*(const uint32 *)cannonFrom.getBasePtr(oldX, oldY));
+                        color = HdMotion::CannonAim::blend(oldColor, color, cannonFraction);
+                    }
                     uint32 alpha = color >> 24;
                     if (!alpha) continue;
                     if (alpha == 255) {

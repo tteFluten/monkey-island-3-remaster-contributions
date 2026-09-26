@@ -32,6 +32,7 @@ def patch(root, edit):
 			HdMovieGlyph glyph;
 			glyph.slot = _hdSlot; glyph.chr = chr;
 			glyph.x100 = x * 100 + _hdFraction; glyph.y = y;
+			glyph.sizePercent = _vm->_hdFontManager->getSizePercent();
 			glyph.color = hdColor(chr, col); glyph.clip = clipRect;
 			_hdGlyphs->push_back(glyph);
 			return getCharWidth(chr);
@@ -46,19 +47,36 @@ def patch(root, edit):
     for method in ('drawStringWrap', 'drawString'):
         old = f'''            sf->{method}(str, _hdSubtitleDark.data(), clipRect, pos_x, pos_y, color, flg);
             sf->{method}(str, _hdSubtitleLight.data(), clipRect, pos_x, pos_y, color, flg);'''
-        new = f'''            if (sf->beginHD(fontId, _hdMovieGlyphs)) {{
-                sf->{method}(str, _dst, clipRect, pos_x, pos_y, color, flg);
+        new = f'            // Crop-aware HD layout for {method}.\n' + '''            // Native drawing mutates clipRect to its text bounds. The HD
+            // pass needs fresh crop-aware bounds, not that narrowed rectangle.
+            const Common::Rect safe = HdMovieText::safeArea(_width, _height,
+                _vm->hdAspectRatio());
+            const int textX = (safe.left + safe.right) / 2;
+            // Dialogue sits above the lower picture edge. Keep non-dialogue
+            // captions near their authored vertical position within the crop.
+            const int textY = (flags & 8) ? safe.bottom :
+                safe.top + CLIP<int>(pos_y, 0, _height) * safe.height() / MAX(1, _height);
+            const TextStyleFlags textFlags = (TextStyleFlags)((flg & ~kStyleAlignRight) |
+                kStyleAlignCenter | kStyleWordWrap);
+            Common::Rect textClip = safe;
+            if (sf->beginHD(fontId, _hdMovieGlyphs)) {
+                sf->drawStringWrap(str, _dst, textClip, textX, textY, color, textFlags);
                 sf->endHD();
-            }} else {{
-{old}
-            }}'''
+            } else {
+                sf->drawStringWrap(str, _hdSubtitleDark.data(), textClip, textX, textY, color, textFlags);
+                textClip = safe; // Each native mask pass also mutates its bounds.
+                sf->drawStringWrap(str, _hdSubtitleLight.data(), textClip, textX, textY, color, textFlags);
+            }'''
         edit(player, old, new)
     original = '                                pixels = (const byte *)_hdScaleBuffer;'
     edit(player, original, '''                                // Draw crisp glyphs at final resolution, after scaling the movie.
                                 Graphics::Surface frame;
                                 frame.init(w, h, w * 4, _hdScaleBuffer, Graphics::PixelFormat::createFormatRGBA32());
+                                const int previousTextSize = _vm->_hdFontManager ?
+                                    _vm->_hdFontManager->getSizePercent() : 65;
                                 for (uint i = 0; i < _hdMovieGlyphs.size(); ++i) {
                                     const HdMovieGlyph &g = _hdMovieGlyphs[i];
+                                    _vm->_hdFontManager->setSizePercent(g.sizePercent);
                                     Common::Rect clip(g.clip.left * w / _vm->_screenWidth,
                                         g.clip.top * h / _vm->_screenHeight,
                                         g.clip.right * w / _vm->_screenWidth,
@@ -71,4 +89,5 @@ def patch(root, edit):
                                         g.x100 * w / (100 * _vm->_screenWidth) - clip.left,
                                         g.y * h / _vm->_screenHeight - clip.top, rgb[0], rgb[1], rgb[2]);
                                 }
+                                if (_vm->_hdFontManager) _vm->_hdFontManager->setSizePercent(previousTextSize);
 ''' + original)

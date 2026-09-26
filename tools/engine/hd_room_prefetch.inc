@@ -6,6 +6,7 @@ struct HdCostumeManager::RoomPrefetch {
     Common::HashMap<int, bool> costumes;
     uint cursor = 0;
     int room = -1;
+    int decodeRoom = -1;
     CostumeKey key;
     HdDecodeJob job;
     SDL_Thread *thread = nullptr;
@@ -62,13 +63,20 @@ void HdCostumeManager::queueRoomCostumes(int room) {
 void HdCostumeManager::prefetchRoomStep(int room) {
     if (!_roomPrefetch || _borrowDepth) return;
     RoomPrefetch &pending = *_roomPrefetch;
+    // Also invalidate on entry to rooms without any queued costumes. Do not
+    // resume an old queue, or evict current-room textures with its late result.
+    // The decoder owns only job, so its one in-flight read can finish safely.
+    if (pending.room != room) {
+        pending.queue.clear(); pending.costumes.clear(); pending.cursor = 0;
+        pending.room = room;
+    }
     if (pending.thread) {
         if (!SDL_AtomicGet(&pending.done)) return;
         SDL_WaitThread(pending.thread, nullptr);
         pending.thread = nullptr;
         // A demanded frame can have reached the cache while decoding. Never
         // replace its surface: the renderer may have retained its identity.
-        if (pending.job.ok && !_textureCache.contains(pending.key)) {
+        if (pending.decodeRoom == room && pending.job.ok && !_textureCache.contains(pending.key)) {
             TextureCacheEntry entry;
             entry.surface = pending.job.surface;
             entry.lastUsed = ++_lruCounter;
@@ -83,6 +91,7 @@ void HdCostumeManager::prefetchRoomStep(int room) {
         const CostumeKey key = pending.queue[pending.cursor++];
         if (_textureCache.contains(key)) continue;
         pending.key = key;
+        pending.decodeRoom = room;
         pending.job.path = buildCostumePath(key.akosId, key.akosSub, key.frame);
         pending.job.ok = false;
         SDL_AtomicSet(&pending.done, 0);

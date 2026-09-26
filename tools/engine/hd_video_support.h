@@ -13,12 +13,14 @@ inline unsigned char textColor(unsigned char value, int col) {
 // outlines and palette index 255) from untouched transparent pixels.
 inline void subtitles(unsigned int *frame, int width, int height,
                       const unsigned char *dark, const unsigned char *light,
-                      int textWidth, int textHeight, const unsigned char *palette) {
+                      int textWidth, int textHeight, const unsigned char *palette,
+                      unsigned char *textMask = nullptr, int maskPitch = 0) {
     for (int y = 0; y < height; ++y) {
         int sy = y * textHeight / height;
         for (int x = 0; x < width; ++x) {
             int i = sy * textWidth + x * textWidth / width;
             if (dark[i] != light[i]) continue;
+            if (textMask) textMask[y * maskPitch + x] = 255;
             const unsigned char *rgb = palette + dark[i] * 3;
             frame[y * width + x] = rgb[0] | (rgb[1] << 8) | (rgb[2] << 16) | 0xff000000u;
         }

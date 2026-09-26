@@ -11,7 +11,7 @@
     "6f663d73-945b-47f1-adcc-f728b9665de2": "9a753509-9611-4b0a-b96a-5ab1ab3b430d",
     "0aff02c9-8614-432a-a4de-5eb418c06afc": "69fbb262-24d4-449f-ba3b-0c963aedc7aa",
     "4921c986-44f5-4c33-8f0c-adec6ff6fa6f": "cannon-final-2560x1440",
-    "a1327264-ec6d-4863-905c-9d7f13f9cefc": "5db909ac-cdef-4301-86e1-d4e6b88fbf7f",
+    "a1327264-ec6d-4863-905c-9d7f13f9cefc": "cannon-view-supplied-f1da6708f7c5",
     "afda4e02-afa5-4016-b647-a914f4cf611f": "waterline-final-2560x1440",
     "28ed108f-87bb-45c3-b1dd-3f5d3099b812": "9b1a7f14-deb4-4377-98eb-9ad54bd1ff9a",
     "8eb05ba4-84e0-4331-a4ff-388221b08aaa": "243f162b-66a7-49cc-bbd0-c6ab89912912",
@@ -1963,6 +1963,27 @@
       "reviewStatus": "approved",
       "engineStatus": "untested",
       "reviewNotes": "User-supplied corrected 2560 \u00d7 1440 room 0011 background, shared by scene rendering and water reflections."
+    },
+    "cannon-view-supplied-f1da6708f7c5": {
+      "id": "cannon-view-supplied-f1da6708f7c5",
+      "assetId": "a1327264-ec6d-4863-905c-9d7f13f9cefc",
+      "filePath": "upscaled/imported/f1da6708f7c5728ee26bdcc2f37d8fbae98e950447642f97f88d7372b9483d74.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 4422269,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "f1da6708f7c5728ee26bdcc2f37d8fbae98e950447642f97f88d7372b9483d74",
+        "originalFile": "0010_cannon-v-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-26T18:24:58.604229+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0010 cannon aiming background."
     }
   }
 }

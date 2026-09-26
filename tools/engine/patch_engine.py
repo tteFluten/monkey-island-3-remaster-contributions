@@ -179,6 +179,10 @@ from patch_film import patch as patch_film
 patch_film(root, edit)
 print('Applied optional final vintage-film presentation')
 
+from patch_background_loading import patch as patch_background_loading
+patch_background_loading(root, edit)
+print('Applied shared asynchronous room background cache')
+
 patch_scene_jump(root, edit)
 print('Applied native J-key scene navigation')
 
