@@ -79,6 +79,19 @@ export function readFontSize(config: string): number {
   }
   return size;
 }
+// Game language chosen in the options book; language packs live in .playtest/lang/<code>.
+export const LANGUAGES = ['en', 'es'] as const;
+export function readLanguage(config: string): typeof LANGUAGES[number] {
+  let section = '';
+  let language: typeof LANGUAGES[number] = 'en';
+  for (const line of config.split(/\r?\n/)) {
+    const heading = /^\s*\[([^\]]+)\]\s*$/.exec(line);
+    if (heading) section = heading[1];
+    const setting = /^\s*hd_language\s*=\s*(\S+)\s*$/.exec(line);
+    if (section === 'comi' && setting) language = (LANGUAGES as readonly string[]).includes(setting[1]) ? setting[1] as typeof LANGUAGES[number] : 'en';
+  }
+  return language;
+}
 // Depth of field is opt-in: 0 off, 1 low, 2 high (in-game options book).
 export function readDepthOfField(config: string): 0 | 1 | 2 {
   let section = '';
@@ -118,10 +131,10 @@ export function assertAspect(width: number, height: number, originalWidth: numbe
     throw new Error(`Proportions must match ${originalWidth} × ${originalHeight}; received ${width} × ${height}. Correct the source image before importing.`);
   }
 }
-// Extended artwork keeps each standard room in its centered 4:3 area.
-// Only the decorative side scenery is presented outside the gameplay surface.
+// Extended artwork keeps each standard room, including the options book, in
+// its centered 4:3 area. Only side artwork is presented outside that surface.
 export function wideBackgroundCrop(width: number, height: number, room: Pick<PlaytestRoom, 'room' | 'width' | 'height'>) {
-  if (room.room === 92 || room.width !== 640 || room.height !== 480 ||
+  if (room.width !== 640 || room.height !== 480 ||
       width <= 0 || height <= 0 || width * 9 !== height * 16) return null;
   const cropWidth = height * 4 / 3;
   return { left: (width - cropWidth) / 2, top: 0, width: cropWidth, height };
@@ -374,16 +387,17 @@ export class PlaytestService extends EventEmitter {
         await fs.chmod(this.session, 0o700);
         const saves = path.join(this.local, 'saves');
         await fs.mkdir(saves, { recursive: true });
-        const config = `[scummvm]\nscreenshotpath=${path.join(this.root, '.context')}\nsavepath=${saves}\nmacos_savepath_migrated=true\nvsync=true\nfullscreen=true\ngfx_mode=opengl\nstretch_mode=fit\naspect_ratio=false\nfiltering=true\nlast_window_width=2560\nlast_window_height=1440\ngui_theme=builtin\n\n[comi]\nengineid=scumm\ngameid=comi\npath=${path.join(this.local, 'game')}\nhd_path=${path.join(this.local, 'hd')}\nplaytest_session=${this.session}\nsavepath=${saves}\nsubtitles=true\nhd_trace=false\nhd_gpu_effects=true\n`;
+        const config = `[scummvm]\nscreenshotpath=${path.join(this.root, '.context')}\nsavepath=${saves}\nmacos_savepath_migrated=true\nvsync=true\nfullscreen=true\ngfx_mode=opengl\nstretch_mode=fit\naspect_ratio=false\nfiltering=true\nlast_window_width=2560\nlast_window_height=1440\ngui_theme=builtin\nautosave_period=300\n\n[comi]\nengineid=scumm\ngameid=comi\npath=${path.join(this.local, 'game')}\nhd_path=${path.join(this.local, 'hd')}\nplaytest_session=${this.session}\nsavepath=${saves}\nsubtitles=true\nhd_trace=false\nhd_gpu_effects=true\n`;
         const configPath = path.join(this.local, 'scummvm.ini');
         const previousConfig = await fs.readFile(configPath, 'utf8').catch(() => '');
         const fontSize = readFontSize(previousConfig);
+        const language = readLanguage(previousConfig);
         const aspect = 169; // Every launch starts in the remaster presentation mode.
         const depthOfField = readDepthOfField(previousConfig);
         const tuning = readDepthOfFieldTuning(previousConfig);
         const film = readFilmSettings(previousConfig);
         const displayConfig = config.replace('[scummvm]\n', `[scummvm]\nhd_film_enabled=${film.enabled}\nhd_film_strength=${film.strength}\n${filmTuningConfig(previousConfig)}`) + `hd_water_shader=${readWaterShader(previousConfig)}\n`;
-        await fs.writeFile(configPath, displayConfig + `playtest_character_pack=${pack}\nplaytest_scale=${PLAYTEST_SCALE}\nhd_font_size=${fontSize}\nhd_aspect_ratio=${aspect}\nhd_depth_of_field=${depthOfField}\nhd_dof_blur=${tuning.blur}\nhd_dof_edge=${tuning.edge}\nhd_dof_intensity=${tuning.intensity}\nhd_dof_depth=${tuning.depth}\nhd_aspect_ui_path=${path.join(this.root, 'extracted/objects')}\nhd_color_grades_path=${path.join(this.root, 'data/color-grades.json')}\n`);
+        await fs.writeFile(configPath, displayConfig + `playtest_character_pack=${pack}\nplaytest_scale=${PLAYTEST_SCALE}\nhd_font_size=${fontSize}\nhd_aspect_ratio=${aspect}\nhd_depth_of_field=${depthOfField}\nhd_dof_blur=${tuning.blur}\nhd_dof_edge=${tuning.edge}\nhd_dof_intensity=${tuning.intensity}\nhd_dof_depth=${tuning.depth}\nhd_aspect_ui_path=${path.join(this.root, 'extracted/objects')}\nhd_language=${language}\nhd_language_dir=${path.join(this.local, 'lang')}\nhd_color_grades_path=${path.join(this.root, 'data/color-grades.json')}\n`);
         this.status.engine = null; this.status.error = null;
         const child = spawn(this.binary(), ['--config=' + configPath, '--debuglevel=0', ...(resume ? [`--save-slot=${resumeSlot}`] : []), 'comi'], { cwd: this.session, stdio: ['ignore', 'pipe', 'pipe'] });
         this.child = child; this.status.running = true; this.launchedAt = Date.now();

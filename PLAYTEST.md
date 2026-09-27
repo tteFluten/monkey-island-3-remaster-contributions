@@ -29,11 +29,11 @@ imported, and the Mac engine has been built. Source images and ISOs are unchange
 
 Every workshop launch and resume starts fullscreen with a **2560 × 1440,
 16:9 presentation canvas**, GPU effects enabled, and display synchronization.
-The original options book (**O** or **F5**) still offers **4:3** during play;
-both modes stay in borderless desktop fullscreen (without a separate macOS Space),
-and the next workshop launch resets presentation to
-16:9. Saved effect and font preferences remain intact. The GPU 4:3 canvas is
-1920 × 1440. Asset textures stay at 4×: a standard room uses
+Players have no 4:3 option: the options book has no Display row. Presentation
+stays in borderless desktop fullscreen (without a separate macOS Space). The
+engine still honours `hd_aspect_ratio=43` for isolated checks, which switch it
+with the test-only playtest `aspect` command; its GPU 4:3 canvas is
+1920 × 1440. Saved effect and font preferences remain intact. Asset textures stay at 4×: a standard room uses
 2560 × 1920 textures and native gameplay remains 640 × 480. High-resolution
 masters are preserved separately. Physical display dimensions are independent
 of both the asset textures and presentation canvas.
@@ -92,8 +92,8 @@ current coverage as `film-text.pgm` when text is present, with its presentation
 geometry in `film-text.json`. Add `--dialogue` with an early-game slot-0 save to
 also check Wally's speech and the dialogue response list.
 
-Any standard 640 × 480 background (including difficulty room 0087, excluding
-the options book) accepts exact 16:9 artwork
+Any standard 640 × 480 background (including difficulty room 0087 and the
+options book, room 0092) accepts exact 16:9 artwork
 with the original composition in its centered 4:3 area. Use the existing
 background import and apply controls. They stage the centered image at
 2560 × 1920 and a full 2560 × 1440 sidecar at `hd/widescreen/bg_NNNN.png`.
@@ -113,8 +113,8 @@ Each scene's `finalBackgroundVariant` selects its artwork on every launch and
 reinstall, replacing retired local variants. The workshop offers only the final
 background for these rooms. Each 16:9 runtime copy is byte-identical to the supplied
 image; the engine's center texture is derived from that same image for character
-and hotspot alignment. The in-game 4:3 option remains available and shows the
-center of this final artwork. Other rooms retain their existing selection behavior.
+and hotspot alignment. The 4:3 check mode shows the center of this final
+artwork. Other rooms retain their existing selection behavior.
 
 Room 0087 uses the supplied `0087_easyhard-wonder-3-5-wonder-3-5.png`.
 The 5120 × 2880 master is preserved; its 2560 × 1440 widescreen export surrounds
@@ -126,9 +126,114 @@ panel reports when none are available. The options book remains excluded.
 Run `tools/venv/bin/python tools/check_difficulty_look.py` for isolated native
 checks, or add `--cpu` to exercise the fallback renderer.
 
+The options book (room 0092) uses the supplied `0092_saveload-wonder-3-5.jpg`
+as its final background. The 3344 × 1882 JPEG loses one bottom row to become
+exactly 16:9 and is resized once to the 2560 × 1440 canonical master
+`assets/masters/backgrounds/23be0228c47fbc75e5c623da1910586f6ef98cd8899075f2e60444b0671848ee.png`.
+The widescreen sidecar is a byte copy; the 4:3 check mode shows its center.
+The original gutter bookmark ribbon is not drawn; the painting's own ribbon tips
+remain. The Save/Load spread is a full-screen native image drawn over the
+options spread. The engine treats its exact native pixels as background,
+so the HD painting shows through and slot frames, thumbnails and highlights stay
+native. Each visit is checked against the live screen first; any mismatch keeps
+the native spread.
+
+The options spread is re-laid out for the 16:9 book (`tools/engine/hd_book_layout.h`).
+Left page: Effects, Voice and Music Volume; Text Speed and Text Size; the Voice
+and Text checkboxes side by side; Show object line. Right page: the table of
+contents, centered on the page, and below it the language row (English,
+Español). The original, always-disabled "Enable 3D
+acceleration" option is not shown. Text Size is a book slider built from the
+game's own bar, knob and label (25–100% in 5% steps; click or drag). The book
+scripts are unchanged: their items are drawn at translated positions and the
+pointer is translated back before the scripts read it, so hover captions,
+highlights and clicks follow each control; a slider drag keeps its control until
+release. Empty paper, the Text Size slider and the hidden option reach no script
+hotspot. When Text is unchecked the game hides Text Speed, as in the original.
+
+On the Save/Load spread each column of slots (number, frame, thumbnail, name
+and hotspot) is centred on its 16:9 page; the page corners that turn to the next
+six slots, and the captions, keep their places. Slot thumbnails are HD: every
+save also writes a 640 × 480 PNG of the presented HD scene (the centred 4:3
+gameplay area) beside it, e.g. `comi.s02.hd.<key>.png`. When the book opens, the
+temporary current-game save gets one too, and a save made from the book copies
+it. The key is a checksum of the save's own internal thumbnail, so a replaced or
+foreign save never shows a stale picture. The picture keeps the book's dimming
+and hover highlight, and frames or names drawn over it stay on top. Saves
+without a PNG (made before this change or outside the remaster) show a smooth
+upscale of their internal thumbnail instead of its blocky native stamp. The
+PNGs live with the player's saves and are never packaged.
+
+Autosave uses slot 0 (`comi.s00`): ScummVM saves there every 5 minutes (the
+workshop writes `autosave_period=300`) and the remaster adds one at every chapter
+change, once the chapter card has given way to a playable room that has been on
+screen for two seconds; that save restarts the 5-minute timer. No autosave is
+made inside the book or during a cinematic. On the book's Load page the first
+tile is the autosave, labelled with its age (for example "Autosave (12 min ago)")
+and without a number; every other tile shows the slot before it, so tiles 2-7
+hold saves 1-6 and the numbers still show each save's slot. The Save page keeps
+its numbering, so the autosave slot is never offered for saving. The Load page
+is recognised from the table-of-contents entry the player clicked; reached any
+other way, it keeps the original numbering. Slot 99 cannot be loaded from the
+Load page.
+
+Engine banners such as the book's Quit prompt, the pause banner and the restart
+confirmation pause the game and redraw only once. While one is open,
+the engine keeps the last complete HD frame and replaces only the banner's box,
+so book labels, dialogue and scenery stay visible behind it and the frame is
+restored exactly on dismissal. The engine sizes banner boxes and buttons for the
+native font; each line of HD text (ink and hard shadow) is centred in the box or
+button behind it, at every text size, and left-aligned lines keep their position.
+The book's own controls and Scene Look keys
+ignore input while a banner is open; a click outside **Yes** answers No.
+Answering the Quit prompt clears the script's quit request, so a later
+window close or workshop **Stop** exits without prompting again. Run
+`tools/venv/bin/python tools/check_menu.py` with a cannon fixture in
+`MI3_ASPECT_TEST_SAVES` for isolated native checks of the layout, every moved
+control, the Save/Load pages and the prompts (add `--cpu` for the fallback
+renderer); screenshots go to `.context/menu-check/`.
+
+### Languages
+
+English is the default. The book's language row switches instantly: the next
+line printed or spoken uses the new language (a line already on screen finishes
+as it started), the choice is saved as `hd_language` and restored at the next
+launch. A language is offered only when its pack exists; otherwise its checkbox
+is greyed out and the game stays in English. The shipped English discs contain
+no Spanish text or voices, so the Spanish pack is supplied separately and stays
+local in `.playtest/lang/es/` (ignored, never packaged). Any of these files is
+enough; whatever a pack lacks falls back to English line by line:
+
+| File | Contents |
+| --- | --- |
+| `LANGUAGE.TAB` | A complete string table in the game's format (`TAG` + tab + text, Windows-1252), e.g. from a Spanish release. |
+| `overrides.tab` | `TAG` + tab + text, UTF-8. Applied over `LANGUAGE.TAB` (or the English table), so it can hold a full translation or only corrections. |
+| `VOXDISK1.BUN`, `VOXDISK2.BUN` | Voice bundles in the game's format, e.g. from a Spanish release. |
+| `voices/<TAG>.wav` | One recording per spoken line, 16-bit PCM mono or stereo, any sample rate. Takes precedence over the bundles. |
+
+Tags are the ones in the English game (`SA__026` "Save Game", `CNWY034`, ...);
+the engine's own prompts (`SYST200` "Are you sure you want to quit?", `SYST201`
+"Yes", `SYST202` "No", `BT__002` pause, ...) take the same form. Text keeps the
+game's `\n` line breaks and may use Spanish letters (á é í ó ú ü
+ñ ¡ ¿), which the HD fonts include. Per-line recordings reuse the English line's
+lip-sync data, so mouth movement follows the English timing.
+
+```sh
+tools/venv/bin/python tools/language_pack.py template .context/es-template
+tools/venv/bin/python tools/language_pack.py check .playtest/lang/es
+```
+
+`template` writes `overrides.tab` with every English line to translate and
+`voices.csv` listing the spoken lines (tag, bundle, English text). `check`
+reports unknown tags, characters the fonts cannot show, bad WAV formats and
+coverage. `tools/venv/bin/python tools/check_language.py` runs isolated native
+checks with a generated test pack (screenshots in `.context/language-check/`).
+Not covered yet: voices inside the cinematics (SAN movies) and text painted into
+artwork, such as the chapter cards.
+
 Completed wide scenes uniformly fill taller displays by cropping outer scenery.
 Rendering and pointer input use the same rectangle. Unfinished backgrounds,
-the options book, inventory, and vertical rooms preserve their framing; bars are
+inventory, and vertical rooms preserve their framing; bars are
 acceptable in these cases. The original gameplay region is not stretched. Movies
 zoom uniformly into a centered 16:9 crop, preserving proportions while removing
 12.5% from the top and bottom of the 4:3 picture. The 4:3 mode shows the complete
@@ -143,7 +248,7 @@ background extensions. Inventory opens as a centered overlay without changing
 the room viewport, camera, display aspect ratio, widescreen artwork, or GPU
 rendering path. Panoramas retain their 864-pixel viewport; inventory drawing and
 item hit tests share the same centering offset. The options book retains its
-centered 4:3 layout. In 16:9 mode, OS mouse confinement spans the full window
+centered 4:3 layout, surrounded by its 16:9 artwork. In 16:9 mode, OS mouse confinement spans the full window
 in every scene, including fixed-width rooms, inventory and the options book.
 The presentation cursor can cross the side artwork freely; native hotspot
 coordinates remain unchanged. Returning to 4:3 or the engine GUI restores its
@@ -431,8 +536,7 @@ override, including neutral color or focus Off. **Backspace** restores the
 selected room control to inheritance, and **R** restores every control in the
 current room. In Global mode, Backspace restores that control's built-in default.
 Changes save automatically. Existing room overrides stay active while editing
-global defaults. The focus hotkeys follow the selected editing scope; the
-options book's Focus preset edits the global setting.
+global defaults. The focus hotkeys follow the selected editing scope.
 
 Settings stay in `data/color-grades.json`. Schema 2 stores a `global` object and
 sparse `rooms` objects; missing room keys inherit independently. Color keys keep
@@ -625,11 +729,11 @@ decodes to the current 2560 × 1920 game framebuffer without cropping. The
 original SAN files supply audio, subtitles, timing, and the return to gameplay.
 The MP4 audio track is not played. Escape still skips a cinematic.
 
-Movies follow the options book's **Display** setting: in **16:9**, the backend
+Movies follow the display setting: in **16:9**, the backend
 zooms uniformly into a centered 16:9 crop of the 4:3 framebuffer, removing 12.5%
 from the top and bottom without stretching. Subtitles are laid out inside the
 visible crop with 5% inset margins, so the zoom cannot cut off their lower lines.
-In **4:3**, the complete original framing remains. Only HD pictures are displayed. Native SAN files
+In the 4:3 check mode, the complete original framing remains. Only HD pictures are displayed. Native SAN files
 remain necessary for audio, subtitles, and timing; their original video frames
 are never presented. In widescreen mode, the selected 16:9 frame fits within
 the display, with cinematic black bars above and below on taller screens.
@@ -881,13 +985,13 @@ to the current 4× renderer, with hard black shadows on all game text.
 Subtitles, dialogue responses, object labels, and
 in-game menu text share this sheet replacement path. The workshop UI is unchanged.
 Text defaults to **65% size**. Open the original in-game options book with **F5**
-and use **Text size − / +** to adjust from 25% to 100% in 5% steps. Changes apply
+and use the **Text Size** slider to adjust from 25% to 100% in 5% steps. Changes apply
 immediately and survive relaunches. The setting scales glyphs and original NUT
 metrics together for advances, wrapping, centering, and response hit rectangles.
 Fractional advances are retained until HD rendering so the original letter-spacing
 proportions stay intact without adding tracking;
 speaker colors, highlighting, subtitle settings, and timing still come from the
-game. The size-control row stays at a readable fixed size.
+game. The book's labels, including Text Size, follow the chosen size.
 
 With the game stopped, install or restage the package using Pillow:
 

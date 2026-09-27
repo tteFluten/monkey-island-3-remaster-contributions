@@ -30,10 +30,14 @@
       "height": 480,
       "metadata": {
         "roomNumber": 92,
-        "originalFile": "0092_saveload.png"
+        "originalFile": "0092_saveload.png",
+        "finalBackgroundVariant": "saveload-final-2560x1440"
       },
-      "variants": [],
-      "createdAt": "2026-09-21T22:36:19.713Z"
+      "variants": [
+        "saveload-final-2560x1440"
+      ],
+      "createdAt": "2026-09-21T22:36:19.713Z",
+      "approvedVariantId": "saveload-final-2560x1440"
     },
     "11b40497-636a-4f0e-be50-9a2851328229": {
       "id": "11b40497-636a-4f0e-be50-9a2851328229",
@@ -196,6 +200,29 @@
       "createdAt": "2026-09-21T22:36:19.848Z"
     }
   },
-  "variants": {},
+  "variants": {
+    "saveload-final-2560x1440": {
+      "id": "saveload-final-2560x1440",
+      "assetId": "7faa1fef-70fa-4a70-8f7f-311fe6cb212f",
+      "filePath": "upscaled/imported/23be0228c47fbc75e5c623da1910586f6ef98cd8899075f2e60444b0671848ee.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 4326229,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "23be0228c47fbc75e5c623da1910586f6ef98cd8899075f2e60444b0671848ee",
+        "originalFile": "0092_saveload-wonder-3-5.jpg",
+        "finalBackground": true
+      },
+      "references": [],
+      "createdAt": "2026-09-26T18:51:23.503084+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this 16:9 image as the options book (room 0092) background. The 3344 x 1882 supplied JPEG was cropped by one bottom row to exact 16:9 and resized to 2560 x 1440."
+    }
+  },
   "jobs": {}
 }

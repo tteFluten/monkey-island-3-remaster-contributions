@@ -4,8 +4,17 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import sharp from 'sharp';
-import { PlaytestService, roomFromFilename, assertAspect, wideBackgroundCrop, validateSettings, readFontSize, readDepthOfField, readDepthOfFieldTuning, readFilmSettings } from './playtest.js';
+import { PlaytestService, roomFromFilename, assertAspect, wideBackgroundCrop, validateSettings, readFontSize, readLanguage, readDepthOfField, readDepthOfFieldTuning, readFilmSettings } from './playtest.js';
 import { setProjectRoot } from './manifest.js';
+
+test('game language survives relaunch from the COMI section and defaults to English', () => {
+  assert.equal(readLanguage(''), 'en');
+  assert.equal(readLanguage('[comi]\nhd_language=es'), 'es');
+  assert.equal(readLanguage('[comi]\r\nhd_language = es\r\n[other]\nhd_language=en'), 'es');
+  assert.equal(readLanguage('[scummvm]\nhd_language=es'), 'en');
+  assert.equal(readLanguage('[comi]\nhd_language=fr'), 'en');
+  assert.equal(readLanguage('[comi]\nhd_language=es\nhd_language=../x'), 'en');
+});
 
 test('film opt-in and strength survive relaunch only from global settings', () => {
   assert.deepEqual(readFilmSettings(''), { enabled: false, strength: 20 });
@@ -64,7 +73,7 @@ test('extended room art preserves the exact central 4:3 area', () => {
   assert.deepEqual(wideBackgroundCrop(2560, 1440, { ...room, room: 10 }), { left: 320, top: 0, width: 1920, height: 1440 });
   assert.deepEqual(wideBackgroundCrop(5120, 2880, { ...room, room: 87 }), { left: 640, top: 0, width: 3840, height: 2880 });
   assert.equal(wideBackgroundCrop(2560, 1440, { ...room, height: 2044 }), null);
-  assert.equal(wideBackgroundCrop(2560, 1440, { ...room, room: 92 }), null);
+  assert.deepEqual(wideBackgroundCrop(2560, 1440, { ...room, room: 92 }), { left: 320, top: 0, width: 1920, height: 1440 });
   assert.equal(wideBackgroundCrop(2560, 1440, { ...room, width: 2096 }), null);
   assert.equal(wideBackgroundCrop(3840, 2880, room), null);
   assert.equal(wideBackgroundCrop(2559, 1440, room), null);
@@ -75,7 +84,7 @@ test('settings reject malformed paths and config injection', () => {
   assert.throws(() => validateSettings({ disc1: '/a', disc2: '/b', backgroundFolder: '/c', characterPack: 'topaz\nhd_path=/tmp' }), /Unknown character pack/);
 });
 
-for (const roomId of [9, 13, 87]) test(`room ${roomId}: wide import stages matching center and sides; ordinary selection removes sides`, async () => {
+for (const roomId of [9, 13, 87, 92]) test(`room ${roomId}: wide import stages matching center and sides; ordinary selection removes sides`, async () => {
   const number = String(roomId).padStart(4, '0');
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'mi3-wide-'));
   const service = new PlaytestService(root);
@@ -169,6 +178,8 @@ test('import, persistence, staging, process commands and original restoration', 
     await fs.writeFile(path.join(costumeDir, 'LFLF_0009_AKOS_0025_aframe_0.svg'), '<svg viewBox="0 0 20 30"><path d="M0 0h20v30z"/></svg>');
     await service.launch();
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /playtest_character_pack=topaz/);
+    assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /\[scummvm\][^[]*autosave_period=300/);
+    assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /hd_language=en\nhd_language_dir=.*\.playtest\/lang\n/);
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /playtest_scale=4/);
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /hd_font_size=65/);
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), /hd_aspect_ratio=169/);
