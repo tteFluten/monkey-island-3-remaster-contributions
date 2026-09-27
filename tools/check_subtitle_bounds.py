@@ -86,7 +86,16 @@ def main():
             check.jump(room)
             for width, height in ((1280, 720), (1280, 800), (1720, 720)):
                 check.send(f'resize {width} {height}')
-                check.send('move 2 2')
+                # The capture mask includes object captions as well as speech.
+                # Find empty scenery; black-bar moves are rejected and retain
+                # the previous hover, while the picture center can be an object.
+                window = check.window()
+                for px, py in ((.5, .1), (.5, .9), (.25, .5), (.75, .5), (.5, .5)):
+                    check.send(f'move {round(window["width"] * px)} {round(window["height"] * py)}')
+                    if check.state().get('hoverObject') == 0:
+                        break
+                else:
+                    raise AssertionError('No empty scenery to clear the object caption')
                 for label, x, y, flags in (('top-left', -120, -80, 1), ('bottom-right', 1100, 700, 2)):
                     name = f'room-{room}-{width}x{height}-{label}'
                     results[name] = capture(check, name, x, y, flags)
