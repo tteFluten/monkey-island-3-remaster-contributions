@@ -9,7 +9,7 @@
     "37f79c54-c525-411f-942f-448d3edcd66e": "chapter2-supplied-9a1c30fceb66",
     "5f420ca4-000c-4e77-b8ee-57a9d59849b7": "chapter3-supplied-f227dab20874",
     "6f663d73-945b-47f1-adcc-f728b9665de2": "chapter4-supplied-7556d7a92b84",
-    "0aff02c9-8614-432a-a4de-5eb418c06afc": "69fbb262-24d4-449f-ba3b-0c963aedc7aa",
+    "0aff02c9-8614-432a-a4de-5eb418c06afc": "chapter5-supplied-fc4d520fd634",
     "4921c986-44f5-4c33-8f0c-adec6ff6fa6f": "cannon-final-2560x1440",
     "a1327264-ec6d-4863-905c-9d7f13f9cefc": "cannon-view-supplied-f1da6708f7c5",
     "afda4e02-afa5-4016-b647-a914f4cf611f": "waterline-final-2560x1440",
@@ -2068,6 +2068,27 @@
       "reviewStatus": "approved",
       "engineStatus": "untested",
       "reviewNotes": "User selected this image for the room 0007 Chapter 4 background."
+    },
+    "chapter5-supplied-fc4d520fd634": {
+      "id": "chapter5-supplied-fc4d520fd634",
+      "assetId": "0aff02c9-8614-432a-a4de-5eb418c06afc",
+      "filePath": "upscaled/imported/fc4d520fd6344364422e672ec5dfc9aae241febea33145c3ade9572818615854.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5083307,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "fc4d520fd6344364422e672ec5dfc9aae241febea33145c3ade9572818615854",
+        "originalFile": "0008_chapter5-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T17:28:21.645268+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0008 Chapter 5 background."
     }
   }
 }
