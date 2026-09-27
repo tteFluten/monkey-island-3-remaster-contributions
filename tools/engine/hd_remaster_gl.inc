@@ -368,6 +368,7 @@ void main() {
         const int canvasH = 1440;
         const int gameW = s.viewportWidth * 3, left = (canvasW - gameW) / 2;
         const bool wideFocus = wide && canvasW == 2560 && s.viewportWidth == 640;
+        const bool plunderWater = wideFocus && s.room == 13 && s.plunderMap && s.plunderWaterCoverage.getPixels();
         const Math::Vector4d frameRect(float(left)/canvasW, 0, float(gameW)/canvasW, 1);
         const double waterNow = HdRemaster::milliseconds();
         if (_waterRoom != s.room) { _waterRoom = s.room; _waterTime = 0; _waterLast = 0; }
@@ -408,7 +409,7 @@ void main() {
                 _grade.value[8]/100.0f, _grade.value[9]/100.0f));
             bind(_lut, 4);
             if (s.water) {
-                const auto &mask = s.waterCoverage;
+                const auto &mask = plunderWater ? s.plunderWaterCoverage : s.waterCoverage;
                 const bool resized = _previousWater.w != mask.w || _previousWater.h != mask.h;
                 if (!_water) _water = new Texture(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE);
                 if (resized || memcmp(_previousWater.getPixels(), mask.getPixels(), mask.pitch * mask.h)) {
@@ -541,7 +542,8 @@ void main() {
                 // Focus spans the full painting; water retains its native boundary mapping.
                 _effect->setUniform("focusRect", Math::Vector4d(0,0,1,1));
                 _effect->setUniform("blurRect", Math::Vector4d(0,0,1,1));
-                _effect->setUniform("coverageRect", Math::Vector4d(-float(left)/gameW,0,float(canvasW)/gameW,1));
+                _effect->setUniform("coverageRect", plunderWater ? Math::Vector4d(0,0,1,1)
+                    : Math::Vector4d(-float(left)/gameW,0,float(canvasW)/gameW,1));
                 if (s.dof || s.water) bind(&wide->getGLTexture(), 1);
                 if (s.dof) { bind(_wideBlur[0]->getTexture(), 2); bind(_cover[0]->getTexture(), 3); }
                 _effect->setUniform("waterPatternRect", Math::Vector4d(0,0,1,1));
@@ -549,7 +551,7 @@ void main() {
                 _effects->drawTexture(wide->getGLTexture(), 0, 0, canvasW, canvasH);
             }
             _effect->setUniform1f("backgroundOnly", 0);
-            _effect->setUniform("coverageRect", Math::Vector4d(0,0,1,1));
+            _effect->setUniform("coverageRect", plunderWater ? frameRect : Math::Vector4d(0,0,1,1));
             _effect->setUniform("focusRect", wideFocus ? frameRect : Math::Vector4d(0,0,1,1));
             if (s.dof || s.water) {
                 bind(_background, 1);

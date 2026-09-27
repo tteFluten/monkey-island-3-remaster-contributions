@@ -5,6 +5,7 @@
 #include "common/system.h"
 #include "common/array.h"
 #include "common/hd_water.h"
+#include "common/hd_plunder_map.h"
 
 // Engine/backend handoff, owned by this single-process native runtime. Surfaces
 // are CPU staging buffers; the backend owns all GL objects and their lifetimes.
@@ -37,6 +38,9 @@ struct State {
     uint uploadedCoverageGeneration = ~0u;
     Graphics::Surface scene, coverage, reference;
     Graphics::Surface waterCoverage;
+    bool plunderMap = false, plunderMapInput = false;
+    int plunderPointerX = 0, plunderPointerY = 0;
+    Graphics::Surface plunderWaterCoverage;
     Common::Array<byte> wideCoverage;
     bool compareReady = false;
     const Graphics::Surface *background = nullptr, *overlay = nullptr;

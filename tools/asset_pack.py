@@ -164,6 +164,12 @@ def installation_plan(root, target, manifest):
         state = dict(old, settings=settings,
                      selections={**packaged['selections'], **old.get('selections', {})},
                      variants={**packaged['variants'], **old.get('variants', {})})
+        # An authored replacement upgrades only its known predecessor. Keep
+        # custom selections, the original-game choice, and fallback variants.
+        for key, variant in packaged['variants'].items():
+            predecessor = variant.get('params', {}).get('replacesVariantId')
+            if predecessor and state['selections'].get(variant['assetId']) == predecessor:
+                state['selections'][variant['assetId']] = key
         # Final backgrounds explicitly retire that room's older selections.
         # Preserve local variants and selections for every other asset.
         for key, variant in packaged['variants'].items():

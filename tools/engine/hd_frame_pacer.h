@@ -25,6 +25,10 @@ struct FramePacer {
     bool due(unsigned int now) const { return !started || (int)(now - next) >= 0; }
     unsigned int delay(unsigned int now) const { return due(now) ? 0 : next - now; }
     void presented(unsigned int now) {
+        // Vsynced GPU updates can bypass due(), including bootstrap frames
+        // that do not swap. Keep their early attempts from accumulating a
+        // future deadline that would starve the CPU-rendered options book.
+        if (!due(now)) return;
         if (!started || (int)(now - next) > 100) {
             next = now; remainder = 0; started = true;
         }

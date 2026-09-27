@@ -200,4 +200,12 @@ from patch_language import patch as patch_language
 patch_language(root, edit)
 print('Applied language packs')
 
+from patch_plunder_map import patch as patch_plunder_map
+patch_plunder_map(root, edit)
+print('Applied widescreen Plunder Island map registration')
+
+from patch_subtitle_bounds import patch as patch_subtitle_bounds
+patch_subtitle_bounds(root, edit)
+print('Applied crop-aware gameplay subtitle boundaries')
+
 stamp.write_text(revision + "\n")

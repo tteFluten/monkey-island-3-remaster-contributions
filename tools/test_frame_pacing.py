@@ -38,6 +38,16 @@ int main() {
     p.presented(0xfffffff8u);
     assert(p.next == 8 && p.delay(0xfffffff8u) == 16);
     assert(!p.due(7) && p.due(8));
+    // The vsynced GPU path bypasses due(). Repeated early update attempts
+    // must not push the CPU menu's first presentation into the future.
+    HdPresentation::FramePacer transition;
+    transition.presented(1000);
+    for (int attempt = 0; attempt < 10000; ++attempt)
+        transition.presented(1001);
+    assert(transition.next == 1016 && transition.delay(1001) == 15);
+    assert(transition.due(1016));
+    transition.presented(1016);
+    assert(transition.next == 1033);
     HdPresentation::SwapPacer swap;
     swap.presented(0);
     assert(swap.delay(5) == 7); // Render work comes before the deadline wait.

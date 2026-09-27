@@ -9,6 +9,9 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
         ConfMan.getInt("hd_wide_background_revision"));
     const Common::String sourceKey = key;
     auto &remaster = HdRemaster::state();
+    if (remaster.wideRoom != 13 || path.empty()) {
+        remaster.plunderMap = remaster.plunderMapInput = false;
+    }
     if (!key.empty() && !remaster.active) key += Common::String::format(":dof:%d:%d:%d:%u", remaster.dof, remaster.radius, remaster.intensity, remaster.coverageGeneration);
     if (!key.empty()) key += HdRemaster::state().active ? ":gpu" : ":cpu";
     HdColorGrade::Grade grade;
@@ -21,6 +24,7 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
     _hdWideBackgroundKey = key;
     delete _hdWideBackground;
     _hdWideBackground = nullptr;
+    remaster.plunderMap = remaster.plunderMapInput = false;
     ConfMan.setBool("hd_wide_background_active", false, Common::ConfigManager::kTransientDomain);
     _forceRedraw = true;
     if (path.empty()) return;
@@ -78,6 +82,30 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
             pixels->getPixels(), pixels->pitch);
         _hdWideBackground->updateGLTexture();
         ConfMan.setBool("hd_wide_background_active", true, Common::ConfigManager::kTransientDomain);
+        if (remaster.wideRoom == 13) {
+            Common::File stamp;
+            const Common::Path stampPath(ConfMan.get("hd_path") + "/backgrounds/bg_0013.png.stamp");
+            if (stamp.open(Common::FSNode(stampPath))) {
+                const Common::String source = stamp.readLine();
+                remaster.plunderMap = source.hasPrefix(Common::String(HdPlunderMap::kSource) + ":");
+            }
+            if (remaster.plunderMap) {
+                // One depth field for the whole painting avoids clamped water
+                // at the two boundaries of the central gameplay texture.
+                const int w = 854, h = 480;
+                auto &coverage = remaster.plunderWaterCoverage;
+                coverage.free(); coverage.create(w, h, Graphics::PixelFormat::createFormatCLUT8());
+                Common::Array<byte> water; water.resize(w * h);
+                Common::Array<uint16> edge; edge.resize(w * h);
+                for (int y = 0; y < h; ++y) for (int x = 0; x < w; ++x) {
+                    byte r, g, b;
+                    raw.format.colorToRGB(raw.getPixel(x * raw.w / w, y * raw.h / h), r, g, b);
+                    water[y * w + x] = HdPlunderMap::water((x + 0.5) * 1000 / w,
+                        (y + 0.5) * 1000 / h, r, g, b) ? 2 : 0;
+                }
+                HdWater::surfaceDepth(water.data(), w, h, edge.data(), (byte *)coverage.getPixels(), 1);
+            }
+        }
         warning("HD widescreen: loaded %s", path.c_str());
     }
     pixels->free();

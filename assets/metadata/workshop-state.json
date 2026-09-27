@@ -13,8 +13,8 @@
     "4921c986-44f5-4c33-8f0c-adec6ff6fa6f": "cannon-final-2560x1440",
     "a1327264-ec6d-4863-905c-9d7f13f9cefc": "cannon-view-supplied-f1da6708f7c5",
     "afda4e02-afa5-4016-b647-a914f4cf611f": "waterline-final-2560x1440",
-    "28ed108f-87bb-45c3-b1dd-3f5d3099b812": "9b1a7f14-deb4-4377-98eb-9ad54bd1ff9a",
-    "8eb05ba4-84e0-4331-a4ff-388221b08aaa": "243f162b-66a7-49cc-bbd0-c6ab89912912",
+    "28ed108f-87bb-45c3-b1dd-3f5d3099b812": "treasure-wide-6f0c6289d355",
+    "8eb05ba4-84e0-4331-a4ff-388221b08aaa": "plunder-map-wide-e5369aec8e12",
     "3d77636e-df21-4f0d-8556-43657f9ed342": "7cad8e40-2cfb-43d4-97ae-4ee9f4199b28",
     "eea06c30-39d2-4fe9-a29d-96577c8e0cea": "0cc899e8-abb0-4355-8ae9-2e8c394c3af3",
     "effd87cb-6883-46ef-8900-32d3dc3f6c9e": "77bdcaba-23d2-42d0-81cb-578311283f2c",
@@ -31,7 +31,7 @@
     "a0687c98-291b-452e-a20d-ad795371bbf3": "99d5f90a-b8a1-41f8-8fd2-6a227836ef5e",
     "3e31caea-1509-4c21-9b42-62e357db41f8": "6e9ab0af-c4d4-499f-aa28-99d6e64b9f65",
     "36114439-d72e-46aa-b1f1-3d717d53ea36": "070a6f2d-6176-4a01-b514-5f4c69863690",
-    "52a5a24a-8145-4573-83b6-2ab71e373185": "4b7f98cb-4228-4d3e-9553-d773b1169abc",
+    "52a5a24a-8145-4573-83b6-2ab71e373185": "a3a9b0dc-e80a-4aee-9c38-ef75231f6fea",
     "202b09ce-6f6f-4f20-972e-40f5a1b766bd": "da1f8b39-7036-42ac-ae23-9d029c8b6020",
     "2c530330-9145-49c4-97fa-4c625674e786": "eb2f90e9-de99-4ccd-9f5a-26d7e4cb62b1",
     "cc299362-9b75-49af-ad68-78ec0897cab3": "56794e38-eb5c-4c7a-adb5-827ed0129de6",
@@ -1878,7 +1878,7 @@
       "createdAt": "2026-09-25T19:20:57.368354+00:00",
       "reviewStatus": "approved",
       "engineStatus": "untested",
-      "reviewNotes": "User designated this exact 2560 \u00d7 1440 image as the final room 0009 background."
+      "reviewNotes": "User designated this exact 2560 × 1440 image as the final room 0009 background."
     },
     "easyhard-supplied-5120x2880": {
       "id": "easyhard-supplied-5120x2880",
@@ -1942,7 +1942,7 @@
       "createdAt": "2026-09-26T15:34:25.232190+00:00",
       "reviewStatus": "approved",
       "engineStatus": "untested",
-      "reviewNotes": "User-supplied corrected 2560 \u00d7 1440 room 0011 background, shared by scene rendering and water reflections."
+      "reviewNotes": "User-supplied corrected 2560 × 1440 room 0011 background, shared by scene rendering and water reflections."
     },
     "cannon-view-supplied-f1da6708f7c5": {
       "id": "cannon-view-supplied-f1da6708f7c5",
@@ -2091,6 +2091,113 @@
       "reviewStatus": "approved",
       "engineStatus": "untested",
       "reviewNotes": "User designated this 16:9 image as the options book (room 0092) background. The 3344 x 1882 supplied JPEG was cropped by one bottom row to exact 16:9 and resized to 2560 x 1440."
+    },
+    "plunder-map-wide-e5369aec8e12": {
+      "id": "plunder-map-wide-e5369aec8e12",
+      "assetId": "8eb05ba4-84e0-4331-a4ff-388221b08aaa",
+      "filePath": "upscaled/imported/e5369aec8e127c954aa7b3dba42df3c9ac58de0bec25fdc06a173769f5e5c194.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5257819,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "e5369aec8e127c954aa7b3dba42df3c9ac58de0bec25fdc06a173769f5e5c194",
+        "originalFile": "0013_plndrmap-wonder-3-5.png",
+        "replacesVariantId": "243f162b-66a7-49cc-bbd0-c6ab89912912",
+        "layout": "plunder-map-v1"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T18:51:15.065Z",
+      "reviewStatus": "unreviewed",
+      "engineStatus": "untested"
+    },
+    "treasure-wide-6f0c6289d355": {
+      "id": "treasure-wide-6f0c6289d355",
+      "assetId": "28ed108f-87bb-45c3-b1dd-3f5d3099b812",
+      "filePath": "upscaled/imported/6f0c6289d35522df3225711ecde9296bab5ee8baa71109bcb206080a7def3a1b.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5095493,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "6f0c6289d35522df3225711ecde9296bab5ee8baa71109bcb206080a7def3a1b",
+        "originalFile": "0012_treasure-wonder-3-5.png",
+        "replacesVariantId": "9b1a7f14-deb4-4377-98eb-9ad54bd1ff9a"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T19:35:58.817Z",
+      "reviewStatus": "unreviewed",
+      "engineStatus": "untested"
+    },
+    "user-background-0030-0d70885f3bad": {
+      "id": "user-background-0030-0d70885f3bad",
+      "assetId": "52a5a24a-8145-4573-83b6-2ab71e373185",
+      "filePath": "upscaled/imported/0d70885f3bad75f9d9d7dbce4db8b02df118960437725b9fc08e6aa73b16e2ef.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5605359,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "0d70885f3bad75f9d9d7dbce4db8b02df118960437725b9fc08e6aa73b16e2ef",
+        "originalFile": "0030_voodoo-i-wonder-3-5.png",
+        "replacesVariantId": "4b7f98cb-4228-4d3e-9553-d773b1169abc"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T20:56:19.715Z",
+      "reviewStatus": "unreviewed",
+      "engineStatus": "untested"
+    },
+    "70f60ee4-0ffc-4fc6-a468-353559275022": {
+      "id": "70f60ee4-0ffc-4fc6-a468-353559275022",
+      "assetId": "52a5a24a-8145-4573-83b6-2ab71e373185",
+      "filePath": "upscaled/imported/1431b07aa9bf001cd48093d9c03dc7f42eeefa54470f6116e4773d901c5d239c.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5582074,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "1431b07aa9bf001cd48093d9c03dc7f42eeefa54470f6116e4773d901c5d239c",
+        "originalFile": "0030_voodoo-i-wonder-3-5.png",
+        "replacesVariantId": "user-background-0030-0d70885f3bad"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T21:09:54.921Z",
+      "reviewStatus": "unreviewed",
+      "engineStatus": "untested"
+    },
+    "a3a9b0dc-e80a-4aee-9c38-ef75231f6fea": {
+      "id": "a3a9b0dc-e80a-4aee-9c38-ef75231f6fea",
+      "assetId": "52a5a24a-8145-4573-83b6-2ab71e373185",
+      "filePath": "upscaled/imported/42d4fde8dc88734e1bd42180218ea9cf2546166f1d2152181120c415cec16a3a.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5584830,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "42d4fde8dc88734e1bd42180218ea9cf2546166f1d2152181120c415cec16a3a",
+        "originalFile": "0030_voodoo-i-wonder-3-5.png",
+        "replacesVariantId": "70f60ee4-0ffc-4fc6-a468-353559275022"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T21:25:58.562Z",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this exact 2560 × 1440 image as the final room 0030 background."
     }
   }
 }
