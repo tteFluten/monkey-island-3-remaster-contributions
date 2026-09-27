@@ -28,8 +28,11 @@
         "roomNumber": 6,
         "originalFile": "0006_chapter3.png"
       },
-      "variants": [],
-      "createdAt": "2026-09-21T22:36:08.820Z"
+      "variants": [
+        "chapter3-supplied-f227dab20874"
+      ],
+      "createdAt": "2026-09-21T22:36:08.820Z",
+      "approvedVariantId": "chapter3-supplied-f227dab20874"
     },
     "49fe0ac0-5434-4930-ace6-75d451afab0e": {
       "id": "49fe0ac0-5434-4930-ace6-75d451afab0e",
@@ -140,6 +143,28 @@
       "createdAt": "2026-09-22T00:23:17.131Z"
     }
   },
-  "variants": {},
+  "variants": {
+    "chapter3-supplied-f227dab20874": {
+      "id": "chapter3-supplied-f227dab20874",
+      "assetId": "5f420ca4-000c-4e77-b8ee-57a9d59849b7",
+      "filePath": "upscaled/imported/f227dab208742c1f8f4864ace5fddd94e91f644d137c1baa5dfd26a6d7de1889.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5241987,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "f227dab208742c1f8f4864ace5fddd94e91f644d137c1baa5dfd26a6d7de1889",
+        "originalFile": "0006_chapter3-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T13:32:51.525804+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0006 Chapter 3 background."
+    }
+  },
   "jobs": {}
 }

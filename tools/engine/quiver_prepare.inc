@@ -133,16 +133,22 @@ if (waterRequested || _hdUICostumeManager || (playtestExactRoom(_currentRoom) &&
         // excluded above and retain all their original pixels.
         for (int ai = (int)quiverPoses.size() - 1; ai >= 0; --ai) {
             Actor *a = quiverPoses[ai].actor;
-            if (quiverPoses[ai].water)
-                QuiverNative::removeActor(quiverWithoutWater.data(), a->_quiverUnder.data(),
-                                          a->_quiverAfter.data(), quiverWithoutWater.size());
+            const bool water = quiverPoses[ai].water;
+            const bool mixedWater = water && HdWater::mixedOverlay(_currentRoom, a->_costume);
+            if (water)
+                HdWater::removeOverlay(quiverWithoutWater.data(), a->_quiverUnder.data(),
+                    a->_quiverAfter.data(), quiverWithoutWater.size(), _currentPalette, mixedWater);
             if (quiverPoses[ai].water && !waterState.waterSurface)
                 for (int y = 0; y < visH; ++y)
                     HdWater::coverage((byte *)waterState.waterCoverage.getBasePtr(0, y),
                         &quiverNative[y * visW], &a->_quiverUnder[y * visW],
                         &a->_quiverAfter[y * visW], visW);
-            QuiverNative::removeActor(quiverNative.data(), a->_quiverUnder.data(),
-                                      a->_quiverAfter.data(), quiverNative.size());
+            if (water)
+                HdWater::removeOverlay(quiverNative.data(), a->_quiverUnder.data(),
+                    a->_quiverAfter.data(), quiverNative.size(), _currentPalette, mixedWater);
+            else
+                QuiverNative::removeActor(quiverNative.data(), a->_quiverUnder.data(),
+                                          a->_quiverAfter.data(), quiverNative.size());
             // HD characters must remain visible through transparent areas of
             // the replacement coin, even inside the wider native silhouette.
             if (a->_costume == 1 && a->_layer < 0)

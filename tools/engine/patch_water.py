@@ -1,9 +1,11 @@
 """Replace known ambient water sprites with masked, presentation-rate shading."""
 from pathlib import Path
+from water_regions import header as water_regions_header
 
 
 def patch(root, edit):
     here = Path(__file__).parent
+    (root / 'common/hd_water_regions.h').write_text(water_regions_header())
     (root / 'common/hd_water.h').write_bytes((here / 'hd_water.h').read_bytes())
     (root / 'engines/scumm/hd_water_surface.inc').write_bytes((here / 'hd_water_surface.inc').read_bytes())
     edit('engines/scumm/gfx.cpp', 'namespace Scumm {',

@@ -9,6 +9,7 @@
 // Engine/backend handoff, owned by this single-process native runtime. Surfaces
 // are CPU staging buffers; the backend owns all GL objects and their lifetimes.
 namespace HdRemaster {
+inline bool chapterCard(int room) { return (room >= 4 && room <= 8) || room == 88; }
 struct Sample { double at = 0, cpu = 0, gpu = -1, interval = 0, native = 0, motion = 0, scene = 0, backend = 0; int room = 0, cameraX = 0, cameraY = 0; };
 struct State {
     bool (*capture)(Graphics::Surface &) = nullptr;
@@ -18,6 +19,8 @@ struct State {
     bool water = false, waterPaused = false, waterSurface = false;
     int waterOpacity = 100, waterWaves = 100, waterSpeed = 100;
     int waterDistortion = 100, waterHighlights = 100, waterReflection = 8;
+    int waterRed = 100, waterGreen = 100, waterBlue = 100;
+    int waterLight = 100, waterLightDirection = 0, waterGloss = 100, waterScale = 100;
     float waterReflectionIntercept = 0, waterReflectionSlope = 0;
     // Room entry is published only after backend setup and a complete engine
     // composition agree. This prevents a CPU/4:3 bootstrap frame flashing first.

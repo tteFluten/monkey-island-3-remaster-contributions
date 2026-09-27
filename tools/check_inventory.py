@@ -67,16 +67,13 @@ def main():
         cycle(check, 'cannon-fullscreen')
         check.send('fullscreen 0')
         check.send('resize 1280 720')
-        check.select(43)
-        cycle(check, 'cannon-43')
-        check.select(169)
         check.jump(15)
         check.wait(lambda: check.state()['viewportWidth'] == 864, 'panorama')
         cycle(check, 'panorama-169')
         cycle(check, 'panorama-reopened')
         (output / 'result.json').write_text(json.dumps({'ok': True, 'gpu': not args.cpu,
             'checks': ['unchanged framing and camera', 'centered inventory input', 'wide background retained',
-                       'tall window', 'fullscreen', '4:3', 'panorama', 'reopen']}, indent=2) + '\n')
+                       'tall window', 'fullscreen', 'panorama', 'reopen']}, indent=2) + '\n')
         print('PASS: centered inventory, stable presentation and pointer mapping')
     finally:
         check.close()

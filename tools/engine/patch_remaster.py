@@ -7,7 +7,7 @@ def patch(root, edit):
     for name in ('hd_remaster.h', 'hd_color_grade.h'):
         (root / 'common' / name).write_bytes((here / name).read_bytes())
     gfx = 'engines/scumm/gfx.cpp'
-    # Cannon and post-movie scenes use the final-composite fade; difficulty opens on its completed
+    # Chapter cards, cannon and post-movie scenes use the final-composite fade; difficulty opens on its completed
     # HD frame. Its native entry transition otherwise presents 4:3 strip blits
     # before drawDirtyScreenParts() builds the first HD scene (an entry flash).
     # Keep fadeOut(0)'s bookkeeping and other rooms' script-selected effects.
@@ -15,15 +15,15 @@ def patch(root, edit):
     edit('engines/scumm/room.cpp', '#include "common/system.h"',
          '#include "common/system.h"\n#include "common/hd_remaster.h"')
     edit('engines/scumm/room.cpp',
-         '\tfadeOut(_switchRoomEffect2);\n\t_newEffect = _switchRoomEffect;', '''    if (_game.id == GID_CMI && _currentRoom == 4 && room > 0 && room != 4 && room != 92 &&
-        HdRemaster::state().active && HdRemaster::state().ui && HdRemaster::state().room == 4) {
+         '\tfadeOut(_switchRoomEffect2);\n\t_newEffect = _switchRoomEffect;', '''    if (_game.id == GID_CMI && HdRemaster::chapterCard(_currentRoom) && room > 0 && room != _currentRoom && room != 92 &&
+        HdRemaster::state().active && HdRemaster::state().ui && HdRemaster::state().room == _currentRoom) {
         fadeHDPresentation();
         // Exit scripts may request another presentation before room setup.
         // Keep the black outgoing frame until the destination is composed.
         HdRemaster::state().entryRoom = room;
         HdRemaster::state().entryPrepared = HdRemaster::state().entryComposed = false;
     }
-    const bool hdCompositeCut = _game.id == GID_CMI && (room == 9 || room == 87 || HdRemaster::state().movieFadePending) && _hdScale > 1 &&
+    const bool hdCompositeCut = _game.id == GID_CMI && (HdRemaster::chapterCard(room) || room == 9 || room == 87 || HdRemaster::state().movieFadePending) && _hdScale > 1 &&
         _hdAssetManager && _hdAssetManager->isEnabled() && _hdAssetManager->hasBackground(room);
     const bool hdSkipLogo = _game.id == GID_CMI && _hdScale > 1 && (room == 1 || _currentRoom == 1);
     fadeOut((hdCompositeCut || hdSkipLogo) ? 0 : _switchRoomEffect2);
@@ -33,7 +33,7 @@ def patch(root, edit):
     # made AFTER the backend has initialized shaders and decoded the sidecar.
     edit('engines/scumm/room.cpp', '\t_currentRoom = room;', '''\t_currentRoom = room;
     auto &entry = HdRemaster::state();
-    entry.entryRoom = _game.id == GID_CMI && (room == 87 || (entry.movieFadePending && room != 1 && room != 92)) && _hdScale > 1 &&
+    entry.entryRoom = _game.id == GID_CMI && (HdRemaster::chapterCard(room) || room == 87 || (entry.movieFadePending && room != 1 && room != 92)) && _hdScale > 1 &&
         ConfMan.hasKey("playtest_session") && _hdAssetManager &&
         _hdAssetManager->isEnabled() && _hdAssetManager->hasBackground(room) ? room : 0;
     entry.entryPrepared = entry.entryComposed = false;

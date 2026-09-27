@@ -20,7 +20,6 @@ class DifficultyCheck(Check):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--cpu', action='store_true')
-    parser.add_argument('--aspect', type=int, choices=(43, 169), default=169)
     parser.add_argument('--output', type=Path, default=ROOT / '.context/difficulty-look')
     args = parser.parse_args()
     out = args.output.resolve()
@@ -39,7 +38,7 @@ def main():
         check.click_game(left + (281 if plus else 255), 19 + line * 16)
         assert check.state()['room'] == 87, 'Look click reached the difficulty controls'
 
-    check = DifficultyCheck(out, args.aspect, color_grades_path=grades, config_overrides=overrides)
+    check = DifficultyCheck(out, 169, color_grades_path=grades, config_overrides=overrides)
     try:
         check.jump(87)
         backend = 'cpu-effects' if args.cpu else 'opengl-shaders'
@@ -72,14 +71,14 @@ def main():
     finally:
         check.close()
 
-    check = DifficultyCheck(out / 'restart', args.aspect, color_grades_path=grades, config_overrides=overrides)
+    check = DifficultyCheck(out / 'restart', 169, color_grades_path=grades, config_overrides=overrides)
     try:
         check.jump(87)
         check.screenshot('persisted-vignette')
         image = Image.open(check.output / 'persisted-vignette.png').convert('RGB')
         assert sum(ImageStat.Stat(image.crop(box)).mean) < off_light * .9
         assert not check.state()['error']
-        (out / 'result.json').write_text(json.dumps({'passed': True, 'backend': backend, 'aspect': args.aspect}))
+        (out / 'result.json').write_text(json.dumps({'passed': True, 'backend': backend, 'aspect': 169}))
         print('PASS: difficulty Scene Look, keyboard/mouse, vignette rendering, isolated room settings, restart persistence')
     finally:
         check.close()

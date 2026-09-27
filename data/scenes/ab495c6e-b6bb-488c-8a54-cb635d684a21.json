@@ -22,11 +22,36 @@
         "roomNumber": 7,
         "originalFile": "0007_chapter4.png"
       },
-      "variants": [],
-      "createdAt": "2026-09-21T22:36:08.855Z"
+      "variants": [
+        "chapter4-supplied-7556d7a92b84"
+      ],
+      "createdAt": "2026-09-21T22:36:08.855Z",
+      "approvedVariantId": "chapter4-supplied-7556d7a92b84"
     }
   },
-  "variants": {},
+  "variants": {
+    "chapter4-supplied-7556d7a92b84": {
+      "id": "chapter4-supplied-7556d7a92b84",
+      "assetId": "6f663d73-945b-47f1-adcc-f728b9665de2",
+      "filePath": "upscaled/imported/7556d7a92b84dac643580039d9698cf0a167ddbf86120039f85996e829ab49b5.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5600847,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "7556d7a92b84dac643580039d9698cf0a167ddbf86120039f85996e829ab49b5",
+        "originalFile": "0007_chapter4-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T13:41:56.940164+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0007 Chapter 4 background."
+    }
+  },
   "jobs": {
     "15e17aa3-5946-4791-9e5d-82d10c9d760b": {
       "id": "15e17aa3-5946-4791-9e5d-82d10c9d760b",

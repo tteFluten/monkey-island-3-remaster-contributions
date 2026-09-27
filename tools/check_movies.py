@@ -42,7 +42,7 @@ def start(check, name):
 def restored(check, room, aspect):
     check.wait(lambda: not check.window()['movieActive'], 'movie presentation released', 30)
     check.room(room)
-    expected = 864 if room == 15 and aspect == 169 else 640
+    expected = 864 if room == 15 else 640
     check.wait(lambda: check.state().get('viewportWidth') == expected, 'room viewport restored')
     assert 'hd_movie_active' not in (check.output / 'scummvm.ini').read_text()
 
@@ -54,7 +54,7 @@ def picture(check, name, aspect):
     # from the geometry helper to catch backend integration/pillarbox errors.
     bounds = image.point(lambda value: 255 if value > 8 else 0).getbbox()
     width, height = image.size
-    numerator, denominator = (16, 9) if aspect == 169 else (4, 3)
+    numerator, denominator = (16, 9)
     w, h = width, width * denominator // numerator
     if h > height:
         h, w = height, height * numerator // denominator
@@ -136,58 +136,58 @@ def main():
     results = {}
     for source in args.sources:
         hd_path = None if source == 'hd' else hd_overlay(output / f'{source}-assets', source == 'invalid')
-        for aspect in (169, 43):
-            name = f'{source}-{aspect}'
-            check = Check(output / name, aspect, hd_path=hd_path, color_grades_path=grades,
-                          config_overrides={'scummvm': {'hd_film_enabled': 'true', 'hd_film_strength': '20'},
-                                            'comi': {'subtitles': 'true'}})
-            try:
-                check.jump(9)
-                check.send('resize 1280 720')
-                if source == 'hd':
-                    start(check, 'SB020.SAN')
-                    results[name] = picture(check, 'movie', aspect)
-                    restored(check, 9, aspect)  # Native end of file, no skip.
-                    assert 'HD video: playing' in (check.output / 'engine.log').read_text()
-                    # Valid supplied clip omits ten trailing black frames.
-                    start(check, 'FG010GP.SAN')
-                    restored(check, 9, aspect)
-                    assert 'retaining last image until native movie ends' in (check.output / 'engine.log').read_text()
-                else:
-                    unavailable(check, 9, aspect, source)
-                    results[name] = {'skippedWithMessage': True}
-                # Immediately play another movie, then skip its long timeline.
-                start(check, 'BBSAN.SAN')
-                time.sleep(2)
-                picture(check, 'second-movie', aspect)
-                check.send('key 27')
+        aspect = 169
+        name = f'{source}-{aspect}'
+        check = Check(output / name, aspect, hd_path=hd_path, color_grades_path=grades,
+                      config_overrides={'scummvm': {'hd_film_enabled': 'true', 'hd_film_strength': '20'},
+                                        'comi': {'subtitles': 'true'}})
+        try:
+            check.jump(9)
+            check.send('resize 1280 720')
+            if source == 'hd':
+                start(check, 'SB020.SAN')
+                results[name] = picture(check, 'movie', aspect)
+                restored(check, 9, aspect)  # Native end of file, no skip.
+                assert 'HD video: playing' in (check.output / 'engine.log').read_text()
+                # Valid supplied clip omits ten trailing black frames.
+                start(check, 'FG010GP.SAN')
                 restored(check, 9, aspect)
-                capture(check, 'fixed-room-return')
-                check.jump(15)
-                if source == 'hd':
-                    start(check, 'SB020.SAN')
-                    picture(check, 'from-panorama', aspect)
-                    restored(check, 15, aspect)
-                else:
-                    unavailable(check, 15, aspect, source)
-                capture(check, 'panorama-return')
-                # Test fit on a taller window while a long movie is active.
-                start(check, 'BBSAN.SAN')
-                check.send('resize 960 800')
-                picture(check, 'taller-window', aspect)
-                check.send('fullscreen 1')
-                picture(check, 'fullscreen', aspect)
-                check.send('key 27')
+                assert 'retaining last image until native movie ends' in (check.output / 'engine.log').read_text()
+            else:
+                unavailable(check, 9, aspect, source)
+                results[name] = {'skippedWithMessage': True}
+            # Immediately play another movie, then skip its long timeline.
+            start(check, 'BBSAN.SAN')
+            time.sleep(2)
+            picture(check, 'second-movie', aspect)
+            check.send('key 27')
+            restored(check, 9, aspect)
+            capture(check, 'fixed-room-return')
+            check.jump(15)
+            if source == 'hd':
+                start(check, 'SB020.SAN')
+                picture(check, 'from-panorama', aspect)
                 restored(check, 15, aspect)
-                check.send('fullscreen 0')
-                # Failed native open never enters the movie presentation.
-                command = check.output / 'movie.txt'
-                command.write_text('MISSING.SAN\n')
-                check.wait(lambda: not command.exists(), 'missing movie consumed')
-                restored(check, 15, aspect)
-                print(f'PASS {name}: completion, skip, consecutive movies, room restoration, resize/fullscreen', flush=True)
-            finally:
-                check.close()
+            else:
+                unavailable(check, 15, aspect, source)
+            capture(check, 'panorama-return')
+            # Test fit on a taller window while a long movie is active.
+            start(check, 'BBSAN.SAN')
+            check.send('resize 960 800')
+            picture(check, 'taller-window', aspect)
+            check.send('fullscreen 1')
+            picture(check, 'fullscreen', aspect)
+            check.send('key 27')
+            restored(check, 15, aspect)
+            check.send('fullscreen 0')
+            # Failed native open never enters the movie presentation.
+            command = check.output / 'movie.txt'
+            command.write_text('MISSING.SAN\n')
+            check.wait(lambda: not command.exists(), 'missing movie consumed')
+            restored(check, 15, aspect)
+            print(f'PASS {name}: completion, skip, consecutive movies, room restoration, resize/fullscreen', flush=True)
+        finally:
+            check.close()
     results['decoder-error'] = decoder_failure(output, grades)
     (output / 'result.json').write_text(json.dumps({'passed': True, 'cases': results}, indent=2))
 

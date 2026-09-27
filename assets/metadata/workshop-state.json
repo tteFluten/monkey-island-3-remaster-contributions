@@ -6,9 +6,9 @@
     "672ad30e-33de-4ed9-99e3-f4a0204768bd": "ea1f14ab-d612-41f0-b60a-27dcef923f4c",
     "afa87f30-273a-4168-b38f-dcc935351368": "07c6a3bc-874c-4863-8e17-ae3125834dc4",
     "b27ee864-73b4-45b8-bf6b-3790d2391135": "chapter1-supplied-2560x1440",
-    "37f79c54-c525-411f-942f-448d3edcd66e": "2c2a3340-dca2-45df-bb9f-6b627c16a6c8",
-    "5f420ca4-000c-4e77-b8ee-57a9d59849b7": "0675e246-f577-42bb-a6a9-cdc96b717353",
-    "6f663d73-945b-47f1-adcc-f728b9665de2": "9a753509-9611-4b0a-b96a-5ab1ab3b430d",
+    "37f79c54-c525-411f-942f-448d3edcd66e": "chapter2-supplied-9a1c30fceb66",
+    "5f420ca4-000c-4e77-b8ee-57a9d59849b7": "chapter3-supplied-f227dab20874",
+    "6f663d73-945b-47f1-adcc-f728b9665de2": "chapter4-supplied-7556d7a92b84",
     "0aff02c9-8614-432a-a4de-5eb418c06afc": "69fbb262-24d4-449f-ba3b-0c963aedc7aa",
     "4921c986-44f5-4c33-8f0c-adec6ff6fa6f": "cannon-final-2560x1440",
     "a1327264-ec6d-4863-905c-9d7f13f9cefc": "cannon-view-supplied-f1da6708f7c5",
@@ -1984,6 +1984,90 @@
       "reviewStatus": "approved",
       "engineStatus": "untested",
       "reviewNotes": "User selected this image for the room 0010 cannon aiming background."
+    },
+    "chapter2-supplied-7ef494b5bf83": {
+      "id": "chapter2-supplied-7ef494b5bf83",
+      "assetId": "37f79c54-c525-411f-942f-448d3edcd66e",
+      "filePath": "upscaled/imported/7ef494b5bf83fe646cfbd617a69f31c6812644cb6ed820b6bf9243b2f4fb94ac.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5250972,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "7ef494b5bf83fe646cfbd617a69f31c6812644cb6ed820b6bf9243b2f4fb94ac",
+        "originalFile": "0005_chapter2-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T13:23:20.292892+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0005 Chapter 2 background."
+    },
+    "chapter2-supplied-9a1c30fceb66": {
+      "id": "chapter2-supplied-9a1c30fceb66",
+      "assetId": "37f79c54-c525-411f-942f-448d3edcd66e",
+      "filePath": "upscaled/imported/9a1c30fceb66aeab1f6aa7755ca6120904eb000a84dfe8458d046c927205de45.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5250609,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "9a1c30fceb66aeab1f6aa7755ca6120904eb000a84dfe8458d046c927205de45",
+        "originalFile": "0005_chapter2-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T13:32:51.525804+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0005 Chapter 2 background."
+    },
+    "chapter3-supplied-f227dab20874": {
+      "id": "chapter3-supplied-f227dab20874",
+      "assetId": "5f420ca4-000c-4e77-b8ee-57a9d59849b7",
+      "filePath": "upscaled/imported/f227dab208742c1f8f4864ace5fddd94e91f644d137c1baa5dfd26a6d7de1889.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5241987,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "f227dab208742c1f8f4864ace5fddd94e91f644d137c1baa5dfd26a6d7de1889",
+        "originalFile": "0006_chapter3-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T13:32:51.525804+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0006 Chapter 3 background."
+    },
+    "chapter4-supplied-7556d7a92b84": {
+      "id": "chapter4-supplied-7556d7a92b84",
+      "assetId": "6f663d73-945b-47f1-adcc-f728b9665de2",
+      "filePath": "upscaled/imported/7556d7a92b84dac643580039d9698cf0a167ddbf86120039f85996e829ab49b5.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5600847,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "7556d7a92b84dac643580039d9698cf0a167ddbf86120039f85996e829ab49b5",
+        "originalFile": "0007_chapter4-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T13:41:56.940164+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0007 Chapter 4 background."
     }
   }
 }

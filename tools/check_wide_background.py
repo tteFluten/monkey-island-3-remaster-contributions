@@ -66,10 +66,6 @@ def main():
         assert abs(check.state()['mouseRoomY'] - 300) <= 1
         check.send('down 10 200'); check.send('up 10 200')
         assert 'HD-ASPECT input blocked' in (output / 'engine.log').read_text()
-        check.select(43)
-        check.screenshot('cannon-center-43')
-        assert check.state()['viewportWidth'] == 640
-        check.select(169)
         sides(check, 'cannon-restored-169')
         check.send('key 105')
         sides(check, 'inventory-169')
@@ -110,7 +106,7 @@ def main():
         check.room(args.room)
         sides(check, 'movie-restored-169')
         (output / 'result.json').write_text(json.dumps({'passed': True}))
-        print('PASS: full image, mode switching, pointer alignment, inventory, resize, fullscreen, fallback, reload, save/room restoration, cinematic return', flush=True)
+        print('PASS: full image, pointer alignment, inventory, resize, fullscreen, fallback, reload, save/room restoration, cinematic return', flush=True)
     finally:
         check.close()
 

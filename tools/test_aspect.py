@@ -16,21 +16,16 @@ class AspectTests(unittest.TestCase):
 #include <initializer_list>
 using namespace HdAspect;
 int main() {
-    assert(preference(0) == 43 && preference(169) == 169);
-    assert(viewport(43, 2096, 480) == 640);
+    assert(preference(169) == 169);
     assert(viewport(169, 2096, 480) == 864);
     assert(viewport(169, 864, 480) == 864);
     assert(viewport(169, 863, 480) == 640);
     assert(viewport(169, 640, 2044) == 640);
     assert(viewport(169, 1200, 1200) == 640);
-    Rect r = game(2560, 1920, 43, 640);
-    assert(r.x == 0 && r.y == 0 && r.w == 2560 && r.h == 1920);
-    r = game(2560, 1440, 169, 640);
+    Rect r = game(2560, 1440, 169, 640);
     assert(r.x == 320 && r.y == 0 && r.w == 1920 && r.h == 1440);
     r = game(2560, 1440, 169, 640, false, true);
     assert(r.x == 0 && r.y == 0 && r.w == 2560 && r.h == 1440);
-    r = game(2560, 1440, 43, 640, false, true);
-    assert(r.x == 320 && r.y == 0 && r.w == 1920 && r.h == 1440);
     r = game(2560, 1600, 169, 640, true, true);
     assert(r.x == 0 && r.y == 80 && r.w == 2560 && r.h == 1440);
     r = game(3440, 1440, 169, 640, true, true);
@@ -41,8 +36,6 @@ int main() {
     assert(r.x == 0 && r.y == 240 && r.w == 2560 && r.h == 1440);
     r = frame(640, 480, 169);
     assert(r.x == 0 && r.y == 60 && r.w == 640 && r.h == 360);
-    r = frame(2560, 1920, 43);
-    assert(r.x == 0 && r.y == 0 && r.w == 2560 && r.h == 1920);
     r = game(2560, 1440, 169, 864);
     assert(r.x == -16 && r.y == 0 && r.w == 2592 && r.h == 1440);
     // At 3x display scale, the visible edges map to native pixels 5..858.
@@ -55,14 +48,12 @@ int main() {
             assert(f.x >= 0 && f.y >= 0 && f.w <= width && f.h <= height);
             assert(r.h == f.h && r.w * 480 / 640 <= r.h);
             // Movies retain the selected frame with bars on other screen shapes.
-            for (int aspect : {43, 169}) {
-                Rect movie = game(width, height, aspect, 640, true, true);
-                Rect expected = frame(width, height, aspect);
-                assert(movie.x == expected.x && movie.y == expected.y);
-                assert(movie.w == expected.w && movie.h == expected.h);
-                assert(movie.x >= 0 && movie.y >= 0);
-                assert(movie.x + movie.w <= width && movie.y + movie.h <= height);
-            }
+            Rect movie = game(width, height, 169, 640, true, true);
+            Rect expected = frame(width, height, 169);
+            assert(movie.x == expected.x && movie.y == expected.y);
+            assert(movie.w == expected.w && movie.h == expected.h);
+            assert(movie.x >= 0 && movie.y >= 0);
+            assert(movie.x + movie.w <= width && movie.y + movie.h <= height);
         }
     }
     assert(camera(320, 2096, 864, 320, 1776) == 432);

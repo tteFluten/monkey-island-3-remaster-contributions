@@ -45,12 +45,20 @@ float softGrain(vec2 p) {
     return mix(mix(hash(cell), hash(cell + vec2(1.0, 0.0)), f.x),
                mix(hash(cell + vec2(0.0, 1.0)), hash(cell + vec2(1.0)), f.x), f.y) * 2.0 - 1.0;
 }
-float textAt(vec2 pixel) {
+float textCoverage(vec2 pixel) {
     if (textEnabled < 0.5) return 0.0;
     vec2 p = (pixel - textScreenRect.xy) / textScreenRect.zw;
     if (p.x < 0.0 || p.y < 0.0 || p.x > 1.0 || p.y > 1.0) return 0.0;
     vec2 textUV = textSourceRect.xy + vec2(p.x, 1.0 - p.y) * textSourceRect.zw;
     return step(0.001, texture2D(textMaskTexture, textUV).r);
+}
+float textAt(vec2 pixel) {
+    // A shifted frame sample blends four framebuffer texels. Sampling the
+    // source mask only at its fractional position can miss an edge that is
+    // present in one of those texels, leaving a red/blue copy of the letter.
+    vec2 corner = floor(pixel - 0.5) + 0.5;
+    return max(max(textCoverage(corner), textCoverage(corner + vec2(1.0, 0.0))),
+               max(textCoverage(corner + vec2(0.0, 1.0)), textCoverage(corner + vec2(1.0))));
 }
 void main() {
     vec2 pixel = uv * textureSize;
@@ -198,6 +206,20 @@ public:
                     const HdAspect::Rect crop = HdAspect::frame(text.mask.w, text.mask.h, ConfMan.getInt("hd_aspect_ratio"));
                     textSource = Math::Vector4d(float(crop.x)/text.mask.w, float(crop.y)/text.mask.h,
                         float(crop.w)/text.mask.w, float(crop.h)/text.mask.h);
+                }
+                if (captureRequested && !chromaticPass) {
+                    Common::DumpFile geometryFile;
+                    if (geometryFile.open(Common::Path(ConfMan.get("playtest_session") + "/film-text.json")))
+                        geometryFile.writeString(Common::String::format(
+                            "{\"screenRect\":[%.6f,%.6f,%.6f,%.6f],\"sourceRect\":[%.6f,%.6f,%.6f,%.6f]}\n",
+                            gameRect.left * sx, gameRect.top * sy, gameRect.width() * sx, gameRect.height() * sy,
+                            textSource.x(), textSource.y(), textSource.z(), textSource.w()));
+                    Common::DumpFile maskFile;
+                    if (hasText && maskFile.open(Common::Path(ConfMan.get("playtest_session") + "/film-text.pgm"))) {
+                        maskFile.writeString(Common::String::format("P5\n%d %d\n255\n", text.mask.w, text.mask.h));
+                        for (int y = 0; y < text.mask.h; ++y)
+                            maskFile.write(text.mask.getBasePtr(0, y), text.mask.w);
+                    }
                 }
                 _shader->setUniform1f("textEnabled", hasText ? 1.0f : 0.0f);
                 _shader->setUniform("textSourceRect", textSource);
