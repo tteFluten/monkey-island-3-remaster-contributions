@@ -27,6 +27,22 @@ int main() {
     assert(r.x == 0 && r.y == 0 && r.w == 2560 && r.h == 1920);
     r = game(2560, 1440, 169, 640);
     assert(r.x == 320 && r.y == 0 && r.w == 1920 && r.h == 1440);
+    r = game(2560, 1440, 169, 640, false, true);
+    assert(r.x == 0 && r.y == 0 && r.w == 2560 && r.h == 1440);
+    r = game(2560, 1440, 43, 640, false, true);
+    assert(r.x == 320 && r.y == 0 && r.w == 1920 && r.h == 1440);
+    r = game(2560, 1600, 169, 640, true, true);
+    assert(r.x == 0 && r.y == 80 && r.w == 2560 && r.h == 1440);
+    r = game(3440, 1440, 169, 640, true, true);
+    assert(r.x == 440 && r.y == 0 && r.w == 2560 && r.h == 1440);
+    // The renderer samples a centered source crop with the same aspect ratio
+    // as the destination: 12.5% off each vertical edge, with no distortion.
+    r = frame(2560, 1920, 169);
+    assert(r.x == 0 && r.y == 240 && r.w == 2560 && r.h == 1440);
+    r = frame(640, 480, 169);
+    assert(r.x == 0 && r.y == 60 && r.w == 640 && r.h == 360);
+    r = frame(2560, 1920, 43);
+    assert(r.x == 0 && r.y == 0 && r.w == 2560 && r.h == 1920);
     r = game(2560, 1440, 169, 864);
     assert(r.x == -16 && r.y == 0 && r.w == 2592 && r.h == 1440);
     // At 3x display scale, the visible edges map to native pixels 5..858.
@@ -38,6 +54,15 @@ int main() {
             r = game(width, height, 169, 640);
             assert(f.x >= 0 && f.y >= 0 && f.w <= width && f.h <= height);
             assert(r.h == f.h && r.w * 480 / 640 <= r.h);
+            // Movies retain the selected frame with bars on other screen shapes.
+            for (int aspect : {43, 169}) {
+                Rect movie = game(width, height, aspect, 640, true, true);
+                Rect expected = frame(width, height, aspect);
+                assert(movie.x == expected.x && movie.y == expected.y);
+                assert(movie.w == expected.w && movie.h == expected.h);
+                assert(movie.x >= 0 && movie.y >= 0);
+                assert(movie.x + movie.w <= width && movie.y + movie.h <= height);
+            }
         }
     }
     assert(camera(320, 2096, 864, 320, 1776) == 432);
@@ -45,6 +70,16 @@ int main() {
     assert(camera(320, 896, 864, 320, 320) == 432); // fixed script camera
     assert(camera(800, 896, 864, 800, 800) == 464);
     assert(camera(600, 2096, 864, 700, 500) == 600);
+    // Cover crops only decorative edges on a 16:10 display. Pointer mapping
+    // still exposes the entire centered original 4:3 gameplay surface.
+    r = game(2560, 1600, 169, 640, true);
+    assert(r.x > 0 && r.y == 0 && r.h == 1600 && r.x + r.w < 2560);
+    Rect cover = frame(2560, 1600, 169, true);
+    assert(cover.x < 0 && cover.y == 0 && cover.w >= 2560 && cover.h == 1600);
+    r = game(2560, 1600, 169, 864, true);
+    assert(r.x < 0 && r.y == 0 && r.x + r.w >= 2560);
+    r = game(2560, 1440, 169, 640, true);
+    assert(r.x == 320 && r.y == 0 && r.w == 1920 && r.h == 1440);
     Buttons b;
     int x = 12, y = 34;
     assert(!b.accept(false, 1, 0, x, y) && b.pressed == 0);

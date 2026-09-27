@@ -10,6 +10,8 @@ def patch(root, edit):
     Common::List<HdFontChar> _hdMotionFonts;
     HdMotion::Clock _hdMotionClock;
     HdMotion::Track _hdMotionCamera;
+    HdMotion::CannonAim _hdMotionCannon;
+    unsigned int _hdMotionFraction = 1024;
     Common::Array<HdMotion::Track> _hdMotionActors;
     bool _hdInterpolating = false, _hdMotionMoving = false;
     bool _hdMotionPresented = false;

@@ -7,11 +7,15 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
         path = ConfMan.get("hd_wide_background");
     Common::String key = path.empty() ? path : path + Common::String::format(":%d",
         ConfMan.getInt("hd_wide_background_revision"));
+    const Common::String sourceKey = key;
+    auto &remaster = HdRemaster::state();
+    if (!key.empty() && !remaster.active) key += Common::String::format(":dof:%d:%d:%d:%u", remaster.dof, remaster.radius, remaster.intensity, remaster.coverageGeneration);
+    if (!key.empty()) key += HdRemaster::state().active ? ":gpu" : ":cpu";
     HdColorGrade::Grade grade;
     if (!path.empty()) for (int c = 0; c < HdColorGrade::kControls; ++c) {
         const Common::String setting = Common::String("hd_wide_look_") + HdColorGrade::range(c).key;
         if (ConfMan.hasKey(setting)) grade.value[c] = HdColorGrade::clampControl(c, ConfMan.getInt(setting));
-        key += Common::String::format(":%d", grade.value[c]);
+        if (!HdRemaster::state().active) key += Common::String::format(":%d", grade.value[c]);
     }
     if (key == _hdWideBackgroundKey) return;
     _hdWideBackgroundKey = key;
@@ -21,22 +25,40 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
     _forceRedraw = true;
     if (path.empty()) return;
 #ifdef USE_PNG
-    Common::FSNode node((Common::Path(path)));
-    Common::SeekableReadStream *file = node.createReadStream();
-    if (!file) return; // Ordinary artwork retains the existing side bars.
-    Image::PNGDecoder decoder;
-    const bool loaded = decoder.loadStream(*file);
-    delete file;
-    const Graphics::Surface *source = decoder.getSurface();
-    if (!loaded || !source || source->w != 2560 || source->h != 1440) {
-        warning("HD widescreen: invalid background %s", path.c_str());
-        return;
+    static Graphics::Surface raw;
+    static Common::String rawKey;
+    if (rawKey != sourceKey || !raw.getPixels()) {
+        Graphics::Surface decoded;
+        if (!HdBackground::cache().load(path, decoded)) return;
+        if (decoded.w != 2560 || decoded.h != 1440) {
+            decoded.free();
+            warning("HD widescreen: invalid background %s", path.c_str()); return;
+        }
+        raw.free(); raw = decoded; rawKey = sourceKey;
     }
-    Graphics::Surface *pixels = source->convertTo(Graphics::PixelFormat::createFormatRGBA32(),
-        decoder.getPalette().data(), decoder.getPalette().size());
-    if (!pixels) return;
+    Graphics::Surface *pixels = new Graphics::Surface();
+    pixels->copyFrom(raw);
+    if (!remaster.active && remaster.dof && remaster.wideCoverage.size() == size_t(remaster.viewportWidth * remaster.viewportHeight)) {
+        static std::vector<uint32> blurred;
+        static Common::String blurKey;
+        static int bw = 0, bh = 0;
+        const int radius = remaster.radius * 3 / remaster.scale;
+        const Common::String nextBlur = sourceKey + Common::String::format(":%d", radius);
+        if (blurKey != nextBlur) {
+            HdDepthOfField::blur((const byte *)raw.getPixels(), raw.pitch, 4, raw.w, raw.h, 2, radius, blurred, bw, bh);
+            blurKey = nextBlur;
+        }
+        for (int y = 0; y < pixels->h; ++y) {
+            uint32 *row = (uint32 *)pixels->getBasePtr(0, y);
+            for (int x = 0; x < pixels->w; ++x) {
+                const int coverage = HdDepthOfField::coverageAt(remaster.wideCoverage.data(), remaster.viewportWidth,
+                    remaster.viewportHeight, 3, x * 3 / 4, y) * remaster.intensity / 100;
+                if (coverage) row[x] = HdDepthOfField::mix(row[x], HdDepthOfField::sample(blurred.data(), bw, bh, 2, x, y), coverage);
+            }
+        }
+    }
     const bool color = !HdColorGrade::colorIdentity(grade), vignette = HdColorGrade::vignetteActive(grade);
-    if (color || vignette) {
+    if ((color || vignette) && !HdRemaster::state().active) {
         HdColorGrade::Lut lut;
         if (color) HdColorGrade::build(grade, lut);
         for (int y = 0; y < pixels->h; ++y) {

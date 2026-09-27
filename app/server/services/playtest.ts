@@ -12,6 +12,47 @@ import { getAllScenes } from './manifest.js';
 import { writeJsonAtomic, readJsonSafe, fileExists, hashFile } from './files.js';
 
 export const ENGINE_REVISION = '43c1d07613e3c34b9c8cfc7ab168575212864d48';
+// Film is a global presentation preference, saved by the native shortcut.
+export function readFilmSettings(config: string): { enabled: boolean; strength: number } {
+  const film = { enabled: false, strength: 20 };
+  let section = '';
+  for (const line of config.split(/\r?\n/)) {
+    const heading = /^\s*\[([^\]]+)\]\s*$/.exec(line);
+    if (heading) section = heading[1];
+    if (section !== 'scummvm') continue;
+    const enabled = /^\s*hd_film_enabled\s*=\s*(true|false|yes|no|1|0)\s*$/i.exec(line);
+    if (enabled) film.enabled = /^(true|yes|1)$/i.test(enabled[1]);
+    const strength = /^\s*hd_film_strength\s*=\s*(-?\d+)\s*$/.exec(line);
+    if (strength) film.strength = Math.max(0, Math.min(100, Number(strength[1])));
+  }
+  return film;
+}
+// Keep the global Film Look sliders when regenerating the launch configuration.
+function filmTuningConfig(config: string): string {
+  const values: Record<string, number> = {
+    hd_film_grain: 100, hd_film_dust: 100, hd_film_scratches: 100,
+    hd_film_flicker: 100, hd_film_wobble: 100, hd_film_chromatic: 100,
+  };
+  let section = '';
+  for (const line of config.split(/\r?\n/)) {
+    const heading = /^\s*\[([^\]]+)\]\s*$/.exec(line);
+    if (heading) section = heading[1];
+    const setting = /^\s*(hd_film_grain|hd_film_dust|hd_film_scratches|hd_film_flicker|hd_film_wobble|hd_film_chromatic)\s*=\s*(-?\d+)\s*$/.exec(line);
+    if (section === 'scummvm' && setting) values[setting[1]] = Math.max(0, Math.min(200, Number(setting[2])));
+  }
+  return Object.entries(values).map(([key, value]) => `${key}=${value}\n`).join('');
+}
+export function readWaterShader(config: string): boolean {
+  let section = '';
+  let enabled = true;
+  for (const line of config.split(/\r?\n/)) {
+    const heading = /^\s*\[([^\]]+)\]\s*$/.exec(line);
+    if (heading) section = heading[1];
+    const setting = /^\s*hd_water_shader\s*=\s*(true|false|yes|no|1|0)\s*$/i.exec(line);
+    if (section === 'comi' && setting) enabled = /^(true|yes|1)$/i.test(setting[1]);
+  }
+  return enabled;
+}
 export function readAspectRatio(config: string): 43 | 169 {
   let section = '';
   let aspect: 43 | 169 = 43;
@@ -77,10 +118,10 @@ export function assertAspect(width: number, height: number, originalWidth: numbe
     throw new Error(`Proportions must match ${originalWidth} × ${originalHeight}; received ${width} × ${height}. Correct the source image before importing.`);
   }
 }
-// Extended cannon artwork keeps the original room in its centered 4:3 area.
+// Extended artwork keeps each standard room in its centered 4:3 area.
 // Only the decorative side scenery is presented outside the gameplay surface.
-export function cannonWideCrop(width: number, height: number, room: Pick<PlaytestRoom, 'room' | 'width' | 'height'>) {
-  if (room.room !== 9 || room.width !== 640 || room.height !== 480 ||
+export function wideBackgroundCrop(width: number, height: number, room: Pick<PlaytestRoom, 'room' | 'width' | 'height'>) {
+  if (room.room === 92 || room.width !== 640 || room.height !== 480 ||
       width <= 0 || height <= 0 || width * 9 !== height * 16) return null;
   const cropWidth = height * 4 / 3;
   return { left: (width - cropWidth) / 2, top: 0, width: cropWidth, height };
@@ -169,8 +210,11 @@ export class PlaytestService extends EventEmitter {
     for (const manifest of await getAllScenes()) {
       for (const asset of Object.values(manifest.assets)) {
         if (asset.type !== 'background' || manifest.scene.roomNumber === undefined) continue;
-        const variants = [...asset.variants.map(id => manifest.variants[id]).filter(Boolean), ...Object.values(this.state.variants).filter(v => v.assetId === asset.id)];
-        result.push({ room: manifest.scene.roomNumber, sceneId: manifest.scene.id, assetId: asset.id, name: manifest.scene.name, originalPath: asset.originalPath, width: asset.width, height: asset.height, variants, selectedVariantId: this.state.selections[asset.id] ?? null });
+        const finalId = asset.metadata?.finalBackgroundVariant;
+        const final = typeof finalId === 'string' ? manifest.variants[finalId] : undefined;
+        if (finalId && !final) throw new Error(`Missing final background for room ${manifest.scene.roomNumber}`);
+        const variants = final ? [final] : [...asset.variants.map(id => manifest.variants[id]).filter(Boolean), ...Object.values(this.state.variants).filter(v => v.assetId === asset.id)];
+        result.push({ room: manifest.scene.roomNumber, sceneId: manifest.scene.id, assetId: asset.id, name: manifest.scene.name, originalPath: asset.originalPath, width: asset.width, height: asset.height, variants, selectedVariantId: final?.id ?? this.state.selections[asset.id] ?? null, finalBackground: !!final });
       }
     }
     return result.sort((a, b) => a.room - b.room);
@@ -242,9 +286,10 @@ export class PlaytestService extends EventEmitter {
         if (!item || typeof item.file !== 'string' || !Number.isInteger(item.room)) throw new Error('Each image needs a room mapping');
         const candidate = scanned.get(item.file), room = rooms.get(item.room);
         if (!candidate || !room || candidate.error) throw new Error(`Invalid image or room: ${item.file}`);
+        if (room.finalBackground) throw new Error(`Room ${room.room} uses its final background; update the canonical artwork instead`);
         if (used.has(room.room)) throw new Error(`Select only one image for room ${room.room}`);
         used.add(room.room);
-        if (!cannonWideCrop(candidate.width, candidate.height, room))
+        if (!wideBackgroundCrop(candidate.width, candidate.height, room))
           assertAspect(candidate.width, candidate.height, room.width, room.height);
         const source = path.join(this.state.settings.backgroundFolder, candidate.file);
         items.push({ room, source, hash: await hashFile(source), width: candidate.width, height: candidate.height });
@@ -279,6 +324,7 @@ export class PlaytestService extends EventEmitter {
   async select(number: number, variantId: unknown) {
     if (this.status.busy) throw new Error('Wait for the current operation');
     const room = await this.room(number);
+    if (room.finalBackground && variantId !== room.selectedVariantId) throw new Error(`Room ${number} uses its final background`);
     if (variantId !== null && (typeof variantId !== 'string' || !room.variants.some(v => v.id === variantId))) throw new Error('Unknown variant for this room');
     this.state.selections[room.assetId] = variantId as string | null;
     await this.save();
@@ -287,7 +333,8 @@ export class PlaytestService extends EventEmitter {
     const variant = room.variants.find(v => v.id === room.selectedVariantId);
     const source = path.join(this.root, variant?.filePath ?? room.originalPath);
     const meta = await sharp(source).metadata();
-    const crop = variant ? cannonWideCrop(meta.width ?? 0, meta.height ?? 0, room) : null;
+    if (room.finalBackground && (meta.width !== 2560 || meta.height !== 1440)) throw new Error(`Room ${room.room} requires its final 2560 × 1440 background`);
+    const crop = variant ? wideBackgroundCrop(meta.width ?? 0, meta.height ?? 0, room) : null;
     if (!crop) assertAspect(meta.width ?? 0, meta.height ?? 0, room.width, room.height);
     const destination = path.join(this.local, `hd/backgrounds/bg_${String(room.room).padStart(4, '0')}.png`);
     const wideDestination = path.join(this.local, `hd/widescreen/bg_${String(room.room).padStart(4, '0')}.png`);
@@ -303,7 +350,8 @@ export class PlaytestService extends EventEmitter {
     // Switching back to any ordinary variant removes obsolete side scenery.
     if (crop) {
       await fs.mkdir(path.dirname(wideDestination), { recursive: true });
-      await sharp(source).resize(2560, 1440).ensureAlpha().png().toFile(wideDestination + '.tmp');
+      if (room.finalBackground) await fs.copyFile(source, wideDestination + '.tmp');
+      else await sharp(source).resize(2560, 1440).ensureAlpha().png().toFile(wideDestination + '.tmp');
       await fs.rename(wideDestination + '.tmp', wideDestination);
     } else await fs.rm(wideDestination, { force: true });
     await fs.rename(temp, destination);
@@ -326,14 +374,15 @@ export class PlaytestService extends EventEmitter {
         await fs.chmod(this.session, 0o700);
         const saves = path.join(this.local, 'saves');
         await fs.mkdir(saves, { recursive: true });
-        const config = `[scummvm]\nscreenshotpath=${path.join(this.root, '.context')}\nsavepath=${saves}\nmacos_savepath_migrated=true\nvsync=false\nfullscreen=false\ngfx_mode=opengl\nstretch_mode=fit\naspect_ratio=false\nfiltering=true\nlast_window_width=1280\nlast_window_height=960\ngui_theme=builtin\n\n[comi]\nengineid=scumm\ngameid=comi\npath=${path.join(this.local, 'game')}\nhd_path=${path.join(this.local, 'hd')}\nplaytest_session=${this.session}\nsavepath=${saves}\nsubtitles=true\nhd_trace=true\n`;
+        const config = `[scummvm]\nscreenshotpath=${path.join(this.root, '.context')}\nsavepath=${saves}\nmacos_savepath_migrated=true\nvsync=true\nfullscreen=true\ngfx_mode=opengl\nstretch_mode=fit\naspect_ratio=false\nfiltering=true\nlast_window_width=2560\nlast_window_height=1440\ngui_theme=builtin\n\n[comi]\nengineid=scumm\ngameid=comi\npath=${path.join(this.local, 'game')}\nhd_path=${path.join(this.local, 'hd')}\nplaytest_session=${this.session}\nsavepath=${saves}\nsubtitles=true\nhd_trace=false\nhd_gpu_effects=true\n`;
         const configPath = path.join(this.local, 'scummvm.ini');
         const previousConfig = await fs.readFile(configPath, 'utf8').catch(() => '');
         const fontSize = readFontSize(previousConfig);
-        const aspect = readAspectRatio(previousConfig);
+        const aspect = 169; // Every launch starts in the remaster presentation mode.
         const depthOfField = readDepthOfField(previousConfig);
         const tuning = readDepthOfFieldTuning(previousConfig);
-        const displayConfig = config.replace('last_window_height=960', `last_window_height=${aspect === 169 ? 720 : 960}`);
+        const film = readFilmSettings(previousConfig);
+        const displayConfig = config.replace('[scummvm]\n', `[scummvm]\nhd_film_enabled=${film.enabled}\nhd_film_strength=${film.strength}\n${filmTuningConfig(previousConfig)}`) + `hd_water_shader=${readWaterShader(previousConfig)}\n`;
         await fs.writeFile(configPath, displayConfig + `playtest_character_pack=${pack}\nplaytest_scale=${PLAYTEST_SCALE}\nhd_font_size=${fontSize}\nhd_aspect_ratio=${aspect}\nhd_depth_of_field=${depthOfField}\nhd_dof_blur=${tuning.blur}\nhd_dof_edge=${tuning.edge}\nhd_dof_intensity=${tuning.intensity}\nhd_dof_depth=${tuning.depth}\nhd_aspect_ui_path=${path.join(this.root, 'extracted/objects')}\nhd_color_grades_path=${path.join(this.root, 'data/color-grades.json')}\n`);
         this.status.engine = null; this.status.error = null;
         const child = spawn(this.binary(), ['--config=' + configPath, '--debuglevel=0', ...(resume ? [`--save-slot=${resumeSlot}`] : []), 'comi'], { cwd: this.session, stdio: ['ignore', 'pipe', 'pipe'] });

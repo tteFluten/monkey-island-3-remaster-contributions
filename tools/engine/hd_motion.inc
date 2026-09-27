@@ -3,13 +3,10 @@
 bool ScummEngine::canPresentHDMotion() {
     if ((ConfMan.hasKey("hd_smooth_motion") && !ConfMan.getBool("hd_smooth_motion")) ||
         _game.id != GID_CMI || _hdScale <= 1 || isPaused() || isSmushActive() ||
-        _saveLoadFlag || vm.cutSceneStackPointer || _userPut <= 0 || _haveMsg ||
-        _roomWidth <= _screenWidth || _roomHeight != _screenHeight ||
+        _saveLoadFlag || hdInventoryOpen() ||
         !_hdBackgroundSurface.getPixels() || !_hdCleanBackground.getPixels() || !_hdCleanValid ||
         _currentRoom == 87 || _currentRoom == 92 || _hdVerbSurfaceValid)
         return false;
-    for (const auto &glyph : _hdFontChars) if (glyph.dialogue) return false;
-    for (const auto &glyph : _hdMotionFonts) if (glyph.dialogue) return false;
     for (int i = 1; i < _numActors; ++i)
         if (_actors[i]->_visible && _actors[i]->_room == _currentRoom && _actors[i]->_layer < 0)
             return false; // Inventory/verb coin remains on the normal UI path.
@@ -25,13 +22,26 @@ void ScummEngine::captureHDMotion() {
     _hdMotionCamera.sample(camera._cur.x, camera._cur.y, _currentRoom, reset);
     _hdMotionMoving = _hdMotionCamera.moving;
     _hdMotionActors.resize(_numActors);
+    bool cannonFound = false;
     for (int i = 0; i < _numActors; ++i) {
         Actor *a = _actors[i];
         bool visible = a->_visible && a->_room == _currentRoom && a->_layer >= 0;
         _hdMotionActors[i].sample(a->getPos().x, a->getPos().y,
             visible ? a->_costume : -1, reset || !visible);
         if (visible && _hdMotionActors[i].moving) _hdMotionMoving = true;
+        if (enabled && _currentRoom == 10 && visible && a->_costume == 35 &&
+            playtestExactRoom(_currentRoom) && a->_quiverDraws.size() == 1) {
+            const Actor::QuiverDraw &d = a->_quiverDraws[0];
+            HdMotion::CannonPose pose;
+            pose.cel = d.cel; pose.left = d.screenLeft; pose.top = d.screenTop;
+            pose.width = d.screenWidth; pose.height = d.screenHeight;
+            pose.sourceWidth = d.width; pose.sourceHeight = d.height; pose.mirror = d.mirror;
+            _hdMotionCannon.sample(pose, a->_number, _playtestCommandId, reset);
+            cannonFound = true;
+            if (_hdMotionCannon.moving) _hdMotionMoving = true;
+        }
     }
+    if (!cannonFound) _hdMotionCannon = HdMotion::CannonAim();
     _hdMotionFonts = _hdFontChars;
     if (_hdFrameCount % 120 == 0 && enabled)
         hdPrintf("HD-MOTION native interval=%ums moving=%d camera=%d", _hdMotionClock.interval, _hdMotionMoving, camera._cur.x);
@@ -41,6 +51,7 @@ void ScummEngine::presentHDMotion() {
     if (!_hdMotionClock.valid || !_hdMotionMoving || !canPresentHDMotion() ||
         _hdMotionClock.room != _currentRoom || _hdMotionActors.size() != (uint)_numActors)
         return;
+    const double motionStarted = HdRemaster::milliseconds(), cpuBefore = HdRemaster::state().cpuWork;
     const uint32 started = _system->getMillis();
     unsigned int fraction = _hdMotionClock.fraction(started);
     bool verify = false;
@@ -52,6 +63,7 @@ void ScummEngine::presentHDMotion() {
             fclose(file); remove(request.c_str()); verify = true; fraction = 1024;
         }
     }
+    _hdMotionFraction = fraction;
     // Scratch copies isolate hit testing, saves, script coordinates, masks and
     // dirty-strip bookkeeping from intermediate display positions.
     VirtScreen &screen = _virtscr[kMainVirtScreen];
@@ -62,7 +74,8 @@ void ScummEngine::presentHDMotion() {
     const Graphics::Surface savedClean = _hdCleanBackground;
     byte *savedValid = _hdCleanValid;
     const auto savedFonts = _hdFontChars;
-    Common::Array<byte> front, back, masks, clean, valid;
+    auto &front = _hdMotionFront; auto &back = _hdMotionBack;
+    auto &masks = _hdMotionMasks; auto &clean = _hdMotionClean; auto &valid = _hdMotionValid;
     const uint bufferSize = getResourceSize(rtBuffer, kMainVirtScreen + 1);
     front.resize(bufferSize); memcpy(front.data(), screen.getBasePtr(0, 0), bufferSize);
     if (screen.backBuf) { back.resize(bufferSize); memcpy(back.data(), screen.backBuf, bufferSize); }
@@ -75,14 +88,17 @@ void ScummEngine::presentHDMotion() {
     valid.resize(_hdCleanValidSize); memcpy(valid.data(), savedValid, valid.size());
     uint32 savedUsage[ARRAYSIZE(gfxUsageBits)];
     memcpy(savedUsage, gfxUsageBits, sizeof(savedUsage));
-    Common::Array<Actor *> originals, sorted;
+    auto &originals = _hdMotionOriginals; auto &sorted = _hdMotionSorted;
     originals.resize(_numActors); sorted.resize(_numActors);
     memcpy(sorted.data(), _sortedActors, _numActors * sizeof(Actor *));
+    while (_hdMotionClones.size() < (uint)_numActors) _hdMotionClones.push_back(nullptr);
     for (int i = 0; i < _numActors; ++i) {
         originals[i] = _actors[i];
         // COMI uses Actor_v7, whose drawing state is entirely in Actor.
         // Clones are never animated or walked; only drawActorCostume is called.
-        _actors[i] = new Actor(*originals[i]);
+        if (!_hdMotionClones[i]) _hdMotionClones[i] = new Actor(*originals[i]);
+        else *_hdMotionClones[i] = *originals[i];
+        _actors[i] = _hdMotionClones[i];
         _actors[i]->hdSetDrawPosition(Common::Point(_hdMotionActors[i].atX(fraction), _hdMotionActors[i].atY(fraction)));
         _actors[i]->_cost = originals[i]->_hdRenderCost;
         _actors[i]->_needRedraw = originals[i]->_visible;
@@ -94,7 +110,11 @@ void ScummEngine::presentHDMotion() {
     camera._cur = Common::Point(_hdMotionCamera.atX(fraction), _hdMotionCamera.atY(fraction));
     cameraMoved();
     _fullRedraw = true;
-    redrawBGAreas();
+    if (_hdMotionStageRoom == _currentRoom && camera._cur == _hdMotionStageCamera &&
+        _hdMotionStageFront.size() == bufferSize && _hdMotionStageMasks.size() == (uint)maskSize) {
+        memcpy(front.data(), _hdMotionStageFront.data(), bufferSize);
+        memcpy(maskBuffer, _hdMotionStageMasks.data(), maskSize);
+    } else redrawBGAreas();
     // Preserve COMI's original (non-stable) depth sort, including equal depths.
     int count = 0;
     for (int i = 1; i < _numActors; ++i)
@@ -110,9 +130,10 @@ void ScummEngine::presentHDMotion() {
     renderHDComposite();
     // All simulation-visible data is restored before polling the next input.
     for (int i = 0; i < _numActors; ++i) {
-        delete _actors[i]; _actors[i] = originals[i];
+        _actors[i] = originals[i];
     }
     _hdMotionDrawCamera = camera._cur.x;
+    _hdMotionDrawTop = _screenTop;
     _hdMotionPresented = true;
     memcpy(_sortedActors, sorted.data(), _numActors * sizeof(Actor *));
     screen = savedScreen; camera = savedCamera;
@@ -126,23 +147,25 @@ void ScummEngine::presentHDMotion() {
     if (verify) {
         // Compare a target-position replay to the normal compositor using the
         // restored native buffers/actors, rather than the preceding display.
-        endpoint.resize(_hdComposite.pitch * _hdComposite.h);
-        memcpy(endpoint.data(), _hdComposite.getPixels(), endpoint.size());
+        const Graphics::Surface &actualScene = HdRemaster::state().active ? HdRemaster::state().scene : _hdComposite;
+        endpoint.resize(actualScene.pitch * actualScene.h);
+        memcpy(endpoint.data(), actualScene.getPixels(), endpoint.size());
         _hdInterpolating = true;
         _hdFontChars = _hdMotionFonts;
         renderHDComposite();
         _hdFontChars = savedFonts;
         _hdInterpolating = false;
         Common::DumpFile replayFile, nativeFile;
-        Graphics::Surface replay = _hdComposite;
+        const Graphics::Surface &nativeScene = HdRemaster::state().active ? HdRemaster::state().scene : _hdComposite;
+        Graphics::Surface replay = nativeScene;
         replay.setPixels(endpoint.data());
         if (replayFile.open(Common::Path(ConfMan.get("playtest_session") + "/motion-replay.png")))
             Image::writePNG(replayFile, replay);
         if (nativeFile.open(Common::Path(ConfMan.get("playtest_session") + "/motion-native.png")))
-            Image::writePNG(nativeFile, _hdComposite);
+            Image::writePNG(nativeFile, nativeScene);
         unsigned int different = 0;
         const uint32 *expected = (const uint32 *)endpoint.data();
-        const uint32 *actual = (const uint32 *)_hdComposite.getPixels();
+        const uint32 *actual = (const uint32 *)nativeScene.getPixels();
         for (uint i = 0; i < endpoint.size() / 4; ++i) if (expected[i] != actual[i]) ++different;
         Common::String result = ConfMan.get("playtest_session") + "/motion-check.json";
         FILE *file = fopen(result.c_str(), "w");
@@ -155,6 +178,8 @@ void ScummEngine::presentHDMotion() {
         hdPrintf("HD-MOTION sample native=%d draw=%d fraction=%u interval=%u", camera._cur.x,
                  _hdMotionDrawCamera, fraction, _hdMotionClock.interval); ++samples;
     }
+    HdRemaster::state().cpuMotion += HdRemaster::milliseconds() - motionStarted;
+    HdRemaster::state().cpuWork = cpuBefore + HdRemaster::milliseconds() - motionStarted;
     uint32 duration = _system->getMillis() - started;
     elapsed += duration; maximum = MAX(maximum, duration);
     if (++frames == 120) {

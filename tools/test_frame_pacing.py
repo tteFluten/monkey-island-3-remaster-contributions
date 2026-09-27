@@ -38,6 +38,19 @@ int main() {
     p.presented(0xfffffff8u);
     assert(p.next == 8 && p.delay(0xfffffff8u) == 16);
     assert(!p.due(7) && p.due(8));
+    HdPresentation::SwapPacer swap;
+    swap.presented(0);
+    assert(swap.delay(5) == 7); // Render work comes before the deadline wait.
+    for (int frame = 1; frame < 600; ++frame) {
+        const double now = frame * 1000.0 / 60.0;
+        swap.presented(now);
+        assert(swap.next > now + 16 && swap.next < now + 17);
+    }
+    swap.presented(20000); // Suspension drops old deadlines.
+    assert(swap.delay(20001) == 11);
+    swap.presented(20028); // A missed display interval cannot trigger a burst.
+    assert(swap.delay(20029) == 11);
+    swap.reset(); assert(swap.delay(20030) == 0);
     // Slower game ticks coexist with 60 presentation updates each second.
     HdPresentation::FramePacer separate;
     int gameTicks = 0, presentations = 0;

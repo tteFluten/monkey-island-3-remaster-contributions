@@ -1,6 +1,17 @@
 // Floor-only pass: native foreground, HD objects, actors, dialogue and cursor
 // are all composited afterwards. The original z-buffer clips baked foreground.
-if (_game.id == GID_CMI && _currentRoom != 87) {
+if (_game.id == GID_CMI && _currentRoom != 87 && !hdColorGradeState().shadowBypass &&
+    hdSceneLookValue(_currentRoom, HdSceneLook::kShadowOpacity) > 0) {
+    const int shadowOffsetX = hdSceneLookValue(_currentRoom, HdSceneLook::kShadowX);
+    const int shadowOffsetY = hdSceneLookValue(_currentRoom, HdSceneLook::kShadowY);
+    const float shadowWidth = hdSceneLookValue(_currentRoom, HdSceneLook::kShadowWidth) / 100.0f;
+    const float shadowOvalness = hdSceneLookValue(_currentRoom, HdSceneLook::kShadowOvalness) / 100.0f;
+    const int shadowAlpha = (hdSceneLookValue(_currentRoom, HdSceneLook::kShadowOpacity) * 255 + 50) / 100;
+    const uint32 shadowColor = hdSceneLookValue(_currentRoom, HdSceneLook::kShadowRed) |
+        (hdSceneLookValue(_currentRoom, HdSceneLook::kShadowGreen) << 8) |
+        (hdSceneLookValue(_currentRoom, HdSceneLook::kShadowBlue) << 16);
+    static Common::Array<HdActorShadow::GroundAnchor> groundAnchors;
+    groundAnchors.resize(_numActors);
     for (int ai = 0; ai < _numActors; ++ai) {
         Actor *a = _actors[ai];
         if (!a || !a->_visible || !a->_costume || a->_room != _currentRoom || a->_layer < 0) continue;
@@ -14,7 +25,7 @@ if (_game.id == GID_CMI && _currentRoom != 87) {
         Common::Array<byte> silhouette, empty;
         const byte *under = a->_quiverUnder.data(), *after = a->_quiverAfter.data();
         for (uint pi = 0; pi < quiverPoses.size(); ++pi) {
-            if (quiverPoses[pi].actor != a) continue;
+            if (quiverPoses[pi].actor != a || quiverPoses[pi].nativeColorFallback) continue;
             silhouette.resize(visW * visH); empty.resize(visW * visH);
             memset(silhouette.data(), 0, silhouette.size());
             memset(empty.data(), 0, empty.size());
@@ -35,14 +46,37 @@ if (_game.id == GID_CMI && _currentRoom != 87) {
             under = empty.data(); after = silhouette.data();
             break;
         }
-        const HdActorShadow::Footprint shadow = HdActorShadow::footprint(
+        const bool sceneAligned = a->getPos().x == 0 && a->getPos().y == a->getElevation();
+        const int elevation = HdActorShadow::groundElevation(a->getPos().x, a->getPos().y, a->getElevation());
+        HdActorShadow::Footprint shadow = HdActorShadow::footprint(
             under, after, visW, visH,
-            a->getPos().x - vs->xstart, a->getPos().y,
-            HdActorShadow::groundElevation(a->getPos().x, a->getPos().y, a->getElevation()));
+            a->getPos().x - vs->xstart, a->getPos().y - _screenTop,
+            elevation, sceneAligned);
         if (_hdFrameCount % 120 == 0 && !shadow.valid)
             hdPrintf("CONTACT-SHADOW-SKIP actor=%d position=%d,%d elevation=%d pose=%d", a->_number,
                      a->getPos().x, a->getPos().y, a->getElevation(), !silhouette.empty());
-        if (!shadow.valid || !shadow.opacity) continue;
+        if (!shadow.valid) continue;
+        auto &anchor = groundAnchors[ai];
+        if (sceneAligned) {
+            if (anchor.room != _currentRoom || anchor.costume != a->_costume || anchor.revision != _playtestCommandId) {
+                anchor.room = _currentRoom; anchor.costume = a->_costume; anchor.revision = _playtestCommandId;
+                anchor.actorY = a->getPos().y;
+                anchor.worldY = shadow.y + _screenTop;
+            }
+            // Camera motion and actual actor movement still follow the room;
+            // changing costume pixels cannot move this calibrated baseline.
+            shadow.y = anchor.worldY + a->getPos().y - anchor.actorY - _screenTop;
+        } else {
+            anchor.room = -1;
+        }
+        // Offsets are in original game pixels, so 4:3, 16:9 and HD scaling
+        // follow the same feet position without changing actor coordinates.
+        shadow.x += shadowOffsetX;
+        shadow.y += shadowOffsetY;
+        shadow.radiusX *= shadowWidth;
+        shadow.radiusY = shadow.radiusX * shadowOvalness;
+        shadow.opacity = shadowAlpha * (80 - elevation) / 80;
+        if (!shadow.opacity) continue;
         int z = -1, lowest = -1;
         for (uint di = 0; di < a->_quiverDraws.size(); ++di) {
             const Actor::QuiverDraw &d = a->_quiverDraws[di];
@@ -57,11 +91,14 @@ if (_game.id == GID_CMI && _currentRoom != 87) {
         const int y0 = MAX(0, (int)(cy - ry)), y1 = MIN(hdH, (int)(cy + ry) + 1);
         for (int y = y0; y < y1; ++y) {
             uint32 *dest = (uint32 *)_hdComposite.getBasePtr(0, y);
-            const byte *mask = z >= 0 && z < _gdi->_numZBuffer ? getMaskBuffer(0, y / scale, z) : nullptr;
+            const byte *mask = z >= 0 && z < _gdi->_numZBuffer ? getMaskBuffer(0, y / scale + _screenTop, z) : nullptr;
             const float dy = (y + 0.5f - cy) / ry;
             for (int x = x0; x < x1; ++x) {
                 if (HdObjectDepth::masked(mask, x / scale, vs->xstart & 7)) continue;
-                dest[x] = HdActorShadow::shade(dest[x], (x + 0.5f - cx) / rx, dy, shadow.opacity);
+                const float dx = (x + 0.5f - cx) / rx;
+                dest[x] = HdActorShadow::shade(dest[x], dx, dy, shadow.opacity, shadowColor);
+                if (HdRemaster::state().active && dx * dx + dy * dy < 1.0f)
+                    dest[x] = (dest[x] & 0xffffffu) | (HdRemaster::opacity(shadow.opacity, dest[x] >> 24) << 24);
             }
         }
         if (_hdFrameCount % 120 == 0)

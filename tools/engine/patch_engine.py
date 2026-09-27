@@ -2,8 +2,34 @@
 """Deterministic, idempotent patches for the pinned COMI-HD source."""
 from pathlib import Path
 import sys
+import hashlib
+import subprocess
+import time
 
 root = Path(sys.argv[1])
+# A complete patch set is repeatable. On a changed patch set, rebuild from the
+# pinned archive rather than stacking text replacements over obsolete patches.
+# Preserve the previous generated source tree for local debugging/manual edits.
+fingerprint = hashlib.sha256()
+for source in sorted(Path(__file__).parent.iterdir()):
+    if source.suffix in ('.py', '.h', '.inc', '.cpp'):
+        fingerprint.update(source.name.encode()); fingerprint.update(source.read_bytes())
+# The embedded scene picker catalog must also be rebuilt when names change.
+from patch_scene_jump import catalog_header, patch as patch_scene_jump
+fingerprint.update(catalog_header().encode())
+stamp = root / '.mi3-patches'
+revision = fingerprint.hexdigest()
+if stamp.exists():
+    if stamp.read_text().strip() == revision:
+        print('Engine patches are current')
+        sys.exit(0)
+    archive = root.parent / 'source.tar.gz'
+    if not archive.is_file():
+        raise RuntimeError('Changed patches require the pinned source.tar.gz archive')
+    backup = root.with_name('source-backup-' + str(time.time_ns()))
+    root.rename(backup)
+    root.mkdir()
+    subprocess.run(['tar', '-xzf', str(archive), '--strip-components=3', '-C', str(root), '*/scummvm/fork'], check=True)
 
 def edit(name, before, after):
     file = root / name
@@ -137,3 +163,27 @@ print('Applied per-room color grades and the playtest Look panel')
 from patch_wide_background import patch as patch_wide_background
 patch_wide_background(root, edit)
 print('Applied optional full-width cannon background presentation')
+
+from patch_telemetry import patch as patch_telemetry
+patch_telemetry(root, edit)
+
+from patch_remaster import patch as patch_remaster
+patch_remaster(root, edit)
+print('Applied 1440p GPU scene effects and reusable motion storage')
+
+from patch_water import patch as patch_water
+patch_water(root, edit)
+print('Applied lightweight ambient water shader')
+
+from patch_film import patch as patch_film
+patch_film(root, edit)
+print('Applied optional final vintage-film presentation')
+
+from patch_background_loading import patch as patch_background_loading
+patch_background_loading(root, edit)
+print('Applied shared asynchronous room background cache')
+
+patch_scene_jump(root, edit)
+print('Applied native J-key scene navigation')
+
+stamp.write_text(revision + "\n")

@@ -40,3 +40,7 @@ __pycache__/
 !.env.example
 .venv/
 /app/dist-server/
+
+# Local Scene Look migration backup
+/data/color-grades.json.v1.bak
+/data/color-grades.json.tmp

@@ -15,10 +15,35 @@ def patch(root, edit):
     void refreshHDRoomBackground();
     void configureHDViewport(bool movie = false);
     void refreshHDViewport(bool movie);
+    void fadeHDPresentation();
     bool handleHDAspectEvent(const Common::Event &event);
     void drawHDAspectMenu();
     bool _hdAspectMouseDown = false;
     const Graphics::Surface *_hdBackendCursor = nullptr;''')
+    # Inspection labels are authored at the original 640px screen center.
+    # Translate only screen-anchored captions; overhead speech already uses
+    # actor/camera coordinates and must not receive this offset a second time.
+    text = 'engines/scumm/string_v7.cpp'
+    edit(text, '\t\tenqueueText(msg, st.xpos, st.ypos, st.color, st.charset, (TextStyleFlags)flags);', '''        const int textX = _game.id == GID_CMI && _hdScale > 1 && !hdInventoryOpen() && !_hdInventoryInputOffset && hdAspectRatio() == 169
+            ? HdAspect::centeredTextX(st.xpos, st.center, _screenWidth) : st.xpos;
+        enqueueText(msg, textX, st.ypos, st.color, st.charset, (TextStyleFlags)flags);''')
+    edit(text, '\t\tsubtitlePos.x = _string[0].xpos;', '''        subtitlePos.x = _string[0].xpos;
+        if (_game.id == GID_CMI && _hdScale > 1 && !hdInventoryOpen() && !_hdInventoryInputOffset && hdAspectRatio() == 169 &&
+            !(a && _string[0].overhead))
+            subtitlePos.x = HdAspect::centeredTextX(subtitlePos.x, _string[0].center, _screenWidth);''')
+    # Constructor clip rectangles are still 640px after a panorama is opened.
+    # Center the original wrapping area for centered captions, preserving line
+    # breaks; other text can use the current viewport without right-edge clipping.
+    for clip in ('_wrappedTextClipRect', '_defaultTextClipRect'):
+        before = '\t\t\tbt.rect = ' + clip + ';'
+        edit(text, before, before + '''
+            if (_game.id == GID_CMI && _hdScale > 1 && !hdInventoryOpen() && !_hdInventoryInputOffset && hdAspectRatio() == 169 && _screenWidth > 640) {
+                if ((bt.flags & kStyleAlignCenter) && bt.xpos == _screenWidth / 2)
+                    bt.rect.translate((_screenWidth - 640) / 2, 0);
+                else
+                    bt.rect.right += _screenWidth - 640;
+            }''')
+
     # A scrolling viewport also needs its extra feed strip.
     edit('engines/scumm/gfx.h', 'uint16 tdirty[80 + 1];', 'uint16 tdirty[108 + 1];')
     edit('engines/scumm/gfx.h', 'uint16 bdirty[80 + 1];', 'uint16 bdirty[108 + 1];')
@@ -37,9 +62,8 @@ def patch(root, edit):
     if '#include "scumm/hd_aspect.inc"' not in (root / gfx).read_text():
         edit(gfx, 'void ScummEngine::initScreens(int b, int h) {',
              '#include "scumm/hd_aspect.inc"\n\nvoid ScummEngine::initScreens(int b, int h) {')
-    # Inventory scripts use the original 640-pixel coordinates. Reconfigure
-    # after scripts, before camera/drawing, keeping rendering and hit tests in
-    # the same centered 4:3 area without restarting the room or inventory.
+    # Reconcile room presentation after scripts without shrinking panoramas
+    # when inventory opens; its UI is centered independently of the scene.
     edit('engines/scumm/scumm.cpp', '\t\twalkActors();\n\t\tmoveCamera();',
          '\t\trefreshHDInventoryViewport();\n\t\twalkActors();\n\t\tmoveCamera();')
     edit(gfx, '\tdrawHDFontSizeMenu();', '\tdrawHDAspectMenu();\n\tdrawHDFontSizeMenu();')
@@ -55,8 +79,9 @@ def patch(root, edit):
     if (ConfMan.hasKey("playtest_session") && _currentRoom != 92 &&
         lastKeyHit.keycode == Common::KEYCODE_o && lastKeyHit.hasFlags(0))
         lastKeyHit = Common::KeyState(Common::KEYCODE_F5, 319);''')
-    # Movies keep their established 640x480 framing even when launched from a
-    # panorama. Restore the viewport only after releasing the movie buffers.
+    # Movies keep their native 640x480 buffers; the backend crops their
+    # presentation to 16:9 with uniform zoom. Release restores the movie flag for
+    # completion, Escape, and decoder failure. Missing SANs return before entry.
     smush = 'engines/scumm/smush/smush_player.cpp'
     edit(smush, '\t// Check for HD video replacement', '\t_vm->refreshHDViewport(true);\n\n\t// Check for HD video replacement')
     edit(smush, '\t_vm->_gdi->_numStrips = _origNumStrips;', '\t_vm->_gdi->_numStrips = _origNumStrips;\n\t_vm->refreshHDViewport(false);')
@@ -83,7 +108,9 @@ def patch(root, edit):
         // per side; the same rectangle is used to invert pointer coordinates.
         if (ConfMan.hasKey("playtest_session") && ConfMan.getInt("hd_aspect_ratio") == 169 && getHeight()) {
             const int nativeWidth = getWidth() * 480 / getHeight();
-            const HdAspect::Rect rect = HdAspect::game(safeArea.width(), safeArea.height(), 169, nativeWidth);
+            const HdAspect::Rect rect = HdAspect::game(safeArea.width(), safeArea.height(), 169, nativeWidth,
+                nativeWidth >= 864 || (ConfMan.hasKey("hd_wide_background_active") && ConfMan.getBool("hd_wide_background_active")),
+                ConfMan.hasKey("hd_movie_active") && ConfMan.getBool("hd_movie_active"));
             _gameDrawRect = Common::Rect(safeArea.left + rect.x, safeArea.top + rect.y,
                 safeArea.left + rect.x + rect.w, safeArea.top + rect.y + rect.h);
         }
@@ -91,6 +118,15 @@ def patch(root, edit):
 \t\tif (getOverlayHeight()) {''')
     # Block before SDL edge clamping, which otherwise activates edge objects.
     sdl = 'backends/graphics/sdl/sdl-graphics.cpp'
+    # SDL applies this rectangle as a physical OS pointer confinement in
+    # fullscreen, before notifyMousePosition sees any events. Fixed-width
+    # rooms retain a 4:3 gameplay rectangle, but the pointer must reach all of
+    # the 16:9 presentation. Keep virtual input mapping and margin rejection
+    # below unchanged; this applies to every room and refreshes on resizing,
+    # aspect changes and GUI transitions through notifyActiveAreaChanged.
+    edit(sdl, '\t_window->setMouseRect(_activeArea.drawRect);', '''    const bool widePointer = !_overlayInGUI && ConfMan.hasKey("playtest_session") &&
+        ConfMan.getInt("hd_aspect_ratio") == 169;
+    _window->setMouseRect(widePointer ? Common::Rect(_windowWidth, _windowHeight) : _activeArea.drawRect);''')
     edit(sdl, '\tmouse.y = (int)(mouse.y * dpiScale + 0.5f);', '''\tmouse.y = (int)(mouse.y * dpiScale + 0.5f);
     if (ConfMan.hasKey("playtest_session") && ConfMan.getInt("hd_aspect_ratio") == 169 &&
         !_overlayInGUI && !_activeArea.drawRect.contains(mouse)) {

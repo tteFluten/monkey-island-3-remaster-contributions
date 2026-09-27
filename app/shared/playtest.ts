@@ -16,6 +16,7 @@ export interface PlaytestRoom {
   height: number;
   variants: Variant[];
   selectedVariantId: string | null;
+  finalBackground?: boolean;
 }
 export interface ImportCandidate {
   file: string;
@@ -34,6 +35,18 @@ export interface EngineState {
   width: number;
   height: number;
   aspectRatio?: 43 | 169;
+  drawableWidth?: number;
+  drawableHeight?: number;
+  renderBackend?: 'opengl-shaders' | 'cpu-effects';
+  waterBackend?: 'opengl-shader' | 'original-overlays';
+  presentationIntervalMs?: number;
+  presentationFps?: number;
+  renderCpuMs?: number;
+  cameraTop?: number;
+  inventoryOpen?: boolean;
+  inventoryOffset?: number;
+  mouseScriptX?: number;
+  cursorObject?: number;
   outputWidth?: number;
   outputHeight?: number;
   viewportWidth?: number;

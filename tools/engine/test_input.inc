@@ -12,14 +12,19 @@ if (getenv("MI3_ENGINE_TEST_INPUT") && ConfMan.hasKey("playtest_session", "comi"
 			fgets(command, sizeof(command), input);
 			fclose(input);
 			remove(file.c_str());
-			int key = 0, x = 0, y = 0;
+			int key = 0, x = 0, y = 0, modifiers = 0;
 			if (strncmp(command, "window", 6) == 0) {
 				int w, h;
 				SDL_GetWindowSize(_graphicsManager->getWindow()->getSDLWindow(), &w, &h);
 				FILE *output = fopen((ConfMan.get("playtest_session", "comi") + "/test-window.json").c_str(), "w");
 				if (output) {
-					fprintf(output, "{\"width\":%d,\"height\":%d,\"dpi\":%f}\n", w, h,
-						_graphicsManager->getWindow()->getSdlDpiScalingFactor());
+					fprintf(output, "{\"width\":%d,\"height\":%d,\"dpi\":%f,\"fullscreen\":%s,\"flags\":%u,\"windowedTest\":%s,\"session\":%s,\"movieActive\":%s}\n", w, h,
+						_graphicsManager->getWindow()->getSdlDpiScalingFactor(),
+                        g_system->getFeatureState(OSystem::kFeatureFullscreenMode) ? "true" : "false",
+                        SDL_GetWindowFlags(_graphicsManager->getWindow()->getSDLWindow()),
+                        SDL_getenv("MI3_ENGINE_TEST_WINDOWED") ? "true" : "false",
+                        ConfMan.hasKey("playtest_session") ? "true" : "false",
+                        ConfMan.hasKey("hd_movie_active") && ConfMan.getBool("hd_movie_active") ? "true" : "false");
 					fclose(output);
 				}
 			} else if (sscanf(command, "fullscreen %d", &key) == 1) {
@@ -30,10 +35,21 @@ if (getenv("MI3_ENGINE_TEST_INPUT") && ConfMan.hasKey("playtest_session", "comi"
 				SDL_SetWindowSize(_graphicsManager->getWindow()->getSDLWindow(), x, y);
 			} else if (strncmp(command, "screenshot", 10) == 0) {
 				g_system->saveScreenshot();
-			} else if (sscanf(command, "key %d", &key) == 1) {
+			} else if (strncmp(command, "film-capture", 12) == 0) {
+                HdFilm::state().capture = true;
+            } else if (sscanf(command, "film-time %d", &key) == 1) {
+                HdFilm::state().testTick = key;
+                ++HdFilm::state().revision;
+			} else if (sscanf(command, "wheel %d", &y) == 1) {
+                SDL_Event native = {};
+                native.type = SDL_MOUSEWHEEL;
+                native.wheel.y = y;
+                SDL_PushEvent(&native);
+			} else if (sscanf(command, "key %d %d", &key, &modifiers) >= 1) {
 				SDL_Event native = {};
 				native.type = SDL_KEYDOWN;
 				native.key.keysym.sym = (SDL_Keycode)key;
+                native.key.keysym.mod = (SDL_Keymod)modifiers;
 				native.key.state = SDL_PRESSED;
 				SDL_PushEvent(&native);
 				native.type = SDL_KEYUP;

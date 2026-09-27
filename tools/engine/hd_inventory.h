@@ -4,6 +4,16 @@
 namespace HdInventory {
 inline bool isObject(int number) { return number >= 105 && number <= 274; }
 inline int imageIndex(int image) { return image > 0 ? image - 1 : -1; }
+inline int centerOffset(int viewportWidth) { return viewportWidth > 640 ? (viewportWidth - 640) / 2 : 0; }
+
+// UI pixels are premultiplied; the scene behind them is opaque.
+inline unsigned int overScene(unsigned int ui, unsigned int scene) {
+    const unsigned int inverse = 255 - (ui >> 24);
+    unsigned int result = 0xff000000;
+    for (int shift = 0; shift < 24; shift += 8)
+        result |= (((ui >> shift) & 255) + (((scene >> shift) & 255) * inverse + 127) / 255) << shift;
+    return result;
+}
 
 // RGBA surfaces in the HD compositor use the high byte for alpha. Blend edges
 // instead of replacing them with a second, thresholded outline.
@@ -11,7 +21,8 @@ inline unsigned int over(unsigned int source, unsigned int dest) {
     unsigned int a = source >> 24;
     if (!a) return dest;
     if (a == 255) return source;
-    unsigned int result = 0xff000000;
+    // The GPU UI layer is transparent; retain premultiplied coverage there.
+    unsigned int result = (a + (((dest >> 24) * (255 - a) + 127) / 255)) << 24;
     for (int shift = 0; shift < 24; shift += 8)
         result |= ((((source >> shift) & 255) * a +
                     ((dest >> shift) & 255) * (255 - a) + 127) / 255) << shift;

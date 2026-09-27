@@ -22,10 +22,35 @@
         "roomNumber": 4,
         "originalFile": "0004_chapter1.png"
       },
-      "variants": [],
-      "createdAt": "2026-09-21T22:36:08.746Z"
+      "variants": [
+        "chapter1-supplied-2560x1440"
+      ],
+      "createdAt": "2026-09-21T22:36:08.746Z",
+      "approvedVariantId": "chapter1-supplied-2560x1440"
     }
   },
-  "variants": {},
+  "variants": {
+    "chapter1-supplied-2560x1440": {
+      "id": "chapter1-supplied-2560x1440",
+      "assetId": "b27ee864-73b4-45b8-bf6b-3790d2391135",
+      "filePath": "upscaled/imported/587ed3b9962af22e619462f5ae7893262d2566d31976c61bf2570b05a06aeebb.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5693488,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "587ed3b9962af22e619462f5ae7893262d2566d31976c61bf2570b05a06aeebb",
+        "originalFile": "0004_chapter1-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-26T14:48:20.964616+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this image as the room 0004 chapter background."
+    }
+  },
   "jobs": {}
 }

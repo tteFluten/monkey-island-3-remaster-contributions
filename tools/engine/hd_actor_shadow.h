@@ -8,16 +8,25 @@ struct Footprint {
     int opacity = 0;
 };
 
+// Scripted scene-aligned costumes need one calibrated ground anchor rather
+// than treating their drawing origin as feet or following each animated cel.
+struct GroundAnchor {
+    int room = -1, costume = -1, revision = -1, actorY = 0;
+    float worldY = 0;
+};
+
 inline int groundElevation(int actorX, int actorY, int elevation) {
     // Scene-aligned costumes use (0, y) with elevation=y merely to put their
     // drawing origin at (0, 0). That is layering metadata, not a physical jump.
     return actorX == 0 && actorY == elevation ? 0 : elevation;
 }
 
-// Derive feet from native painted pixels, including split-limb and fallback
-// poses. Some scripted actors (Wally) have an origin far outside their sprite.
+// Painted pixels determine eligibility and size, including split-limb and
+// fallback poses. Walking shadows use the actor's ground Y, not animated feet.
+// Scene-aligned costumes supply a painted baseline for a persistent anchor.
 inline Footprint footprint(const unsigned char *under, const unsigned char *after,
-                           int width, int height, int actorX, int floorY, int elevation) {
+                           int width, int height, int actorX, int floorY, int elevation,
+                           bool sceneAligned = false) {
     Footprint result;
     int left = width, right = -1, top = height, bottom = -1;
     for (int y = 0; y < height; ++y)
@@ -52,23 +61,25 @@ inline Footprint footprint(const unsigned char *under, const unsigned char *afte
     if (radius > 38) radius = 38;
     result.valid = true;
     result.x = center;
-    // Tuck the oval under the feet and give it a slightly wider footprint.
-    result.y = bottom + 1 + elevation - 3;
+    // Keep the ground plane steady as the costume rises/falls during a step.
+    // Elevation changes the footprint/opacity, never the physical floor Y.
+    result.y = (sceneAligned ? bottom + 1 + elevation : floorY) - 3;
     result.radiusX = (radius + elevation * 0.08f) * 1.20f;
     result.radiusY = result.radiusX * 0.24f;
     result.opacity = 38 * (80 - elevation) / 80;
     return result;
 }
 
-// Uniform black oval at 15% opacity when grounded, with a hard boundary.
-// Nothing extends into the bounding box corners. Preserve floor hue and alpha.
-inline unsigned int shade(unsigned int rgba, float dx, float dy, int opacity) {
+// Uniform tinted oval with a hard boundary; black retains the original shade.
+// Nothing extends into the bounding box corners. Preserve the destination alpha.
+inline unsigned int shade(unsigned int rgba, float dx, float dy, int opacity, unsigned int color = 0) {
     if (dx * dx + dy * dy >= 1.0f) return rgba;
     const int alpha = opacity;
     unsigned int result = rgba & 0xff000000u;
     for (int c = 0; c < 3; ++c) {
         unsigned int value = (rgba >> (c * 8)) & 255;
-        result |= ((value * (255 - alpha) + 127) / 255) << (c * 8);
+        const unsigned int tint = (color >> (c * 8)) & 255;
+        result |= ((value * (255 - alpha) + tint * alpha + 127) / 255) << (c * 8);
     }
     return result;
 }

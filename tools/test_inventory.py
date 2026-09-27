@@ -23,7 +23,9 @@ class InventoryTests(unittest.TestCase):
                 source = root / 'engines/scumm'
                 source.mkdir(parents=True)
                 fixtures = {
-                    'scumm.h': '    bool _hdDepthOfFieldMouseDown = false;\n',
+                    'scumm.h': '    bool _hdDepthOfFieldMouseDown = false;\n\tint _hdScale = 1;\n',
+                    'scumm.cpp': 'VAR(VAR_MOUSE_X) = _mouse.x;\nVAR(VAR_VIRT_MOUSE_X) = _virtualMouse.x;\n',
+                    'verbs.cpp': 'int ScummEngine::findVerbAtPos(int x, int y) const {\n',
                     'scumm_v6.h': '\tvoid drawBlastObject(BlastObject *eo);\n\tint getBlastCount() const\n',
                     'input.cpp': '\tif (handleHDDepthOfFieldEvent(event)) return;\n',
                     'object.cpp': '#include "scumm/bomp.h"\n'
@@ -81,6 +83,11 @@ struct Surface {
 int main() {
     using namespace HdInventory;
     assert(imageIndex(1) == 0 && imageIndex(2) == 1 && imageIndex(0) == -1);
+    assert(centerOffset(640) == 0 && centerOffset(864) == 112);
+    // Centering changes UI placement only, with the inverse used for input.
+    assert(432 - centerOffset(864) == 320);
+    assert(over(0x800000ff, 0) == 0x80000080);
+    assert(overScene(over(0x800000ff, 0), 0xff000011) == over(0x800000ff, 0xff000011));
     Surface scene(8,8), panel(2,2), item(1,1);
     for (auto &p: scene.data) p = 0xff000011;
     panel.data = {0, 0xff000033, 0xff000033, 0x80000055};

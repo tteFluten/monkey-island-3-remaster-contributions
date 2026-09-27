@@ -16734,6 +16734,17 @@
       "canonical": "costumes/LFLF_0010_AKOS_0039_frame_11.png"
     },
     {
+      "source": "costumes/LFLF_0010_AKOS_0039_frame_12.png",
+      "source_sha256": "59d8aab6a753c768329e6a3bd12619cd8cd85f0c77368de4ead35f9872c14d4b",
+      "size": [
+        5,
+        5
+      ],
+      "shadow_pixels": 0,
+      "cleaned_sha256": "f5aaae592b73ee8624525368275b63fc4956adf520144644bd58a81eb7b61cb5",
+      "canonical": "costumes/LFLF_0010_AKOS_0039_frame_12.png"
+    },
+    {
       "source": "costumes/LFLF_0010_AKOS_0039_frame_13.png",
       "source_sha256": "d4732af960840b07ecc6f202a212843391770b77b4bf837af0666a28628b554a",
       "size": [
@@ -16743,6 +16754,50 @@
       "shadow_pixels": 9,
       "cleaned_sha256": "84927e214cfd346a8963fbb7e5321cde4a9b15670e9f6cb4936a8d3d98b6ac2f",
       "canonical": "costumes/LFLF_0010_AKOS_0039_frame_13.png"
+    },
+    {
+      "source": "costumes/LFLF_0010_AKOS_0039_frame_14.png",
+      "source_sha256": "69238a6539d92a13c598947523a4ee1a6fe410ec74bb2d7eb731860f086c4378",
+      "size": [
+        4,
+        3
+      ],
+      "shadow_pixels": 0,
+      "cleaned_sha256": "dca072408d999ca31ae2d6fb0172201980237ab2a38a872ae3e36ebba00c808a",
+      "canonical": "costumes/LFLF_0010_AKOS_0039_frame_14.png"
+    },
+    {
+      "source": "costumes/LFLF_0010_AKOS_0039_frame_15.png",
+      "source_sha256": "e1d1c1ea22fbaa605182db73f86d21ff19fa7abd22b8f7d5b7aedbcbb6cc1187",
+      "size": [
+        5,
+        5
+      ],
+      "shadow_pixels": 0,
+      "cleaned_sha256": "ad0bbeb7b1cd2f06756378dff14856091914b541019df2b64365fd0b20a4cd28",
+      "canonical": "costumes/LFLF_0010_AKOS_0039_frame_15.png"
+    },
+    {
+      "source": "costumes/LFLF_0010_AKOS_0039_frame_16.png",
+      "source_sha256": "4fccedc3aeb54d64cb3cfe31ed16e7bed020e780ad3bccd1e74d59503103ea4e",
+      "size": [
+        5,
+        4
+      ],
+      "shadow_pixels": 0,
+      "cleaned_sha256": "74d11fa9b85c4a92f62a8887f96fd1f3f3c7541a2cc564406d9983d44fb3e94e",
+      "canonical": "costumes/LFLF_0010_AKOS_0039_frame_16.png"
+    },
+    {
+      "source": "costumes/LFLF_0010_AKOS_0039_frame_17.png",
+      "source_sha256": "4211cf17a89c044eb41de3fcadcdbcc06fac6846ee62cd6f3a44ba6c5b3fd71b",
+      "size": [
+        2,
+        2
+      ],
+      "shadow_pixels": 0,
+      "cleaned_sha256": "2e5f8b22e5b76a62d03762fb8c60e787d5e17b147052b46120375ddbf1c323fc",
+      "canonical": "costumes/LFLF_0010_AKOS_0039_frame_17.png"
     },
     {
       "source": "costumes/LFLF_0010_AKOS_0039_frame_18.png",
@@ -16943,6 +16998,17 @@
       "canonical": "costumes/LFLF_0010_AKOS_0041_frame_1.png"
     },
     {
+      "source": "costumes/LFLF_0010_AKOS_0041_frame_10.png",
+      "source_sha256": "2a42a224ea0b6fdf8635e83a541b3c3d5e086b66c8083a720d89b6780afc8498",
+      "size": [
+        15,
+        13
+      ],
+      "shadow_pixels": 1,
+      "cleaned_sha256": "9fa7ef28e9d95fc083b89293a0cb0bd598843cb36a971682ffd1f4d3ba380ee1",
+      "canonical": "costumes/LFLF_0010_AKOS_0041_frame_10.png"
+    },
+    {
       "source": "costumes/LFLF_0010_AKOS_0041_frame_11.png",
       "source_sha256": "e23b01b172b5c9562a40ce050bf6769a3bc3bda2793f5ec92bdc955fa3785712",
       "size": [
@@ -16963,6 +17029,17 @@
       "shadow_pixels": 14,
       "cleaned_sha256": "ce9b64b362c12d7dac2402fedcf5107b85b2f20820ae8b70ef6f3d31a71697bc",
       "canonical": "costumes/LFLF_0010_AKOS_0041_frame_12.png"
+    },
+    {
+      "source": "costumes/LFLF_0010_AKOS_0041_frame_2.png",
+      "source_sha256": "52a147f16432256bb4934493b7c9273e5a52baf9025c2e7e6ba6208b5a216275",
+      "size": [
+        4,
+        15
+      ],
+      "shadow_pixels": 1,
+      "cleaned_sha256": "c9bb15dd2656cfafaf0ad4ce30a1960e0cd610bfff020a43b5874e9daf5c056c",
+      "canonical": "costumes/LFLF_0010_AKOS_0041_frame_2.png"
     },
     {
       "source": "costumes/LFLF_0010_AKOS_0041_frame_4.png",
@@ -16996,6 +17073,17 @@
       "shadow_pixels": 8,
       "cleaned_sha256": "97ee97d4eae66913858ca6365084628f66645f96f8860b521509e5934b86dd7b",
       "canonical": "costumes/LFLF_0010_AKOS_0041_frame_6.png"
+    },
+    {
+      "source": "costumes/LFLF_0010_AKOS_0041_frame_8.png",
+      "source_sha256": "4fe0324e4d8f4cea3579605f263cb62b9f52665770744b6793922ab5ff9497f5",
+      "size": [
+        15,
+        13
+      ],
+      "shadow_pixels": 1,
+      "cleaned_sha256": "16f04046eb1a9fb6ed85ceca8a6ac20a77d79932ed343b7cd8f2725f12024ebf",
+      "canonical": "costumes/LFLF_0010_AKOS_0041_frame_8.png"
     },
     {
       "source": "costumes/LFLF_0010_AKOS_0041_frame_9.png",
@@ -24441,6 +24529,12 @@
       "shadow_pixels": 939,
       "cleaned_sha256": "34b7090896f294457a3a8a335eb5eb4ce3f2d20056da91a4ba66ca409761349c",
       "canonical": "costumes/LFLF_0013_AKOS_0064_frame_148.png"
+    },
+    {
+      "source": "costumes/LFLF_0013_AKOS_0064_frame_149.png",
+      "cleaned_sha256": "877ca7cc94619f77be60b17d9db79144c0f6e6a1ce9c1f7fe4b8d919d48f8cde",
+      "canonical": "costumes/LFLF_0013_AKOS_0064_frame_149.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0013_AKOS_0064_frame_15.png",
@@ -33397,6 +33491,12 @@
       "canonical": "costumes/LFLF_0016_AKOS_0088_frame_11.png"
     },
     {
+      "source": "costumes/LFLF_0016_AKOS_0088_frame_12.png",
+      "cleaned_sha256": "2b7857b2b3612efca5da1abe2ba234768698a8fb9fa14473b0f479bf450262ee",
+      "canonical": "costumes/LFLF_0016_AKOS_0088_frame_12.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0016_AKOS_0088_frame_13.png",
       "source_sha256": "56a620258a1ebd85595a330657bfc89c104aeff8d89f7a2dfe421b22e1cf3b69",
       "size": [
@@ -36719,6 +36819,12 @@
       "canonical": "costumes/LFLF_0019_AKOS_0102_frame_36.png"
     },
     {
+      "source": "costumes/LFLF_0019_AKOS_0102_frame_37.png",
+      "cleaned_sha256": "c7ad6e93cfc43f8c4e8d0911d07efaa5e4341fd23ab4fa0c8f7669309c76b0f6",
+      "canonical": "costumes/LFLF_0019_AKOS_0102_frame_37.png",
+      "origin": "local-game-extraction"
+    },
+    {
       "source": "costumes/LFLF_0019_AKOS_0102_frame_38.png",
       "source_sha256": "a01ebffd74cd554a74ab5af29da53fd730f972b4a3309758a9fff4741675d331",
       "size": [
@@ -37355,6 +37461,12 @@
       "shadow_pixels": 314,
       "cleaned_sha256": "f875c2c10d8b353de1af2412fc059214d250d536844098582ea5251985fd8f91",
       "canonical": "costumes/LFLF_0019_AKOS_0106_frame_24.png"
+    },
+    {
+      "source": "costumes/LFLF_0019_AKOS_0106_frame_25.png",
+      "cleaned_sha256": "d2514cd9f9fd05c97937bcebde633d6e66af0a364d067ca65493cf97c42b5b2d",
+      "canonical": "costumes/LFLF_0019_AKOS_0106_frame_25.png",
+      "origin": "local-game-extraction"
     },
     {
       "source": "costumes/LFLF_0019_AKOS_0106_frame_26.png",

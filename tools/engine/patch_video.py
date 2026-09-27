@@ -1,4 +1,4 @@
-"""Use the existing MP4 path with native timing, subtitles and safe fallback."""
+"""Use HD-only COMI pictures with native SAN timing, audio and subtitles."""
 from pathlib import Path
 
 
@@ -33,13 +33,23 @@ static Common::String videoShellQuote(const Common::String &value) {
     old = text[begin:end]
     new = start + '''
     Common::String cmd = Common::String::format(
-        "%s -nostdin -v error -i %s -vf scale=%d:%d:flags=bilinear -f rawvideo -pix_fmt rgba -an -",
+        "%s -nostdin -v error -xerror -i %s -vf scale=%d:%d:flags=bilinear -f rawvideo -pix_fmt rgba -an -",
         videoShellQuote(ffmpegPath).c_str(), videoShellQuote(mp4Path).c_str(), width, height);
 '''
     edit(player, old, new)
     # Remove the POSIX hardcoded size, retaining the dimensions given by caller.
     edit(player, '\t_width = 2560;\n\t_height = 1920;\n\treturn true;\n#endif',
          '\treturn true;\n#endif')
+    # A clean EOF (including the supplied short trailing black sequence) can
+    # retain the final HD image. A decoder error must skip instead of showing
+    # original footage or a partly decoded frame.
+    edit('engines/scumm/hd_video_player.h', '\tvoid close();', '\tbool close();')
+    edit(player, 'void HdVideoPlayer::close() {', 'bool HdVideoPlayer::close() {\n    bool success = true;')
+    edit(player, '\t\tWaitForSingleObject(_hdProcess, 5000);', '''        const DWORD waited = WaitForSingleObject(_hdProcess, 5000);
+        DWORD exitCode = 1;
+        success = waited == WAIT_OBJECT_0 && GetExitCodeProcess(_hdProcess, &exitCode) && exitCode == 0;''')
+    edit(player, '\t\tpclose((FILE*)_hdPipePosix);', '\t\tsuccess = pclose((FILE*)_hdPipePosix) == 0;')
+    edit(player, '\n}\n\n} // End of namespace Scumm', '\n    return success;\n}\n\n} // End of namespace Scumm')
 
     smush = 'engines/scumm/smush/smush_player.cpp'
     header = 'engines/scumm/smush/smush_player.h'
@@ -53,6 +63,7 @@ static Common::String videoShellQuote(const Common::String &value) {
          '#include "scumm/hd_video_player.h"\n#include "scumm/hd_video_support.h"')
     edit(header, '\tbyte *_hdFrameBuffer;', '''\tbyte *_hdFrameBuffer;
     bool _hdVideoEnded = false;
+    bool _hdVideoFailed = false;
     int _hdFramesRead = 0;
     bool _hdHasSubtitles = false;
     Common::Array<byte> _hdSubtitleDark, _hdSubtitleLight;''')
@@ -63,6 +74,25 @@ static Common::String videoShellQuote(const Common::String &value) {
     edit(smush, '\t\t\t_hdVideoActive = true;', '''\t\t\t_hdVideoActive = true;
             _hdVideoEnded = false;
             _hdFramesRead = 0;''')
+    # COMI's script entry always starts at frame zero. Other games retain their
+    # native paths; unsupported COMI segments must not display low-res footage.
+    edit(smush, '\t// Check for HD video replacement', '''    _hdVideoFailed = false;
+\t// Check for HD video replacement''')
+    edit(smush, '\t_updateNeeded = false;\n\t_warpNeeded = false;', '''    if (_vm->_game.id == GID_CMI && (!_hdVideoActive || !_hdFrameBuffer)) {
+        delete _hdVideo;
+        _hdVideo = nullptr;
+        free(_hdFrameBuffer);
+        _hdFrameBuffer = nullptr;
+        _hdVideoActive = false;
+        _vm->refreshHDViewport(false);
+        _vm->_system->fillScreen(0);
+        _vm->_system->updateScreen();
+        warning("HD movie unavailable: %s; skipping cinematic", filename);
+        _vm->displayMessage("HD video unavailable: %s. This cinematic will be skipped.", filename);
+        return;
+    }
+
+\t_updateNeeded = false;\n\t_warpNeeded = false;''')
     edit(smush, '\t_skipNext = false;\n\n\tif (_insanity)', '''\t_skipNext = false;
     _hdHasSubtitles = false;
     if (_hdVideoActive) {
@@ -83,9 +113,12 @@ static Common::String videoShellQuote(const Common::String &value) {
             ++_hdFramesRead;
         } else {
             _hdVideoEnded = true;
-            _hdVideo->close();
-            if (!_hdFramesRead) {
-                warning("HD video decode failed; using original movie");
+            const bool decoded = _hdVideo->close();
+            if (_vm->_game.id == GID_CMI && (!_hdFramesRead || !decoded)) {
+                warning("HD video decode failed; skipping cinematic");
+                _hdVideoFailed = true;
+                _vm->_smushVideoShouldFinish = true;
+            } else if (!_hdFramesRead) {
                 _hdVideoActive = false;
             } else {
                 warning("HD video ended after %d frames; retaining last image until native movie ends", _hdFramesRead);
@@ -94,6 +127,14 @@ static Common::String videoShellQuote(const Common::String &value) {
     }
 \tif (_width != 0 && _height != 0) {
 \t\tupdateScreen();''')
+    # A failed frame must never reach either the HD blit or the original blit.
+    edit(smush, '\t\t\tif (_updateNeeded) {', '\t\t\tif (_updateNeeded && !_hdVideoFailed) {')
+    edit(smush, '\tCursorMan.showMouse(oldMouseState);', '''\tCursorMan.showMouse(oldMouseState);
+    if (_hdVideoFailed && !_vm->shouldQuit()) {
+        _vm->_system->fillScreen(0);
+        _vm->_system->updateScreen();
+        _vm->displayMessage("HD video could not be decoded: %s. This cinematic was skipped.", filename);
+    }''')
     for method in ('drawStringWrap', 'drawString'):
         original = f'\t\tsf->{method}(str, _dst, clipRect, pos_x, pos_y, color, flg);'
         edit(smush, original, original + f'''
@@ -125,5 +166,7 @@ static Common::String videoShellQuote(const Common::String &value) {
                             }
                         }
                         _vm->_system->copyRectToScreen(pixels, w * 4, 0, 0, w, h);''')
+    edit(smush, '\t\t\t\t\t} else {\n\t\t\t\t\t\t// Original SMUSH rendering',
+         '\t\t\t\t\t} else if (_vm->_game.id != GID_CMI) {\n\t\t\t\t\t\t// Original SMUSH rendering for other games only')
     (root / 'engines/scumm/hd_video_support.h').write_bytes(
         (Path(__file__).parent / 'hd_video_support.h').read_bytes())

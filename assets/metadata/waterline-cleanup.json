@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "created_at": "2026-09-25T18:12:18.486981+00:00",
+  "room": 11,
+  "review_status": "unreviewed",
+  "engine_status": "untested",
+  "provider": "OpenAI image generation tool",
+  "source": "assets/masters/backgrounds/c765f1739886be526e31fcc36dfd3bc6d222c5a082178ce9164cc008fc21eb12.png",
+  "source_sha256": "c765f1739886be526e31fcc36dfd3bc6d222c5a082178ce9164cc008fc21eb12",
+  "output": "assets/references/water-cleanup/0011_waterln-clean.png",
+  "output_sha256": "ebde35a03a5517db71ecca8bf1b38542d68056991f4790f77dadec9b5dd91e87",
+  "edit": "Remove translucent horizontal haze from hull and blurred smudges from water; retain 4:3 framing, illustrated style, objects and shoreline. Leave calm water as a base for dynamic shading.",
+  "limitations": "Generated cleanup draft is 1448x1086, below the original 3840x2880 master. Original canonical artwork and packaged runtime are retained. The draft is selected only in this workspace for review; no approval or canonical promotion is implied.",
+  "staging": "Use existing Playtest folder import for assets/references/water-cleanup, map 0011_waterln-clean.png to room 11, and Apply.",
+  "references": [
+    "https://www.shadertoy.com/view/MdXyzX",
+    "https://github.com/sator-imaging/FastOcean-Unity",
+    "https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-1-effective-water-simulation-physical-models",
+    "https://kortham.net/posts/2d-water-reflections/"
+  ]
+}

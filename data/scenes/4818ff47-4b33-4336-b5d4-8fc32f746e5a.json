@@ -28,10 +28,14 @@
       "height": 480,
       "metadata": {
         "roomNumber": 9,
-        "originalFile": "0009_cannon.png"
+        "originalFile": "0009_cannon.png",
+        "finalBackgroundVariant": "cannon-final-2560x1440"
       },
-      "variants": [],
-      "createdAt": "2026-09-21T22:36:08.926Z"
+      "variants": [
+        "cannon-final-2560x1440"
+      ],
+      "createdAt": "2026-09-21T22:36:08.926Z",
+      "approvedVariantId": "cannon-final-2560x1440"
     },
     "6ad0e031-921e-433d-8c15-e746817afb77": {
       "id": "6ad0e031-921e-433d-8c15-e746817afb77",
@@ -170,6 +174,29 @@
       "createdAt": "2026-09-22T00:23:17.326Z"
     }
   },
-  "variants": {},
+  "variants": {
+    "cannon-final-2560x1440": {
+      "id": "cannon-final-2560x1440",
+      "assetId": "4921c986-44f5-4c33-8f0c-adec6ff6fa6f",
+      "filePath": "upscaled/imported/f7a54cda98ca3ad0419cfcb5bb816ebd6267edb34e04fc4b82dc8aaf7aeaf61e.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5422720,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "f7a54cda98ca3ad0419cfcb5bb816ebd6267edb34e04fc4b82dc8aaf7aeaf61e",
+        "originalFile": "0009_cannon-wonder-3-5.png",
+        "finalBackground": true
+      },
+      "references": [],
+      "createdAt": "2026-09-25T19:20:57.368354+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this exact 2560 \u00d7 1440 image as the final room 0009 background."
+    }
+  },
   "jobs": {}
 }

@@ -164,6 +164,14 @@ def installation_plan(root, target, manifest):
         state = dict(old, settings=settings,
                      selections={**packaged['selections'], **old.get('selections', {})},
                      variants={**packaged['variants'], **old.get('variants', {})})
+        # Final backgrounds explicitly retire that room's older selections.
+        # Preserve local variants and selections for every other asset.
+        for key, variant in packaged['variants'].items():
+            if variant.get('params', {}).get('finalBackground') is not True: continue
+            asset = variant['assetId']
+            state['variants'] = {k: v for k, v in state['variants'].items() if v['assetId'] != asset}
+            state['variants'][key] = variant
+            state['selections'][asset] = key
         data = (json.dumps(state, indent=2) + '\n').encode()
         before = digest(state_path) if state_path.exists() else None
         after = hashlib.sha256(data).hexdigest()

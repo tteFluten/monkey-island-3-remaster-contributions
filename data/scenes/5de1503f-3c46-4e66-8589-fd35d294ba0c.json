@@ -79,8 +79,11 @@
         "roomNumber": 10,
         "originalFile": "0010_cannon-v.png"
       },
-      "variants": [],
-      "createdAt": "2026-09-21T22:36:09.027Z"
+      "variants": [
+        "cannon-view-supplied-f1da6708f7c5"
+      ],
+      "createdAt": "2026-09-21T22:36:09.027Z",
+      "approvedVariantId": "cannon-view-supplied-f1da6708f7c5"
     },
     "dd700942-f537-4e7d-a5ed-813f2a98fefb": {
       "id": "dd700942-f537-4e7d-a5ed-813f2a98fefb",
@@ -1025,6 +1028,28 @@
       "createdAt": "2026-09-22T00:23:18.139Z"
     }
   },
-  "variants": {},
+  "variants": {
+    "cannon-view-supplied-f1da6708f7c5": {
+      "id": "cannon-view-supplied-f1da6708f7c5",
+      "assetId": "a1327264-ec6d-4863-905c-9d7f13f9cefc",
+      "filePath": "upscaled/imported/f1da6708f7c5728ee26bdcc2f37d8fbae98e950447642f97f88d7372b9483d74.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 4422269,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "f1da6708f7c5728ee26bdcc2f37d8fbae98e950447642f97f88d7372b9483d74",
+        "originalFile": "0010_cannon-v-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-26T18:24:58.604229+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0010 cannon aiming background."
+    }
+  },
   "jobs": {}
 }

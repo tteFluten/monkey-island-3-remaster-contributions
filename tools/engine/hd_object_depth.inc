@@ -17,6 +17,6 @@ for (int ai = 0; ai < _numActors; ++ai) {
     if (replaced) continue;
     for (int y = 0; y < visH; ++y)
         HdObjectDepth::protectActor(&nativeActorMask[y * visW],
-            (const byte *)vs->getBasePtr(vs->xstart, y),
+            (const byte *)vs->getBasePtr(vs->xstart, y + _screenTop),
             &a->_quiverUnder[y * visW], &a->_quiverAfter[y * visW], visW);
 }

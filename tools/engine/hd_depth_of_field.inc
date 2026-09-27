@@ -8,10 +8,13 @@ struct HdDepthOfFieldState {
     std::vector<uint32> blur;
     int blurW = 0, blurH = 0, factor = 1;
     // Feathered native foreground coverage for the frame being composed.
-    std::vector<byte> coverage;
+    std::vector<byte> coverage, masks, maskScratch;
+    int maskWidth = 0, maskHeight = 0, maskOffset = -1, maskEdge = -1, maskDepth = -1;
+    bool maskAny = false;
+    uint cpuCoverageGeneration = ~0u;
     std::vector<bool> rows;
     int visW = 0, visH = 0, intensity = 100;
-    bool active = false;
+    bool active = false, wideFocus = false;
     // Live-tuning readout and the level restored by the on/off hotkey.
     uint32 hudUntil = 0;
     int lastLevel = 2;
@@ -26,25 +29,20 @@ Graphics::Surface *hdDepthOfFieldCheckbox[2] = {nullptr, nullptr};
 // original 640x480 coordinates. The left page is full of original options.
 const int kHdDepthOfFieldRowY = 330, kHdDepthOfFieldBoxX = 420, kHdDepthOfFieldStep = 58;
 
-void hdStoreDepthOfField(int level, const HdDepthOfField::Tuning &tuning) {
-    ConfMan.setInt("hd_depth_of_field", level);
-    ConfMan.setInt("hd_dof_blur", tuning.blurTenths);
-    ConfMan.setInt("hd_dof_edge", tuning.edge);
-    ConfMan.setInt("hd_dof_intensity", tuning.intensity);
-    ConfMan.setInt("hd_dof_depth", tuning.depth);
-    ConfMan.flushToDisk();
-}
+// Implemented by the shared Scene Look configuration below this include.
+int hdSceneLookValue(int room, int control);
+int hdSceneLookEditRoom(int room);
+void hdSaveSceneFocus(int room, int level, const HdDepthOfField::Tuning &tuning, unsigned int changed, bool reset = false);
 
-HdDepthOfField::Tuning hdDepthOfFieldTuning() {
-    return HdDepthOfField::tuning(ConfMan.hasKey("hd_dof_blur") ? ConfMan.getInt("hd_dof_blur") : 0,
-        ConfMan.hasKey("hd_dof_edge") ? ConfMan.getInt("hd_dof_edge") : 2,
-        ConfMan.hasKey("hd_dof_intensity") ? ConfMan.getInt("hd_dof_intensity") : 100,
-        ConfMan.hasKey("hd_dof_depth") ? ConfMan.getInt("hd_dof_depth") : 1);
+HdDepthOfField::Tuning hdDepthOfFieldTuning(int room) {
+    return HdDepthOfField::tuning(hdSceneLookValue(room, HdSceneLook::kBlur),
+        hdSceneLookValue(room, HdSceneLook::kEdge), hdSceneLookValue(room, HdSceneLook::kIntensity),
+        hdSceneLookValue(room, HdSceneLook::kDepth));
 }
 }
 
 int ScummEngine::hdDepthOfFieldLevel() const {
-    return ConfMan.hasKey("hd_depth_of_field") ? HdDepthOfField::level(ConfMan.getInt("hd_depth_of_field")) : 0;
+    return hdSceneLookValue(_currentRoom, HdSceneLook::kFocus);
 }
 
 // Step 1b: runs right after the background copy, before native foreground,
@@ -54,20 +52,57 @@ void ScummEngine::renderHDDepthOfField(int backgroundX, int visW, int visH) {
     dof.active = false;
     const int level = hdDepthOfFieldLevel();
     const Graphics::Surface &bg = _hdBackgroundSurface;
-    if (_game.id != GID_CMI || !level || _currentRoom == 87 || _currentRoom == 92 ||
+    if (_game.id != GID_CMI || !level || _currentRoom == 92 ||
         _gdi->_numZBuffer <= 1 || !bg.getPixels() || _hdCurrentRoom != _currentRoom ||
         (bg.format.bytesPerPixel != 3 && bg.format.bytesPerPixel != 4))
         return;
     const int scale = MAX(1, (int)_hdScale);
-    const HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning();
+    const HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning(_currentRoom);
     const int radius = HdDepthOfField::radiusTenths(HdDepthOfField::blurTenths(level, tuning), scale);
     if (!tuning.intensity) return;
     // The live mask buffer includes object z-planes and follows the (possibly
     // interpolated) camera, exactly like actor and contact-shadow clipping.
     const int bitOffset = _virtscr[kMainVirtScreen].xstart & 7;
-    if (!HdDepthOfField::coverage([&](int y, int z) -> const byte * { return getMaskBuffer(0, y, z); },
-            _gdi->_numZBuffer, visW, visH, bitOffset, tuning.edge, dof.coverage, tuning.depth))
+    // Compare packed live z-planes before expanding/feathering. Objects can
+    // change a mask without changing room or camera, so geometry alone is not a key.
+    const int stride = (visW + bitOffset + 7) / 8, planes = _gdi->_numZBuffer;
+    dof.maskScratch.resize(stride * visH * (planes - 1));
+    for (int z = 1; z < planes; ++z) {
+        const byte *first = getMaskBuffer(0, _screenTop, z);
+        for (int y = 0; y < visH; ++y)
+            memcpy(dof.maskScratch.data() + ((z - 1) * visH + y) * stride,
+                   first + y * _gdi->_numStrips, stride);
+    }
+    const bool changed = dof.maskWidth != visW || dof.maskHeight != visH || dof.maskOffset != bitOffset ||
+        dof.maskEdge != tuning.edge || dof.maskDepth != tuning.depth || dof.masks != dof.maskScratch;
+    auto &remaster = HdRemaster::state();
+    if (changed) {
+        dof.maskWidth = visW; dof.maskHeight = visH; dof.maskOffset = bitOffset;
+        dof.maskEdge = tuning.edge; dof.maskDepth = tuning.depth;
+        dof.masks.swap(dof.maskScratch);
+        ++remaster.coverageGeneration;
+    }
+    remaster.dof = true; remaster.radius = radius; remaster.intensity = tuning.intensity;
+    if (remaster.active) {
+        remaster.maskPlanes = planes - 1; remaster.maskOffset = bitOffset;
+        remaster.maskEdge = tuning.edge; remaster.maskDepth = MIN(tuning.depth, planes - 1);
+        HdRemaster::resize(remaster.coverage, stride, visH * (planes - 1));
+        if (remaster.uploadedCoverageGeneration != remaster.coverageGeneration) {
+            uint32 *pixels = (uint32 *)remaster.coverage.getPixels();
+            for (uint i = 0; i < dof.masks.size(); ++i) pixels[i] = dof.masks[i] | 0xff000000u;
+            remaster.uploadedCoverageGeneration = remaster.coverageGeneration;
+        }
         return;
+    }
+    if (dof.cpuCoverageGeneration != remaster.coverageGeneration) {
+        dof.cpuCoverageGeneration = remaster.coverageGeneration;
+        dof.maskAny = HdDepthOfField::coverage([&](int y, int z) -> const byte * {
+            return dof.masks.data() + ((z - 1) * visH + y) * stride;
+        }, planes, visW, visH, bitOffset, tuning.edge, dof.coverage, tuning.depth);
+        remaster.wideCoverage.resize(dof.coverage.size());
+        memcpy(remaster.wideCoverage.data(), dof.coverage.data(), dof.coverage.size());
+    }
+    if (!dof.maskAny) return;
     if (dof.pixels != bg.getPixels() || dof.room != _hdCurrentRoom || dof.width != bg.w ||
         dof.height != bg.h || dof.radius != radius || dof.scale != scale) {
         const uint32 start = _system->getMillis();
@@ -83,6 +118,10 @@ void ScummEngine::renderHDDepthOfField(int backgroundX, int visW, int visH) {
         hdPrintf("DEPTH-OF-FIELD room=%d level=%d radius=%d planes=%d blur=%dx%d factor=%d built=%ums",
             dof.room, level, radius, _gdi->_numZBuffer, dof.blurW, dof.blurH, dof.factor, _system->getMillis() - start);
     }
+    // The decorative 16:9 painting uses one full-width focus map. Apply its
+    // center crop here as well, including background restoration under costumes.
+    dof.wideFocus = visW == 640 && hdAspectRatio() == 169 &&
+        ConfMan.hasKey("hd_wide_background_active") && ConfMan.getBool("hd_wide_background_active");
     dof.visW = visW;
     dof.visH = visH;
     dof.intensity = tuning.intensity;
@@ -99,11 +138,12 @@ void ScummEngine::renderHDDepthOfField(int backgroundX, int visW, int visH) {
             continue;
         uint32 *dst = (uint32 *)_hdComposite.getBasePtr(0, y);
         for (int x = 0; x < _hdComposite.w; ++x) {
-            const int alpha = HdDepthOfField::coverageAt(dof.coverage.data(), visW, visH, scale, x, y) *
+            const int alpha = HdDepthOfField::coverageAt(dof.coverage.data(), visW, visH, scale,
+                dof.wideFocus ? (x * 6 + visW * scale) / 8 : x, y) *
                 dof.intensity / 100;
             if (!alpha) continue;
             dst[x] = HdDepthOfField::mix(dst[x], HdDepthOfField::sample(dof.blur.data(), dof.blurW, dof.blurH,
-                dof.factor, MIN(x + backgroundX, (int)bg.w - 1), y), alpha);
+                dof.factor, MIN(x + backgroundX, (int)bg.w - 1), y + HdRemaster::state().backgroundY), alpha);
         }
     }
     if (_hdFrameCount % 120 == 0)
@@ -116,11 +156,12 @@ uint32 ScummEngine::hdDepthOfFieldBackground(int x, int y, int backgroundX, uint
     const HdDepthOfFieldState &dof = hdDepthOfFieldState();
     if (!dof.active || x < 0 || y < 0 || y >= dof.height || backgroundX < 0 || backgroundX >= dof.width)
         return sharp;
-    const int alpha = HdDepthOfField::coverageAt(dof.coverage.data(), dof.visW, dof.visH, dof.scale, x, y) *
+    const int alpha = HdDepthOfField::coverageAt(dof.coverage.data(), dof.visW, dof.visH, dof.scale,
+        dof.wideFocus ? (x * 6 + dof.visW * dof.scale) / 8 : x, y) *
         dof.intensity / 100;
     if (!alpha) return sharp;
     return HdDepthOfField::mix(sharp, HdDepthOfField::sample(dof.blur.data(), dof.blurW, dof.blurH,
-        dof.factor, backgroundX, y), alpha);
+        dof.factor, backgroundX, y + HdRemaster::state().backgroundY), alpha);
 }
 
 bool ScummEngine::handleHDDepthOfFieldEvent(const Common::Event &event) {
@@ -131,7 +172,7 @@ bool ScummEngine::handleHDDepthOfFieldEvent(const Common::Event &event) {
     //   [ ] blur   shift+[ ] intensity   ; ' edge softness   shift+; ' depth
     //   \ on/off   shift+\ reset
     if (event.type == Common::EVENT_KEYDOWN && ConfMan.hasKey("playtest_session") && _game.id == GID_CMI &&
-        _currentRoom != 92 && _currentRoom != 87 && !isSmushActive() &&
+        _currentRoom != 92 && !isSmushActive() &&
         !(event.kbd.flags & (Common::KBD_CTRL | Common::KBD_ALT | Common::KBD_META))) {
         const bool shift = (event.kbd.flags & Common::KBD_SHIFT) != 0;
         int blur = 0, edge = 0, intensity = 0, depth = 0;
@@ -145,16 +186,22 @@ bool ScummEngine::handleHDDepthOfFieldEvent(const Common::Event &event) {
         default: return false;
         }
         HdDepthOfFieldState &dof = hdDepthOfFieldState();
-        int level = hdDepthOfFieldLevel();
-        HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning();
-        if (toggle) {
+        const int room = hdSceneLookEditRoom(_currentRoom);
+        int level = hdSceneLookValue(room, HdSceneLook::kFocus);
+        HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning(room);
+        unsigned int changed = 0;
+        if (reset) {
+            for (int c = HdSceneLook::kFocus; c < HdSceneLook::kWaterOpacity; ++c) changed |= 1u << c;
+        } else if (toggle) {
             if (level) dof.lastLevel = level;
             level = level ? 0 : dof.lastLevel;
+            changed = 1u << HdSceneLook::kFocus;
         } else {
-            if (!level) level = dof.lastLevel;
-            tuning = reset ? HdDepthOfField::Tuning() : HdDepthOfField::step(level, tuning, blur, edge, intensity, depth);
+            if (!level) { level = dof.lastLevel; changed |= 1u << HdSceneLook::kFocus; }
+            tuning = HdDepthOfField::step(level, tuning, blur, edge, intensity, depth);
+            changed |= 1u << (blur ? HdSceneLook::kBlur : edge ? HdSceneLook::kEdge : intensity ? HdSceneLook::kIntensity : HdSceneLook::kDepth);
         }
-        hdStoreDepthOfField(level, tuning);
+        hdSaveSceneFocus(room, level, tuning, changed, reset);
         dof.hudUntil = _system->getMillis() + 4000;
         return true;
     }
@@ -168,10 +215,10 @@ bool ScummEngine::handleHDDepthOfFieldEvent(const Common::Event &event) {
             level = i;
     if (level < 0) return false;
     _hdDepthOfFieldMouseDown = true; _leftBtnPressed = 0;
-    ConfMan.setInt("hd_depth_of_field", level);
-    // A preset replaces any hotkey blur; edge and intensity are kept.
-    ConfMan.setInt("hd_dof_blur", 0);
-    ConfMan.flushToDisk();
+    // The options book is game-wide. Room overrides remain independent.
+    HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning(0);
+    tuning.blurTenths = 0;
+    hdSaveSceneFocus(0, level, tuning, (1u << HdSceneLook::kFocus) | (1u << HdSceneLook::kBlur));
     _fullRedraw = true;
     return true;
 }
@@ -218,7 +265,7 @@ static void drawHDOverlayText(Graphics::Surface &dest, HdFontManager *fonts, Cha
 
 // Readout for a few seconds after each tuning hotkey, over the game view.
 static void drawHDDepthOfFieldHud(Graphics::Surface &dest, HdFontManager *fonts, CharsetRenderer *charset, int scale,
-                                  int level, const HdDepthOfField::Tuning &tuning, int planes) {
+                                  int level, const HdDepthOfField::Tuning &tuning, int planes, int editRoom) {
     const int tenths = HdDepthOfField::blurTenths(level ? level : 1, tuning);
     // The game font has no pipe or braces; spell out the shifted keys.
     const Common::String lines[3] = {
@@ -227,7 +274,8 @@ static void drawHDDepthOfFieldHud(Graphics::Surface &dest, HdFontManager *fonts,
                     MIN(tuning.depth, MAX(1, planes - 1)), MAX(0, planes - 1))
               : Common::String("Focus  off"),
         "[ ] blur     shift [ ] intensity     ; ' edge     shift ; ' depth",
-        "\\ on/off     shift \\ reset     U scene look"};
+        editRoom ? Common::String::format("Room %d   \\ on/off   shift \\ inherit   U look", editRoom)
+                 : Common::String("Global   \\ on/off   shift \\ reset   U look")};
     drawHDOverlayText(dest, fonts, charset, scale, 8, 8, 440, lines, 3);
 }
 
@@ -235,7 +283,8 @@ void ScummEngine::drawHDDepthOfFieldMenu() {
     if (_game.id == GID_CMI && _currentRoom != 92 && _hdFontManager && _hdFontManager->hasFont(3) &&
         hdDepthOfFieldState().hudUntil > _system->getMillis())
         drawHDDepthOfFieldHud(_hdComposite, _hdFontManager, _charset, MAX(1, (int)_hdScale),
-            hdDepthOfFieldLevel(), hdDepthOfFieldTuning(), _gdi->_numZBuffer);
+            hdSceneLookValue(hdSceneLookEditRoom(_currentRoom), HdSceneLook::kFocus),
+            hdDepthOfFieldTuning(hdSceneLookEditRoom(_currentRoom)), _gdi->_numZBuffer, hdSceneLookEditRoom(_currentRoom));
     if (!hasHDFontSizeMenu() || !ConfMan.hasKey("playtest_session")) return;
     const int previous = _hdFontManager->getSizePercent();
     _hdFontManager->setSizePercent(65);

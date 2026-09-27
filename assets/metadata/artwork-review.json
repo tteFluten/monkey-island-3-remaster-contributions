@@ -14176,11 +14176,31 @@
     "derived": false
   },
   "costumes/LFLF_0016_AKOS_0094_frame_49.png": {
-    "master": "source:brasilia/output/topaz-scenes/room-0016/4x/costumes/LFLF_0016_AKOS_0094_frame_49.png",
-    "sha256": "b10570488788720bc6f4a2336c43af46555b46586321be38835773a03551c10d",
-    "state": "rejected",
-    "validation_passed": false,
-    "derived": false
+    "master": "output/topaz-scenes/rooms-13-19/batch-01/4x/costumes/LFLF_0016_AKOS_0094_frame_49.png",
+    "sha256": "009f048f53cc38bc291093f018cdb05f56458790ad3b256cccdf6d14aa89c47c",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "method": "topaz-wonder-4x+matting",
+    "batch": "rooms-13-19/batch-01",
+    "validation": {
+      "passed": true,
+      "size": [
+        412,
+        1100
+      ],
+      "silhouette_iou": 0.9705217778240091,
+      "outside_fraction": 0.0,
+      "opaque_rgb_max_change": 0.0,
+      "original_pixels_restored": false,
+      "original_mask_applied": false,
+      "sha256": "009f048f53cc38bc291093f018cdb05f56458790ad3b256cccdf6d14aa89c47c",
+      "missing_interior_fraction": 0.0,
+      "cleanup": {
+        "type": "provider-alpha",
+        "original_pixels_restored": false
+      }
+    }
   },
   "costumes/LFLF_0016_AKOS_0094_frame_50.png": {
     "master": "source:brasilia/output/topaz-scenes/room-0016/4x/costumes/LFLF_0016_AKOS_0094_frame_50.png",
@@ -14190,11 +14210,31 @@
     "derived": false
   },
   "costumes/LFLF_0016_AKOS_0094_frame_51.png": {
-    "master": "source:brasilia/output/topaz-scenes/room-0016/4x/costumes/LFLF_0016_AKOS_0094_frame_51.png",
-    "sha256": "08b66c5696c2ce9225e256b0b2789550176a10b62a9ee02f632282e693471c2f",
-    "state": "rejected",
-    "validation_passed": false,
-    "derived": false
+    "master": "output/topaz-scenes/rooms-13-19/batch-01/4x/costumes/LFLF_0016_AKOS_0094_frame_51.png",
+    "sha256": "55480077f4c91f5912238ee47f3b746b9f21c669d9536df837e1bb1c1e531e14",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "method": "topaz-wonder-4x+matting",
+    "batch": "rooms-13-19/batch-01",
+    "validation": {
+      "passed": true,
+      "size": [
+        412,
+        1132
+      ],
+      "silhouette_iou": 0.9645475220207105,
+      "outside_fraction": 0.0,
+      "opaque_rgb_max_change": 0.0,
+      "original_pixels_restored": false,
+      "original_mask_applied": false,
+      "sha256": "55480077f4c91f5912238ee47f3b746b9f21c669d9536df837e1bb1c1e531e14",
+      "missing_interior_fraction": 0.0,
+      "cleanup": {
+        "type": "provider-alpha",
+        "original_pixels_restored": false
+      }
+    }
   },
   "costumes/LFLF_0016_AKOS_0094_frame_52.png": {
     "master": "source:brasilia/output/topaz-scenes/room-0016/4x/costumes/LFLF_0016_AKOS_0094_frame_52.png",
@@ -14505,11 +14545,31 @@
     "derived": false
   },
   "costumes/LFLF_0016_AKOS_0088_frame_43.png": {
-    "master": "source:brasilia/output/topaz-scenes/room-0016/4x/costumes/LFLF_0016_AKOS_0088_frame_43.png",
-    "sha256": "fde85d2098eab7b70de7f62590149af0017c1083245dca74c40f9e2a4ab337c4",
-    "state": "rejected",
-    "validation_passed": false,
-    "derived": false
+    "master": "output/topaz-scenes/rooms-13-19/batch-01/4x/costumes/LFLF_0016_AKOS_0088_frame_43.png",
+    "sha256": "bcc19d8230504bc8f1cb5bb926d2e59b8edd8a68a1b981be52e8147b74167621",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "method": "topaz-wonder-4x+matting",
+    "batch": "rooms-13-19/batch-01",
+    "validation": {
+      "passed": true,
+      "size": [
+        396,
+        1068
+      ],
+      "silhouette_iou": 0.9692222504210599,
+      "outside_fraction": 0.0,
+      "opaque_rgb_max_change": 0.0,
+      "original_pixels_restored": false,
+      "original_mask_applied": false,
+      "sha256": "bcc19d8230504bc8f1cb5bb926d2e59b8edd8a68a1b981be52e8147b74167621",
+      "missing_interior_fraction": 0.0,
+      "cleanup": {
+        "type": "provider-alpha",
+        "original_pixels_restored": false
+      }
+    }
   },
   "costumes/LFLF_0016_AKOS_0088_frame_44.png": {
     "master": "source:brasilia/output/topaz-scenes/room-0016/4x/costumes/LFLF_0016_AKOS_0088_frame_44.png",
@@ -14547,18 +14607,58 @@
     "derived": false
   },
   "costumes/LFLF_0016_AKOS_0088_frame_49.png": {
-    "master": "source:brasilia/output/topaz-scenes/room-0016/4x/costumes/LFLF_0016_AKOS_0088_frame_49.png",
-    "sha256": "1457e660c59ceed9453b4159d780fa65ef92babc45daf4730e8c55b7b4809bbe",
-    "state": "rejected",
-    "validation_passed": false,
-    "derived": false
+    "master": "output/topaz-scenes/rooms-13-19/batch-01/4x/costumes/LFLF_0016_AKOS_0088_frame_49.png",
+    "sha256": "0d22398aec4b43770d360eabe8e1bb52b3fdcf4c0148858eafc370a83ff4f655",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "method": "topaz-wonder-4x+matting",
+    "batch": "rooms-13-19/batch-01",
+    "validation": {
+      "passed": true,
+      "size": [
+        412,
+        1076
+      ],
+      "silhouette_iou": 0.969139328890043,
+      "outside_fraction": 0.0,
+      "opaque_rgb_max_change": 0.0,
+      "original_pixels_restored": false,
+      "original_mask_applied": false,
+      "sha256": "0d22398aec4b43770d360eabe8e1bb52b3fdcf4c0148858eafc370a83ff4f655",
+      "missing_interior_fraction": 0.0,
+      "cleanup": {
+        "type": "provider-alpha",
+        "original_pixels_restored": false
+      }
+    }
   },
   "costumes/LFLF_0016_AKOS_0088_frame_50.png": {
-    "master": "source:brasilia/output/topaz-scenes/room-0016/4x/costumes/LFLF_0016_AKOS_0088_frame_50.png",
-    "sha256": "c3baa4fd2343acf06a6fac66a73151750b9b198433544b94fb5d737a25dbd41a",
-    "state": "rejected",
-    "validation_passed": false,
-    "derived": false
+    "master": "output/topaz-scenes/rooms-13-19/batch-01/4x/costumes/LFLF_0016_AKOS_0088_frame_50.png",
+    "sha256": "6aa4f77f6294587a133b37e4c7e596fd0191c54438df45e02844fca3c53c518e",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "method": "topaz-wonder-4x+matting",
+    "batch": "rooms-13-19/batch-01",
+    "validation": {
+      "passed": true,
+      "size": [
+        412,
+        1092
+      ],
+      "silhouette_iou": 0.9683594358847062,
+      "outside_fraction": 0.0,
+      "opaque_rgb_max_change": 0.0,
+      "original_pixels_restored": false,
+      "original_mask_applied": false,
+      "sha256": "6aa4f77f6294587a133b37e4c7e596fd0191c54438df45e02844fca3c53c518e",
+      "missing_interior_fraction": 0.0,
+      "cleanup": {
+        "type": "provider-alpha",
+        "original_pixels_restored": false
+      }
+    }
   },
   "costumes/LFLF_0016_AKOS_0088_frame_51.png": {
     "master": "source:brasilia/output/topaz-scenes/room-0016/4x/costumes/LFLF_0016_AKOS_0088_frame_51.png",
@@ -40110,5 +40210,177 @@
         "original_pixels_restored": false
       }
     }
+  },
+  "costumes/LFLF_0013_AKOS_0064_frame_149.png": {
+    "master": "output/topaz-scenes/rooms-13-19/batch-01/4x/costumes/LFLF_0013_AKOS_0064_frame_149.png",
+    "sha256": "8275de8b6e4f832c4c0d77ff2739c90fc216cf7ab8da2b7529a6b07106e3afbb",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "method": "topaz-wonder-4x+matting",
+    "batch": "rooms-13-19/batch-01",
+    "validation": {
+      "passed": true,
+      "size": [
+        276,
+        1076
+      ],
+      "silhouette_iou": 0.9638823592985869,
+      "outside_fraction": 0.0,
+      "opaque_rgb_max_change": 0.0,
+      "original_pixels_restored": false,
+      "original_mask_applied": false,
+      "sha256": "8275de8b6e4f832c4c0d77ff2739c90fc216cf7ab8da2b7529a6b07106e3afbb",
+      "missing_interior_fraction": 0.0,
+      "cleanup": {
+        "type": "provider-alpha",
+        "original_pixels_restored": false
+      }
+    }
+  },
+  "costumes/LFLF_0016_AKOS_0088_frame_12.png": {
+    "master": "output/topaz-scenes/rooms-13-19/batch-01/4x/costumes/LFLF_0016_AKOS_0088_frame_12.png",
+    "sha256": "8f373c28595a2f517dba5edb0374a49caec0eaee371af209dbee26cd9a696df6",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "method": "topaz-wonder-4x+matting",
+    "batch": "rooms-13-19/batch-01",
+    "validation": {
+      "passed": true,
+      "size": [
+        328,
+        1068
+      ],
+      "silhouette_iou": 0.9712611032390559,
+      "outside_fraction": 0.0,
+      "opaque_rgb_max_change": 0.0,
+      "original_pixels_restored": false,
+      "original_mask_applied": false,
+      "sha256": "8f373c28595a2f517dba5edb0374a49caec0eaee371af209dbee26cd9a696df6",
+      "missing_interior_fraction": 0.0,
+      "cleanup": {
+        "type": "provider-alpha",
+        "original_pixels_restored": false
+      }
+    }
+  },
+  "costumes/LFLF_0019_AKOS_0102_frame_37.png": {
+    "master": "output/topaz-scenes/rooms-13-19/batch-01/4x/costumes/LFLF_0019_AKOS_0102_frame_37.png",
+    "sha256": "3cb4b07b3ae603007f81f24891bc3c7ef1c020b367dd592b0c217e358bc922f2",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "method": "topaz-wonder-4x+matting",
+    "batch": "rooms-13-19/batch-01",
+    "validation": {
+      "passed": true,
+      "size": [
+        256,
+        284
+      ],
+      "silhouette_iou": 0.9730028169014084,
+      "outside_fraction": 0.0,
+      "opaque_rgb_max_change": 0.0,
+      "original_pixels_restored": false,
+      "original_mask_applied": false,
+      "sha256": "3cb4b07b3ae603007f81f24891bc3c7ef1c020b367dd592b0c217e358bc922f2",
+      "missing_interior_fraction": 0.0,
+      "cleanup": {
+        "type": "provider-alpha",
+        "original_pixels_restored": false
+      }
+    }
+  },
+  "costumes/LFLF_0019_AKOS_0106_frame_25.png": {
+    "master": "output/topaz-scenes/rooms-13-19/batch-01/4x/costumes/LFLF_0019_AKOS_0106_frame_25.png",
+    "sha256": "3a5e690c33bcfa4ffbe0b2405251bbf3d9968894f4ef325dd81c5bd94ee8af5a",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "method": "topaz-wonder-4x+matting",
+    "batch": "rooms-13-19/batch-01",
+    "validation": {
+      "passed": true,
+      "size": [
+        636,
+        760
+      ],
+      "silhouette_iou": 0.9445593506070351,
+      "outside_fraction": 0.0,
+      "opaque_rgb_max_change": 0.0,
+      "original_pixels_restored": false,
+      "original_mask_applied": false,
+      "sha256": "3a5e690c33bcfa4ffbe0b2405251bbf3d9968894f4ef325dd81c5bd94ee8af5a",
+      "missing_interior_fraction": 0.0,
+      "cleanup": {
+        "type": "provider-alpha",
+        "original_pixels_restored": false
+      }
+    }
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_12.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_12.png",
+    "sha256": "ea76cf66610d6837d41f837b8df904f9b59147f92c4c1ef2e7cbb600facb7774",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_14.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_14.png",
+    "sha256": "506a81928d117b0a885302688f17353acdfc5c2cb49a4bba6835e84f73e6bf5b",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_15.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_15.png",
+    "sha256": "47fdae64e3af700a9f97a51a8977b39895626162d1ed85e7503a9a1c8cff2a90",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_16.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_16.png",
+    "sha256": "91bfdbe9a0a73921a145fef2cc81c1932e778f6ed7a00dd2f0df07d89f89730d",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0039_frame_17.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0039_frame_17.png",
+    "sha256": "5b39ca4172c764c2d9b5baae73f7fdf958b9ebdaed6cae824c4f688c21c38ced",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0041_frame_2.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0041_frame_2.png",
+    "sha256": "c7112c55d6da2bc7c1a39ca90f12c89bfcfd8cec05bec1e4a84b8247deaea642",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0041_frame_8.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0041_frame_8.png",
+    "sha256": "9170aef5839515974b0e0bbda966709575444a9b555657a7a1732963def7dbb5",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
+  },
+  "costumes/LFLF_0010_AKOS_0041_frame_10.png": {
+    "master": "source:irvine/output/topaz-scenes/room-0010-missing-20260926/runtime-4x/costumes/LFLF_0010_AKOS_0041_frame_10.png",
+    "sha256": "bfb440cf254949e77c7093c4f1bf21353508bb6ed8e708b922b8207e4372d818",
+    "state": "validated",
+    "validation_passed": true,
+    "derived": false,
+    "visual_review": "particle silhouette on light and dark backgrounds; gameplay not tested"
   }
 }

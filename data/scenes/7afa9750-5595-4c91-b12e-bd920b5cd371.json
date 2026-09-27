@@ -27,8 +27,11 @@
         "roomNumber": 87,
         "originalFile": "0087_easyhard.png"
       },
-      "variants": [],
-      "createdAt": "2026-09-21T22:36:19.416Z"
+      "variants": [
+        "easyhard-supplied-5120x2880"
+      ],
+      "createdAt": "2026-09-21T22:36:19.416Z",
+      "approvedVariantId": "easyhard-supplied-5120x2880"
     },
     "d87adb99-4fed-43af-94cd-ba500cb33c64": {
       "id": "d87adb99-4fed-43af-94cd-ba500cb33c64",
@@ -113,6 +116,28 @@
       "createdAt": "2026-09-22T00:23:31.356Z"
     }
   },
-  "variants": {},
+  "variants": {
+    "easyhard-supplied-5120x2880": {
+      "id": "easyhard-supplied-5120x2880",
+      "assetId": "febf8abc-771c-48c3-8e01-4c7a59526466",
+      "filePath": "upscaled/imported/6fd5c540760fb7ba26b139bf0493ea7711fb1e033320a6774e03693e48ca2e8d.png",
+      "width": 5120,
+      "height": 2880,
+      "mimeType": "image/png",
+      "fileSize": 18580635,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "6fd5c540760fb7ba26b139bf0493ea7711fb1e033320a6774e03693e48ca2e8d",
+        "originalFile": "0087_easyhard-wonder-3-5-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-25T21:19:55.080173+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this image as the room 0087 difficulty background."
+    }
+  },
   "jobs": {}
 }
