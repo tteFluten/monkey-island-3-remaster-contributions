@@ -124,8 +124,7 @@ void ScummEngine::refreshHDViewport(bool movie) {
     }
 }
 
-// Players get 16:9 only. hd_aspect_ratio=43 in the config (or the playtest
-// "aspect" command) remains available to isolated checks.
+// Players get 16:9 only; the book has no aspect control.
 bool ScummEngine::handleHDAspectEvent(const Common::Event &) {
     return false;
 }

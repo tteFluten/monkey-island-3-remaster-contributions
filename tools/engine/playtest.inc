@@ -148,15 +148,6 @@ void ScummEngine::playtestTick() {
 						} else {
 							_playtestError = "Replacement background could not be loaded";
 						}
-					} else if (action == "aspect" && room == _currentRoom && getenv("MI3_ENGINE_TEST_INPUT") &&
-							command->hasChild("aspect") && command->child("aspect")->isIntegerNumber() &&
-							(command->child("aspect")->asIntegerNumber() == 43 || command->child("aspect")->asIntegerNumber() == 169)) {
-						// Isolated checks only: players get 16:9 (see hd_aspect.inc).
-						ConfMan.setInt("hd_aspect_ratio", (int)command->child("aspect")->asIntegerNumber());
-						ConfMan.flushToDisk();
-						_system->beginGFXTransaction();
-						_system->endGFXTransaction();
-						_fullRedraw = true;
 					} else {
 						_playtestError = "Unsupported command or room is not active";
 					}
