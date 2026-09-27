@@ -118,6 +118,7 @@ class Deliveries:
         finally:
             with self.lock:self.progress['running']=False
     def branch(self,id_,name=None,draft=False):
+        requested_name=name
         with self.lock:
             report=copy.deepcopy(self.report)
             if self.progress['running'] or not report or report.get('id')!=id_ or report.get('status') not in ('ready','blocked'):raise ValueError('Primero terminá el análisis de la entrega.')
@@ -141,7 +142,8 @@ class Deliveries:
                     if digest(data)!=item.get('file_hashes',{}).get(name,item['sha256']):raise ValueError('La copia de entrega cambió.')
                     record.update(sha256=digest(data),bytes=len(data),review_status='accepted' if not item['issues'] else 'review-pending')
                     if record.get('derived_from'):record['transform']['source_sha256']=item['sha256']
-                    index[name]=record;payload[name]=data
+                    if index.get(name,{}).get('sha256')!=record['sha256']:payload[name]=data
+                    index[name]=record
             manifest['files']=list(index.values());categories=defaultdict(lambda:dict(files=0,bytes=0));unique={}
             for row in index.values():categories[row['category']]['files']+=1;categories[row['category']]['bytes']+=row['bytes'];unique[row['sha256']]=row['bytes']
             manifest.update(categories=dict(categories),logical_bytes=sum(r['bytes'] for r in index.values()),unique_bytes=sum(unique.values()))
@@ -152,15 +154,20 @@ class Deliveries:
             summary=['# Entrega del barco','', 'Estado: '+report['delivery_state'], '', 'Base: '+base, '', 'Incluye '+str(len(report['items']))+' assets y sus copias de runtime. Se exportaron las versiones en uso del refinador.', '', 'Las animaciones de agua requieren revisión visual y de movimiento antes de considerar esta entrega final.', '', 'Los controles automáticos son indicios; no certifican ausencia de halos ni fidelidad artística.', '', '## Pendientes','']
             summary += ['- '+i['path']+': '+'; '.join(i['issues']) for i in report['items'] if i['issues']]
             payload['assets/metadata/deliveries/barco-'+id_+'.md']=('\n'.join(summary)+'\n').encode()
-            branch=name or 'codex/entrega-barco-'+time.strftime('%Y%m%d')+'-'+id_[:6]
+            branch=requested_name or 'codex/entrega-barco-'+time.strftime('%Y%m%d')+'-'+id_[:6]
             if not isinstance(branch,str) or not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9._/-]{1,100}',branch):raise ValueError('Nombre de rama inválido.')
             git(w.root,'check-ref-format','refs/heads/'+branch)
             env=dict(os.environ,GIT_INDEX_FILE=str(folder/'git-index'))
             git(w.root,'lfs','version');git(w.root,'read-tree',base,env=env)
             updates=[]
+            objects={}
             for name,data in payload.items():
-                safe_path(name);oid=git(w.root,'hash-object','-w','--path='+name,'--stdin',data=data,env=env).decode().strip()
-                if name.endswith('.png') and not git(w.root,'cat-file','blob',oid).startswith(b'version https://git-lfs.github.com/spec/v1\n'):raise ValueError('Git LFS no está activo para los PNG; no se creó la rama.')
+                safe_path(name);key=(name.endswith('.png'),digest(data))
+                oid=objects.get(key)
+                if not oid:
+                    oid=git(w.root,'hash-object','-w','--path='+name,'--stdin',data=data,env=env).decode().strip()
+                    if name.endswith('.png') and not git(w.root,'cat-file','blob',oid).startswith(b'version https://git-lfs.github.com/spec/v1\n'):raise ValueError('Git LFS no está activo para los PNG; no se creó la rama.')
+                    objects[key]=oid
                 updates.append('100644 '+oid+'\t'+name+'\n')
             git(w.root,'update-index','--index-info',data=''.join(updates).encode(),env=env)
             tree=git(w.root,'write-tree',env=env).decode().strip()

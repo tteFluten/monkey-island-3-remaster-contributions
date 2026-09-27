@@ -29,6 +29,7 @@ class DeliveryTests(unittest.TestCase):
             manager=Deliveries(work,SimpleNamespace(approvals=lambda:approval));manager.analyze('interior')
             self.assertEqual(manager.report['status'],'ready',manager.report)
             report=manager.branch(manager.report['id'],'scene-1-ship-v1')
+            self.assertEqual(report['branch'],'scene-1-ship-v1')
             self.assertEqual(git(root,'write-tree'),staged)
             self.assertEqual(git(root,'rev-parse','HEAD').decode().strip(),base)
             self.assertEqual((root/master).read_bytes(),image)
