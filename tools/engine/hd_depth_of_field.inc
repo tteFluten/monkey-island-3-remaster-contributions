@@ -24,10 +24,6 @@ HdDepthOfFieldState &hdDepthOfFieldState() {
     static HdDepthOfFieldState *state = new HdDepthOfFieldState();
     return *state;
 }
-Graphics::Surface *hdDepthOfFieldCheckbox[2] = {nullptr, nullptr};
-// Options-book row on the free right page, below the table of contents, in
-// original 640x480 coordinates. The left page is full of original options.
-const int kHdDepthOfFieldRowY = 330, kHdDepthOfFieldBoxX = 420, kHdDepthOfFieldStep = 58;
 
 // Implemented by the shared Scene Look configuration below this include.
 int hdSceneLookValue(int room, int control);
@@ -165,9 +161,6 @@ uint32 ScummEngine::hdDepthOfFieldBackground(int x, int y, int backgroundX, uint
 }
 
 bool ScummEngine::handleHDDepthOfFieldEvent(const Common::Event &event) {
-    if (_hdDepthOfFieldMouseDown && event.type == Common::EVENT_LBUTTONUP) {
-        _hdDepthOfFieldMouseDown = false; _leftBtnPressed = 0; return true;
-    }
     // Playtest tuning hotkeys during gameplay; unused by the original game.
     //   [ ] blur   shift+[ ] intensity   ; ' edge softness   shift+; ' depth
     //   \ on/off   shift+\ reset
@@ -205,22 +198,7 @@ bool ScummEngine::handleHDDepthOfFieldEvent(const Common::Event &event) {
         dof.hudUntil = _system->getMillis() + 4000;
         return true;
     }
-    if (!hasHDFontSizeMenu() || !ConfMan.hasKey("playtest_session")) return false;
-    if (event.type != Common::EVENT_LBUTTONDOWN) return false;
-    const int x = event.mouse.x / _hdScale, y = event.mouse.y / _hdScale;
-    int level = -1;
-    for (int i = 0; i < 3; ++i)
-        if (Common::Rect(kHdDepthOfFieldBoxX + kHdDepthOfFieldStep * i, kHdDepthOfFieldRowY,
-                kHdDepthOfFieldBoxX + kHdDepthOfFieldStep * (i + 1) - 4, kHdDepthOfFieldRowY + 24).contains(x, y))
-            level = i;
-    if (level < 0) return false;
-    _hdDepthOfFieldMouseDown = true; _leftBtnPressed = 0;
-    // The options book is game-wide. Room overrides remain independent.
-    HdDepthOfField::Tuning tuning = hdDepthOfFieldTuning(0);
-    tuning.blurTenths = 0;
-    hdSaveSceneFocus(0, level, tuning, (1u << HdSceneLook::kFocus) | (1u << HdSceneLook::kBlur));
-    _fullRedraw = true;
-    return true;
+    return false;
 }
 
 // Playtest overlay text: a darkened box with one line per entry, in the game's
@@ -285,50 +263,4 @@ void ScummEngine::drawHDDepthOfFieldMenu() {
         drawHDDepthOfFieldHud(_hdComposite, _hdFontManager, _charset, MAX(1, (int)_hdScale),
             hdSceneLookValue(hdSceneLookEditRoom(_currentRoom), HdSceneLook::kFocus),
             hdDepthOfFieldTuning(hdSceneLookEditRoom(_currentRoom)), _gdi->_numZBuffer, hdSceneLookEditRoom(_currentRoom));
-    if (!hasHDFontSizeMenu() || !ConfMan.hasKey("playtest_session")) return;
-    const int previous = _hdFontManager->getSizePercent();
-    _hdFontManager->setSizePercent(65);
-    const int scale = _hdScale;
-    const int oldFont = _charset->getCurID();
-    _charset->setCurID(3);
-    const CharsetRendererNut *font = dynamic_cast<const CharsetRendererNut *>(_charset);
-    auto label = [&](const char *text, int x) {
-        int x100 = x * 100;
-        for (const char *c = text; *c; ++c) {
-            _hdFontManager->drawChar(3, *c, _hdComposite, x100 / 100, kHdDepthOfFieldRowY * scale, 25, 12, 3);
-            x100 += (font ? font->getCharWidth100(*c) : _charset->getCharWidth(*c) * 100) * scale;
-        }
-    };
-    static const char *const names[] = {"Off", "Low", "High"};
-    label("Focus", (kHdDepthOfFieldBoxX - 50) * scale);
-    for (int i = 0; i < 3; ++i)
-        label(names[i], (kHdDepthOfFieldBoxX + kHdDepthOfFieldStep * i + 24) * scale);
-    // Reuse the original game's checkbox sprites, preserving the parchment.
-    const int selected = hdDepthOfFieldLevel();
-    for (int i = 0; i < 3; ++i) {
-        const int state = selected == i ? 1 : 0;
-        if (!hdDepthOfFieldCheckbox[state]) {
-            Common::FSNode node(Common::Path(ConfMan.get("hd_aspect_ui_path") +
-                    Common::String::format("/0092_saveload-checkbox_%04d.png", state)));
-            Common::SeekableReadStream *file = node.createReadStream();
-            if (!file) continue;
-            Image::PNGDecoder decoder;
-            const bool loaded = decoder.loadStream(*file);
-            delete file;
-            if (!loaded || !decoder.getSurface()) continue;
-            hdDepthOfFieldCheckbox[state] = decoder.getSurface()->convertTo(Graphics::PixelFormat::createFormatRGBA32(),
-                    decoder.getPalette().data(), decoder.getPalette().size());
-        }
-        const Graphics::Surface *sprite = hdDepthOfFieldCheckbox[state];
-        for (int y = 0; y < sprite->h; ++y) for (int x = 0; x < sprite->w; ++x) {
-            byte a, r, g, b;
-            sprite->format.colorToARGB(*(const uint32 *)sprite->getBasePtr(x, y), a, r, g, b);
-            if (!a || (r == 0 && g == 255 && b == 0)) continue;
-            const int left = kHdDepthOfFieldBoxX + kHdDepthOfFieldStep * i + x, top = kHdDepthOfFieldRowY + y;
-            _hdComposite.fillRect(Common::Rect(left * scale, top * scale, (left + 1) * scale, (top + 1) * scale),
-                _hdComposite.format.RGBToColor(r, g, b));
-        }
-    }
-    _charset->setCurID(oldFont);
-    _hdFontManager->setSizePercent(previous);
 }

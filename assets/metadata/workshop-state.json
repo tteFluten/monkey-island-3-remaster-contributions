@@ -93,7 +93,7 @@
     "60ca3707-ccb3-4473-884e-f8e268c5abe8": "d7b29a26-5856-4a23-ba91-1069b3cf6ff8",
     "8f098284-ba4f-47dd-83ce-42df0490dcb8": "4a326e33-76ac-4388-9d3b-6b58c15faa17",
     "cf09a53c-193d-472d-9c36-6f3242995347": "6cae28b1-2181-4523-88ab-ed5733c10beb",
-    "7faa1fef-70fa-4a70-8f7f-311fe6cb212f": "3c06aa40-63e6-4ae6-aea7-1377509a0a52",
+    "7faa1fef-70fa-4a70-8f7f-311fe6cb212f": "saveload-final-2560x1440",
     "f6b3683e-ac49-49a8-8ec4-3725477703d8": "fcf65383-20f3-43c4-9d7b-ba91a1a25399",
     "7a691b5e-890b-4632-94b1-0f0c118f7566": "adbb53dd-f9e7-46f3-bf93-ddf02ec5a852"
   },
@@ -1818,26 +1818,6 @@
       "reviewStatus": "unreviewed",
       "engineStatus": "untested"
     },
-    "3c06aa40-63e6-4ae6-aea7-1377509a0a52": {
-      "id": "3c06aa40-63e6-4ae6-aea7-1377509a0a52",
-      "assetId": "7faa1fef-70fa-4a70-8f7f-311fe6cb212f",
-      "filePath": "upscaled/imported/8194ce5ddd64be84764ef353ee0403753c488c8b87259aa30b45c267bbec28e7.png",
-      "width": 3840,
-      "height": 2880,
-      "mimeType": "image/png",
-      "fileSize": 15032904,
-      "tool": "folder-import",
-      "model": "",
-      "prompt": "",
-      "params": {
-        "sha256": "8194ce5ddd64be84764ef353ee0403753c488c8b87259aa30b45c267bbec28e7",
-        "originalFile": "0092_saveload-wonder-3-5.png"
-      },
-      "references": [],
-      "createdAt": "2026-09-23T19:00:53.155Z",
-      "reviewStatus": "unreviewed",
-      "engineStatus": "untested"
-    },
     "fcf65383-20f3-43c4-9d7b-ba91a1a25399": {
       "id": "fcf65383-20f3-43c4-9d7b-ba91a1a25399",
       "assetId": "f6b3683e-ac49-49a8-8ec4-3725477703d8",
@@ -2089,6 +2069,28 @@
       "reviewStatus": "approved",
       "engineStatus": "untested",
       "reviewNotes": "User selected this image for the room 0008 Chapter 5 background."
+    },
+    "saveload-final-2560x1440": {
+      "id": "saveload-final-2560x1440",
+      "assetId": "7faa1fef-70fa-4a70-8f7f-311fe6cb212f",
+      "filePath": "upscaled/imported/23be0228c47fbc75e5c623da1910586f6ef98cd8899075f2e60444b0671848ee.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 4326229,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "23be0228c47fbc75e5c623da1910586f6ef98cd8899075f2e60444b0671848ee",
+        "originalFile": "0092_saveload-wonder-3-5.jpg",
+        "finalBackground": true
+      },
+      "references": [],
+      "createdAt": "2026-09-26T18:51:23.503084+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User designated this 16:9 image as the options book (room 0092) background. The 3344 x 1882 supplied JPEG was cropped by one bottom row to exact 16:9 and resized to 2560 x 1440."
     }
   }
 }

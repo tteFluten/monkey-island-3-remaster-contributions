@@ -188,4 +188,16 @@ print('Applied shared asynchronous room background cache')
 patch_scene_jump(root, edit)
 print('Applied native J-key scene navigation')
 
+from patch_banner import patch as patch_banner
+patch_banner(root, edit)
+print('Applied retained HD frames behind engine banners')
+
+from patch_book import patch as patch_book
+patch_book(root, edit)
+print('Applied HD options book pages')
+
+from patch_language import patch as patch_language
+patch_language(root, edit)
+print('Applied language packs')
+
 stamp.write_text(revision + "\n")

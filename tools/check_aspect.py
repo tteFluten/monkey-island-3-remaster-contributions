@@ -121,12 +121,12 @@ class Check:
         self.room(room)
 
     def select(self, aspect, key=111):
+        # Players have no in-game aspect control; the book must open and close in 16:9.
         assert aspect == 169, "Native checks target 16:9 only"
         room = self.state()['room']
         self.send(f'key {key}')
         self.room(92)
         assert self.state()['viewportWidth'] == 640, self.state()
-        self.click_game(225, 412)
         self.wait(lambda: self.state().get('aspectRatio') == aspect, f'select {aspect}')
         self.config.read(self.output / 'scummvm.ini')
         assert self.config.getint('comi', 'hd_aspect_ratio') == aspect

@@ -54,9 +54,6 @@ def patch(root, edit):
          '\t\t\tHdFilmText::pixel(dest, px, py, a);\n\t\t\t// Write to destination (use dest channel shifts)')
     edit('engines/scumm/dialogue_font.cpp', '\t\t\tif (!a) continue;',
          '\t\t\tif (!a) continue;\n\t\t\tHdFilmText::pixel(dest, x + sx, y + sy, a);')
-    # Text-size labels are drawn into a temporary glyph-only surface first.
-    edit('engines/scumm/hd_font_size_menu.inc', '\t\t\t\tif (a)\n',
-         '\t\t\t\tHdFilmText::pixel(_hdComposite, targetX + x - minX, targetY + y - minY, a);\n\t\t\t\tif (a)\n')
     player = 'engines/scumm/smush/smush_player.cpp'
     edit(player, '#include "common/hd_remaster.h"',
          '#include "common/hd_remaster.h"\n#include "common/hd_film_text.h"')
