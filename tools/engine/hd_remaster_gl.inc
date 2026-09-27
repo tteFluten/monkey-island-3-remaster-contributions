@@ -136,6 +136,8 @@ uniform vec4 waterPalette; // Original room color and its blend with the paintin
 uniform vec2 waterTexel;
 uniform float waterEnabled, waterSurface;
 uniform vec4 waterTuning; // opacity, distortion, highlights, mirrored background opacity
+uniform vec4 waterColorLight; // RGB palette multipliers and direct light strength
+uniform vec4 waterLight; // light direction XYZ and highlight exponent
 uniform vec4 vignette; // enabled, amount, inner radius, softness
 uniform float saturation, dofIntensity, backgroundOnly;
 vec3 waterSky(vec3 direction, vec3 palette) {
@@ -181,17 +183,17 @@ void main() {
             vec2 offset = normal.xz * vec2(3.5, 1.75) * waterTexel * mask * waterTuning.y;
             vec3 base = texture2D(backgroundTexture, bgUV).rgb;
             vec3 painted = texture2D(backgroundTexture, bgUV + offset).rgb;
-            vec3 palette = mix(painted, waterPalette.rgb, waterPalette.a);
+            vec3 palette = mix(painted, waterPalette.rgb, waterPalette.a) * waterColorLight.rgb;
             float viewHeight = waterSurface > 0.5 ? mix(0.3, 0.9, clamp(depth / 160.0, 0.0, 1.0)) : 0.65;
             vec3 view = normalize(vec3(0.0, viewHeight, 1.0));
-            vec3 light = normalize(vec3(0.6, 0.85, -0.35));
+            vec3 light = normalize(waterLight.xyz);
             float diffuse = clamp(dot(normal, light), 0.0, 1.0);
             float fresnel = mix(0.16, 0.9, pow(1.0 - clamp(dot(normal, view), 0.0, 1.0), 3.0));
             vec3 reflection = waterSky(reflect(-view, normal), palette);
             // Give moving crests/troughs readable contrast without lifting
             // the whole painted surface or weakening shoreline coverage.
             vec3 body = palette * (0.72 + 0.65 * pattern.a);
-            vec3 water = mix(body * (0.8 + 0.25 * diffuse), reflection, fresnel);
+            vec3 water = mix(body * (0.8 + 0.25 * diffuse * waterColorLight.a), reflection, fresnel);
             if (waterSurface > 0.5) {
                 // Mirror the painting around one continuous water plane.
                 // The detailed coverage mask must not bend the reflected hull.
@@ -203,12 +205,12 @@ void main() {
                 reflectionUV.y = 2.0 * mirrorY - reflectionUV.y;
                 reflectionUV += normal.xz * vec2(24.0, 5.0) * calmEdge * waterTuning.y * reflectionTexel;
                 reflectionUV = clamp(reflectionUV, reflectionTexel * 0.5, vec2(1.0) - reflectionTexel * 0.5);
-                vec3 mirroredBackground = texture2D(reflectionTexture, reflectionUV).rgb * vec3(0.72, 0.86, 0.9);
+                vec3 mirroredBackground = texture2D(reflectionTexture, reflectionUV).rgb * vec3(0.72, 0.86, 0.9) * waterColorLight.rgb;
                 water = mix(water, mirroredBackground, waterTuning.w);
             }
-            float specular = pow(clamp(dot(normal, normalize(light + view)), 0.0, 1.0), 48.0);
+            float specular = pow(clamp(dot(normal, normalize(light + view)), 0.0, 1.0), waterLight.w);
             vec3 highlight = mix(palette / max(max(palette.r, max(palette.g, palette.b)), 0.04), vec3(1.0), 0.25);
-            water += highlight * specular * 0.42 * waterTuning.z;
+            water += highlight * specular * 0.42 * waterTuning.z * waterColorLight.a;
             water = mix(base, water, calmEdge);
             rgb += (water - base) * amount;
         }
@@ -227,6 +229,7 @@ uniform vec4 waterWorld;
 uniform vec2 waterSampleStep;
 uniform float waterSeconds;
 uniform float waterWaveStrength;
+uniform float waterWaveScale;
 vec4 waterHash(vec4 n) {
     return fract(sin(n) * 43333.333);
 }
@@ -247,10 +250,10 @@ vec3 waterNoise(vec3 p) {
 }
 void main() {
     vec2 p = waterWorld.xy + uv * waterWorld.zw;
-    vec2 flow = p / vec2(52.0, 28.0) - vec2(0.08, 0.35) * waterSeconds;
+    vec2 flow = p / (vec2(52.0, 28.0) * waterWaveScale) - vec2(0.08, 0.35) * waterSeconds;
     vec3 wave = vec3(0.35, 0.0, 0.0);
     float frequency = 0.45, timeFrequency = 0.15, amplitude = 0.45;
-    float footprint = max(waterSampleStep.x, waterSampleStep.y);
+    float footprint = max(waterSampleStep.x, waterSampleStep.y) / waterWaveScale;
     for (int octave = 0; octave < 5; ++octave) {
         vec3 sampleWave = waterNoise(vec3(flow * frequency, waterSeconds * timeFrequency));
         // Fade unresolved detail before upscaling to avoid sparkling/aliasing.
@@ -488,6 +491,7 @@ void main() {
                 _waterPipeline->setFramebuffer(_waterPattern); _waterPipeline->activate();
                 _waterShader->setUniform1f("waterSeconds", _waterTime);
                 _waterShader->setUniform1f("waterWaveStrength", s.waterWaves / 100.0f);
+                _waterShader->setUniform1f("waterWaveScale", s.waterScale / 100.0f);
                 _waterShader->setUniform("waterWorld", Math::Vector4d(float(s.backgroundX)/s.scale - float(left)/3,
                     float(s.backgroundY)/s.scale, float(canvasW)/3, s.viewportHeight));
                 _waterShader->setUniform("waterSampleStep", Math::Vector2d(float(canvasW)/(3 * patternW * 52),
@@ -511,7 +515,14 @@ void main() {
             _effect->setUniform1f("waterEnabled", s.water ? 1 : 0);
             _effect->setUniform1f("waterSurface", s.waterSurface ? 1 : 0);
             _effect->setUniform("waterTuning", Math::Vector4d(s.waterOpacity / 100.0f,
-                s.waterDistortion / 100.0f, s.waterHighlights / 100.0f, s.waterReflection / 100.0f));
+                s.waterDistortion / 100.0f, s.waterHighlights / 100.0f,
+                HdWater::fullSurface(s.room) ? s.waterReflection / 100.0f : 0));
+            _effect->setUniform("waterColorLight", Math::Vector4d(s.waterRed / 100.0f,
+                s.waterGreen / 100.0f, s.waterBlue / 100.0f, s.waterLight / 100.0f));
+            const double lightAngle = s.waterLightDirection * 0.017453292519943295;
+            const float lightSin = sin(lightAngle), lightCos = cos(lightAngle);
+            _effect->setUniform("waterLight", Math::Vector4d(0.6f * lightCos + 0.35f * lightSin,
+                0.85f, 0.6f * lightSin - 0.35f * lightCos, 48.0f * s.waterGloss / 100.0f));
             // The cannon sea shares room 11's #0F3333 water treatment. Other rooms keep
             // their own painted palette; artwork and saved Scene Look stay intact.
             _effect->setUniform("waterPalette", HdWater::fullSurface(s.room)
@@ -593,14 +604,14 @@ void main() {
         // The same centered game rectangle also drives inverse mouse mapping.
         const float h = gameRect.height(), w = h * canvasW / canvasH;
         const float x = gameRect.left + (gameRect.width() - w) * 0.5f;
-        // Reveal the completed cannon/post-movie scene together, rather than animating
+        // Reveal the completed chapter card/cannon/post-movie scene together, rather than animating
         // individual PNG palettes. Start AFTER its first composition/uploads;
         // loading time must not consume or lengthen this presentation-only fade.
         const double fadeNow = HdRemaster::milliseconds();
         const bool movieReveal = s.movieFadePending && !overlay && !s.exitFadeActive;
         if (_presentedRoom != s.room || movieReveal) {
             _presentedRoom = s.room;
-            _sceneFadeStarted = (s.room == 9 || movieReveal) ? fadeNow : -1;
+            _sceneFadeStarted = (HdRemaster::chapterCard(s.room) || s.room == 9 || movieReveal) ? fadeNow : -1;
             if (movieReveal) {
                 s.movieFadePending = false;
                 s.exitFadeOpacity = 0;

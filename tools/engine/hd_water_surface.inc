@@ -1,6 +1,6 @@
-// A cached native-resolution depth mask for the full cannon/waterline surface. Trace
-// bottom-connected water in two dimensions so painted reflections don't stop
-// a column early. Regenerate only when artwork changes.
+// Cached native-resolution coverage in full room coordinates. Reviewed regions
+// handle painted water in panoramas and tall rooms; cannon/waterline retain
+// their connected-surface tracing. Regenerate only when artwork changes.
 struct HdWaterSurface {
     Common::Array<byte> depth;
     const void *pixels = nullptr;
@@ -9,8 +9,10 @@ struct HdWaterSurface {
     bool valid = false;
 
     bool prepare(const Graphics::Surface &background, int currentRoom, int currentRevision, int currentScale) {
-        if (!HdWater::fullSurface(currentRoom) || currentScale <= 0 ||
-            background.w != 640 * currentScale || background.h != 480 * currentScale)
+        const bool mapped = HdWater::mappedRoom(currentRoom);
+        if ((!HdWater::fullSurface(currentRoom) && !mapped) || currentScale <= 0 ||
+            !background.getPixels() || background.w < currentScale || background.h < currentScale ||
+            (!mapped && (background.w != 640 * currentScale || background.h != 480 * currentScale)))
             return false;
         if (pixels == background.getPixels() && room == currentRoom && revision == currentRevision && scale == currentScale)
             return valid;
@@ -24,13 +26,15 @@ struct HdWaterSurface {
             background.format.colorToRGB(background.getPixel(x * scale + scale / 2, y * scale + scale / 2), r, g, b);
             // The cannon view's sea starts below its authored horizon. The
             // similarly teal sky and fort must never join its water region.
-            water[y * width + x] = (currentRoom != 10 || y >= height * 3 / 8) &&
-                HdWater::waterlineColor(r, g, b) ? 1 : 0;
+            water[y * width + x] = mapped
+                ? (HdWater::mapped(currentRoom, (x + 0.5) * 1000 / width, (y + 0.5) * 1000 / height, r, g, b) ? 2 : 0)
+                : ((currentRoom != 10 || y >= height * 3 / 8) && HdWater::waterlineColor(r, g, b) ? 1 : 0);
         }
         Common::Array<int> pending, shoreline;
         shoreline.resize(width);
         for (int x = 0; x < width; ++x) {
             shoreline[x] = height;
+            if (mapped) continue;
             // The cannon view is enclosed by a wooden gunport, including the
             // bottom edge. Seed its sea from the interior instead of the rail.
             if (currentRoom == 10 && (x < width / 3 || x >= width * 2 / 3)) continue;
@@ -61,26 +65,14 @@ struct HdWaterSurface {
         reflectionSlope = denominator > 0 ? (count * sumXY - sumX * sumY) / denominator : 0;
         reflectionIntercept = count > 0 ? (sumY - reflectionSlope * sumX) / count : height;
         unsigned covered = 0;
-        if (currentRoom == 10) {
+        if (currentRoom == 10 || mapped) {
             // Unlike the open waterline, keep all four gunport edges and any
             // enclosed dry detail. Distance to dry paint softens refraction
             // before it reaches the wood, rather than filling whole columns.
             Common::Array<uint16> edge;
             edge.resize(width * height);
-            for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
-                const int i = y * width + x;
-                edge[i] = water[i] != 2 || !x || !y || x == width - 1 || y == height - 1 ? 0 :
-                    MIN<uint16>(255, MIN(edge[i - 1], edge[i - width]) + 1);
-            }
-            for (int y = height - 2; y >= 1; --y) for (int x = width - 2; x >= 1; --x) {
-                const int i = y * width + x;
-                edge[i] = MIN<uint16>(edge[i], MIN(edge[i + 1], edge[i + width]) + 1);
-                if (edge[i] > 2) {
-                    depth[i] = edge[i] - 2;
-                    ++covered;
-                }
-            }
-            valid = covered >= (unsigned)(width * 20);
+            covered = HdWater::surfaceDepth(water.data(), width, height, edge.data(), depth.data(), mapped ? 1 : 2);
+            valid = covered >= (mapped ? 8u : (unsigned)(width * 20));
             return valid;
         }
         for (int x = 0; x < width; ++x) {

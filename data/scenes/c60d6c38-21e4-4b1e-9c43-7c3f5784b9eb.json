@@ -22,10 +22,57 @@
         "roomNumber": 5,
         "originalFile": "0005_chapter2.png"
       },
-      "variants": [],
-      "createdAt": "2026-09-21T22:36:08.783Z"
+      "variants": [
+        "chapter2-supplied-7ef494b5bf83",
+        "chapter2-supplied-9a1c30fceb66"
+      ],
+      "createdAt": "2026-09-21T22:36:08.783Z",
+      "approvedVariantId": "chapter2-supplied-9a1c30fceb66"
     }
   },
-  "variants": {},
+  "variants": {
+    "chapter2-supplied-7ef494b5bf83": {
+      "id": "chapter2-supplied-7ef494b5bf83",
+      "assetId": "37f79c54-c525-411f-942f-448d3edcd66e",
+      "filePath": "upscaled/imported/7ef494b5bf83fe646cfbd617a69f31c6812644cb6ed820b6bf9243b2f4fb94ac.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5250972,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "7ef494b5bf83fe646cfbd617a69f31c6812644cb6ed820b6bf9243b2f4fb94ac",
+        "originalFile": "0005_chapter2-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T13:23:20.292892+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0005 Chapter 2 background."
+    },
+    "chapter2-supplied-9a1c30fceb66": {
+      "id": "chapter2-supplied-9a1c30fceb66",
+      "assetId": "37f79c54-c525-411f-942f-448d3edcd66e",
+      "filePath": "upscaled/imported/9a1c30fceb66aeab1f6aa7755ca6120904eb000a84dfe8458d046c927205de45.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5250609,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "9a1c30fceb66aeab1f6aa7755ca6120904eb000a84dfe8458d046c927205de45",
+        "originalFile": "0005_chapter2-wonder-3-5.png"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T13:32:51.525804+00:00",
+      "reviewStatus": "approved",
+      "engineStatus": "untested",
+      "reviewNotes": "User selected this image for the room 0005 Chapter 2 background."
+    }
+  },
   "jobs": {}
 }

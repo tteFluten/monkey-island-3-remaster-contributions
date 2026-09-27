@@ -1,18 +1,11 @@
 #ifndef COMMON_HD_WATER_H
 #define COMMON_HD_WATER_H
+#include "common/hd_water_regions.h"
 
 namespace HdWater {
-// Ambient water only: cannon costume 45 contains the sea ripples; 34/46/47
-// contain impacts and boat destruction and must keep their scripted art.
-// In particular, waterline costumes 49/57 include Murray
-// and 54 contains scripted splashes; replacing those would erase story poses.
-inline bool ambient(int room, int costume) {
-    return (room == 10 && costume == 45) ||
-           (room == 11 && (costume == 51 || costume == 59)) ||
-           (room == 14 && (costume == 73 || costume == 74)) ||
-           (room == 15 && (costume == 80 || costume == 83));
-}
-inline bool room(int room) { return room == 10 || room == 11 || room == 14 || room == 15; }
+// Reviewed ambient/reflection costumes and mixed water/boat poses are generated
+// from water_regions.json. Story poses, impacts and waterfalls are excluded.
+inline bool room(int room) { return room == 10 || room == 11 || room == 14 || room == 15 || mappedRoom(room); }
 inline bool fullSurface(int room) { return room == 10 || room == 11; }
 
 // The cannon and waterline paintings use this material classifier: their wood is
@@ -20,6 +13,41 @@ inline bool fullSurface(int room) { return room == 10 || room == 11; }
 // selected ungraded painting, never from the scene containing actors or UI.
 inline bool waterlineColor(unsigned r, unsigned g, unsigned b) {
     return g > 6 && b > 6 && g * 4 > r * 5 && b * 4 > r * 5 && b * 10 > g * 7;
+}
+
+// Unwind only visible pixels belonging to this actor, front to back. The boat
+// animation in room 37 combines wood with teal ripples; retain its physical boat
+// while removing the water. Use the native palette, before room color grading.
+inline void removeOverlay(unsigned char *display, const unsigned char *under,
+                          const unsigned char *after, unsigned count,
+                          const unsigned char *palette, bool mixed) {
+    for (unsigned i = 0; i < count; ++i) {
+        const unsigned p = after[i] * 3;
+        if (display[i] == after[i] && under[i] != after[i] &&
+            (!mixed || waterlineColor(palette[p], palette[p + 1], palette[p + 2])))
+            display[i] = under[i];
+    }
+}
+
+// Distance from dry paint, used to stop refraction crossing a shoreline or
+// foreground boundary. Callers supply reusable native-resolution buffers.
+inline unsigned surfaceDepth(const unsigned char *water, int width, int height,
+                             unsigned short *edge, unsigned char *depth, int guard) {
+    for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
+        const int i = y * width + x;
+        const unsigned near = x && y ? (edge[i - 1] < edge[i - width] ? edge[i - 1] : edge[i - width]) : 0;
+        edge[i] = water[i] != 2 || !x || !y || x == width - 1 || y == height - 1 ? 0 :
+            (near < 254 ? near + 1 : 255);
+        depth[i] = 0;
+    }
+    unsigned covered = 0;
+    for (int y = height - 2; y >= 1; --y) for (int x = width - 2; x >= 1; --x) {
+        const int i = y * width + x;
+        const unsigned near = (edge[i + 1] < edge[i + width] ? edge[i + 1] : edge[i + width]) + 1;
+        if (near < edge[i]) edge[i] = near;
+        if (edge[i] > guard) { depth[i] = edge[i] - guard; ++covered; }
+    }
+    return covered;
 }
 
 // Native actor captures already contain transparency, clipping and z-plane

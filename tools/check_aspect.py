@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exercise the native aspect controls using isolated saves and engine-local input.
+"""Exercise native 16:9 presentation and controls using isolated saves and engine-local input.
 
 Requires an existing .playtest runtime. Never sends OS-wide input, stages art,
 changes the regular Playtest config, or modifies the user's saves.
@@ -17,7 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Check:
-    def __init__(self, output, aspect=43, hd_path=None, color_grades_path=None, engine_path=None, config_overrides=None, allow_window=True):
+    def __init__(self, output, aspect=169, hd_path=None, color_grades_path=None, engine_path=None, config_overrides=None, allow_window=True):
+        assert aspect == 169, "Native checks target 16:9 only"
         self.output = output.resolve()
         self.output.mkdir(parents=True, exist_ok=True)
         for name in ('status.json', 'result.json', 'test-input.txt', 'test-window.json', 'command.json', 'save-load.txt',
@@ -30,7 +31,7 @@ class Check:
         self.config.read(ROOT / '.playtest/scummvm.ini')
         self.config['scummvm'].update({'savepath': str(self.output / 'saves'), 'screenshotpath': str(self.output),
                                       'fullscreen': 'false', 'last_window_width': '1280',
-                                      'last_window_height': '720' if aspect == 169 else '960'})
+                                      'last_window_height': '720'})
         self.config['comi'].update({'savepath': str(self.output / 'saves'), 'playtest_session': str(self.output),
                                    'hd_aspect_ratio': str(aspect), 'hd_aspect_test_input': 'true',
                                    'hd_aspect_ui_path': str(ROOT / 'extracted/objects')})
@@ -83,8 +84,7 @@ class Check:
 
     def click_game(self, x, y):
         window = self.window()
-        aspect = self.state()['aspectRatio']
-        h = min(window['height'], window['width'] * (9 / 16 if aspect == 169 else 3 / 4))
+        h = min(window['height'], window['width'] * 9 / 16)
         width = self.state()['viewportWidth'] * h / 480
         left, top = (window['width'] - width) / 2, (window['height'] - h) / 2
         px, py = round(left + x * h / 480), round(top + y * h / 480)
@@ -92,7 +92,7 @@ class Check:
         self.send(f'up {px} {py}')
 
     def room(self, room):
-        self.wait(lambda: self.state().get('ready') and self.state().get('room') == room, f'room {room}')
+        self.wait(lambda: self.state().get('room') == room and (room == 92 or self.state().get('ready')), f'room {room}')
 
     def jump(self, room):
         command = {'id': self.state().get('commandId', 0) + 1, 'action': 'jump', 'room': room}
@@ -121,11 +121,12 @@ class Check:
         self.room(room)
 
     def select(self, aspect, key=111):
+        assert aspect == 169, "Native checks target 16:9 only"
         room = self.state()['room']
         self.send(f'key {key}')
         self.room(92)
         assert self.state()['viewportWidth'] == 640, self.state()
-        self.click_game(155 if aspect == 43 else 225, 412)
+        self.click_game(225, 412)
         self.wait(lambda: self.state().get('aspectRatio') == aspect, f'select {aspect}')
         self.config.read(self.output / 'scummvm.ini')
         assert self.config.getint('comi', 'hd_aspect_ratio') == aspect
@@ -149,14 +150,11 @@ def interactions(check):
     assert check.state()['viewportWidth'] == 864
     check.save_load(1, 7, 15)
     assert (check.output / 'saves/comi.s07').is_file()
-    check.select(43)
-    check.save_load(2, 7, 15)
-    assert check.state()['viewportWidth'] == 640
     check.select(169)
     check.save_load(2, 0, 9)
     check.save_load(2, 7, 15)
     assert check.state()['viewportWidth'] == 864
-    print('PASS: native save/load across both modes and menu restoration', flush=True)
+    print('PASS: native save/load in 16:9 and menu restoration', flush=True)
     window = check.window()
     h = min(window['height'], window['width'] * 9 / 16)
     scale = h / 480
@@ -222,7 +220,7 @@ def main():
     parser.add_argument('--rooms', type=int, nargs='+', help='Check only these rooms, starting in 16:9')
     parser.add_argument('--interactions', action='store_true', help='Save/load, movement, movie and window checks')
     args = parser.parse_args()
-    check = Check(args.output, 169 if args.rooms or args.interactions else 43,
+    check = Check(args.output, 169,
                   config_overrides={'comi': {'hd_gpu_effects': str(args.gpu).lower()}})
     try:
         if args.interactions:
@@ -239,7 +237,6 @@ def main():
             (check.output / 'result.json').write_text(json.dumps({'passed': True, 'rooms': args.rooms}, indent=2))
             return
         check.jump(9)
-        check.screenshot('cannon-43')
         check.select(169)
         assert check.state()['viewportWidth'] == 640
         check.screenshot('cannon-169')
@@ -253,12 +250,9 @@ def main():
         assert check.state()['viewportWidth'] == 864
         assert 0 <= check.state()['cameraLeft'] <= 2096 - 864
         check.screenshot('puerto-169')
-        check.select(43, 1073741886)
-        assert check.state()['viewportWidth'] == 640
-        check.screenshot('puerto-43')
-        check.select(169)
+        check.select(169, 1073741886)
         assert check.state()['viewportWidth'] == 864
-        print('PASS: Puerto Pollo, F5/options, both viewports, restored HD background', flush=True)
+        print('PASS: Puerto Pollo, F5/options, 16:9 viewport, restored HD background', flush=True)
         rooms = [(14, 864), (53, 864), (77, 640), (40, 640), (9, 640)]
         if args.all_panoramas:
             rooms = []

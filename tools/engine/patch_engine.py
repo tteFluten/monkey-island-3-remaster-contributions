@@ -17,6 +17,8 @@ for source in sorted(Path(__file__).parent.iterdir()):
 # The embedded scene picker catalog must also be rebuilt when names change.
 from patch_scene_jump import catalog_header, patch as patch_scene_jump
 fingerprint.update(catalog_header().encode())
+from water_regions import header as water_regions_header
+fingerprint.update(water_regions_header().encode())
 stamp = root / '.mi3-patches'
 revision = fingerprint.hexdigest()
 if stamp.exists():

@@ -57,8 +57,9 @@ across the whole picture, including centrally placed character costumes, with
 slightly more separation toward the edges. Rendered fonts are excluded from
 chromatic aberration: dialogue, labels, response choices, difficulty/options text,
 look panels, and cinematic subtitles record glyph coverage, including outlines
-and antialiased edges. The final pass also protects displaced samples so colored
-copies cannot leak outside letters. Inventory centering and movie cropping apply
+and antialiased edges. Coverage includes the UI canvas scaling footprint; the
+final pass checks all four framebuffer texels blended by each displaced sample,
+so colored copies cannot leak outside letters. Inventory centering and movie cropping apply
 the same transforms to that coverage. Backend dialogs and OSD text are drawn
 after a separate scene-only chromatic pass when those overlays are visible;
 the remaining film effects still run at final presentation. Settings retain the
@@ -71,7 +72,7 @@ to 0% to disable just that effect. Its global INI key is `hd_film_chromatic`.
 **Backspace** resets the selected control, **R** resets film settings, and **B**
 temporarily bypasses film for comparison. Settings save immediately to the global
 engine INI and survive workshop relaunches. **Tab** continues to Character Shadows,
-then Water in room 11, then Scene Look; **F** remains the global on/off shortcut.
+then Water in water rooms, then Scene Look; **F** remains the global on/off shortcut.
 The effect is opt-in and the workshop retains the native shortcut's preference
 on relaunch. In the engine INI's global `[scummvm]` section, use
 `hd_film_enabled=true` and `hd_film_strength=20` for the subtle preset. Strength
@@ -83,6 +84,13 @@ Run `tools/venv/bin/python tools/check_film.py` with a cannon fixture in
 captures. Add `--motion` for a sampled three-second film preview. Captures go to
 `.context/film-check/`; all test saves and settings are isolated. For paired GPU
 timings, run `tools/check_performance.py --gpu --vsync` with and without `--film`.
+Run `tools/venv/bin/python tools/check_film_text.py` for maximum-strength chromatic
+checks of menu lettering, settings panels, panorama UI, and three animated-video
+subtitle sequences at windowed, resized, and fullscreen sizes. These compare text against the same unfiltered frame and
+verify that scenery still receives the effect. `film-capture` also saves the
+current coverage as `film-text.pgm` when text is present, with its presentation
+geometry in `film-text.json`. Add `--dialogue` with an early-game slot-0 save to
+also check Wally's speech and the dialogue response list.
 
 Any standard 640 × 480 background (including difficulty room 0087, excluding
 the options book) accepts exact 16:9 artwork
@@ -116,7 +124,7 @@ Changes save as room 87 overrides in `data/color-grades.json`, using the same
 global/room controls as gameplay. Focus affects only authored z-planes; the
 panel reports when none are available. The options book remains excluded.
 Run `tools/venv/bin/python tools/check_difficulty_look.py` for isolated native
-checks, or add `--cpu --aspect 43` to exercise the fallback renderer.
+checks, or add `--cpu` to exercise the fallback renderer.
 
 Completed wide scenes uniformly fill taller displays by cropping outer scenery.
 Rendering and pointer input use the same rectangle. Unfinished backgrounds,
@@ -151,8 +159,7 @@ rendering. Inventory diagnostics also expose `inventoryOpen`, `inventoryOffset`,
 drawable size are separate.
 
 Run `tools/venv/bin/python tools/check_inventory.py` with a `comi.s00` fixture
-in `MI3_ASPECT_TEST_SAVES` to check opening, closing, input centering, both aspect
-ratios, fullscreen, and panorama framing. Add `--cpu` to check the fallback path.
+in `MI3_ASPECT_TEST_SAVES` to check opening, closing, input centering, 16:9 presentation, fullscreen, and panorama framing. Add `--cpu` to check the fallback path.
 The check copies saves into its isolated session.
 
 Run `python3 tools/check_aspect.py --all-panoramas` for native smoke checks using
@@ -192,18 +199,35 @@ coverage, and costume scaling/lighting are cached. The normal native build uses
 release settings, with symbols retained for profiling. Normal rendering performs no GPU-to-CPU readback; explicit
 screenshots, thumbnails, and visual comparisons can request one.
 
-Ambient water uses a lightweight GPU shader by default in the cannon aiming
-view (10) and waterline (11),
-where **W** opens its live tuning page. Adjust water strength, wave height,
-speed, distortion, highlights, and mirrored-background reflection opacity
-with **−/+** or the arrow keys (**Shift** ×5). **W** or a click on the section
+Ambient water uses a lightweight GPU shader by default in all 37 water rooms
+identified by the full 94-room background audit: 9–11, 13–15, 22, 26–27, 29, 31,
+33–37, 40–51, 53–54, 58–59, and 74–78. **W** opens its live tuning page in each
+room. Adjust water strength, wave height, speed, distortion, highlights, RGB
+color, light strength/direction, highlight sharpness, and wave size with **−/+**
+or the arrow keys (**Shift** ×5). The cannon aiming view (10) and waterline (11)
+also expose mirrored-background reflection opacity. **W** or a click on the section
 heading switches between Water and Scene Look; **U/Esc** closes the panel.
 Changes save as room overrides in `data/color-grades.json`; **G** switches to
 global defaults. **B** compares against the painted water, **Backspace** restores
 inheritance for one control, and **R** restores inheritance for all water controls
 without clearing the room's color or vignette settings. Reflection defaults to
-8%; the remaining controls default to 100%. Setting speed to zero freezes the
-waves, and setting strength to zero reveals the painted water.
+8%; light direction defaults to 0 degrees and the remaining controls to 100%.
+Setting speed to zero freezes the waves, and setting strength to zero reveals
+the painted water.
+
+The new controls affect only the masked water surface:
+
+| Control | Range | Effect |
+| --- | --- | --- |
+| Color red / green / blue | 0–200% each | Tint the painted water palette and its reflected scenery; 100% preserves each channel. |
+| Light strength | 0–200% | Scale direct lighting and highlights while retaining ambient sky reflection. |
+| Light direction | −180 to +180 degrees | Rotate the light around the surface from its original direction. |
+| Highlight sharpness | 25–200% | Lower values spread highlights; higher values tighten them. |
+| Wave size | 25–400% | Change ripple spacing; larger values give broader waves. |
+
+Old settings files retain their appearance through neutral defaults for missing
+keys. Values use the existing per-room overrides, global inheritance, comparison
+and reset controls; changing water settings does not reset scene color or shadows.
 
 The cannon view shares the waterline shader, sea palette, and initial water
 tuning. Its 32-frame ambient ripple costume (45) is removed from the rendered
@@ -216,15 +240,37 @@ Scene 10 has its own Water overrides, so later tuning does not change scene 11.
 Its selected background is the user-supplied `0010_cannon-v-wonder-3-5.png`,
 preserved as a 2560 × 1440 master with matching widescreen output and a centered
 4:3 runtime crop. The prior background remains archived as an alternate.
-The engine has been rebuilt; this extension has not been visually verified.
 
-The shader also operates in
-fort base (14), and town (15). It replaces only the known ambient-water costumes:
-51/59, 73/74, and 80/83 respectively. Their original transparent, depth-clipped
+In the waterline (11), fort base (14), and town (15), the shader replaces only
+the known ambient-water costumes: 51/59, 73/74, and 80/83/85 respectively. Their original transparent, depth-clipped
 native pixels supply coverage in the fort and town; the PNG overlays are not drawn or decoded for
 those successful replacements. Character poses containing water (including
-Murray), scripted splashes, and unmapped scenes retain their artwork. Packaged
+Murray), scripted splashes, and waterfalls retain their artwork. Packaged
 PNGs and their provenance remain available for fallback.
+
+The other 33 water rooms use reviewed polygons and foreground exclusions from
+[`tools/engine/water_regions.json`](tools/engine/water_regions.json), combined
+with color checks on the selected, ungraded painting. Masks use full-room
+coordinates, including panoramas and tall rooms, and soften refraction at dry
+boundaries. They cover horizontal water surfaces, including small window views
+and the surface stripe in the underwater room. Paper maps, lava and prop
+liquids are excluded. All 94 rooms have an explicit coverage decision in the
+catalog. These masks follow the current background compositions; review them
+when replacing a painting with a different layout. New rooms use their painted
+palette and wave lighting without mirroring foreground scenery across an
+arbitrary shoreline. Existing actors and scripted effects remain layered above.
+
+The shader suppresses the legacy water/reflection costumes in every room that
+has dedicated overlays. The reviewed list is in the catalog's `overlays`
+section: 10 (45), 11 (51/59), 14 (73/74), 15 (80/83/85), 29 (164), 31 (177),
+33 (187/188), 37 (211), 44 (253), 54 (277/278), 75 (369/370), and 77 (376).
+These 19 water-only costumes are removed from the displayed foreground and
+skipped during HD preloading. Room 37 costume 212 mixes a boat with ambient
+ripples: only its teal water pixels are removed, preserving the boat and pixels
+occluded by another actor. The physical rocking boat/hull, sharks, plank splash
+sequence, characters and waterfalls remain. The simulation still runs the
+original animations; source files and packaged fallback art stay available when
+water shading is disabled.
 
 The effect adapts the waves in the corrected user-supplied
 [Shadertoy reference](https://www.shadertoy.com/view/fcGSW1): five octaves of
@@ -287,13 +333,18 @@ settings do not restart it. After a movie finishes or is skipped, the next
 completed HD scene uses the same one-second fade, including a return to the
 same room. Consecutive movies do not consume the pending scene fade. The
 backend holds intermediate room-entry frames until the new composition is
-ready, so loading does not show an unfaded scene first. Other room changes and
-original-art fallback retain their native transitions. Leaving the HD Chapter 1
-card (0004) fades the full presentation to black over one second before the next
-scene fades in. Skipping an HD movie with Escape uses the same fade-out while
+ready, so loading does not show an unfaded scene first. All six HD chapter cards
+(0004–0008 and 0088) use that same one-second
+fade-in after the completed image is ready. Leaving any chapter card fades the
+full presentation to black over one second before the next scene fades in.
+Other room changes and original-art fallback retain their native transitions.
+Skipping an HD movie with Escape uses the same fade-out while
 retaining the movie's existing crop and display rectangle. Viewport restoration
 happens behind black, preventing a resized last frame from flashing on screen.
-These transitions have been built but not visually verified.
+Run `tools/venv/bin/python tools/check_chapter_fades.py` to check all six chapter
+cards in 16:9 using framebuffer captures and copied saves. The checks cover
+fade-in, fade-out to black, and return to gameplay; they do not validate story
+progression. All native presentation checks now target 16:9 only.
 
 The difficulty screen (room 0087, `easyhard`) opens directly on its completed HD
 composition. Its native entry wipe/dissolve is bypassed when replacement artwork
@@ -332,8 +383,9 @@ sample the same full 2560 × 1440 background for reflections, with the center ma
 to its matching region of that image. The 4:3 working texture is used only as a
 reflection fallback when no widescreen texture is active. This is a lightweight 2D approximation;
 characters are not included in the reflection. If a different painting cannot be
-classified, the renderer falls back to the original sprite coverage. Other rooms
-keep their native water coverage. Hull reflection follows the lightweight
+classified, the renderer falls back to the original sprite coverage. Fort base
+and town retain native water coverage; newly mapped rooms use their reviewed
+painted-surface regions. Hull reflection follows the lightweight
 [2D reflection approach](https://kortham.net/posts/2d-water-reflections/), combined
 with a sky reflection tinted to the room's water palette. This is an
 adaptation to a fixed painted water surface: the demo's flying camera, standalone
@@ -353,8 +405,23 @@ on launch/resume. CPU effects and unavailable GPU shaders retain the original
 overlay path automatically. Status reports `waterBackend` as `opengl-shader`
 when replacing ambient water, otherwise `original-overlays`. Disable water when
 comparing existing color/blur effects against the CPU reference: procedural water
-is intentionally a new GPU-only treatment. The updated engine builds, but full
-runtime regressions and benchmarks remain stopped at the user's request.
+is intentionally a new GPU-only treatment.
+
+Validation for the expanded coverage:
+
+```bash
+python3 tools/test_water.py
+python3 tools/test_color_grade.py
+tools/venv/bin/python tools/check_water_params.py
+tools/venv/bin/python tools/check_water.py --screenshots
+tools/venv/bin/python tools/check_water.py --rooms 10 15 75 77 --interactions --output .context/water-interactions
+tools/venv/bin/python tools/check_water.py --rooms 13 75 --fallback --output .context/water-fallback
+```
+
+The native check uses isolated saves and settings in 16:9, and verifies shader
+activation and background loading in every water room. Screenshots support
+visual shoreline review. Unit checks validate complete room classification,
+protected dry regions, preserved story costumes and mask edge distances.
 
 Scene Look supports global defaults and individual room overrides for **all**
 color, vignette, and depth-of-field controls. Open it with **U**. Press **G** or
@@ -433,7 +500,7 @@ logos, chapter cards, difficulty selection, credits, and save/load screens
 **Enter** or clicking a row jumps. **J/Esc** closes without jumping, and choosing
 the current room closes without restarting its scripts. Opening selects and
 reveals the current room. The panel shows room numbers and manifest names in
-both 4:3 and 16:9, including panoramic rooms.
+16:9, including panoramic rooms.
 
 The picker replaces Scene Look, consumes gameplay input, and leaves running
 scripts unpaused. It cannot open during a cinematic, scripted cutscene,
@@ -606,7 +673,7 @@ For native smoke tests launched with `MI3_ENGINE_TEST_INPUT=1`, write a SAN
 filename such as `SINKSHP.SAN` to the isolated session's `movie.txt` to play it
 through the normal movie player. The hook is disabled in regular sessions.
 Run `tools/venv/bin/python tools/check_movies.py` for isolated native checks of
-both aspect ratios, HD-only playback, missing/broken-HD messages,
+16:9 presentation, HD-only playback, missing/broken-HD messages,
 skipped/completed playback, and room restoration. Screenshots and results are saved under `.context/movie-check/`.
 
 ## Character comparisons
@@ -717,7 +784,7 @@ Run `tools/venv/bin/python -m unittest tools/test_inventory.py` for alpha blendi
 native icon fallback, clipping, 4×/6× geometry, and repeatable patch ordering
 that keeps scene color grades off inventory artwork. Native verification uses
 copied saves: pick up the cannon-room ramrod, open inventory with I, hover/select
-it, then close and reopen the panel in both aspect modes.
+it, then close and reopen the panel in 16:9.
 
 ## Character lighting
 

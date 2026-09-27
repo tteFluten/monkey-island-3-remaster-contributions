@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import sharp from 'sharp';
-import { PlaytestService, roomFromFilename, assertAspect, wideBackgroundCrop, validateSettings, readFontSize, readAspectRatio, readDepthOfField, readDepthOfFieldTuning, readFilmSettings } from './playtest.js';
+import { PlaytestService, roomFromFilename, assertAspect, wideBackgroundCrop, validateSettings, readFontSize, readDepthOfField, readDepthOfFieldTuning, readFilmSettings } from './playtest.js';
 import { setProjectRoot } from './manifest.js';
 
 test('film opt-in and strength survive relaunch only from global settings', () => {
@@ -15,15 +15,6 @@ test('film opt-in and strength survive relaunch only from global settings', () =
   assert.deepEqual(readFilmSettings('[scummvm]\nhd_film_strength=-5'), { enabled: false, strength: 0 });
   assert.deepEqual(readFilmSettings('[scummvm]\nhd_film_strength=110'), { enabled: false, strength: 100 });
   assert.deepEqual(readFilmSettings('[scummvm]\nhd_film_enabled=invalid\nhd_film_strength=20oops'), { enabled: false, strength: 20 });
-});
-
-test('aspect preference defaults to 4:3 and reads only the COMI section', () => {
-  assert.equal(readAspectRatio(''), 43);
-  assert.equal(readAspectRatio('[scummvm]\nhd_aspect_ratio=169'), 43);
-  assert.equal(readAspectRatio('[comi]\r\nhd_aspect_ratio = 169\r\n[other]\nhd_aspect_ratio=43'), 169);
-  for (const value of ['43', '0', '16:9', '169oops', '-169', '']) {
-    assert.equal(readAspectRatio(`[comi]\nhd_aspect_ratio=${value}`), 43);
-  }
 });
 
 test('font size defaults safely and only reads the COMI preference', () => {
@@ -209,7 +200,7 @@ test('import, persistence, staging, process commands and original restoration', 
     const packRestored = new PlaytestService(root); await packRestored.init();
     assert.equal((await packRestored.snapshot()).settings.characterPack, 'original');
     // An executable that exits immediately must clear running state and expose failure.
-    await fs.appendFile(path.join(root, '.playtest/scummvm.ini'), 'hd_font_size=75\nhd_aspect_ratio=43\nhd_depth_of_field=2\nhd_dof_blur=35\n');
+    await fs.appendFile(path.join(root, '.playtest/scummvm.ini'), 'hd_font_size=75\nhd_aspect_ratio=0\nhd_depth_of_field=2\nhd_dof_blur=35\n');
     const savedFilmConfig = (await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'))
       .replace('hd_film_enabled=false', 'hd_film_enabled=true').replace('hd_film_strength=20', 'hd_film_strength=35');
     await fs.writeFile(path.join(root, '.playtest/scummvm.ini'), savedFilmConfig);

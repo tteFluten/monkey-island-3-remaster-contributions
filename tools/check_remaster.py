@@ -12,7 +12,6 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT / '.context/performance/visual')
     parser.add_argument('--rooms', type=int, nargs='+', default=[9, 15, 77])
-    parser.add_argument('--aspect', type=int, choices=[43, 169], default=169)
     parser.add_argument('--interactions', action='store_true')
     args = parser.parse_args()
     output = args.output.resolve(); output.mkdir(parents=True, exist_ok=True)
@@ -21,7 +20,7 @@ def main():
         'brightness': 4, 'contrast': 8, 'saturation': 5, 'gamma': 105,
         'vignetteEnabled': 1, 'vignetteAmount': 40, 'vignetteRadius': 60, 'vignetteSoftness': 50
     } for room in args.rooms}}))
-    check = Check(output, args.aspect, color_grades_path=grades,
+    check = Check(output, 169, color_grades_path=grades,
         config_overrides={'comi': {'hd_gpu_effects': 'true', 'hd_water_shader': 'false', 'hd_depth_of_field': '2', 'hd_dof_blur': '0'},
                           'scummvm': {'vsync': 'true'}})
     results = []
@@ -56,7 +55,7 @@ def main():
             time.sleep(.5)
             gpu = Image.open(output / 'effects-gpu.png').convert('RGB')
             cpu = Image.open(output / 'effects-cpu.png').convert('RGB')
-            assert gpu.size == cpu.size == (2560 if args.aspect == 169 else 1920, 1440)
+            assert gpu.size == cpu.size == (2560, 1440)
             diff = ImageChops.difference(gpu, cpu)
             mean = max(ImageStat.Stat(diff).mean)
             results.append({'room': room, 'meanChannelError': mean, 'passed': mean < 2})
@@ -66,7 +65,7 @@ def main():
             check.screenshot(f'room-{room}-presentation')
         if args.interactions:
             check.save_load(2, 0, 9)
-            check.select(43); check.select(169)
+            check.select(169)
             check.send('key 105'); check.screenshot('inventory'); check.send('key 105')
             check.send('resize 960 800'); check.screenshot('taller-window')
             check.send('fullscreen 1'); check.screenshot('fullscreen')

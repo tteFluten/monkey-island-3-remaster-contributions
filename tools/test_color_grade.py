@@ -35,6 +35,29 @@ int main() {
     settings.set(87, kVignetteAmount, 65);
     assert(settings.get(87, kContrast) == 6);
     assert(settings.get(87, kVignetteOn) == 1);
+
+    // Extended water controls push shadow overrides past bit 31. Every bit
+    // must remain independent, including when inheriting/resetting a control.
+    for (int c = 0; c < HdSceneLook::kControls; ++c) {
+        HdSceneLook::Layer layer;
+        layer.set(c, HdSceneLook::range(c).high + 1);
+        for (int other = 0; other < HdSceneLook::kControls; ++other)
+            assert(layer.has(other) == (other == c));
+        assert(layer.value[c] == HdSceneLook::range(c).high);
+        layer.inherit(c);
+        assert(layer.mask == 0);
+    }
+    settings.set(0, HdSceneLook::kWaterRed, 125);
+    settings.set(75, HdSceneLook::kWaterRed, 0); // Explicit black channel is real.
+    settings.set(75, HdSceneLook::kShadowBlue, 180);
+    assert(settings.get(75, HdSceneLook::kWaterRed) == 0);
+    assert(settings.get(74, HdSceneLook::kWaterRed) == 125);
+    settings.reset(75, HdSceneLook::kWaterRed);
+    assert(settings.get(75, HdSceneLook::kWaterRed) == 125);
+    assert(settings.get(75, HdSceneLook::kShadowBlue) == 180);
+    assert(HdSceneLook::clamp(HdSceneLook::kWaterScale, 0) == 25);
+    assert(HdSceneLook::clamp(HdSceneLook::kWaterGloss, 0) == 25);
+    assert(HdSceneLook::clamp(HdSceneLook::kWaterLightDirection, -999) == -180);
     assert(settings.get(9, kVignetteOn) == 0);
     assert(settings.get(0, kVignetteAmount) == 40);
     settings.reset(87, kVignetteAmount);

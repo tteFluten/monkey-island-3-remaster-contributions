@@ -55,7 +55,12 @@ inline void pixel(const Graphics::Surface &surface, int x, int y, byte alpha) {
     const uintptr offset = address - base;
     const int mx = (offset % s.pitch) / 4, my = offset / s.pitch;
     if (mx >= s.mask.w) return;
-    *(byte *)s.mask.getBasePtr(mx, my) = 255;
+    // The GPU scene path resamples the UI onto its 1440p canvas before the
+    // window is scaled. Include that first filter's footprint; the film
+    // shader separately covers the final framebuffer's bilinear samples.
+    const int left = MAX(0, mx - 1), right = MIN(int(s.mask.w), mx + 2);
+    for (int row = MAX(0, my - 1); row < MIN(int(s.mask.h), my + 2); ++row)
+        memset(s.mask.getBasePtr(left, row), 255, right - left);
     s.any = true;
 }
 }

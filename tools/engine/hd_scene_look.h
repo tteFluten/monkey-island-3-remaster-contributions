@@ -7,10 +7,11 @@
 // overrides, not an absence of configuration.
 namespace HdSceneLook {
 enum Control { kFocus = HdColorGrade::kControls, kBlur, kEdge, kIntensity, kDepth,
-    kWaterOpacity, kWaterWaves, kWaterSpeed, kWaterDistortion, kWaterHighlights, kWaterReflection,
+    kWaterOpacity, kWaterWaves, kWaterSpeed, kWaterDistortion, kWaterHighlights,
+    kWaterRed, kWaterGreen, kWaterBlue, kWaterLight, kWaterLightDirection, kWaterGloss, kWaterScale, kWaterReflection,
     kShadowX, kShadowY, kShadowWidth, kShadowOvalness, kShadowOpacity,
     kShadowRed, kShadowGreen, kShadowBlue, kControls };
-static_assert(kControls <= 32, "Scene Look overrides must fit their bit mask");
+static_assert(kControls <= 64, "Scene Look overrides must fit their bit mask");
 inline const HdColorGrade::Range &range(int control) {
     if (control < HdColorGrade::kControls) return HdColorGrade::range(control);
     static const HdColorGrade::Range focus[] = {
@@ -24,6 +25,13 @@ inline const HdColorGrade::Range &range(int control) {
         {"Wave speed", "waterSpeed", 0, 300, 100, 10},
         {"Distortion", "waterDistortion", 0, 300, 100, 10},
         {"Highlights", "waterHighlights", 0, 300, 100, 10},
+        {"Color red", "waterRed", 0, 200, 100, 5},
+        {"Color green", "waterGreen", 0, 200, 100, 5},
+        {"Color blue", "waterBlue", 0, 200, 100, 5},
+        {"Light strength", "waterLight", 0, 200, 100, 10},
+        {"Light direction", "waterLightDirection", -180, 180, 0, 5},
+        {"Highlight sharpness", "waterGloss", 25, 200, 100, 5},
+        {"Wave size", "waterScale", 25, 400, 100, 5},
         {"Reflection opacity", "waterReflection", 0, 100, 8, 1},
         {"Position X", "shadowOffsetX", -80, 80, 0, 1},
         {"Position Y", "shadowOffsetY", -80, 80, 0, 1},
@@ -42,11 +50,11 @@ inline int clamp(int control, int value) {
 }
 struct Layer {
     int value[kControls];
-    unsigned int mask = 0;
+    unsigned long long mask = 0;
     Layer() { for (int c = 0; c < kControls; ++c) value[c] = range(c).neutral; }
-    bool has(int c) const { return (mask & (1u << c)) != 0; }
-    void set(int c, int v) { value[c] = clamp(c, v); mask |= 1u << c; }
-    void inherit(int c) { mask &= ~(1u << c); }
+    bool has(int c) const { return (mask & (1ULL << c)) != 0; }
+    void set(int c, int v) { value[c] = clamp(c, v); mask |= 1ULL << c; }
+    void inherit(int c) { mask &= ~(1ULL << c); }
 };
 struct Settings {
     Layer global, rooms[256];

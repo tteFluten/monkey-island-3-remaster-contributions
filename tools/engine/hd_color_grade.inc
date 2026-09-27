@@ -33,17 +33,19 @@ enum { kLookColor = 0, kLookFocus = HdColorGrade::kVignetteOn,
     kLookBlur, kLookEdge, kLookIntensity, kLookDepth, kLookVignette,
     kLookRows = kLookVignette + 4 };
 const int kLookWidth = 300, kLookTop = 8, kLookLineHeight = 16, kLookExtraLines = 9;
+static_assert(HdSceneLook::kShadowX - HdSceneLook::kWaterOpacity <= kLookRows, "Water controls must fit panel buffers");
 int hdLookRows() {
     const auto &st = hdColorGradeState();
     return st.filmPage ? HdFilm::kControls : st.shadowPage ? HdSceneLook::kControls - HdSceneLook::kShadowX
-        : st.waterPage ? HdSceneLook::kShadowX - HdSceneLook::kWaterOpacity : kLookRows;
+        : st.waterPage ? (HdWater::fullSurface(HdRemaster::state().room) ? HdSceneLook::kShadowX : HdSceneLook::kWaterReflection)
+            - HdSceneLook::kWaterOpacity : kLookRows;
 }
 int hdLookLine(int row) { return row + 2 + ((hdColorGradeState().waterPage || hdColorGradeState().filmPage || hdColorGradeState().shadowPage) ? 0 : (row >= kLookFocus ? 1 : 0) + (row >= kLookVignette ? 1 : 0)); }
 
 void hdCycleLookPage(int room) {
     auto &st = hdColorGradeState();
     if (st.filmPage) { st.filmPage = false; st.shadowPage = true; }
-    else if (st.shadowPage) { st.shadowPage = false; st.waterPage = HdWater::fullSurface(room); }
+    else if (st.shadowPage) { st.shadowPage = false; st.waterPage = HdWater::room(room); }
     else if (st.waterPage) st.waterPage = false;
     else st.filmPage = true;
     st.row = 0;
@@ -195,7 +197,7 @@ void ScummEngine::renderHDColorGrade() {
     if (_game.id != GID_CMI) return;
     if (!st.loaded) hdLoadColorGrades(st);
     const int room = _currentRoom;
-    if (!HdWater::fullSurface(room)) st.waterBypass = false;
+    if (!HdWater::room(room)) st.waterBypass = false;
     const HdColorGrade::Grade grade = HdSceneLook::Settings::roomValid(room) && !st.bypass
         ? st.settings.grade(room) : HdColorGrade::Grade();
     // The decorative widescreen extension receives the same scene treatment.
@@ -209,6 +211,13 @@ void ScummEngine::renderHDColorGrade() {
     remaster.waterDistortion = st.settings.get(room, HdSceneLook::kWaterDistortion);
     remaster.waterHighlights = st.settings.get(room, HdSceneLook::kWaterHighlights);
     remaster.waterReflection = st.settings.get(room, HdSceneLook::kWaterReflection);
+    remaster.waterRed = st.settings.get(room, HdSceneLook::kWaterRed);
+    remaster.waterGreen = st.settings.get(room, HdSceneLook::kWaterGreen);
+    remaster.waterBlue = st.settings.get(room, HdSceneLook::kWaterBlue);
+    remaster.waterLight = st.settings.get(room, HdSceneLook::kWaterLight);
+    remaster.waterLightDirection = st.settings.get(room, HdSceneLook::kWaterLightDirection);
+    remaster.waterGloss = st.settings.get(room, HdSceneLook::kWaterGloss);
+    remaster.waterScale = st.settings.get(room, HdSceneLook::kWaterScale);
     if (remaster.active) {
         remaster.grade = grade;
         // Exchange reusable buffers: scene stays intact; following UI draws
@@ -267,11 +276,11 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         st.panel = false;
         return false;
     }
-    if (!HdWater::fullSurface(_currentRoom) && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
+    if (!HdWater::room(_currentRoom) && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
     if (!st.loaded) hdLoadColorGrades(st);
     const bool key = event.type == Common::EVENT_KEYDOWN;
     if (key && (event.kbd.flags & (Common::KBD_CTRL | Common::KBD_ALT | Common::KBD_META))) return false;
-    if (key && HdWater::fullSurface(_currentRoom) && event.kbd.keycode == Common::KEYCODE_w) {
+    if (key && HdWater::room(_currentRoom) && event.kbd.keycode == Common::KEYCODE_w) {
         st.waterPage = !st.panel || !st.waterPage; st.filmPage = st.shadowPage = false;
         st.panel = true; st.row = 0; _fullRedraw = true;
         return true;
@@ -384,7 +393,7 @@ void ScummEngine::drawHDLookPanel() {
     if (!st.panel || _game.id != GID_CMI || !_hdFontManager || !_hdFontManager->hasFont(3) || !_hdComposite.getPixels())
         return;
     const int room = _currentRoom;
-    if (!HdWater::fullSurface(room) && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
+    if (!HdWater::room(room) && st.waterPage) { st.waterPage = false; st.row = 0; st.waterBypass = false; }
     const int rows = hdLookRows();
     if (!st.loaded) hdLoadColorGrades(st);
     const int editingRoom = st.filmPage ? 0 : hdSceneLookEditRoom(room);
@@ -407,8 +416,11 @@ void ScummEngine::drawHDLookPanel() {
     values[kLookVignette] = grade.value[HdColorGrade::kVignetteOn] ? "On" : "Off";
     for (int c = 1; c < 4; ++c)
         values[kLookVignette + c] = Common::String::format("%d%%", grade.value[HdColorGrade::kVignetteOn + c]);
-    if (st.waterPage) for (int row = 0; row < rows; ++row)
-        values[row] = Common::String::format("%d%%", st.settings.get(editingRoom, hdLookControl(row)));
+    if (st.waterPage) for (int row = 0; row < rows; ++row) {
+        const int control = hdLookControl(row), value = st.settings.get(editingRoom, control);
+        values[row] = control == HdSceneLook::kWaterLightDirection
+            ? Common::String::format("%+d deg", value) : Common::String::format("%d%%", value);
+    }
     if (st.shadowPage) for (int row = 0; row < rows; ++row) {
         const int control = hdLookControl(row), value = st.settings.get(editingRoom, control);
         values[row] = control <= HdSceneLook::kShadowY ? Common::String::format("%+d px", value)
@@ -427,7 +439,7 @@ void ScummEngine::drawHDLookPanel() {
         : Common::String::format("%s   Global defaults", title);
     for (int row = 0; row < rows; ++row) {
         if (row == 0) lines[count++] = st.filmPage ? "Film texture   Tab: Shadows"
-            : st.shadowPage ? (HdWater::fullSurface(room) ? "Shadows   Tab: Water" : "Shadows   Tab: Scene Look")
+            : st.shadowPage ? (HdWater::room(room) ? "Shadows   Tab: Water" : "Shadows   Tab: Scene Look")
             : st.waterPage ? "Water shader   Tab: Scene Look" : "Color correction   Tab: Film";
         if (!st.waterPage && !st.filmPage && !st.shadowPage && row == kLookFocus) lines[count++] = "Scene depth";
         if (!st.waterPage && !st.filmPage && !st.shadowPage && row == kLookVignette) lines[count++] = "Vignette";
