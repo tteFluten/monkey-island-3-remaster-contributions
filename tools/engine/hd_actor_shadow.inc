@@ -50,7 +50,7 @@ if (_game.id == GID_CMI && _currentRoom != 87 && !hdColorGradeState().shadowBypa
         const int elevation = HdActorShadow::groundElevation(a->getPos().x, a->getPos().y, a->getElevation());
         HdActorShadow::Footprint shadow = HdActorShadow::footprint(
             under, after, visW, visH,
-            a->getPos().x - vs->xstart, a->getPos().y - _screenTop,
+            a->getPos().x - vs->xstart, a->getPos().y - _screenTop + hdVoodooExteriorActorOffset(a),
             elevation, sceneAligned);
         if (_hdFrameCount % 120 == 0 && !shadow.valid)
             hdPrintf("CONTACT-SHADOW-SKIP actor=%d position=%d,%d elevation=%d pose=%d", a->_number,

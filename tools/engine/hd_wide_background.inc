@@ -8,7 +8,10 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
     Common::String key = path.empty() ? path : path + Common::String::format(":%d",
         ConfMan.getInt("hd_wide_background_revision"));
     const Common::String sourceKey = key;
+    if (!key.empty()) key += Common::String::format(":masks:%d", HdMasks::state().revision);
     auto &remaster = HdRemaster::state();
+    if (remaster.wideRoom != 29 || path.empty())
+        remaster.voodooExterior = remaster.voodooExteriorInput = false;
     if (remaster.wideRoom != 13 || path.empty()) {
         remaster.plunderMap = remaster.plunderMapInput = false;
     }
@@ -22,9 +25,11 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
     }
     if (key == _hdWideBackgroundKey) return;
     _hdWideBackgroundKey = key;
+    remaster.authoredWideWaterCoverage.free();
     delete _hdWideBackground;
     _hdWideBackground = nullptr;
     remaster.plunderMap = remaster.plunderMapInput = false;
+    remaster.voodooExterior = remaster.voodooExteriorInput = false;
     ConfMan.setBool("hd_wide_background_active", false, Common::ConfigManager::kTransientDomain);
     _forceRedraw = true;
     if (path.empty()) return;
@@ -100,11 +105,41 @@ void OpenGLGraphicsManager::updateHDWideBackground() {
                 for (int y = 0; y < h; ++y) for (int x = 0; x < w; ++x) {
                     byte r, g, b;
                     raw.format.colorToRGB(raw.getPixel(x * raw.w / w, y * raw.h / h), r, g, b);
-                    water[y * w + x] = HdPlunderMap::water((x + 0.5) * 1000 / w,
-                        (y + 0.5) * 1000 / h, r, g, b) ? 2 : 0;
+                    water[y * w + x] = (HdMasks::waterOverride(13) ? HdMasks::waterAt(13,(x+.5)*1000/w,(y+.5)*1000/h,r,g,b) : HdPlunderMap::water((x + 0.5) * 1000 / w,
+                        (y + 0.5) * 1000 / h, r, g, b)) ? 2 : 0;
                 }
                 HdWater::surfaceDepth(water.data(), w, h, edge.data(), (byte *)coverage.getPixels(), 1);
             }
+        }
+        if (remaster.wideRoom == 29) {
+            Common::File stamp;
+            if (stamp.open(Common::FSNode(Common::Path(ConfMan.get("hd_path") + "/backgrounds/bg_0029.png.stamp"))))
+                remaster.voodooExterior = stamp.readLine().hasPrefix(Common::String(HdVoodooExterior::kSource) + ":");
+            if (remaster.voodooExterior) {
+                const int w = 854, h = 480;
+                auto &coverage = remaster.voodooWaterCoverage;
+                coverage.free(); coverage.create(w,h,Graphics::PixelFormat::createFormatCLUT8());
+                Common::Array<byte> water; water.resize(w*h);
+                Common::Array<uint16> edge; edge.resize(w*h);
+                for (int y=0;y<h;++y) for (int x=0;x<w;++x) {
+                    byte r,g,b;
+                    raw.format.colorToRGB(raw.getPixel(x*raw.w/w,y*raw.h/h),r,g,b);
+                    water[y*w+x] = (HdMasks::waterOverride(29) ? HdMasks::waterAt(29,(x+.5)*1000/w,(y+.5)*1000/h,r,g,b) : HdVoodooExterior::water((x+0.5)*2048/w,(y+0.5)*1152/h,r,g,b)) ? 2 : 0;
+                }
+                HdWater::surfaceDepth(water.data(),w,h,edge.data(),(byte *)coverage.getPixels(),1);
+            }
+        }
+        if (HdMasks::waterOverride(remaster.wideRoom)) {
+            const int w=854,h=480;
+            auto &coverage=remaster.authoredWideWaterCoverage;
+            coverage.create(w,h,Graphics::PixelFormat::createFormatCLUT8());
+            Common::Array<byte> water;water.resize(w*h);
+            Common::Array<uint16> edge;edge.resize(w*h);
+            for(int y=0;y<h;++y)for(int x=0;x<w;++x){byte r,g,b;
+                raw.format.colorToRGB(raw.getPixel(x*raw.w/w,y*raw.h/h),r,g,b);
+                water[y*w+x]=HdMasks::waterAt(remaster.wideRoom,(x+.5)*1000/w,(y+.5)*1000/h,r,g,b)?2:0;
+            }
+            HdWater::surfaceDepth(water.data(),w,h,edge.data(),(byte *)coverage.getPixels(),1);
         }
         warning("HD widescreen: loaded %s", path.c_str());
     }

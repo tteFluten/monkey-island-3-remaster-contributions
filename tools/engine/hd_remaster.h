@@ -5,7 +5,9 @@
 #include "common/system.h"
 #include "common/array.h"
 #include "common/hd_water.h"
+#include "common/hd_scene_masks.h"
 #include "common/hd_plunder_map.h"
+#include "common/hd_voodoo_exterior.h"
 
 // Engine/backend handoff, owned by this single-process native runtime. Surfaces
 // are CPU staging buffers; the backend owns all GL objects and their lifetimes.
@@ -17,6 +19,10 @@ struct State {
     double (*highResTime)() = nullptr;
     bool available = false, active = false, ui = false, dof = false;
     bool recording = false, synchronized60 = false;
+    bool maskVisible = false, maskEditing = false;
+    double maskZoom=1,maskFocusX=0,maskFocusY=0;
+    Graphics::Surface maskOverlay, authoredWideWaterCoverage;
+    unsigned maskGeneration = 0;
     bool water = false, waterPaused = false, waterSurface = false;
     int waterOpacity = 100, waterWaves = 100, waterSpeed = 100;
     int waterDistortion = 100, waterHighlights = 100, waterReflection = 8;
@@ -41,6 +47,9 @@ struct State {
     bool plunderMap = false, plunderMapInput = false;
     int plunderPointerX = 0, plunderPointerY = 0;
     Graphics::Surface plunderWaterCoverage;
+    bool voodooExterior = false, voodooExteriorInput = false;
+    int voodooPointerX = 0, voodooPointerY = 0;
+    Graphics::Surface voodooWaterCoverage;
     Common::Array<byte> wideCoverage;
     bool compareReady = false;
     const Graphics::Surface *background = nullptr, *overlay = nullptr;

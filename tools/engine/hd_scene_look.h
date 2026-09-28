@@ -70,6 +70,17 @@ struct Settings {
     void set(int room, int c, int value) {
         (roomValid(room) ? rooms[room] : global).set(c, value);
     }
+    bool shadowPositionOverridden(int room) const {
+        return roomValid(room) && (rooms[room].has(kShadowX) || rooms[room].has(kShadowY));
+    }
+    void overrideShadowPosition(int room) {
+        if (!roomValid(room)) return;
+        const int x = get(room, kShadowX), y = get(room, kShadowY);
+        set(room, kShadowX, x); set(room, kShadowY, y);
+    }
+    void resetShadows(int room, bool positionOnly = false) {
+        for (int c = kShadowX; c < (positionOnly ? kShadowY + 1 : kControls); ++c) reset(room, c);
+    }
     void reset(int room, int c) {
         if (roomValid(room)) rooms[room].inherit(c);
         else global.set(c, range(c).neutral);

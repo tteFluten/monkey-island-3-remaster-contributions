@@ -41,9 +41,22 @@ if (getenv("MI3_ENGINE_TEST_INPUT") && ConfMan.hasKey("playtest_session", "comi"
                 HdFilm::state().testTick = key;
                 ++HdFilm::state().revision;
 			} else if (sscanf(command, "wheel %d", &y) == 1) {
+                // SDL2-compat 2.32.72 corrupts injected wheel amounts with the
+                // pointer coordinate. Feed the backend's normal output event
+                // directly, retaining its mouse mapping and multi-notch queue.
+                if (y) {
+                    event.type = y > 0 ? Common::EVENT_WHEELUP : Common::EVENT_WHEELDOWN;
+                    if (!processMouseEvent(event, _mouseX, _mouseY)) return false;
+                    _fakeMouseScroll = event;
+                    _queuedFakeMouseScroll = ABS(y) - 1;
+                    return true;
+                }
+			} else if (sscanf(command, "hold %d %d", &key, &modifiers) >= 1 || sscanf(command, "release %d %d", &key, &modifiers) >= 1) {
                 SDL_Event native = {};
-                native.type = SDL_MOUSEWHEEL;
-                native.wheel.y = y;
+                native.type = command[0]=='h'?SDL_KEYDOWN:SDL_KEYUP;
+                native.key.keysym.sym = (SDL_Keycode)key;
+                native.key.keysym.mod = (SDL_Keymod)modifiers;
+                native.key.state = command[0]=='h'?SDL_PRESSED:SDL_RELEASED;
                 SDL_PushEvent(&native);
 			} else if (sscanf(command, "key %d %d", &key, &modifiers) >= 1) {
 				SDL_Event native = {};

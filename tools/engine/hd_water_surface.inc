@@ -7,15 +7,18 @@ struct HdWaterSurface {
     int room = -1, revision = -1, width = 0, height = 0, scale = 0;
     float reflectionIntercept = 0, reflectionSlope = 0;
     bool valid = false;
+    int maskRevision = -1;
 
     bool prepare(const Graphics::Surface &background, int currentRoom, int currentRevision, int currentScale) {
-        const bool mapped = HdWater::mappedRoom(currentRoom);
+        const bool authored = HdMasks::waterOverride(currentRoom);
+        const bool mapped = authored || HdWater::mappedRoom(currentRoom);
         if ((!HdWater::fullSurface(currentRoom) && !mapped) || currentScale <= 0 ||
             !background.getPixels() || background.w < currentScale || background.h < currentScale ||
             (!mapped && (background.w != 640 * currentScale || background.h != 480 * currentScale)))
             return false;
-        if (pixels == background.getPixels() && room == currentRoom && revision == currentRevision && scale == currentScale)
+        if (pixels == background.getPixels() && room == currentRoom && revision == currentRevision && scale == currentScale && maskRevision == HdMasks::state().revision)
             return valid;
+        maskRevision = HdMasks::state().revision;
         pixels = background.getPixels(); room = currentRoom; revision = currentRevision; scale = currentScale;
         width = background.w / scale; height = background.h / scale;
         depth.resize(width * height); memset(depth.data(), 0, depth.size());
@@ -26,7 +29,9 @@ struct HdWaterSurface {
             background.format.colorToRGB(background.getPixel(x * scale + scale / 2, y * scale + scale / 2), r, g, b);
             // The cannon view's sea starts below its authored horizon. The
             // similarly teal sky and fort must never join its water region.
-            water[y * width + x] = mapped
+            water[y * width + x] = authored
+                ? (HdMasks::waterAt(currentRoom, HdMasks::state().widePainting ? (x + 0.5 + 107) * 1000 / 854 : (x + 0.5) * 1000 / width, (y + 0.5) * 1000 / height, r, g, b) ? 2 : 0)
+                : mapped
                 ? (HdWater::mapped(currentRoom, (x + 0.5) * 1000 / width, (y + 0.5) * 1000 / height, r, g, b) ? 2 : 0)
                 : ((currentRoom != 10 || y >= height * 3 / 8) && HdWater::waterlineColor(r, g, b) ? 1 : 0);
         }

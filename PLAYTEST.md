@@ -922,9 +922,12 @@ inside the oval, with a hard edge and no spread into the surrounding corners.
 No shadow image assets or blur passes are required. These remain the default
 appearance until the shadow controls are adjusted.
 
-Open **U → Tab → Tab** from Scene Look for **Character Shadows**. Use arrows or
-−/+ buttons to adjust, with **Shift** for five steps. **G** switches between
-Global defaults and the current room; changes save immediately in
+Open **M → Shadows** directly, or **U → Tab → Tab** from Scene Look for **Character Shadows**. Use arrows or
+−/+ buttons to adjust, with **Shift** for five steps. **This scene / Global default** selects the editing scope (**G** also switches).
+**Override position for this scene** pins the current X/Y coordinates;
+**Use global position** removes those two overrides without resetting size,
+opacity, or color. **Use global size, color and position** removes all shadow
+overrides for this scene. Changes save immediately in
 `data/color-grades.json` and persist across launches.
 
 | Control | Range | Default |
@@ -942,7 +945,10 @@ room layer. **Backspace** resets one control, **R** resets only the shadow page
 shadows for comparison. Editing a shadow value exits that comparison. Offsets
 move the rendered shadow relative to the feet; actor movement and hit areas stay
 unchanged. The same settings feed both CPU and GPU composition in 4:3 and 16:9.
-These controls were built without running tests or visual validation.
+Validation: `python3 tools/test_actor_shadow.py`, `python3 tools/test_color_grade.py`,
+and `tools/venv/bin/python tools/check_shadow_scopes.py` cover shadow geometry,
+per-control inheritance, the native scope/reset buttons, room changes, display
+ratios, restart persistence, and external-change conflicts using isolated files.
 
 This pass runs beneath native foreground, HD objects, characters, text and the
 cursor, and uses captured native depth masks. It covers eligible shadow-enabled

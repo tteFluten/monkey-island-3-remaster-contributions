@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Check:
-    def __init__(self, output, aspect=169, hd_path=None, color_grades_path=None, engine_path=None, config_overrides=None, allow_window=True):
+    def __init__(self, output, aspect=169, hd_path=None, color_grades_path=None, engine_path=None, config_overrides=None, allow_window=True, save_source=None):
         assert aspect == 169, "Native checks target 16:9 only"
         self.output = output.resolve()
         self.output.mkdir(parents=True, exist_ok=True)
@@ -25,7 +25,7 @@ class Check:
                      'benchmark-start', 'benchmark-stop', 'frames.csv', 'camera-sweep', 'walk-to.txt',
                      'motion-check', 'motion-check.json'):
             (self.output / name).unlink(missing_ok=True)
-        save_source = Path(os.environ.get('MI3_ASPECT_TEST_SAVES', str(ROOT / '.playtest/saves')))
+        save_source = Path(save_source or os.environ.get('MI3_ASPECT_TEST_SAVES', str(ROOT / '.playtest/saves')))
         shutil.copytree(save_source, self.output / 'saves', dirs_exist_ok=True)
         self.config = configparser.ConfigParser(interpolation=None)
         self.config.read(ROOT / '.playtest/scummvm.ini')
@@ -74,7 +74,11 @@ class Check:
 
     def send(self, text):
         p = self.output / 'test-input.txt'
-        p.write_text(text + '\n')
+        # The engine polls concurrently. Publish the complete command at once
+        # so it cannot consume an empty file between open() and write().
+        temporary = p.with_suffix('.tmp')
+        temporary.write_text(text + '\n')
+        temporary.replace(p)
         self.wait(lambda: not p.exists(), text)
         time.sleep(.35)
 
@@ -90,6 +94,22 @@ class Check:
         px, py = round(left + x * h / 480), round(top + y * h / 480)
         self.send(f'down {px} {py}')
         self.send(f'up {px} {py}')
+
+    def mask_button(self, slot):
+        """Use the native menu's actual hit rectangles, including More options."""
+        def control(n):
+            return next((c for c in self.state().get('maskEditor', {}).get('controls', []) if c['slot'] == n), None)
+        self.wait(lambda: control(19), 'scene tools layout')
+        if not control(slot):
+            self.mask_button(19)
+            self.wait(lambda: control(slot), 'expanded scene tools')
+        window = self.window()
+        button = control(slot)
+        canvas = max(854, self.state()['viewportWidth'])
+        height = max(window['height'], window['width'] * 9 / 16)
+        x = (window['width'] - height * canvas / 480) / 2 + (button['x'] + button['width'] / 2) * height / 480
+        y = (window['height'] - height) / 2 + (button['y'] + button['height'] / 2) * height / 480
+        self.send(f'click {round(x)} {round(y)}')
 
     def room(self, room):
         self.wait(lambda: self.state().get('room') == room and (room == 92 or self.state().get('ready')), f'room {room}')
@@ -112,10 +132,12 @@ class Check:
 
     def save_load(self, action, slot, room):
         path = self.output / 'save-load.txt'
-        path.write_text(f'{action} {slot}\n')
+        previous_status = (self.output / 'status.json').stat().st_mtime_ns
+        temporary = path.with_suffix('.tmp')
+        temporary.write_text(f'{action} {slot}\n')
+        temporary.replace(path)
         self.wait(lambda: not path.exists(), 'save/load consumed')
-        consumed_at = time.time_ns()
-        self.wait(lambda: (self.output / 'status.json').stat().st_mtime_ns > consumed_at,
+        self.wait(lambda: (self.output / 'status.json').stat().st_mtime_ns > previous_status,
                   'save/load completed')
         time.sleep(.5)
         self.room(room)

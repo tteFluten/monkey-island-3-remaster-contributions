@@ -31,7 +31,8 @@ class HdRemasterGL {
     bool _hasGrade = false, _attempted = false;
     int _presentedRoom = -1;
     double _sceneFadeStarted = -1;
-    Texture *_fadeBlack = nullptr;
+    Texture *_fadeBlack = nullptr, *_maskOverlay = nullptr;
+    unsigned _maskGeneration = ~0u;
 
     static void upload(Texture *&texture, const Graphics::Surface &pixels, bool linear = true) {
         if (!texture) {
@@ -48,6 +49,19 @@ class HdRemasterGL {
         GL_CALL(glActiveTexture(GL_TEXTURE0));
     }
 public:
+    void drawMasks(Pipeline *normal, Framebuffer *screen, const Common::Rect &rect, bool overlay) {
+        auto &s = HdRemaster::state();
+        if (overlay || !s.maskVisible || !s.maskOverlay.getPixels()) return;
+        if (!_maskOverlay || _maskGeneration != s.maskGeneration) {
+            upload(_maskOverlay, s.maskOverlay); _maskGeneration = s.maskGeneration;
+        }
+        normal->setFramebuffer(screen); normal->activate(); normal->setColor(1,1,1,1);
+        screen->enableScissorTest(false);
+        screen->enableBlend(Framebuffer::kBlendModePremultipliedTransparency);
+        float h=rect.height(), w=h*s.maskOverlay.w/s.maskOverlay.h;
+        normal->drawTexture(*_maskOverlay,rect.left+(rect.width()-w)/2,rect.top,w,h);
+        screen->enableBlend(Framebuffer::kBlendModeOpaque); screen->enableScissorTest(true);
+    }
     bool snapshot(Graphics::Surface &pixels) {
         if (!_canvas || !_lastPipeline || !HdRemaster::state().active) return false;
         HdRemaster::resize(pixels, _canvas->getTexture()->getWidth(), _canvas->getTexture()->getHeight());
@@ -338,6 +352,7 @@ void main() {
         HdRemaster::state().available = true;
     }
     void destroy() {
+        delete _maskOverlay; _maskOverlay = nullptr;
         delete _fadeBlack; _fadeBlack = nullptr;
         HdRemaster::state().available = HdRemaster::state().active = false;
         _lastPipeline = nullptr; _lastScreen = nullptr;
@@ -369,6 +384,9 @@ void main() {
         const int gameW = s.viewportWidth * 3, left = (canvasW - gameW) / 2;
         const bool wideFocus = wide && canvasW == 2560 && s.viewportWidth == 640;
         const bool plunderWater = wideFocus && s.room == 13 && s.plunderMap && s.plunderWaterCoverage.getPixels();
+        const bool voodooWater = wideFocus && s.room == 29 && s.voodooExterior && s.voodooWaterCoverage.getPixels();
+        const bool authoredWater = wideFocus && HdMasks::waterOverride(s.room) && s.authoredWideWaterCoverage.getPixels();
+        const bool fullWidthWater = authoredWater || plunderWater || voodooWater;
         const Math::Vector4d frameRect(float(left)/canvasW, 0, float(gameW)/canvasW, 1);
         const double waterNow = HdRemaster::milliseconds();
         if (_waterRoom != s.room) { _waterRoom = s.room; _waterTime = 0; _waterLast = 0; }
@@ -409,7 +427,7 @@ void main() {
                 _grade.value[8]/100.0f, _grade.value[9]/100.0f));
             bind(_lut, 4);
             if (s.water) {
-                const auto &mask = plunderWater ? s.plunderWaterCoverage : s.waterCoverage;
+                const auto &mask = authoredWater ? s.authoredWideWaterCoverage : voodooWater ? s.voodooWaterCoverage : plunderWater ? s.plunderWaterCoverage : s.waterCoverage;
                 const bool resized = _previousWater.w != mask.w || _previousWater.h != mask.h;
                 if (!_water) _water = new Texture(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE);
                 if (resized || memcmp(_previousWater.getPixels(), mask.getPixels(), mask.pitch * mask.h)) {
@@ -542,7 +560,7 @@ void main() {
                 // Focus spans the full painting; water retains its native boundary mapping.
                 _effect->setUniform("focusRect", Math::Vector4d(0,0,1,1));
                 _effect->setUniform("blurRect", Math::Vector4d(0,0,1,1));
-                _effect->setUniform("coverageRect", plunderWater ? Math::Vector4d(0,0,1,1)
+                _effect->setUniform("coverageRect", fullWidthWater ? Math::Vector4d(0,0,1,1)
                     : Math::Vector4d(-float(left)/gameW,0,float(canvasW)/gameW,1));
                 if (s.dof || s.water) bind(&wide->getGLTexture(), 1);
                 if (s.dof) { bind(_wideBlur[0]->getTexture(), 2); bind(_cover[0]->getTexture(), 3); }
@@ -551,7 +569,7 @@ void main() {
                 _effects->drawTexture(wide->getGLTexture(), 0, 0, canvasW, canvasH);
             }
             _effect->setUniform1f("backgroundOnly", 0);
-            _effect->setUniform("coverageRect", plunderWater ? frameRect : Math::Vector4d(0,0,1,1));
+            _effect->setUniform("coverageRect", fullWidthWater ? frameRect : Math::Vector4d(0,0,1,1));
             _effect->setUniform("focusRect", wideFocus ? frameRect : Math::Vector4d(0,0,1,1));
             if (s.dof || s.water) {
                 bind(_background, 1);
@@ -628,7 +646,11 @@ void main() {
         // This includes background, side extensions, costumes and scene UI.
         // Keep cached pixels untouched; restore white before drawing the cursor.
         normal->setColor(sceneGain, sceneGain, sceneGain, 1.0f);
-        normal->drawTexture(*_canvas->getTexture(), x, gameRect.top, w, h);
+        if(s.maskVisible&&s.maskEditing&&s.maskZoom>1&&!overlay){
+            const double width=s.viewportWidth>640?s.viewportWidth:854;
+            normal->drawTexture(*_canvas->getTexture(),x+(w-w*s.maskZoom)*.5+(width*.5-s.maskFocusX)*h/480*s.maskZoom,
+                gameRect.top+(h-h*s.maskZoom)*.5+(240-s.maskFocusY)*h/480*s.maskZoom,w*s.maskZoom,h*s.maskZoom);
+        }else normal->drawTexture(*_canvas->getTexture(), x, gameRect.top, w, h);
         normal->setColor(1.0f, 1.0f, 1.0f, 1.0f);
         screen->enableScissorTest(true);
         return true;
@@ -637,6 +659,7 @@ void main() {
 #else
 class HdRemasterGL {
 public:
+    void drawMasks(Pipeline *, Framebuffer *, const Common::Rect &, bool) {}
     bool snapshot(Graphics::Surface &) { return false; }
     void drawExitFade(Pipeline *, Framebuffer *, int, int, bool) {}
     void beginFrame() {}
