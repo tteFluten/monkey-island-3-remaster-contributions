@@ -1,6 +1,27 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const tools=require('../sequence-tools.js');
 const frames=[10,2,0].map(n=>({id:'walk'+n,group:'ship/walk_frame',category:'ship',name:'walk_frame_'+n,number:n,has_reference:true,revision:'r'+n}));
+test('sea selection includes animated water frames only',()=>{
+  const frames=['LFLF_0011_AKOS_0051_frame_0','LFLF_0011_AKOS_0054_frame_87','LFLF_0009_AKOS_0030_frame_0','0011_background','0011_object_0000'].map(name=>({name}));
+  assert.deepEqual(tools.waterFrames(frames),frames.slice(0,2));
+});
+test('batch application uses newest results and protects edited assets and warning results',()=>{
+  const selected=['a','b','c','d','e','f','g','h'].map(id=>({id,revision:'current'}));
+  const job=(asset_id,status='ready',extra={})=>({id:asset_id+'-job',asset_id,status,created_at:1,base_revision:'current',image:'test.png',...extra});
+  const jobs=[job('a'),job('b'),job('b','running',{created_at:2}),job('c','ready',{base_revision:'old'}),job('d','ready',{quality:{passed:false}}),job('e','applied'),job('f','ready',{image:null}),job('g','failed')];
+  const rows=tools.results(selected,jobs);
+  assert.deepEqual(rows.filter(r=>!r.reason).map(r=>r.frame.id),['a']);
+  assert.equal(rows[1].reason,'En proceso');assert.equal(rows[2].reason,'Cambió la versión en uso');
+  assert.deepEqual(tools.results(selected,jobs,true).filter(r=>!r.reason).map(r=>r.frame.id),['a','d']);
+  assert.equal(rows[7].reason,'Sin generación');
+});
+test('unedited catalog frames use the generation revision; legacy results without it are excluded',()=>{
+  const frames=[{id:'base',revision:null},{id:'legacy',revision:null}];
+  const jobs=frames.map(f=>({asset_id:f.id,status:'ready',image:'test.png',created_at:1,base_revision:f.id==='base'?'original-hash':undefined}));
+  const rows=tools.results(frames,jobs);
+  assert.equal(rows[0].reason,'');assert.equal(rows[0].frame.revision??rows[0].job.base_revision,'original-hash');
+  assert.equal(rows[1].reason,'Sin revisión de origen');
+});
 test('a filtered match selects the complete resource in numeric order, never another collection',()=>{
   const other={...frames[0],id:'other',category:'water'};
   const groups=tools.groups([...frames,other],[frames[0]]);

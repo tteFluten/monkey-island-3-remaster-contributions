@@ -1,6 +1,62 @@
 'use strict';
 // A sequence is the existing costume/resource group, not an inferred animation script.
 const SequenceTools = {
+  waterFrames(frames){return frames.filter(f=>/^LFLF_0011_.*_frame_\d+$/i.test(f.name));},
+  results(frames,jobs,includeWarnings=false){
+    const newest=new Map();
+    for(const job of [...jobs].sort((a,b)=>b.created_at-a.created_at))if(!newest.has(job.asset_id))newest.set(job.asset_id,job);
+    return frames.map(frame=>{
+      const job=newest.get(frame.id);
+      const reason=!job?'Sin generación':job.status==='applied'?'Ya aplicado':job.status!=='ready'?(['queued','running'].includes(job.status)?'En proceso':'Falló'):!job.image?'Sin imagen':!job.base_revision?'Sin revisión de origen':frame.revision!=null&&job.base_revision!==frame.revision?'Cambió la versión en uso':job.quality?.passed===false&&!includeWarnings?'Con alertas · revisar':'';
+      return {frame,job,reason};
+    });
+  },
+  async refreshAssets(ids){
+    for(let i=0;i<ids.length;i+=60)LiveAssets.merge(await api('/api/live-state?ids='+ids.slice(i,i+60).join(',')));
+  },
+  async reviewResults(frames){
+    const ids=new Set(frames.map(f=>f.id)),dialog=document.createElement('dialog');dialog.className='sq-batch-dialog';
+    dialog.setAttribute('aria-label','Aplicar resultados de la selección');
+    dialog.innerHTML='<header><h2>Resultados de la selección</h2><button data-close>Cerrar</button></header><div class="sq-batch-body"><p>Última generación de cada cuadro. Aplicar la pone en uso y conserva el historial. Los cuadros editados después de generar se omiten.</p><label><input type="checkbox" data-warnings> Incluir resultados con alertas visuales</label><label><input type="checkbox" data-approve> Aprobar también los resultados aplicados</label><p data-summary role="status"></p><div data-results style="max-height:45vh;overflow:auto"></div><p data-progress role="status"></p></div><footer><button data-refresh>Actualizar</button><button data-apply class="accent" disabled>Aplicar resultados</button></footer>';
+    const q=k=>dialog.querySelector('[data-'+k+']');let rows=[],busy=false,timer;
+    const render=()=>{
+      const eligible=rows.filter(r=>!r.reason);q('summary').textContent=`${eligible.length} listos para aplicar · ${rows.length-eligible.length} omitidos · ${rows.length} seleccionados`;
+      q('apply').disabled=busy||!eligible.length;q('apply').textContent=`Aplicar ${eligible.length} resultados`;
+      q('results').replaceChildren(...rows.map(({frame,job,reason})=>{
+        const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;gap:12px;padding:8px;border-bottom:1px solid #333';
+        if(job?.image){const img=document.createElement('img');img.src=job.image;img.alt='';img.style.cssText='width:64px;height:56px;object-fit:contain';row.append(img);}
+        const label=document.createElement('span');label.textContent=frame.name+' · '+(reason||'Listo para aplicar');row.append(label);return row;
+      }));
+    };
+    const refresh=async()=>{
+      clearTimeout(timer);if(busy||!dialog.isConnected)return;
+      try{await this.refreshAssets([...ids]);const result=await api('/api/imagelab/jobs');if(!dialog.isConnected)return;
+        rows=this.results(state.frames.filter(f=>ids.has(f.id)),result.jobs,q('warnings').checked);render();
+      }catch(error){q('progress').textContent=error.message;}
+      if(dialog.isConnected)timer=setTimeout(refresh,3000);
+    };
+    q('close').onclick=()=>{if(busy)return;clearTimeout(timer);dialog.close();dialog.remove();};
+    dialog.addEventListener('cancel',e=>{if(busy)e.preventDefault();else{clearTimeout(timer);dialog.remove();}});
+    q('refresh').onclick=refresh;q('warnings').onchange=refresh;
+    q('apply').onclick=async()=>{
+      if(busy)return;busy=true;clearTimeout(timer);
+      const targets=rows.filter(r=>!r.reason).map(r=>({id:r.frame.id,name:r.frame.name,revision:r.frame.revision??r.job.base_revision,job:r.job.id})),approve=q('approve').checked;
+      for(const el of dialog.querySelectorAll('button,input'))el.disabled=true;
+      let applied=0,approved=0;const errors=[];
+      try{for(const target of targets){
+        q('progress').textContent=`Aplicando ${applied+errors.length+1}/${targets.length}…`;
+        try{const saved=await api('/api/variants/select',{job_id:target.job,revision:target.revision});applied++;
+          if(approve){await api('/api/imagelab/approve',{id:target.id,revision:saved.revision});approved++;}
+        }catch(error){errors.push(target.name+': '+error.message);}
+        try{await this.refreshAssets([target.id]);}catch{LiveAssets.request([target.id]);}
+      }}finally{
+        busy=false;for(const el of dialog.querySelectorAll('button,input'))el.disabled=false;
+        q('progress').textContent=`${applied} aplicados${approve?' · '+approved+' aprobados':''} · ${errors.length} errores. ${errors.join(' · ')}`;
+        await refresh();
+      }
+    };
+    document.body.append(dialog);dialog.showModal();await refresh();
+  },
   key(frame){return JSON.stringify([frame.category||'',frame.group||frame.id]);},
   groups(all,filtered){
     const matches=new Set(filtered.map(f=>f.id)),groups=new Map();

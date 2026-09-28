@@ -104,17 +104,19 @@ const assetGrid = (() => {
     try{for(const request of requests){
       if(batchStop)break;
       report(`${label} · enviando ${sent+errors.length+1}/${requests.length}`);
-      try{await api(request.url,request.body);sent++;}catch(error){errors.push(request.name+': '+error.message);}
+        try{const job=await api(request.url,request.body);sent++;if(job.asset_id){imageLabAssetJobs.set(job.asset_id,job);window.dispatchEvent(new Event('imagelab-assets'));LiveAssets.request([job.asset_id]);}}catch(error){errors.push(request.name+': '+error.message);}
     }}finally{
       batchSending=false;stop.hidden=true;
-      report(`${sent} encolados · ${errors.length} errores${batchStop?' · envío detenido':''}. Resultados en Versiones y Cola.`);
-      output.title=errors.join('\n');updateBatchControls();
+        report(`${sent} encolados · ${errors.length} errores${batchStop?' · envío detenido':''}. Al terminar, usá Aplicar resultados con esta selección.`);
+        output.title=errors.join('\n');updateBatchControls();
+        LiveAssets.request(requests.map(r=>r.body.id));
     }
     return {sent,errors};
   }
-  function processSelection(technique){
-    if(batchSending||!picked.size)return;
-    const frames=state.frames.filter(f=>picked.has(f.id));
+    function processSelection(technique){
+      if(batchSending||!picked.size)return;
+      const frames=state.frames.filter(f=>picked.has(f.id));
+      if(technique==='apply'){SequenceTools.reviewResults(frames).catch(error=>imageLabNotice(error.message));return;}
     if(technique==='wonder'){
       const {requests,skipped}=SequenceTools.plan(frames,{technique:'upscale',model:'Wonder 3.5 High + Bria'},imageLabApprovals,imageLabAssetJobs);
       if(!requests.length){panel.querySelector('[data-batch-status]').textContent=`No hay cuadros para enviar: ${skipped.busy} en proceso · ${skipped.original} sin original.`;return;}
@@ -381,6 +383,12 @@ const assetGrid = (() => {
     selectionBar.querySelector('[data-select-visible]').onclick=()=>pickMany(visibleIds);
     selectionBar.querySelector('[data-select-all]').onclick=()=>pickMany(listedIds());
     selectionBar.querySelector('[data-selection-clear]').onclick=()=>clearSelection();
+    const waterButton=ReviewUI.button('Seleccionar animaciones del mar','layers',()=>{
+      const frames=SequenceTools.waterFrames(state.frames);if(!frames.length){imageLabNotice('No hay cuadros de agua en el catálogo.');return;}
+      clearSelection();sequenceScope=null;sequenceReturn=null;viewMode='sequences';search.value='';collection.value=frames[0].category;filter.value='all';order.value='name';
+      panel.querySelector('[data-problem]').value='';panel.querySelector('[data-similarity]').value='100';panel.querySelector('[data-edge-filter]').value='all';panel.querySelector('[data-preset]').value='all';
+      rebuild();pickMany(frames.map(f=>f.id));fit();
+    },'');waterButton.append(document.createTextNode('Animaciones del mar'));selectionBar.querySelector('.ab-selection-options').prepend(waterButton);
     canvas.setAttribute('aria-label','Mesa de assets. Arrastrar para desplazar. Casillas o Ctrl+clic para seleccionar; Shift para un rango. Flechas para recorrer, espacio para marcar, Enter para comparar.');
     // Both batch actions keep progress visible, even with advanced controls folded.
     const batchStatus=quick.querySelector('[data-batch-status]');batchStatus.textContent='';
@@ -397,7 +405,7 @@ const assetGrid = (() => {
     };
     quick.append(panel.querySelector('[data-batch-stop]'));
     const selectionActions=document.createElement('div');selectionActions.className='ab-selection-actions';
-    for(const [key,label,icon] of [['wonder','Generar · Wonder ×4 → Bria','wand-sparkles'],['bria','Alpha','scan-line'],['clean','Bordes','scissors'],['upscale','Avanzado','sliders-horizontal']]){
+    for(const [key,label,icon] of [['wonder','Generar · Wonder ×4 → Bria','wand-sparkles'],['apply','Aplicar resultados','check'],['bria','Alpha','scan-line'],['clean','Bordes','scissors'],['upscale','Avanzado','sliders-horizontal']]){
       const button=ReviewUI.button(label,icon,()=>processSelection(key),'');button.dataset.selectionAction=key;button.append(document.createTextNode(label));button.hidden=true;
       if(key==='wonder'){button.className='accent';button.title='Generar selección desde los originales · Wonder ×4 y Bria · consume créditos';}
       selectionActions.append(button);
