@@ -19,12 +19,13 @@ from functools import lru_cache
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 from imagelab import ImageLab
+from live_updates import ChangeFeed
 
 PNG = b'\x89PNG\r\n\x1a\n'
 MAX_BODY = 48 * 1024 * 1024
 
 
-@lru_cache(maxsize=192)
+@lru_cache(maxsize=1024)
 def thumbnail(path, modified, reference):
     data = Path(path).read_bytes()
     png_size(data)
@@ -94,7 +95,9 @@ class Workshop:
         self.root = root.resolve()
         self.store = self.root / '.context' / 'sprite-painter'
         self.frames = {}
+        self.catalog_cache = {}
         self.lock = threading.RLock()
+        self.changes = ChangeFeed()
         self.reload()
 
     def register(self, path, category, name=None, dimensions=None):
@@ -110,11 +113,13 @@ class Workshop:
         self.frames[id_] = dict(id=id_, path=relative, name=stem,
                                group=category + '/' + group, category=category,
                                number=index, dimensions=dimensions)
+        self.catalog_cache.pop(id_,None)
         return id_
 
     def reload(self):
         with self.lock:
             self.reference.cache_clear()
+            self.catalog_cache.clear()
             self.frames = {}
             manifest = self.root / 'assets' / 'manifest.json'
             review_file = self.root / 'assets/metadata/artwork-review.json'
@@ -201,6 +206,27 @@ class Workshop:
         p = self.store / 'edits' / (id_ + '.json')
         return json.loads(p.read_text()) if p.exists() else {}
 
+    def catalog_frame(self, id_):
+        with self.lock:
+            frame=self.frame(id_);draft=self.draft(id_)
+            try:
+                stat=draft.stat();edited=True;path=draft
+            except FileNotFoundError:
+                edited=False;path=self.original(id_)
+                try:stat=path.stat()
+                except FileNotFoundError:stat=None
+            image_version=f'{stat.st_mtime_ns}-{stat.st_size}' if stat else 'missing'
+            stamp=(edited,image_version)
+            cached=self.catalog_cache.get(id_)
+            if cached and cached[0]==stamp:return dict(cached[1])
+            meta=self.metadata(id_) if edited else {}
+            variant=meta.get('selected_variant') or {};ref=self.reference(id_)
+            result=dict(frame,edited=edited,revision=(meta.get('revision') or sha(path.read_bytes())) if edited else None,thumbnail_version=image_version,
+                edge_cleaned=variant.get('operation')=='local-alpha' or variant.get('model','').startswith('Limpieza de borde'),
+                has_reference=ref is not None,reference_kind='original-preparado' if ref and 'topaz-cleaned' in ref.parts else 'original')
+            self.catalog_cache[id_]=(stamp,result)
+            return dict(result)
+
     def open(self, id_):
         with self.lock:
             original = self.original(id_).read_bytes()
@@ -251,6 +277,8 @@ class Workshop:
             if self.frame(id_)['name'].startswith('0003_') and self.frame(id_)['name'].endswith('_0000'):
                 from inventory_states import sync
                 sync(self,id_)
+            self.catalog_cache.pop(id_,None)
+            self.changes.publish(id_)
             return dict(revision=revision, saved=str(previous), offset=offset)
 
     def restore(self, body):
@@ -278,22 +306,44 @@ class Workshop:
             if path.exists() and path.read_bytes() != data:
                 raise Conflict('Ya existe un PNG distinto con ese nombre en este lote.')
             atomic(path, data)
-            return dict(id=self.register(path, 'Importados · ' + session, dimensions=list(size)))
+            id_=self.register(path, 'Importados · ' + session, dimensions=list(size))
+            self.changes.publish(id_)
+            return dict(id=id_)
 
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def send(self, status, value, mime='application/json'):
+    def send(self, status, value, mime='application/json', cache_control='no-store'):
         data = json.dumps(value, ensure_ascii=False).encode() if mime == 'application/json' else value
         self.send_response(status)
         self.send_header('Content-Type', mime)
         self.send_header('Content-Length', str(len(data)))
-        self.send_header('Cache-Control', 'no-store')
+        self.send_header('Cache-Control', cache_control)
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.end_headers()
         self.wfile.write(data)
+
+    def stream_changes(self):
+        self.send_response(200)
+        self.send_header('Content-Type','text/event-stream')
+        self.send_header('Cache-Control','no-cache')
+        self.send_header('Connection','close')
+        self.end_headers()
+        cursor=self.headers.get('Last-Event-ID')
+        try:
+            self.wfile.write(b'retry: 1000\n\n');self.wfile.flush()
+            while True:
+                change=self.server.workshop.changes.read(cursor)
+                if change:
+                    cursor=change['cursor']
+                    packet=f'id: {cursor}\nevent: change\ndata: {json.dumps(change)}\n\n'.encode()
+                else:packet=b': keepalive\n\n'
+                self.wfile.write(packet);self.wfile.flush()
+        except (BrokenPipeError,ConnectionError,OSError):
+            pass
+        self.close_connection=True
 
     def trusted(self):
         expected = f'127.0.0.1:{self.server.server_port}'
@@ -311,6 +361,26 @@ class Handler(BaseHTTPRequestHandler):
             w = self.server.workshop
             if parsed.path == '/api/health':
                 self.send(200, dict(app='monkey-sprite-painter', root=str(w.root)))
+            elif parsed.path == '/api/events':
+                self.stream_changes()
+            elif parsed.path == '/api/live-state':
+                ids=list(dict.fromkeys(args.get('ids',[''])[0].split(','))) if 'ids' in args else list(w.frames)
+                for id_ in ids:w.frame(id_)
+                lab=self.server.imagelab
+                # Same lock order as accepting a variant; never publish a half-saved image.
+                with lab.lock,w.lock:
+                    approvals=lab.approvals()
+                    jobs=lab.list(assets=ids)
+                    wanted=set(ids)
+                    changed=w.changes.read(args['since'][0],0) if 'since' in args and 'ids' not in args else None
+                    frame_ids=ids
+                    if 'since' in args and 'ids' not in args and not (changed and changed.get('reset')):
+                        frame_ids=[id_ for id_ in (changed or {}).get('ids',[]) if id_ in wanted]
+                    snapshot=dict(ids=ids,full='ids' not in args,
+                        cursor=w.changes.cursor(),frames=[w.catalog_frame(id_) for id_ in frame_ids],
+                        approvals={id_:approvals.get(id_) for id_ in ids},
+                        jobs=[job for job in jobs if job['asset_id'] in wanted])
+                self.send(200,snapshot)
             elif parsed.path == '/api/imagelab/status':
                 self.send(200, self.server.imagelab.status())
             elif parsed.path == '/api/deliveries':
@@ -344,20 +414,19 @@ class Handler(BaseHTTPRequestHandler):
             elif parsed.path == '/api/asset-audit':
                 self.send(200,self.server.audit.snapshot())
             elif parsed.path == '/api/catalog':
-                frames=[]
-                for f in w.frames.values():
-                    ref=w.reference(f['id'])
-                    variant=w.metadata(f['id']).get('selected_variant',{})
-                    edge_cleaned=variant.get('operation')=='local-alpha' or variant.get('model','').startswith('Limpieza de borde')
-                    frames.append(dict(f, edited=w.draft(f['id']).exists(), revision=w.revision(f['id']), edge_cleaned=edge_cleaned,has_reference=ref is not None,
-                        reference_kind='original-preparado' if ref and 'topaz-cleaned' in ref.parts else 'original'))
-                self.send(200, dict(frames=frames, root=str(w.root), store=str(w.store)))
+                cursor=w.changes.cursor()
+                frames=[w.catalog_frame(id_) for id_ in list(w.frames)]
+                self.send(200, dict(frames=frames, root=str(w.root), store=str(w.store),cursor=cursor))
             elif parsed.path == '/api/thumbnail':
                 id_ = args['id'][0]
                 reference = args.get('reference', ['0'])[0] == '1'
-                path = w.reference(id_) if reference else w.draft(id_) if w.draft(id_).exists() else w.original(id_)
-                if path is None: return self.send(404, dict(error='No hay un original asociado por nombre exacto.'))
-                self.send(200, thumbnail(str(path), path.stat().st_mtime_ns, reference), 'image/png')
+                with w.lock:
+                    path = w.reference(id_) if reference else w.draft(id_) if w.draft(id_).exists() else w.original(id_)
+                    if path is None: return self.send(404, dict(error='No hay un original asociado por nombre exacto.'))
+                    stat=path.stat();version=f'{stat.st_mtime_ns}-{stat.st_size}'
+                    cache_control='private, max-age=31536000, immutable' if args.get('v',[''])[0]==version else 'no-store'
+                    data=thumbnail(str(path), stat.st_mtime_ns, reference)
+                self.send(200,data,'image/png',cache_control)
             elif parsed.path == '/api/open':
                 self.send(200, w.open(args['id'][0]))
             elif parsed.path == '/api/image':
@@ -384,7 +453,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send(200, data, 'image/png')
             elif parsed.path == '/confite/':
                 self.send(200, (Path(__file__).parent / 'confite' / 'index.html').read_bytes(), 'text/html; charset=utf-8')
-            elif parsed.path in ('/', '/app.js', '/style.css', '/confite-link.js', '/confite-workshop.css', '/workshop-theme.css', '/asset-browser.js', '/imagelab-ui.js', '/asset-review.js', '/deliveries-ui.js'):
+            elif parsed.path in ('/', '/app.js', '/style.css', '/confite-link.js', '/confite-workshop.css', '/workshop-theme.css', '/asset-browser.js', '/imagelab-ui.js', '/asset-review.js', '/review-ui.js', '/lucide-icons.json', '/deliveries-ui.js', '/live-assets.js', '/sequence-tools.js'):
                 names = {'/': ('index.html', 'text/html; charset=utf-8'),
                          '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
                          '/confite-link.js': ('confite-link.js', 'text/javascript; charset=utf-8'),
@@ -392,8 +461,12 @@ class Handler(BaseHTTPRequestHandler):
                          '/workshop-theme.css': ('workshop-theme.css', 'text/css; charset=utf-8'),
                          '/asset-browser.js': ('asset-browser.js', 'text/javascript; charset=utf-8'),
                          '/asset-review.js': ('asset-review.js', 'text/javascript; charset=utf-8'),
+                         '/review-ui.js': ('review-ui.js', 'text/javascript; charset=utf-8'),
+                         '/lucide-icons.json': ('lucide-icons.json', 'application/json; charset=utf-8'),
                          '/deliveries-ui.js': ('deliveries-ui.js', 'text/javascript; charset=utf-8'),
                          '/imagelab-ui.js': ('imagelab-ui.js', 'text/javascript; charset=utf-8'),
+                         '/live-assets.js': ('live-assets.js', 'text/javascript; charset=utf-8'),
+                         '/sequence-tools.js': ('sequence-tools.js', 'text/javascript; charset=utf-8'),
                          '/style.css': ('style.css', 'text/css; charset=utf-8')}
                 name, mime = names[parsed.path]
                 self.send(200, (Path(__file__).parent / name).read_bytes(), mime)
@@ -419,6 +492,8 @@ class Handler(BaseHTTPRequestHandler):
             elif self.path == '/api/upscale/jobs': result = self.server.imagelab.create_upscale(body)
             elif self.path == '/api/asset-audit': result = self.server.audit.start(body.get('ids',list(self.server.workshop.frames)),bool(body.get('strict',False)))
             elif self.path == '/api/variants/refine-alpha': result = self.server.imagelab.refine_alpha(body)
+            elif self.path == '/api/variants/extract-alpha': result = self.server.imagelab.extract_variant_alpha(body)
+            elif self.path == '/api/variants/import': result = self.server.imagelab.import_variant(body)
             elif self.path == '/api/variants/select': result = self.server.imagelab.select_variant(body)
             elif self.path == '/api/import': result = self.server.workshop.import_png(body)
             elif self.path == '/api/imagelab/jobs': result = self.server.imagelab.create(body)

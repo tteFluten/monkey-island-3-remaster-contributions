@@ -63,6 +63,34 @@ Desde su revisión se puede aplicar y editar en Confite, o elegir **Limpiar este
 escalado con ImageLab…**. Ese envío usa el escalado y el original intacto como
 referencia de pose, paleta y línea; no garantiza fidelidad artística.
 
+Para generar solo el dibujo, elegí un modelo **ImageLab**, **Base: Original**, tu
+prompt y **Alpha después · conservar fondo** (predeterminado). Hace una sola
+generación, conserva el fondo y no aplica la máscara original. El resultado se
+adapta al tamaño del asset y queda en el historial como **alpha pendiente**;
+el control de fidelidad se pospone hasta tener transparencia.
+Al seleccionar ese resultado, **Extraer alpha · ImageLab** crea otra versión
+sin volver a generar el color. Esa extracción consume ImageLab por separado.
+También podés resolver la transparencia manualmente en Confite. El modo
+**Extraer alpha con ImageLab** hace ambas etapas automáticamente si lo elegís.
+
+La comparación separa **Versiones** y **Generar**. En Generar elegí la técnica
+(escalado o redibujo con prompt) y después el motor/modelo. La tarjeta azul
+**BASE** identifica la imagen que se modifica; **REFERENCIA · original** muestra
+la guía fija de pose, paleta y trazo. Seleccionar una versión también permite
+usarla como base de un redibujo.
+
+Las herramientas se agrupan en **Bordes**, **Transparencia** y **Contornos**.
+Recortar y oscurecer son acciones independientes; Ajustes controla cantidad y
+protecciones. Quitar magenta no hereda recorte ni tinte. ImageLab y Bria pueden
+extraer alpha de cualquier versión seleccionada, conservando RGB y dimensiones;
+son procesos pagos separados. Las técnicas locales no consumen créditos.
+
+Cada versión terminada tiene botones para descargar PNG y copiar la imagen al
+portapapeles (requiere soporte/permisos del navegador). **Subir PNG** o arrastrar
+archivos sobre la comparación agrega versiones sin reemplazar el asset en uso.
+Admite hasta 16 PNG por carga, 32 MB por archivo, con las dimensiones exactas que
+indica la zona de importación; no deforma ni recorta imágenes silenciosamente.
+
 El botón **Historial** dentro de Confite guarda primero el trabajo actual, muestra
 versiones PNG con vista previa y restaura también el offset de esa versión.
 Restaurar conserva el PNG reemplazado como otra versión. El primer guardado
@@ -70,8 +98,52 @@ también respalda el master. Las capas requieren guardar el proyecto `.confite`.
 Original y magenta son capas de referencia: aunque estén visibles, no se incluyen
 en **Guardar borrador** del taller.
 
+## Selección de assets y acciones por lote
+
+En la grilla, las casillas seleccionan assets sin aprobarlos. **Shift + clic**
+marca un rango, **Ctrl/Cmd + clic** alterna un asset y **Seleccionar** permite
+marcar con clic sobre cualquier tarjeta. Arrastrar sigue moviendo el canvas.
+**Visibles** suma los que están en pantalla; **Todo el listado** o **Ctrl/Cmd+A**
+suma todos los filtrados. **Espacio** marca el asset recorrido con las flechas.
+**Quitar selección** deja el lote vacío; **Terminar selección** o **Esc** vuelve
+a las acciones sobre el listado. Abrir un detalle conserva la selección.
+
+Mientras hay modo de selección, aprobar, limpiar, rehacer y analizar listado
+sólo toman los marcados. Los conteos excluyen los no elegibles para cada acción.
+Cambiar filtros conserva la selección e indica cuántos quedaron fuera del filtro.
+Ninguna selección vacía se convierte automáticamente en un lote de todo el listado.
+
+La grilla recibe cambios en vivo del servidor: generación terminada, versión
+aplicada, guardado y aprobación. Se sincroniza también entre ventanas, conservando
+selección, filtros, zoom y desplazamiento. Las miniaturas se cachean por versión;
+una nueva imagen cambia su URL. Si se corta la conexión, se recupera el estado al
+reconectar y se usa una consulta periódica de respaldo. Una generación pendiente
+de revisión no reemplaza automáticamente la versión en uso.
+
 ## Pruebas automatizadas
 
 `python -m unittest discover -s tests -v`
+
+`node --test tests/test-asset-selection.cjs tests/test-imagelab-ui.cjs tests/test-live-assets.cjs tests/test-sequences.cjs`
+
+## Secuencias y lotes
+
+En **Secuencias**, cada tarjeta reúne los cuadros del mismo traje/recurso, ordenados
+por número. No reconstruye las acciones de los scripts del juego. Marcar una
+secuencia incluye todos sus cuadros, incluso los ocultos por un filtro. **Cuadros**
+abre el grupo; **Secuencias** vuelve conservando filtros y posición.
+
+La selección muestra **Generar · Wonder ×4 → Bria**, **Alpha**, **Bordes**,
+**Avanzado** y **Aprobar selección**. Generar envía directamente los originales a
+Wonder y Bria; consume créditos. Incluye los seleccionados aprobados, omite los
+que están en proceso o no tienen original. Alpha/Bordes usan la versión en uso de
+cada cuadro; Avanzado permite cambiar motor, prompt y base. Los lotes crean
+versiones para revisar y no las aplican automáticamente. Detener envío conserva
+los trabajos que ya entraron en la cola.
+
+Abrir un asset desde la grilla crea otra pestaña, preservando posición, filtros y
+selección de la grilla. El enlace `?asset=…&version=…` permite recargar el detalle.
+En el detalle, **Generar** envía a Wonder ×4 → Bria; **Avanzado** contiene los demás
+modelos y la generación con prompt.
 
 El servidor escucha solo en 127.0.0.1, valida rutas, origen, dimensiones y checksums PNG, guarda de forma atómica y verifica revisiones para evitar sobrescrituras entre ventanas.

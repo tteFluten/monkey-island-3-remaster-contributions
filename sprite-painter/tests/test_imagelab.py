@@ -130,6 +130,60 @@ class ImageLabTests(unittest.TestCase):
         self.assertFalse(self.work.draft(self.id).exists())
         self.assertEqual(lab.read(source['id'])['mask_method'],'simplified-contour-v1')
 
+    def test_generate_without_alpha_then_extract_separately(self):
+        from PIL import ImageDraw
+        lab=self.lab();calls=[]
+        self.work.save(dict(id=self.id,revision=None,png=data_url(png(color=(255,0,255,255)))))
+        before=self.work.draft(self.id).read_bytes()
+        def worker(mode,folder=None):
+            if mode=='probe': return self.fake_worker(mode)
+            calls.append(mode)
+            if mode=='alpha':
+                request=json.loads((folder/'alpha-request.json').read_text())
+                self.assertEqual(request['model'],'test-model')
+                mask=Image.new('L',(16,16));ImageDraw.Draw(mask).rectangle((3,3,12,12),fill=255)
+                mask.save(folder/'alpha-image.bin',format='PNG')
+                return dict(ready=True)
+            return self.fake_worker(mode,folder)
+        with patch.object(lab,'worker',side_effect=worker):
+            source=lab.create(dict(id=self.id,prompt='Mi instrucción personalizada',alpha_mode='none',preserve_alpha=True,style_id=''))
+            self.complete(lab)
+            source=lab.read(source['id']);folder=lab.folder(source['id'])
+            self.assertEqual(source['status'],'ready')
+            self.assertEqual(calls,['generate'])
+            self.assertEqual(source['base_kind'],'original')
+            self.assertEqual(source['alpha_mode'],'none')
+            self.assertFalse(source['preserve_alpha'])
+            self.assertTrue(source['quality']['deferred'])
+            self.assertIsNone(source['quality']['passed'])
+            self.assertFalse((folder/'alpha-request.json').exists())
+            request=json.loads((folder/'request.json').read_text())
+            self.assertIn('Mi instrucción personalizada',request['prompt'])
+            with Image.open(folder/'input.png') as base:
+                self.assertEqual(base.getpixel((0,0)),(240,170,80,180))
+            with Image.open(folder/'candidate.png') as result:
+                self.assertEqual(result.size,(8,8))
+                self.assertEqual(result.getpixel((0,0)),(240,170,80,255))
+            color_bytes=(folder/'candidate.png').read_bytes()
+            alpha=lab.alpha_variant(source['id']);self.complete(lab)
+        alpha=lab.read(alpha['id'])
+        self.assertEqual(calls,['generate','alpha'])
+        self.assertEqual(alpha['status'],'ready')
+        self.assertEqual(alpha['parent_job'],source['id'])
+        self.assertFalse(alpha['quality'].get('deferred',False))
+        with Image.open(lab.folder(alpha['id'])/'candidate.png') as result:
+            self.assertEqual(result.getchannel('A').getextrema(),(0,255))
+            self.assertEqual(result.getpixel((4,4))[:3],(240,170,80))
+        self.assertEqual((folder/'candidate.png').read_bytes(),color_bytes)
+        self.assertEqual(self.work.draft(self.id).read_bytes(),before)
+
+    def test_invalid_alpha_mode_is_rejected_before_provider_access(self):
+        lab=self.lab()
+        with patch.object(lab,'worker') as worker:
+            with self.assertRaisesRegex(ValueError,'transparencia'):
+                lab.create(dict(id=self.id,prompt='Remaster',alpha_mode='invalid'))
+            worker.assert_not_called()
+
     def test_prepared_canvas_round_trip_preserves_rectangular_placement(self):
         import base64
         asset=self.work.import_png(dict(name='wide_frame_0.png',png=data_url(png(28,12,(30,60,90,255))),batch='test'))['id']

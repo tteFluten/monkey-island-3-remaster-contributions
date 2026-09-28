@@ -29,6 +29,7 @@ class ImageLab:
         self.probe_lock = threading.Lock()
         self.cached = None
         self.active = None
+        self.job_cache = {}
 
     def resume(self):
         with self.lock:
@@ -83,9 +84,18 @@ class ImageLab:
         if not isinstance(id_, str) or not re.fullmatch(r'[a-f0-9]{24}', id_): raise ValueError('Trabajo desconocido.')
         return self.root / id_
 
-    def read(self, id_):
+    def record(self, id_):
         folder = self.folder(id_)
-        result = json.loads((folder / 'job.json').read_text(encoding='utf-8'))
+        path=folder/'job.json';stat=path.stat();signature=(stat.st_mtime_ns,stat.st_size)
+        cached=self.job_cache.get(id_)
+        if cached and cached[0]==signature:result=dict(cached[1])
+        else:
+            result=json.loads(path.read_text(encoding='utf-8'))
+            self.job_cache[id_]=(signature,dict(result))
+        return result
+
+    def read(self, id_):
+        folder=self.folder(id_);result=self.record(id_)
         if result['status'] in ('ready', 'applied'):
             result['image'] = '/api/imagelab/image?id=' + id_
             result['raw_image'] = result['image'] + '&raw=1'
@@ -95,13 +105,17 @@ class ImageLab:
 
     def write(self, job):
         self.atomic_write(self.folder(job['id'])/'job.json', json.dumps(job, ensure_ascii=False).encode())
+        self.job_cache.pop(job['id'],None)
+        self.work.changes.publish(job['asset_id'],'job')
 
-    def list(self, asset=None):
+    def list(self, asset=None, assets=None):
         if asset: self.work.frame(asset)
+        wanted=set(assets) if assets is not None else {asset} if asset else None
         jobs=[]
         for path in self.root.glob('*/job.json'):
+            if wanted is not None and self.record(path.parent.name)['asset_id'] not in wanted:continue
             job=self.read(path.parent.name)
-            if not asset or job['asset_id']==asset: jobs.append(job)
+            jobs.append(job)
         return sorted(jobs,key=lambda job:job['created_at'],reverse=True)
 
     def create(self, body):
@@ -111,6 +125,8 @@ class ImageLab:
         asset=body['id'];self.work.frame(asset)
         prompt=body.get('prompt','')
         if not isinstance(prompt,str) or not 1<=len(prompt.strip())<=3000: raise ValueError('Escribí una instrucción de hasta 3000 caracteres.')
+        alpha_mode=body.get('alpha_mode','original')
+        if alpha_mode not in ('none','ai','original'): raise ValueError('Método de transparencia desconocido.')
         config=self.status()
         if not config.get('ready'): raise ValueError(config['error'])
         model=body.get('model') or config.get('defaultModel')
@@ -212,8 +228,8 @@ class ImageLab:
             atomic_write(folder/'request.json',json.dumps(request).encode())
             job=dict(id=id_,asset_id=asset,asset_name=self.work.frame(asset)['name'],prompt=prompt.strip(),model=model,
                 width=width,height=height,base_revision=self.work.revision(asset),source_sha256=sha(current),
-                created_at=time.time(),status='queued',preserve_alpha=body.get('preserve_alpha',True) is True,
-                base_kind='generation' if upscale_job else base_kind,base_history=history_name if base_kind=='history' else None,fidelity_version=2,preparation='square-v1',alpha_mode='ai' if body.get('alpha_mode')=='ai' else 'original',mask_method='simplified-contour-v1',viewport=[bx,by,bw,bh],style_asset_id=style_frame['id'] if style_frame else None,
+                created_at=time.time(),status='queued',preserve_alpha=alpha_mode!='none' and body.get('preserve_alpha',True) is True,
+                base_kind='generation' if upscale_job else base_kind,base_history=history_name if base_kind=='history' else None,fidelity_version=2,preparation='square-v1',alpha_mode=alpha_mode,mask_method='none' if alpha_mode=='none' else 'simplified-contour-v1',viewport=[bx,by,bw,bh],style_asset_id=style_frame['id'] if style_frame else None,
                 style_asset_name=style_frame['name'] if style_frame else None,
                 upscale_job_id=upscale_job['id'] if upscale_job else None)
             self.write(job);self.start_next()
@@ -265,6 +281,87 @@ class ImageLab:
                             job['wonder_reused_from']=previous['id'];break
             self.write(job);self.start_next();return job
 
+    def variant_source(self, body):
+        asset=body['id'];self.work.frame(asset)
+        if body.get('job_id'):
+            source=self.read(body['job_id'])
+            if source['asset_id']!=asset or source['status'] not in ('ready','applied'): raise ValueError('Versión no disponible.')
+            path=self.folder(source['id'])/'candidate.png'
+        elif body.get('history'):
+            name=body['history']
+            if not isinstance(name,str) or not re.fullmatch(r'\d+-before\.png',name): raise ValueError('Versión inválida.')
+            path=self.work.store/'history'/asset/name
+        else:
+            if body.get('revision')!=self.work.revision(asset): raise self.conflict('El asset cambió. Volvé a seleccionarlo.')
+            path=self.work.draft(asset) if self.work.draft(asset).exists() else self.work.original(asset)
+        return path.read_bytes()
+
+    def import_variant(self, body):
+        from PIL import Image
+        value=body.get('png','')
+        prefix='data:image/png;base64,'
+        if not isinstance(value,str) or not value.startswith(prefix) or len(value)>44_000_000:
+            raise ValueError('Subí una imagen PNG de hasta 32 MB.')
+        try: data=base64.b64decode(value[len(prefix):],validate=True)
+        except ValueError: raise ValueError('PNG inválido.')
+        width,height=self.png_size(data)
+        with Image.open(io.BytesIO(data)) as image:image.load()
+        with self.lock,self.work.lock:
+            asset=body['id'];frame=self.work.frame(asset)
+            current=self.work.draft(asset) if self.work.draft(asset).exists() else self.work.original(asset)
+            current_data=current.read_bytes();expected=self.png_size(current_data)
+            if (width,height)!=expected:
+                raise ValueError(f'El PNG mide {width} × {height}. Este asset necesita {expected[0]} × {expected[1]} px; ajustá el lienzo antes de importarlo.')
+            filename=str(body.get('name','Importado.png')).replace('\\','/').split('/')[-1][:120]
+            id_=secrets.token_hex(12);folder=self.folder(id_);folder.mkdir(parents=True)
+            for name in ('candidate.png','provider.png','input.png'):self.atomic_write(folder/name,data)
+            job=dict(id=id_,asset_id=asset,asset_name=frame['name'],operation='import',model='Importado · '+filename,
+                prompt='PNG importado desde la PC; pendiente de revisión.',width=width,height=height,
+                alpha_mode='imported',source_sha256=self.sha(current_data),base_revision=self.work.revision(asset),
+                status='ready',created_at=time.time())
+            self.write(job);return self.read(id_)
+
+    def extract_variant_alpha(self, body):
+        from PIL import Image
+        engine=body.get('engine')
+        if engine not in ('imagelab','bria'):raise ValueError('Motor de alpha desconocido.')
+        with self.lock,self.work.lock:
+            asset=body['id'];frame=self.work.frame(asset)
+            data=self.variant_source(body);width,height=self.png_size(data);digest=self.sha(data)
+            model=None
+            if engine=='imagelab':
+                config=self.status()
+                if not config.get('ready'):raise ValueError(config['error'])
+                model=body.get('model') or config.get('defaultModel')
+                if model not in config.get('models',[]):raise ValueError('Modelo no disponible en ImageLab.')
+            else:
+                import replicate_upscale
+                replicate_upscale.token(self.work.root)
+            pending=next((j for j in self.list(asset) if j.get('alpha_engine')==engine and j.get('alpha_source_sha256')==digest and (engine!='imagelab' or j.get('model')==model) and j['status'] in ('queued','running')),None)
+            if pending:return pending
+            id_=secrets.token_hex(12);folder=self.folder(id_);folder.mkdir(parents=True)
+            self.atomic_write(folder/'alpha-source.png',data)
+            with Image.open(io.BytesIO(data)) as image:
+                source=image.convert('RGBA')
+                opaque=Image.new('RGBA',source.size,(127,127,127,255));opaque.alpha_composite(source)
+                opaque.convert('RGB').save(folder/'input.png')
+                factor=896/max(width,height);bw,bh=max(1,round(width*factor)),max(1,round(height*factor))
+                bx,by=(1024-bw)//2,(1024-bh)//2
+                if engine=='imagelab':
+                    prepared=Image.new('RGB',(1024,1024),(127,127,127))
+                    prepared.paste(opaque.convert('RGB').resize((bw,bh),Image.Resampling.LANCZOS),(bx,by))
+                    prepared.save(folder/'provider-image.bin',format='PNG')
+            current=self.work.draft(asset) if self.work.draft(asset).exists() else self.work.original(asset)
+            job=dict(id=id_,asset_id=asset,asset_name=frame['name'],operation='alpha-only' if engine=='imagelab' else 'refine-alpha',
+                model=model if engine=='imagelab' else 'Alpha · Bria / Replicate',alpha_engine=engine,
+                prompt='Extraer transparencia de la versión seleccionada; conservar el RGB y el tamaño.',
+                width=width,height=height,alpha_mode='ai' if engine=='imagelab' else 'bria',preserve_alpha=True,
+                preparation='square-v1' if engine=='imagelab' else 'native',viewport=[bx,by,bw,bh],
+                alpha_source_sha256=digest,source_sha256=self.sha(current.read_bytes()),
+                base_revision=self.work.revision(asset),parent_job=body.get('job_id'),history_source=body.get('history'),
+                status='queued',created_at=time.time())
+            self.write(job);self.start_next();return job
+
     def refine_alpha(self, body):
         from PIL import Image
         amount=float(body.get('trim_pixels',.5))
@@ -279,18 +376,7 @@ class ImageLab:
         if not math.isfinite(tint) or not 0<=tint<=1:raise ValueError('Intensidad de tinte inválida.')
         with self.lock,self.work.lock:
             asset=body['id'];frame=self.work.frame(asset)
-            if body.get('job_id'):
-                source=self.read(body['job_id'])
-                if source['asset_id']!=asset or source['status'] not in ('ready','applied'): raise ValueError('Versión no disponible.')
-                path=self.folder(source['id'])/'candidate.png'
-            elif body.get('history'):
-                name=body['history']
-                if not re.fullmatch(r'\d+-before\.png',name): raise ValueError('Versión inválida.')
-                path=self.work.store/'history'/asset/name
-            else:
-                if body.get('revision')!=self.work.revision(asset): raise self.conflict('El asset cambió. Volvé a seleccionarlo.')
-                path=self.work.draft(asset) if self.work.draft(asset).exists() else self.work.original(asset)
-            data=path.read_bytes();width,height=self.png_size(data)
+            data=self.variant_source(body);width,height=self.png_size(data)
             digest=self.sha(data)
             reference=self.work.reference(asset) if seams else None
             if seams and not reference:raise ValueError('No hay original para proteger empalmes. Desactivá la protección para limpiar sin ella.')
@@ -344,12 +430,14 @@ class ImageLab:
             record=dict(asset_id=asset,asset_name=frame['name'],sha256=digest,file=filename,approved_at=time.time(),job_id=job['id'] if job else None)
             approved[asset]=record
             self.atomic_write(self.root/'references.json',json.dumps(approved).encode())
+            self.work.changes.publish(asset,'approval')
             return record
 
     def revoke(self, asset):
         with self.lock:
             self.work.frame(asset);approved=self.approvals();approved.pop(asset,None)
             self.atomic_write(self.root/'references.json',json.dumps(approved).encode())
+            self.work.changes.publish(asset,'approval')
             return dict(ok=True)
 
     def run(self, job):
@@ -387,11 +475,11 @@ class ImageLab:
             if source['status'] not in ('ready','applied'): raise ValueError('Primero debe terminar la generación.')
             if source.get('preparation')!='square-v1': raise ValueError('Esta variante es anterior al encuadre cuadrado; generá una nueva primero.')
             new_id=secrets.token_hex(12);folder=self.folder(new_id);folder.mkdir(parents=True)
-            for name in ('provider-image.bin','input.png','original.png','prepared.png','style.png','request.json'):
+            for name in ('provider-image.bin','input.png','original.png','prepared.png','style.png','request.json','alpha-source.png'):
                 path=self.folder(id_)/name
                 if path.exists(): self.atomic_write(folder/name,path.read_bytes())
-            job={k:v for k,v in source.items() if k not in ('image','raw_image','applied_at','error','stage')}
-            job.update(id=new_id,parent_job=id_,operation='alpha-only',alpha_mode='ai',status='queued',created_at=time.time())
+            job={k:v for k,v in source.items() if k not in ('image','raw_image','applied_at','error','stage','quality','candidate_sha256')}
+            job.update(id=new_id,parent_job=id_,operation='alpha-only',alpha_mode='ai',preserve_alpha=True,status='queued',created_at=time.time())
             self.write(job);self.start_next();return job
 
     def extract_alpha(self, job):
@@ -404,7 +492,7 @@ class ImageLab:
         job['stage']='extracting-alpha';self.write(job)
         # Same Gemini matte approach used by Basement Alpha Extractor; routed through MCP.
         prompt=('Generate a high-resolution grayscale alpha matte of the sprite in @1. '
-            'The neutral gray BACKGROUND MUST become pure black (#000000), and ALL solid parts of the sprite, including its very dark outlines and dark wood, MUST be pure white (#FFFFFF). '
+            'The flat background and neutral gray margins MUST become pure black (#000000), and ALL solid parts of the sprite, including its very dark outlines and dark wood, MUST be pure white (#FFFFFF). '
             'Dark colors inside the object are opaque material, NOT transparency. Preserve smooth antialiased edges using grayscale transitions. '
             'Do not redraw, simplify, expand, move, crop, or rescale the silhouette. Keep exactly the input image framing and square canvas. Return ONLY the grayscale matte.')
         request=dict(prompt=prompt,images=[dict(base64=base64.b64encode((folder/'provider.png').read_bytes()).decode(),label='subject')],model=job['model'],aspect_ratio='1:1',image_size='1K')
@@ -418,6 +506,7 @@ class ImageLab:
         with Image.open(folder/'provider-image.bin') as generated:
             if generated.width*generated.height>16_000_000: raise ValueError('La imagen del proveedor excede el límite de 16 megapíxeles.')
             raw=generated.convert('RGBA');raw.save(folder/'provider.png')
+            matte=None
             if job.get('alpha_mode')=='ai':
                 with Image.open(folder/'alpha-image.bin') as matte_image:
                     if matte_image.width*matte_image.height>16_000_000 or abs(matte_image.width/matte_image.height-raw.width/raw.height)>.02:
@@ -428,22 +517,40 @@ class ImageLab:
                     if not bbox or matte.getextrema()[1]<200: raise ValueError('La IA no devolvió una máscara útil.')
                     corners=[matte.getpixel(p) for p in [(0,0),(raw.width-1,0),(0,raw.height-1),(raw.width-1,raw.height-1)]]
                     if max(corners)>32: raise ValueError('La máscara incluye el fondo; revisá la salida de alfa.')
-                    matte.save(folder/'alpha.png');raw.putalpha(matte)
+                    matte.save(folder/'alpha.png')
+                    # Resize color independently: premultiplied-alpha resampling can
+                    # darken or quantize RGB when a new matte is attached first.
+                    raw.putalpha(255)
             if job.get('preparation')=='square-v1':
                 if abs(raw.width/raw.height-1)>.02: raise ValueError('El proveedor cambió la proporción del lienzo. Se conservó la salida sin adaptarla.')
                 x,y,w,h=job['viewport']
                 box=(round(x*raw.width/1024),round(y*raw.height/1024),round((x+w)*raw.width/1024),round((y+h)*raw.height/1024))
                 candidate=raw.crop(box).resize((job['width'],job['height']),Image.Resampling.LANCZOS)
+                if matte is not None:
+                    candidate.putalpha(matte.crop(box).resize(candidate.size,Image.Resampling.LANCZOS))
             else:
                 resized=ImageOps.contain(raw,(job['width'],job['height']),Image.Resampling.LANCZOS)
                 candidate=Image.new('RGBA',(job['width'],job['height']))
                 candidate.paste(resized,((candidate.width-resized.width)//2,(candidate.height-resized.height)//2))
-            if job['preserve_alpha'] and job.get('alpha_mode')!='ai':
+                if matte is not None:
+                    resized_matte=ImageOps.contain(matte,candidate.size,Image.Resampling.LANCZOS)
+                    alpha=Image.new('L',candidate.size)
+                    alpha.paste(resized_matte,((candidate.width-resized_matte.width)//2,(candidate.height-resized_matte.height)//2))
+                    candidate.putalpha(alpha)
+            if job['preserve_alpha'] and job.get('alpha_mode') not in ('ai','none'):
                 with Image.open(folder/'input.png') as original:
                     alpha=original.convert('RGBA').getchannel('A')
                     candidate.putalpha(alpha if job.get('preparation')=='square-v1' else ImageChops.multiply(candidate.getchannel('A'),alpha))
+            if job.get('operation')=='alpha-only' and (folder/'alpha-source.png').exists():
+                with Image.open(folder/'alpha-source.png') as source:
+                    preserved=source.convert('RGBA')
+                    if preserved.size!=candidate.size:raise ValueError('La máscara cambió el tamaño de la versión.')
+                    preserved.putalpha(candidate.getchannel('A'));candidate=preserved
             candidate.save(folder/'candidate.png')
-            if job.get('fidelity_version')==2:
+            if job.get('alpha_mode')=='none':
+                # A processing background is expected here, not a silhouette defect.
+                job['quality']=dict(passed=None,issues=[],deferred=True,reason='Alpha pendiente; revisar fidelidad después de extraerlo.')
+            elif job.get('fidelity_version')==2:
                 with Image.open(folder/'original.png') as original:
                     job['quality']=assess_fidelity(original.convert('RGBA'),candidate)
             job['provider_size']=[raw.width,raw.height]
