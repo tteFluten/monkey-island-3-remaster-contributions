@@ -1,6 +1,6 @@
 # Monkey Island 3 Remaster
 
-Private Basement Studio workspace for a playable remaster of **The Curse of Monkey Island**.
+Workspace for a playable remaster of **The Curse of Monkey Island**.
 The workshop manages artwork, reviews replacements, and launches a patched native COMI-HD engine.
 This repository is the project's source of truth. New changes should target its `main` branch through pull requests.
 
