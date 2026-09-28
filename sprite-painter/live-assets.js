@@ -25,7 +25,7 @@ const LiveAssets=(()=>{
     window.dispatchEvent(new CustomEvent('assets-live',{detail:{ids:snapshot.ids,changed,full:snapshot.full}}));
   }
   async function flush(){
-    clearTimeout(timer);timer=null;if(busy)return;
+    clearTimeout(timer);timer=null;if(busy||document.hidden)return;
     if(!full&&!pending.size)return;
     const all=full;full=false;const ids=[...pending].slice(0,80);
     if(all)pending.clear();else ids.forEach(id=>pending.delete(id));
@@ -34,21 +34,29 @@ const LiveAssets=(()=>{
     catch{if(all)full=true;else ids.forEach(id=>pending.add(id));schedule(1500);}
     finally{busy=false;if(!timer&&(full||pending.size))schedule();}
   }
-  function schedule(delay=20){if(!timer)timer=setTimeout(flush,delay);}
+  function schedule(delay=20){if(!timer&&!document.hidden)timer=setTimeout(flush,delay);}
   function request(ids=null){if(ids===null)full=true;else ids.forEach(id=>pending.add(id));schedule();}
-  function fallback(){clearTimeout(retry);if(connected)return;request();retry=setTimeout(fallback,4000);}
+  function fallback(){clearTimeout(retry);if(connected||document.hidden)return;request();retry=setTimeout(fallback,4000);}
+  function suspend(){source?.close();source=null;connected=false;clearTimeout(timer);timer=null;clearTimeout(retry);retry=null;}
+  function connect(){
+    if(source||document.hidden)return;
+    if(typeof EventSource==='undefined'){fallback();return;}
+    source=new EventSource('/api/events');
+    source.addEventListener('open',()=>{connected=true;clearTimeout(retry);request();});
+    source.addEventListener('change',event=>{try{const change=JSON.parse(event.data);request(change.reset?null:change.ids);}catch{request();}});
+    source.addEventListener('error',()=>{connected=false;clearTimeout(retry);retry=setTimeout(fallback,1500);});
+  }
   async function start(){
     if(started)return;started=true;
     // Catalog objects are installed before live patches; startup requests share this promise.
     try{cursor=(state.frames.length?state.catalogCursor:(await catalog()).cursor)||null;}catch{}
-    if(typeof EventSource==='undefined'){fallback();return;}
-    source=new EventSource('/api/events');
-    source.addEventListener('open',()=>{connected=true;clearTimeout(retry);});
-    source.addEventListener('change',event=>{try{const change=JSON.parse(event.data);request(change.reset?null:change.ids);}catch{request();}});
-    source.addEventListener('error',()=>{connected=false;clearTimeout(retry);retry=setTimeout(fallback,1500);});
+    connect();
   }
   window.addEventListener('workspace-write',event=>{if(started)request(event.detail?.ids||null);});
-  window.addEventListener('focus',()=>{if(started)request();});
+  window.addEventListener('focus',()=>{if(started){connect();request();}});
+  window.addEventListener('visibilitychange',()=>{if(document.hidden)suspend();else if(started){connect();request();}});
+  window.addEventListener('pagehide',suspend);
+  window.addEventListener('pageshow',()=>{if(started){connect();request();}});
   window.addEventListener('load',start,{once:true});
   return {request,merge};
 })();

@@ -17,7 +17,7 @@ function fixture(){
   const context=vm.createContext({state:{frames},imageLabApprovals:approvals,imageLabAssetJobs:jobs,window:{addEventListener(){}}});
   // Exercise the real private selection and target logic without exporting test hooks to the app.
   let code=fs.readFileSync(path.join(__dirname,'../asset-browser.js'),'utf8').split('async function openAssetBrowser()')[0];
-  code=code.replace('return {open};',`return {pick,pickMany,clearSelection,batchTargets,actionCandidates,updateBatchControls,
+  code=code.replace('return {open,hide};',`return {pick,pickMany,clearSelection,batchTargets,actionCandidates,updateBatchControls,
     init(p,frames){panel=p;items=frames;},view(frames){items=frames;updateBatchControls();},
     busy(value){batchSending=value;updateBatchControls();},ids(){return [...picked];}};`);
   vm.runInContext(code,context);

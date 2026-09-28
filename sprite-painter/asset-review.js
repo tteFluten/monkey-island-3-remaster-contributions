@@ -2,7 +2,7 @@
 // One review surface per asset. Selecting a version only changes the preview.
 let assetReview=null;
 async function openAssetReview(frame, initialJob=null){
-  if(assetReview){assetReview.close();}
+  if(assetReview){assetReview.close(false);}
   const panel=document.createElement('section');panel.className='ar-workspace';panel.setAttribute('aria-label','Comparación de asset');
   panel.innerHTML=`<header class="ar-header"><button data-back>Assets</button><div><small>COMPARAR Y REFINAR</small><h1 data-name></h1></div><span data-summary></span></header>
   <div class="ar-layout"><main class="ar-main"><div class="ar-toolbar"><span>Vista sincronizada</span><button data-fit>Ajustar</button><button data-minus aria-label="Alejar comparación">−</button><output data-zoom>100%</output><button data-plus aria-label="Acercar comparación">+</button><select data-background aria-label="Fondo de comparación"><option value="checker">Transparencia</option><option value="#999da3">Gris</option><option value="#fafafa">Blanco</option><option value="#17191d">Oscuro</option><option value="#ff00ff">Magenta</option></select></div>
@@ -11,6 +11,7 @@ async function openAssetReview(frame, initialJob=null){
   <aside class="ar-sidebar"><section class="ar-generate"><h2>Crear otra versión</h2><label>Modelo<select data-model aria-label="Modelo para nueva versión"><optgroup label="Topaz · API directa"><option value="upscale:Wonder 3.5 High + Bria">Wonder 3.5 High ×4 + Bria</option></optgroup><optgroup label="Escalado · Replicate"><option value="upscale:Real-ESRGAN Anime 6B">Real-ESRGAN · Anime 6B ×4</option><option value="topaz:CGI">Topaz · CGI</option><option value="topaz:High Fidelity V2">Topaz · Alta fidelidad</option><option value="topaz:Standard V2">Topaz · Estándar</option><option value="topaz:Low Resolution V2">Topaz · Baja resolución</option></optgroup></select></label><div data-ai-options hidden><label>Base<select data-base aria-label="Base para ImageLab"><option value="original">Original</option></select></label><label>Instrucciones<textarea data-prompt rows="3"></textarea></label></div><p data-recipe>Original → Wonder ×4 → Bria (Replicate). Reutiliza Wonder si ya existe; Bria se cobra por separado.</p><button data-generate class="accent">Generar versión</button><p data-message role="status"></p></section>
   <section class="ar-versions"><div class="ar-section-title"><h2>Versiones</h2><span data-count></span></div><p class="ar-hint">Seleccioná para comparar. El trabajo actual solo cambia al usar o retocar una versión.</p><div data-history></div></section></aside></div>`;
   document.body.append(panel);
+  assetGrid.hide();
   const q=k=>panel.querySelector('[data-'+k+']');q('name').textContent=frame.name;q('prompt').value=imageLabDefaultPrompt;
   q('base').parentElement.insertAdjacentHTML('afterend','<div class="ar-base-preview" style="display:flex;align-items:center;gap:10px;margin:8px 0"><img data-base-preview alt="Base elegida para generar" style="width:48px;height:48px;object-fit:contain;background:#292929"><small data-base-label></small></div>');
   const alphaChoice=document.createElement('label');
@@ -60,9 +61,9 @@ async function openAssetReview(frame, initialJob=null){
   panel.addEventListener('dragleave',e=>{if(!panel.contains(e.relatedTarget))importZone.classList.remove('is-dragging');});
   panel.addEventListener('drop',e=>{if(!e.dataTransfer.files.length)return;e.preventDefault();e.stopPropagation();importZone.classList.remove('is-dragging');importFiles([...e.dataTransfer.files]);});
   let jobs=[],versions=[],selected=null,info=null,timer=null,signature='',busy=false,zoom=1,px=0,py=0,drag=null,closed=false,refreshSerial=0,actionMessage='';
-  const review={panel,close(){closed=true;clearTimeout(timer);panel.remove();if(assetReview===review)assetReview=null;try{sessionStorage.removeItem('monkey-review-route');const url=new URL(location.href);url.searchParams.delete('asset');url.searchParams.delete('version');window.history.replaceState(null,'',url);}catch{};document.title='Monkey · Assets';assetGrid.open().catch(error=>message(error.message,true));}};assetReview=review;
+  const review={panel,close(returnToAssets=true){closed=true;clearTimeout(timer);panel.remove();if(assetReview===review)assetReview=null;try{sessionStorage.removeItem('monkey-review-route');const url=new URL(location.href);url.searchParams.delete('asset');url.searchParams.delete('version');window.history.replaceState(null,'',url);}catch{};document.title='Monkey · Assets';if(returnToAssets)assetGrid.open().catch(error=>message(error.message,true));}};assetReview=review;
   document.title=frame.name+' · Monkey';
-  q('back').onclick=review.close;
+  q('back').onclick=()=>review.close();
   q('original').src='/api/reference?id='+frame.id;
   q('original').onerror=()=>{q('original-size').textContent='Original no disponible';};
   q('original').onload=()=>{q('original-size').textContent=q('original').naturalWidth+' × '+q('original').naturalHeight;};

@@ -7,6 +7,35 @@ const assetGrid = (() => {
   const picked=new Set(), selectionButtons=new Map();
   let selectionMode=false, selectionAnchor=null, visibleIds=[];
   let viewMode='assets',sequences=[],sequenceScope=null,sequenceReturn=null;
+  let viewReady=false,lastStoredView='';
+  function snapshotView(){
+    return {filters:sequenceFilters().map(el=>el.value),density:panel.querySelector('[data-density]').value,
+      panX,panY,scale,cols,viewMode,sequenceScope,sequenceReturn,selectionMode,selectionAnchor,
+      picked:[...picked],focused:entries()[selected]?.id};
+  }
+  function rememberView(){
+    if(!viewReady||!panel)return;
+    try{const value=JSON.stringify(snapshotView());if(value!==lastStoredView){sessionStorage.setItem('monkey-assets-view',value);lastStoredView=value;}}catch{}
+  }
+  function savedView(){
+    try{
+      const key=new URLSearchParams(location.search).get('browser');
+      // A tab inherits the exact grid snapshot from which its detail was opened.
+      const value=sessionStorage.getItem('monkey-assets-view')||(key&&localStorage.getItem('monkey-assets-return:'+key));
+      const saved=JSON.parse(value||'null');return Array.isArray(saved?.filters)&&saved.filters.length===8?saved:null;
+    }catch{return null;}
+  }
+  function restoreView(saved){
+    sequenceFilters().forEach((el,i)=>{el.value=saved.filters[i];});
+    panel.querySelector('[data-density]').value=saved.density||'210';
+    viewMode=saved.viewMode==='sequences'?'sequences':'assets';sequenceScope=saved.sequenceScope||null;sequenceReturn=saved.sequenceReturn||null;
+    selectionMode=!!saved.selectionMode;selectionAnchor=saved.selectionAnchor||null;
+    picked.clear();for(const id of saved.picked||[])if(state.frames.some(f=>f.id===id))picked.add(id);
+    rebuild(true);
+    if([saved.panX,saved.panY,saved.scale,saved.cols].every(Number.isFinite)&&saved.scale>=.25&&saved.scale<=3&&saved.cols>=1&&saved.cols<=12){({panX,panY,scale,cols}=saved);}
+    selected=entries().findIndex(f=>f.id===saved.focused);
+  }
+  window.addEventListener('pagehide',rememberView);
   function entries(){return viewMode==='sequences'?sequences:items;}
   function entryIds(entry){return entry.frames?entry.frames.map(f=>f.id):[entry.id];}
   function listedIds(){return entries().flatMap(entryIds);}
@@ -53,6 +82,7 @@ const assetGrid = (() => {
     panel.querySelector('.ab-action-hint').textContent=selectionMode?'Sólo selección · Rehacer consume créditos':'Listado actual · Rehacer consume créditos';
     panel.querySelector('[data-clean-auto]').title=(selectionMode?'Selección':'Listado actual')+' · recorte 0,5 px y tinte 70% · protege empalmes · omite aprobados y limpiezas existentes';
     updateSelectionBar();
+    rememberView();
   }
   function selectionChanged(){updateBatchControls();invalidate();}
   function pick(index,range=false){
@@ -285,6 +315,8 @@ const assetGrid = (() => {
     if(viewMode==='sequences'){openSequence(entry);return;}
     // Synchronous window.open keeps the user gesture; the canvas stays untouched.
     const url=new URL(location.href);url.search='';url.hash='';url.searchParams.set('asset',entry.id);
+    rememberView();
+    try{const key=crypto.randomUUID();localStorage.setItem('monkey-assets-return:'+key,JSON.stringify(snapshotView()));url.searchParams.set('browser',key);}catch{}
     window.open(url.href,'_blank','noopener');
   }
 
@@ -465,6 +497,7 @@ const assetGrid = (() => {
     header.insertBefore(presetLabel,header.querySelector('[data-close]'));
     header.insertBefore(queueButton,header.querySelector('[data-close]'));
     header.insertBefore(settingsButton,header.querySelector('[data-close]'));
+    header.querySelector('[data-close]').remove();
     section('Organizar',filter,order,density);
     section('Control visual',controls);
     const modelControl=quick.querySelector('[data-redo-model]');section('Modelo para rehacer',modelControl);
@@ -483,43 +516,46 @@ const assetGrid = (() => {
   }
   async function open({focusId=null}={}){
     if(confiteSession)return;
-    const returning=!!panel, savedView={panX,panY,scale},savedSelection=items[selected]?.id;
+    const returning=!!panel, previousView=returning?snapshotView():savedView();
     if(!panel)create();panel.hidden=false;active=true;statusLine.textContent='Cargando assets…';
+    viewReady=false;
     invalidate();
     await Promise.all([state.frames.length?Promise.resolve():catalog(),refreshAudit()]);
     if(state.info){const key=state.info.frame.id+'/edit';cache.get(key)?.close?.();cache.delete(key);}
     const previous=collection.value;collection.replaceChildren(new Option('Todas las colecciones',''));[...new Set(state.frames.map(f=>f.category))].sort().forEach(c=>collection.add(new Option(c,c)));collection.value=previous;
-    if(!previous&&state.frames.some(f=>f.category==='Barco · personajes'))collection.value='Barco · personajes';
-    const focused=focusId&&state.frames.find(f=>f.id===focusId);
+    if(!returning&&!previousView&&state.frames.some(f=>f.category==='Barco · personajes'))collection.value='Barco · personajes';
+    const focused=!previousView&&focusId&&state.frames.find(f=>f.id===focusId);
     if(focused)collection.value=focused.category;
     resize();rebuild();
     if(focused&&!items.some(f=>f.id===focusId)){
       search.value='';filter.value='all';panel.querySelector('[data-edge-filter]').value='all';panel.querySelector('[data-problem]').value='';panel.querySelector('[data-similarity]').value='100';rebuild();
     }
-    if(returning&&Number.isFinite(savedView.scale)&&savedView.scale>=.25){panX=savedView.panX;panY=savedView.panY;scale=savedView.scale;}else fit();
-    selected=items.findIndex(f=>f.id===(focused?focusId:savedSelection));
+    if(previousView)restoreView(previousView);else fit();
+    if(focused)selected=items.findIndex(f=>f.id===focusId);
     if(focused&&selected>=0){
       panX=width/2-((selected%cols)*CW+(CW-14)/2)*scale;
       panY=height/2-(Math.floor(selected/cols)*CH+(CH-14)/2)*scale;
       canvas.focus({preventScroll:true});
     }
-    invalidate();
+    viewReady=true;rememberView();invalidate();
   }
-  return {open};
+  function hide(){rememberView();if(panel)panel.hidden=true;active=false;}
+  return {open,hide};
 })();
 async function openAssetBrowser(){try{await save();await assetGrid.open({focusId:state.info?.frame.id});}catch(error){message(error.message,true);}}
 const assetBrowserButton=document.createElement('button');assetBrowserButton.textContent='Explorar assets';assetBrowserButton.className='accent';document.querySelector('header').insertBefore(assetBrowserButton,confiteButton);assetBrowserButton.onclick=openAssetBrowser;
-window.addEventListener('load',async()=>{
+async function startAssetApp(){
   let route={};try{route=JSON.parse(sessionStorage.getItem('monkey-review-route')||'{}');}catch{};
   const params=new URLSearchParams(location.search);if(params.has('asset'))route={asset:params.get('asset'),version:params.get('version')};const assetId=route.asset;
-  if(!assetId){await openAssetBrowser();return;}
   try{
-    if(!state.frames.length)await catalog();
+    await assetGrid.open();
+    if(!assetId)return;
     const frame=state.frames.find(f=>f.id===assetId);
     if(frame)await openAssetReview(frame,route.version);
-    else{try{sessionStorage.removeItem('monkey-review-route');}catch{};message('El asset del enlace ya no está disponible.',true);}
-  }catch(error){message(error.message,true);}
-},{once:true});
+    else{try{sessionStorage.removeItem('monkey-review-route');}catch{};imageLabNotice('El asset del enlace ya no está disponible.');}
+  }catch(error){imageLabNotice(error.message);}
+}
+if(document.readyState==='complete')startAssetApp();else window.addEventListener('load',startAssetApp,{once:true});
 
 
 

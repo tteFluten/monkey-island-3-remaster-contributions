@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Monkey · Sprite Painter</title><link rel="stylesheet" href="/style.css"></head>
-<body>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Monkey · Assets</title><link rel="stylesheet" href="/style.css"><style>body>header,body>main{visibility:hidden;pointer-events:none}body{background:#151515}#app-loading{position:fixed;inset:0;display:grid;place-content:center;color:#aaa;font:14px system-ui;pointer-events:none;z-index:0}body:has(.asset-browser:not([hidden]),.ar-workspace) #app-loading{display:none}</style></head>
+<body><div id="app-loading" role="status">Abriendo assets…</div>
 <header><div class="brand"><span class="mark">M</span><div>MONKEY <span class="light">SPRITE PAINTER</span><small>Taller de retoque · local</small></div></div><div id="saveState" class="state">Abrí una secuencia</div><button id="export">Exportar PNG</button><button id="save" class="accent">Guardar retoque <kbd>Ctrl S</kbd></button></header>
 <main>
 <aside class="library"><div class="section-title">BIBLIOTECA <button id="importButton" title="Importar uno o varios PNG">＋</button></div><input id="import" type="file" accept="image/png" multiple hidden><input id="search" type="search" placeholder="Buscar traje, objeto o cuadro…" aria-label="Buscar recursos"><select id="category" aria-label="Colección"><option value="">Todas las colecciones</option></select><div id="groups"></div><div class="library-note">Los masters quedan intactos.<br>Los retoques se guardan en <code>.context/sprite-painter</code>.</div></aside>

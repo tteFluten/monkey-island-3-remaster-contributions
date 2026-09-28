@@ -8,6 +8,11 @@ no hacer reset/checkout forzado ni incluirlos en commits del editor.
 
 ## Cambios recientes
 
+- Corrección de navegación: el taller antiguo queda fuera de la navegación. Cada
+  detalle recibe un snapshot de su grilla (filtros, selección, zoom, desplazamiento,
+  secuencia) y Assets vuelve a ese estado. Las recargas conservan la vista de la
+  pestaña. SSE se suspende en pestañas ocultas y recupera cambios al volver.
+
 - Sincronización SSE entre pestañas: cambios de versión, miniaturas y aprobaciones.
 - Vista Assets/Secuencias por el `frame.group` existente (traje/recurso), selección
   completa incluso con filtros, y navegación al grupo con regreso conservado.
