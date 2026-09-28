@@ -1,4 +1,5 @@
 import tempfile
+import shutil
 import unittest
 from pathlib import Path
 
@@ -74,6 +75,29 @@ class PackagingTests(unittest.TestCase):
             with self.assertRaises(ValueError):package(root)
             self.assertEqual(before,(root/'assets/manifest.json').read_bytes())
             self.assertFalse((root/'assets/masters/topaz-4x').exists())
+
+    def test_new_room_is_packaged_with_current_workspace_provenance(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);sources=self.fixture(root)
+            atomic(root/'assets/metadata/topaz-scene-plan.json',dict(scenes=[]))
+            package(root)
+            plan=read(root/'assets/metadata/topaz-scene-plan.json')
+            self.assertEqual([s['id'] for s in plan['scenes']],['room-0019'])
+            self.assertEqual(plan['total_sources'],len(sources))
+            reviews=read(root/'assets/metadata/artwork-review.json')
+            self.assertTrue(reviews[sources[0]]['master'].startswith(f'source:{root.name}/output/'))
+            verify(root,media=True)
+
+    def test_staged_runtime_can_be_packaged_without_touching_live_textures(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);sources=self.fixture(root)
+            staged=root/'.context/staged'
+            shutil.copytree(root/'.playtest',staged)
+            live=root/'.playtest/hd'/sources[1]
+            live.write_bytes(b'live texture must remain untouched')
+            self.assertEqual(package(root,staged)['new_assets'],2)
+            self.assertEqual(live.read_bytes(),b'live texture must remain untouched')
+            verify(root,media=True)
 
 
 if __name__=='__main__':unittest.main()

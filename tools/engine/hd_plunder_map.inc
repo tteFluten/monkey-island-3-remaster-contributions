@@ -1,4 +1,24 @@
 // Included after the Look and scene-picker implementations in gfx.cpp.
+bool ScummEngine::hdPlunderMapOverlaySuppressed(int costume) {
+    if (_game.id != GID_CMI || _currentRoom != 13 || costume != 63 ||
+            _hdCurrentRoom != 13 || _hdScale <= 1 || !_hdBackgroundSurface.getPixels())
+        return false;
+    // The GL widescreen flag is published after actor drawing on entry. Use
+    // the loaded painting's identity instead, including CPU/water-off modes.
+    const Common::String path = ConfMan.get("hd_path") + "/backgrounds/bg_0013.png.stamp";
+    const Common::String key = path + Common::String::format(":%d", _playtestCommandId);
+    static Common::String cachedKey;
+    static bool suppressed = false;
+    if (key != cachedKey) {
+        cachedKey = key;
+        suppressed = false;
+        Common::File stamp;
+        if (stamp.open(Common::FSNode(Common::Path(path))))
+            suppressed = stamp.readLine().hasPrefix(Common::String(HdPlunderMap::kSource) + ":");
+    }
+    return suppressed;
+}
+
 bool ScummEngine::hdPlunderMapActive() {
     return _game.id == GID_CMI && _currentRoom == 13 && _hdCurrentRoom == 13 &&
         _hdScale > 1 && hdAspectRatio() == 169 && !isSmushActive() &&

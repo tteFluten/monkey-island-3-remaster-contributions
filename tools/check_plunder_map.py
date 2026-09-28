@@ -8,6 +8,7 @@ import argparse
 import json
 from pathlib import Path
 import shutil
+import time
 
 from check_aspect import Check, ROOT
 
@@ -57,6 +58,34 @@ def hover(check, x, y):
     return check.state()
 
 
+def enter_map(check, suppressed):
+    """Observe entry immediately: the old overlay must never acquire draw cels."""
+    command = {'id': check.state().get('commandId', 0) + 1, 'action': 'jump', 'room': 13}
+    (check.output / 'command.json').write_text(json.dumps(command))
+    check.wait(lambda: check.state().get('commandId') == command['id'], 'map entry acknowledged')
+    # Acknowledgement is written inside start-of-loop command dispatch, before
+    # actor drawing; its cel list can still belong to the previous room. The
+    # next status publication observes the first completed rendering loop.
+    status = check.output / 'status.json'
+    acknowledged = status.stat().st_mtime_ns
+    check.wait(lambda: status.stat().st_mtime_ns > acknowledged, 'first map draw completed')
+    samples = []
+    end = time.monotonic() + 2
+    while time.monotonic() < end:
+        state = check.state()
+        if state.get('room') == 13:
+            for actor in state.get('actors', []):
+                if actor['costume'] == 63:
+                    samples.append(actor['cels'])
+                    if suppressed:
+                        assert not actor['cels'], ('legacy map overlay painted on entry', actor)
+        time.sleep(.05)
+    assert samples, 'Map overlay actor was not exercised'
+    if not suppressed:
+        assert any(samples), 'Original map must retain its native overlay'
+    check.room(13)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT / '.context/plunder-map/check')
@@ -70,7 +99,7 @@ def main():
     fallback = output / 'fallback'
     check = Check(fallback, hd_path=artwork(fallback, False), color_grades_path=grades)
     try:
-        check.jump(13)
+        enter_map(check, False)
         assert not check.state()['plunderMap']
         for name, _, _, sx, sy in LANDMARKS:
             check.send(f'move {round(160 + sx * 1.5)} {round(sy * 1.5)}')
@@ -81,7 +110,7 @@ def main():
     check = Check(wide, hd_path=artwork(wide, True), color_grades_path=grades)
     try:
         home = check.state()['room']
-        check.jump(13)
+        enter_map(check, True)
         check.wait(lambda: check.state().get('plunderMapInput'), 'registered map')
         for width, height in [(1280, 720), (1280, 800), (1720, 720)]:
             check.send(f'resize {width} {height}')
@@ -115,7 +144,7 @@ def main():
                     results['transitions'][name] = 'story-locked (matches original)'
                     continue
                 check.save_load(2, 0, home)
-                check.jump(13)
+                enter_map(check, True)
                 check.wait(lambda: check.state()['plunderMapInput'], 'map input')
                 state = hover(check, x, y)
                 assert state['hoverObject'] == results['destinations'][name], (name, state)
@@ -139,7 +168,7 @@ def main():
                       config_overrides={'comi': {'hd_water_shader': 'false',
                                                  'hd_gpu_effects': str(gpu).lower()}})
         try:
-            check.jump(13)
+            enter_map(check, True)
             check.wait(lambda: check.state().get('plunderMapInput'), 'map without water')
             assert hover(check, 355, 587)['hoverObject'] == results['destinations']['swamp']
             check.screenshot('swamp-hover')

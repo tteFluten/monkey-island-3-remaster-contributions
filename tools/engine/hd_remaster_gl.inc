@@ -150,6 +150,7 @@ uniform vec4 waterPalette; // Original room color and its blend with the paintin
 uniform vec2 waterTexel;
 uniform float waterEnabled, waterSurface;
 uniform vec4 waterTuning; // opacity, distortion, highlights, mirrored background opacity
+uniform float waterReflectiveLight; // Town harbor retains waves without sky/specular reflections.
 uniform vec4 waterColorLight; // RGB palette multipliers and direct light strength
 uniform vec4 waterLight; // light direction XYZ and highlight exponent
 uniform vec4 vignette; // enabled, amount, inner radius, softness
@@ -207,7 +208,7 @@ void main() {
             // Give moving crests/troughs readable contrast without lifting
             // the whole painted surface or weakening shoreline coverage.
             vec3 body = palette * (0.72 + 0.65 * pattern.a);
-            vec3 water = mix(body * (0.8 + 0.25 * diffuse * waterColorLight.a), reflection, fresnel);
+            vec3 water = mix(body * (0.8 + 0.25 * diffuse * waterColorLight.a), reflection, fresnel * waterReflectiveLight);
             if (waterSurface > 0.5) {
                 // Mirror the painting around one continuous water plane.
                 // The detailed coverage mask must not bend the reflected hull.
@@ -224,7 +225,7 @@ void main() {
             }
             float specular = pow(clamp(dot(normal, normalize(light + view)), 0.0, 1.0), waterLight.w);
             vec3 highlight = mix(palette / max(max(palette.r, max(palette.g, palette.b)), 0.04), vec3(1.0), 0.25);
-            water += highlight * specular * 0.42 * waterTuning.z * waterColorLight.a;
+            water += highlight * specular * 0.42 * waterTuning.z * waterColorLight.a * waterReflectiveLight;
             water = mix(base, water, calmEdge);
             rgb += (water - base) * amount;
         }
@@ -533,6 +534,7 @@ void main() {
                     s.waterReflectionSlope * s.background->w / s.background->h));
             _effect->setUniform1f("waterEnabled", s.water ? 1 : 0);
             _effect->setUniform1f("waterSurface", s.waterSurface ? 1 : 0);
+            _effect->setUniform1f("waterReflectiveLight", HdWater::reflectiveLight(s.room) ? 1 : 0);
             _effect->setUniform("waterTuning", Math::Vector4d(s.waterOpacity / 100.0f,
                 s.waterDistortion / 100.0f, s.waterHighlights / 100.0f,
                 HdWater::fullSurface(s.room) ? s.waterReflection / 100.0f : 0));

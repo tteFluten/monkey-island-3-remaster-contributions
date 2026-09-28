@@ -8,8 +8,18 @@ def patch(root, edit):
     (root / 'engines/scumm/hd_plunder_map.inc').write_bytes((here / 'hd_plunder_map.inc').read_bytes())
     edit('engines/scumm/scumm.h', '\tvoid playtestTick();', '''\tvoid playtestTick();
     bool hdPlunderMapActive();
+    bool hdPlunderMapOverlaySuppressed(int costume);
     void publishHDPlunderMapInput();
     void placeHDPlunderMapForeground();''')
+    edit('engines/scumm/actor.cpp', 'void Actor::drawActorCostume(bool hitTestMode) {', '''void Actor::drawActorCostume(bool hitTestMode) {
+    // Suppress the obsolete map overlay before it can paint either native
+    // buffer. Compositor removal is too late for room-entry/uncaptured draws.
+    if (!hitTestMode && _vm->hdPlunderMapOverlaySuppressed(_costume)) {
+        _quiverDraws.clear();
+        _hdNumLimbs = 0;
+        _needRedraw = false;
+        return;
+    }''')
     gfx = 'engines/scumm/gfx.cpp'
     edit(gfx, '#include "scumm/hd_book.inc"',
          '#include "scumm/hd_book.inc"\n#include "scumm/hd_plunder_map.inc"')

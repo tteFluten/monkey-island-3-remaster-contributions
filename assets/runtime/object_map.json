@@ -1235,5 +1235,586 @@
         ]
       }
     }
+  },
+  "717": {
+    "name": "bubblegum-object",
+    "rooms": {
+      "30": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "711": {
+    "name": "voodoo-alligator-tongue",
+    "rooms": {
+      "30": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "709": {
+    "name": "voodoo-paste-object",
+    "rooms": {
+      "30": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "707": {
+    "name": "voodoo-pin-object",
+    "rooms": {
+      "30": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "718": {
+    "name": "voodoo-int-bubblegum-slot",
+    "rooms": {
+      "30": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "545": {
+    "name": "barber-int-barber-chair",
+    "rooms": {
+      "21": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "546": {
+    "name": "barber-int-chair-handle",
+    "rooms": {
+      "21": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "547": {
+    "name": "barber-int-comb",
+    "rooms": {
+      "21": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "549": {
+    "name": "barber-int-hairstyle-book",
+    "rooms": {
+      "21": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "550": {
+    "name": "barber-int-paperweight",
+    "rooms": {
+      "21": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "565": {
+    "name": "barber-int-pump",
+    "rooms": {
+      "21": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "576": {
+    "name": "barber-int-scissors-2",
+    "rooms": {
+      "21": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "548": {
+    "name": "barber-int-scissors",
+    "rooms": {
+      "21": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "564": {
+    "name": "barber-int-strap",
+    "rooms": {
+      "21": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "579": {
+    "name": "brbr-chair-handle-top",
+    "rooms": {
+      "21": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "592": {
+    "name": "clring-a-balcony-door",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "619": {
+    "name": "clring-a-gb-banjo-object",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "614": {
+    "name": "clring-a-guybrush-caber",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "623": {
+    "name": "clring-a-haggis-caber",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "587": {
+    "name": "clring-a-keg-gone",
+    "rooms": {
+      "22": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "593": {
+    "name": "clring-a-stairway-door",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "616": {
+    "name": "clring-a-stump-anim-object",
+    "rooms": {
+      "22": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "591": {
+    "name": "clring-a-tower-door",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "589": {
+    "name": "clring-gun-box-lid",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "588": {
+    "name": "clring-gun-pile",
+    "rooms": {
+      "22": {
+        "states": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    }
+  },
+  "584": {
+    "name": "clring-rubber-tree-animation-obj",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "590": {
+    "name": "clring-vanhelgens-banjo",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "620": {
+    "name": "left-gun-gone",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "621": {
+    "name": "middle-gun-gone",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "615": {
+    "name": "other-tree-anim-object",
+    "rooms": {
+      "22": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "622": {
+    "name": "right-gun-gone",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "586": {
+    "name": "rubber-caber-object",
+    "rooms": {
+      "22": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "640": {
+    "name": "clearing-b-caber-pile-anim-obj",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "631": {
+    "name": "clearing-b-fuse",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "628": {
+    "name": "clearing-b-keg",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "634": {
+    "name": "clearing-b-rubber-tree-2",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "641": {
+    "name": "clearing-b-rubber-tree-anim-obj",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "629": {
+    "name": "clearing-b-sawhorse",
+    "rooms": {
+      "23": {
+        "states": [
+          0,
+          1,
+          2
+        ]
+      }
+    }
+  },
+  "627": {
+    "name": "clearing-b-stump",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "642": {
+    "name": "clearing-b-tilted-horse",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "630": {
+    "name": "clearing-b-tree-keg",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "643": {
+    "name": "clring-b-caber-door-object",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "645": {
+    "name": "keg-shadow",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "644": {
+    "name": "sawhorse-anim-object",
+    "rooms": {
+      "23": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "655": {
+    "name": "pistol-case-anim-object",
+    "rooms": {
+      "24": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "669": {
+    "name": "tanning-oil-object",
+    "rooms": {
+      "26": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "675": {
+    "name": "towels-animation-object",
+    "rooms": {
+      "26": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "698": {
+    "name": "brimbeach-burnt-palido",
+    "rooms": {
+      "28": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "699": {
+    "name": "brimbeach-gate",
+    "rooms": {
+      "28": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "700": {
+    "name": "palido-head-object",
+    "rooms": {
+      "28": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "697": {
+    "name": "pink-chest-anim-object",
+    "rooms": {
+      "28": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "747": {
+    "name": "snake-plaque",
+    "rooms": {
+      "31": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "764": {
+    "name": "quicksand-plaque",
+    "rooms": {
+      "32": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "765": {
+    "name": "quicksand-thorn-plaque",
+    "rooms": {
+      "32": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "763": {
+    "name": "quicksand-vine-plaque",
+    "rooms": {
+      "32": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "759": {
+    "name": "quiksand-animation-reeds",
+    "rooms": {
+      "32": {
+        "states": [
+          0
+        ]
+      }
+    }
+  },
+  "762": {
+    "name": "quiksand-reed-object",
+    "rooms": {
+      "32": {
+        "states": [
+          0,
+          1
+        ]
+      }
+    }
   }
 }

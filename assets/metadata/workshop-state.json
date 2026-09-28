@@ -13,13 +13,13 @@
     "4921c986-44f5-4c33-8f0c-adec6ff6fa6f": "cannon-final-2560x1440",
     "a1327264-ec6d-4863-905c-9d7f13f9cefc": "cannon-view-supplied-f1da6708f7c5",
     "afda4e02-afa5-4016-b647-a914f4cf611f": "waterline-final-2560x1440",
-    "28ed108f-87bb-45c3-b1dd-3f5d3099b812": "treasure-wide-6f0c6289d355",
+    "28ed108f-87bb-45c3-b1dd-3f5d3099b812": "ebed0235-fbee-40f9-a567-88193ee4b296",
     "8eb05ba4-84e0-4331-a4ff-388221b08aaa": "plunder-map-wide-e5369aec8e12",
     "3d77636e-df21-4f0d-8556-43657f9ed342": "7cad8e40-2cfb-43d4-97ae-4ee9f4199b28",
     "eea06c30-39d2-4fe9-a29d-96577c8e0cea": "0cc899e8-abb0-4355-8ae9-2e8c394c3af3",
     "effd87cb-6883-46ef-8900-32d3dc3f6c9e": "77bdcaba-23d2-42d0-81cb-578311283f2c",
     "21872266-4c2b-4bbc-a824-637b1e06317a": "9cb149ab-0c0a-4c1c-9266-ef3dd0b4bffd",
-    "db0424b8-f86b-4852-aa11-bc9d53c1d0f4": "cb292037-4296-400d-b361-e898a4391495",
+    "db0424b8-f86b-4852-aa11-bc9d53c1d0f4": "bbe7f9e8-30a4-4826-8f32-fc2115fdecfe",
     "07da4c7f-3179-402a-863f-6f9776abe4ba": "50fcbfa2-feba-4367-8d0b-065508ac8293",
     "dcae549f-cc42-4eb9-9f98-942c47ee8d1a": "129469ce-51f8-4126-83bb-7cfc7f83b730",
     "922dc08e-d0ef-46ff-a535-0655648acfbb": "035f3be7-8d87-4ffe-ac5d-526013dea43d",
@@ -30,7 +30,7 @@
     "04267762-1b04-4628-a8e6-38b06eabea8b": "c6832999-eb4b-48c5-a34c-feaa1a2e815b",
     "a0687c98-291b-452e-a20d-ad795371bbf3": "99d5f90a-b8a1-41f8-8fd2-6a227836ef5e",
     "3e31caea-1509-4c21-9b42-62e357db41f8": "6e9ab0af-c4d4-499f-aa28-99d6e64b9f65",
-    "36114439-d72e-46aa-b1f1-3d717d53ea36": "070a6f2d-6176-4a01-b514-5f4c69863690",
+    "36114439-d72e-46aa-b1f1-3d717d53ea36": "voodoo-exterior-wide-77d0b9f10c76",
     "52a5a24a-8145-4573-83b6-2ab71e373185": "a3a9b0dc-e80a-4aee-9c38-ef75231f6fea",
     "202b09ce-6f6f-4f20-972e-40f5a1b766bd": "da1f8b39-7036-42ac-ae23-9d029c8b6020",
     "2c530330-9145-49c4-97fa-4c625674e786": "eb2f90e9-de99-4ccd-9f5a-26d7e4cb62b1",
@@ -2198,6 +2198,70 @@
       "reviewStatus": "approved",
       "engineStatus": "untested",
       "reviewNotes": "User designated this exact 2560 × 1440 image as the final room 0030 background."
+    },
+    "ebed0235-fbee-40f9-a567-88193ee4b296": {
+      "id": "ebed0235-fbee-40f9-a567-88193ee4b296",
+      "assetId": "28ed108f-87bb-45c3-b1dd-3f5d3099b812",
+      "filePath": "upscaled/imported/d46ecd7e18cd49cfa68695a013c96112e7823f36e82ff5d9d53194a2360671ce.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 4951845,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "d46ecd7e18cd49cfa68695a013c96112e7823f36e82ff5d9d53194a2360671ce",
+        "originalFile": "0012_treasure-wonder-3-5.png",
+        "replacesVariantId": "treasure-wide-6f0c6289d355"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T22:42:13.744Z",
+      "reviewStatus": "unreviewed",
+      "engineStatus": "untested"
+    },
+    "voodoo-exterior-wide-77d0b9f10c76": {
+      "id": "voodoo-exterior-wide-77d0b9f10c76",
+      "assetId": "36114439-d72e-46aa-b1f1-3d717d53ea36",
+      "filePath": "upscaled/imported/77d0b9f10c76ae10f230f9386c8d032669535b838be69971e66e00f4443f5cb6.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5964848,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "77d0b9f10c76ae10f230f9386c8d032669535b838be69971e66e00f4443f5cb6",
+        "originalFile": "0029_voodoo-e-wonder-3-5.png",
+        "replacesVariantId": "070a6f2d-6176-4a01-b514-5f4c69863690",
+        "layout": "voodoo-exterior-v1"
+      },
+      "references": [],
+      "createdAt": "2026-09-27T23:03:39.944Z",
+      "reviewStatus": "unreviewed",
+      "engineStatus": "untested"
+    },
+    "bbe7f9e8-30a4-4826-8f32-fc2115fdecfe": {
+      "id": "bbe7f9e8-30a4-4826-8f32-fc2115fdecfe",
+      "assetId": "db0424b8-f86b-4852-aa11-bc9d53c1d0f4",
+      "filePath": "upscaled/imported/efe09351253add1f882afda7ed5ae6a0b6555f65e6f08d7581c0fc6d7c9fd963.png",
+      "width": 2560,
+      "height": 1440,
+      "mimeType": "image/png",
+      "fileSize": 5020832,
+      "tool": "user-supplied",
+      "model": "",
+      "prompt": "",
+      "params": {
+        "sha256": "efe09351253add1f882afda7ed5ae6a0b6555f65e6f08d7581c0fc6d7c9fd963",
+        "originalFile": "0018_offstage-wonder-3-5.png",
+        "replacesVariantId": "cb292037-4296-400d-b361-e898a4391495"
+      },
+      "references": [],
+      "createdAt": "2026-09-28T00:03:11.411Z",
+      "reviewStatus": "unreviewed",
+      "engineStatus": "untested"
     }
   }
 }

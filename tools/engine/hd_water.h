@@ -9,6 +9,9 @@ namespace HdWater {
 inline bool room(int room) { return HdMasks::waterOverride(room) || room == 10 || room == 11 || room == 14 || room == 15 || mappedRoom(room); }
 inline bool fullSurface(int room) { return room == 10 || room == 11; }
 
+// Puerto Pollo keeps wave motion and painted color without reflective lighting.
+inline bool reflectiveLight(int room) { return room != 15; }
+
 // The cannon and waterline paintings use this material classifier: their wood is
 // olive/brown and their water is dark blue/teal. Work from the
 // selected ungraded painting, never from the scene containing actors or UI.
