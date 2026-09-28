@@ -216,4 +216,8 @@ from patch_scene_masks import patch as patch_scene_masks
 patch_scene_masks(root, edit)
 print("Applied live walkable-area and water mask editor")
 
+from patch_camera import patch as patch_camera
+patch_camera(root, edit)
+print('Applied soft camera follow and fractional world presentation')
+
 stamp.write_text(revision + "\n")

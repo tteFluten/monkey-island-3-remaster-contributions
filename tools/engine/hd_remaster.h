@@ -13,7 +13,7 @@
 // are CPU staging buffers; the backend owns all GL objects and their lifetimes.
 namespace HdRemaster {
 inline bool chapterCard(int room) { return (room >= 4 && room <= 8) || room == 88; }
-struct Sample { double at = 0, cpu = 0, gpu = -1, interval = 0, native = 0, motion = 0, scene = 0, backend = 0; int room = 0, cameraX = 0, cameraY = 0; };
+struct Sample { double at = 0, cpu = 0, gpu = -1, interval = 0, native = 0, motion = 0, scene = 0, backend = 0; int room = 0, cameraX = 0, cameraY = 0; double visualX = 0, visualY = 0, targetX = 0, targetY = 0, velocityX = 0, velocityY = 0; bool follow = false; };
 struct State {
     bool (*capture)(Graphics::Surface &) = nullptr;
     double (*highResTime)() = nullptr;
@@ -38,6 +38,9 @@ struct State {
     float exitFadeOpacity = 0;
     int room = 0, viewportWidth = 640, viewportHeight = 480;
     int drawableWidth = 0, drawableHeight = 0, backgroundX = 0, backgroundY = 0;
+    double cameraFractionX = 0, cameraFractionY = 0;
+    double cameraTargetX = 0, cameraTargetY = 0, cameraVelocityX = 0, cameraVelocityY = 0;
+    bool cameraFollow = false;
     int maskPlanes = 0, maskOffset = 0, maskEdge = 2, maskDepth = 1;
     int radius = 0, scale = 4, intensity = 100, revision = 0;
     uint generation = 0, coverageGeneration = 0;
@@ -75,6 +78,10 @@ struct State {
                 Sample &s = samples[sampleCount++];
                 s.native = cpuNative; s.motion = cpuMotion; s.scene = cpuScene; s.backend = cpuBackend;
                 s.at = now; s.cpu = cpuWork; s.gpu = -1; s.interval = lastInterval; s.room = room; s.cameraX = backgroundX / scale; s.cameraY = backgroundY / scale;
+                s.visualX = double(backgroundX) / scale + cameraFractionX;
+                s.visualY = double(backgroundY) / scale + cameraFractionY;
+                s.targetX = cameraTargetX; s.targetY = cameraTargetY;
+                s.velocityX = cameraVelocityX; s.velocityY = cameraVelocityY; s.follow = cameraFollow;
             } else ++droppedSamples;
         }
         cpuWork = cpuNative = cpuMotion = cpuScene = cpuBackend = 0;

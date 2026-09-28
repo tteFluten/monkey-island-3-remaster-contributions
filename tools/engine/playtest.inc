@@ -172,11 +172,12 @@ void ScummEngine::playtestTick() {
                 metrics.recording = false;
                 FILE *report = fopen((directory + "/frames.csv").c_str(), "w");
                 if (report) {
-                    fprintf(report, "at_ms,interval_ms,cpu_ms,gpu_ms,room,camera_x,camera_y,native_ms,motion_ms,scene_ms,backend_ms\n");
+                    fprintf(report, "at_ms,interval_ms,cpu_ms,gpu_ms,room,camera_x,camera_y,native_ms,motion_ms,scene_ms,backend_ms,visual_camera_x,visual_camera_y,camera_target_x,camera_target_y,camera_velocity_x,camera_velocity_y,camera_follow\n");
                     for (uint i = 0; i < metrics.sampleCount; ++i) {
                         const auto &sample = metrics.samples[i];
-                        fprintf(report, "%.4f,%.4f,%.4f,%.4f,%d,%d,%d,%.4f,%.4f,%.4f,%.4f\n", sample.at, sample.interval,
-                                sample.cpu, sample.gpu, sample.room, sample.cameraX, sample.cameraY, sample.native, sample.motion, sample.scene, sample.backend);
+                        fprintf(report, "%.4f,%.4f,%.4f,%.4f,%d,%d,%d,%.4f,%.4f,%.4f,%.4f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%d\n", sample.at, sample.interval,
+                                sample.cpu, sample.gpu, sample.room, sample.cameraX, sample.cameraY, sample.native, sample.motion, sample.scene, sample.backend,
+                                sample.visualX, sample.visualY, sample.targetX, sample.targetY, sample.velocityX, sample.velocityY, sample.follow);
                     }
                     fclose(report);
                 }
@@ -220,6 +221,14 @@ void ScummEngine::playtestTick() {
     status.deleteLastChar();
     status += Common::String::format(",\"presentationFps\":%.3f,\"renderCpuMs\":%.3f,\"cameraTop\":%d}",
         render.fps, render.cpuMs, _screenTop);
+    status.deleteLastChar();
+    status += Common::String::format(",\"visualCameraLeft\":%.6f,\"visualCameraTop\":%.6f,\"cameraFollow\":%s,\"cameraSettling\":%s}",
+        double(render.backgroundX) / MAX(1, render.scale) + render.cameraFractionX,
+        double(render.backgroundY) / MAX(1, render.scale) + render.cameraFractionY,
+        render.cameraFollow ? "true" : "false", _hdFollow.moving() ? "true" : "false");
+    status.deleteLastChar();
+    status += Common::String::format(",\"inputCameraLeft\":%.6f,\"inputCameraTop\":%.6f,\"inputMouseX\":%d,\"inputMouseY\":%d}",
+        _hdInputCameraLeft, _hdInputCameraTop, _hdInputMouseX, _hdInputMouseY);
     status.deleteLastChar();
     status += Common::String::format(",\"inventoryOpen\":%s,\"inventoryOffset\":%d,\"mouseScriptX\":%d,\"cursorObject\":%d}",
         hdInventoryOpen() ? "true" : "false", hdInventoryOffset(), VAR(VAR_MOUSE_X), _hdCursorObject);

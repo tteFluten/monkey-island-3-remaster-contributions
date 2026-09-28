@@ -5,7 +5,8 @@ const int kMaskScale=4,kMaskRowH=24;
 int maskCanvasWidth(){auto &r=HdRemaster::state();return r.viewportWidth>640?r.viewportWidth:854;}
 HdMasks::Point maskBaseView(HdMasks::Point p,bool water,bool inverse,int roomW,int roomH) {
     auto &r=HdRemaster::state();const double width=maskCanvasWidth(),pad=(width-r.viewportWidth)/2;
-    const double cx=double(r.backgroundX)/MAX(1,r.scale),cy=double(r.backgroundY)/MAX(1,r.scale);
+    // Match the camera shader's fractional world shift for outlines and picking.
+    const double cx=double(r.backgroundX)/MAX(1,r.scale)+r.cameraFractionX,cy=double(r.backgroundY)/MAX(1,r.scale)+r.cameraFractionY;
     if(water) {
         if(HdMasks::state().widePainting)return inverse?HdMasks::Point(p.x*1000/width,p.y*1000/480):HdMasks::Point(p.x*width/1000,p.y*480/1000);
         return inverse?HdMasks::Point((p.x-pad+cx)*1000/roomW,(p.y+cy)*1000/roomH):HdMasks::Point(p.x*roomW/1000-cx+pad,p.y*roomH/1000-cy);
@@ -446,7 +447,7 @@ void ScummEngine::drawHDMasks() {
     s.planeCount=MAX(0,_gdi->_numZBuffer-1);s.plane=MIN(MAX(1,s.plane),MAX(1,s.planeCount));
     auto &image=r.maskOverlay;const int width=maskCanvasWidth(),rw=MAX(1,_hdBackgroundSurface.w/MAX(1,_hdScale)),rh=MAX(1,_hdBackgroundSurface.h/MAX(1,_hdScale));
     static Common::String previous;static uint32 generatedAt=0;
-    Common::String cache=Common::String::format("%s:%d:%d:%d:%d:%d:%d:%d:%s",s.key.c_str(),s.revision,s.uiRevision,r.backgroundX,r.backgroundY,r.drawableWidth,r.drawableHeight,width,s.error.c_str());
+    Common::String cache=Common::String::format("%s:%d:%d:%d:%d:%.4f:%.4f:%d:%d:%d:%s",s.key.c_str(),s.revision,s.uiRevision,r.backgroundX,r.backgroundY,r.cameraFractionX,r.cameraFractionY,r.drawableWidth,r.drawableHeight,width,s.error.c_str());
     const uint32 now=_system->getMillis();
     // Live actors, script-controlled box flags and object depth masks can change
     // without an edit. Refresh those diagnostics at 10 Hz as gameplay continues.

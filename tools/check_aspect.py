@@ -47,7 +47,7 @@ class Check:
         environment = dict(os.environ, MI3_ENGINE_TEST_INPUT='1', MI3_ENGINE_TEST_EXCLUSIVE='1')
         environment.pop('MI3_ENGINE_TEST_WINDOWED', None)
         if allow_window: environment['MI3_ENGINE_TEST_WINDOWED'] = '1'
-        self.process = subprocess.Popen([str(engine_path or ROOT / '.playtest/engine/build/scummvm'),
+        self.process = subprocess.Popen([str(engine_path.resolve() if engine_path else ROOT / '.playtest/engine/build/scummvm'),
             '--config=' + str(self.output / 'scummvm.ini'), '--save-slot=0', 'comi'], cwd=self.output,
             stdout=self.log, stderr=self.log, env=environment)
         try:
@@ -184,7 +184,7 @@ def interactions(check):
     for x in (1, window['width'] - 2):
         check.send(f'move {x} {round(window["height"] / 2)}')
         state = check.state()
-        expected = state['cameraLeft'] + (x - left) / scale
+        expected = state.get('inputCameraLeft', state.get('visualCameraLeft', state['cameraLeft'])) + (x - left) / scale
         assert abs(state['mouseRoomX'] - expected) <= 2, (state, expected)
     actor = next(a for a in check.state()['actors'] if a['id'] == 1)
     start_x = actor['x']
