@@ -46,7 +46,7 @@ const assetGrid = (() => {
   function batchTargets(approval=false){
     const scope=panel.querySelector('[data-batch-scope]')?.value||'filtered';
     const candidates=selectionMode?actionCandidates():scope==='all'?state.frames:scope==='collection'?state.frames.filter(f=>!collection.value||f.category===collection.value):items;
-    return candidates.filter(f=>approval?!imageLabApprovals[f.id]:(!imageLabApprovals[f.id]||!panel.querySelector('[data-skip-approved]').checked)&&(!panel.querySelector('[data-batch-seams]')?.checked||f.has_reference)&&edgeState(f)==='none');
+    return candidates.filter(f=>approval?imageLabNeedsApproval(f):(!imageLabApprovals[f.id]||!panel.querySelector('[data-skip-approved]').checked)&&(!panel.querySelector('[data-batch-seams]')?.checked||f.has_reference)&&edgeState(f)==='none');
   }
   function updateSelectionBar(){
     if(!panel)return;
@@ -67,7 +67,7 @@ const assetGrid = (() => {
     const scope=panel.querySelector('[data-batch-scope]');
     if(selectionMode)scope.value='selected';else if(scope.value==='selected')scope.value='filtered';
     scope.disabled=selectionMode;scope.querySelector('[value=selected]').hidden=!selectionMode;
-    const candidates=actionCandidates(),approve=candidates.filter(f=>!imageLabApprovals[f.id]).length;
+    const candidates=actionCandidates(),approve=candidates.filter(imageLabNeedsApproval).length;
     const clean=candidates.filter(f=>f.has_reference&&!imageLabApprovals[f.id]&&edgeState(f)==='none').length;
     const redo=candidates.filter(f=>f.has_reference&&!imageLabApprovals[f.id]&&auditInfo(f)?.score>=2).length;
     for(const [selector,label,count] of [
@@ -243,7 +243,7 @@ const assetGrid = (() => {
       const review=cardReview(frame),accent=review.priority===2?'#ff6969':review.priority===1?'#eac264':auditInfo(frame)?.passed?'#77ce98':'#aaaaaa';
       ctx.fillStyle='#191919';ctx.fillRect(x,y,CW-14,CH-14);ctx.strokeStyle=i===selected?'#777777':'#333333';ctx.lineWidth=1;ctx.strokeRect(x+.5,y+.5,CW-15,CH-15);
       text(frame.name,x+12,y+21,CW-40,'#e4e8ed',12);
-      const job=imageLabAssetJobs.get(frame.id),approved=imageLabApprovals[frame.id];
+      const job=imageLabAssetJobs.get(frame.id),approved=!imageLabNeedsApproval(frame)&&imageLabApprovals[frame.id];
       const result=null; // Grid and audit always describe the version actually in use.
       picture(request(frame,false,result),x+8,y+30,CW-30,130,false);
       const pending=job&&['queued','running'].includes(job.status);
@@ -276,7 +276,8 @@ const assetGrid = (() => {
         }
         const approveButton=buttons.querySelector('.ab-approve');
         approveButton.textContent=approved?'Aprobado':'Aprobar';
-        approveButton.setAttribute('aria-label',(approved?'Quitar aprobación: ':'Aprobar asset: ')+frame.name);
+        approveButton.setAttribute('aria-label',(approved?'Aprobado: ':'Aplicar y aprobar última versión: ')+frame.name);
+        approveButton.title='Aplica y aprueba la última generación terminada. Conserva el historial.';
         approveButton.setAttribute('aria-pressed',String(!!approved));
         buttons.querySelector('.ab-audit').disabled=!!auditProgress.running;
         const report=auditInfo(frame);
@@ -439,13 +440,13 @@ const assetGrid = (() => {
       const label=panel.querySelector('[data-batch-status]');let approved=0;const errors=[];
       try{for(const frame of targets){
         if(batchStop)break;
-        label.textContent=`Aprobando ${approved+errors.length+1}/${targets.length} · versión en uso`;
-        try{const record=await api('/api/imagelab/approve',{id:frame.id,revision:frame.revision});imageLabApprovals[frame.id]=record;approved++;invalidate();}
+        label.textContent=`Aplicando y aprobando ${approved+errors.length+1}/${targets.length} · última generación`;
+        try{await acceptLatestImageLabResult(frame);approved++;invalidate();}
         catch(error){errors.push(frame.name+': '+error.message);}
       }}finally{
         batchSending=false;for(const b of bulk.querySelectorAll('[data-batch],[data-batch-approve]'))b.disabled=false;
         panel.querySelector('[data-batch-stop]').hidden=true;
-        label.textContent=`${approved} aprobados · ${errors.length} errores${batchStop?' · detenido':''}. Aprobadas las versiones en uso como referencias.`;
+        label.textContent=`${approved} aplicados y aprobados · ${errors.length} errores${batchStop?' · detenido':''}. Últimas generaciones en uso.`;
         label.title=errors.join('\n');updateBatchControls();window.dispatchEvent(new Event('imagelab-assets'));
       }
     };

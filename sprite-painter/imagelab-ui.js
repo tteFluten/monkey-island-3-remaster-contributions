@@ -2,18 +2,31 @@
 const imageLabDefaultPrompt='Interpolar el dibujo original a mayor resolución. Conservar sus colores exactos, luminosidad y regiones de sombreado. Mantener el color y grosor relativo de cada línea, sin engrosarla ni agregar contornos. Suavizar solo escalones de muestreo. No reinterpretar, completar fragmentos, cambiar materiales, agregar vetas o volumen. Respetar tamaño, pose y encuadre.';
 const imageLabSending=new Set();
 function imageLabPreferences(id){try{const settings=JSON.parse(localStorage.getItem('imagelab-settings-'+id)||'{}');if(settings.prompt==='Remasterizar fielmente el original. Conservar exactamente su silueta, pose, paleta y encuadre. Mejorar bordes y sombreado sin inventar formas ni completar fragmentos.')settings.prompt=imageLabDefaultPrompt;return settings;}catch{return {};}}
-let imageLabAssetJobs=new Map(),imageLabApprovals={};
+let imageLabAssetJobs=new Map(),imageLabApprovals={},imageLabResultJobs=new Map();
+function latestImageLabResult(jobs){return [...jobs].filter(j=>['ready','applied'].includes(j.status)&&j.image).sort((a,b)=>b.created_at-a.created_at)[0];}
+function imageLabNeedsApproval(frame){const job=imageLabResultJobs.get(frame.id),approval=imageLabApprovals[frame.id];return !approval||!!(job&&job.candidate_sha256!==approval.sha256);}
 function syncImageLabAssets(jobs,approvals){
-  imageLabApprovals=approvals||{};imageLabAssetJobs=new Map();
+  imageLabApprovals=approvals||{};imageLabAssetJobs=new Map();imageLabResultJobs=new Map();
+  for(const job of [...jobs].sort((a,b)=>b.created_at-a.created_at))if(['ready','applied'].includes(job.status)&&job.image&&!imageLabResultJobs.has(job.asset_id))imageLabResultJobs.set(job.asset_id,job);
   for(const job of jobs){const old=imageLabAssetJobs.get(job.asset_id);if(!old||(['queued','running'].includes(job.status)&&!['queued','running'].includes(old.status)))imageLabAssetJobs.set(job.asset_id,job);}
   window.dispatchEvent(new Event('imagelab-assets'));
 }
+async function acceptLatestImageLabResult(frame){
+  const history=await api('/api/imagelab/jobs?asset='+frame.id),job=latestImageLabResult(history.jobs);
+  const info=await api('/api/open?id='+frame.id);let revision=info.revision;
+  if(job&&(!job.candidate_sha256||job.candidate_sha256!==info.current_sha256)){
+    const saved=await api('/api/variants/select',{job_id:job.id,revision});revision=saved.revision;
+  }
+  const record=await api('/api/imagelab/approve',{id:frame.id,revision});imageLabApprovals[frame.id]=record;
+  // Read back the authoritative image/revision immediately; do not wait for SSE.
+  try{LiveAssets.merge(await api('/api/live-state?ids='+frame.id));}catch{LiveAssets.request([frame.id]);}
+  window.dispatchEvent(new Event('imagelab-assets'));return record;
+}
 async function approveImageLabAsset(frame){
+  if(imageLabSending.has(frame.id))return;imageLabSending.add(frame.id);
   try{
-    if(imageLabApprovals[frame.id]){await api('/api/imagelab/revoke',{id:frame.id});delete imageLabApprovals[frame.id];imageLabNotice('Aprobación retirada · '+frame.name);}
-    else{const info=await api('/api/open?id='+frame.id);const record=await api('/api/imagelab/approve',{id:frame.id,revision:info.revision});imageLabApprovals[frame.id]=record;imageLabNotice('Aprobado como referencia · '+frame.name);}
-    window.dispatchEvent(new Event('imagelab-assets'));
-  }catch(error){imageLabNotice(error.message);}
+    await acceptLatestImageLabResult(frame);imageLabNotice('Última versión aplicada y aprobada · '+frame.name);
+  }catch(error){imageLabNotice(error.message);}finally{imageLabSending.delete(frame.id);}
 }
 async function enqueueImageLab(frame,button){
   if(imageLabSending.has(frame.id))return;

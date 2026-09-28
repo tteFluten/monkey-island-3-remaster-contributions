@@ -14,7 +14,7 @@ function fixture(){
   }
   const panel={querySelector:control,classList:{toggle(){}}};
   const approvals={},jobs=new Map();
-  const context=vm.createContext({state:{frames},imageLabApprovals:approvals,imageLabAssetJobs:jobs,window:{addEventListener(){}}});
+  const context=vm.createContext({state:{frames},imageLabApprovals:approvals,imageLabAssetJobs:jobs,imageLabNeedsApproval:f=>!approvals[f.id],window:{addEventListener(){}}});
   // Exercise the real private selection and target logic without exporting test hooks to the app.
   let code=fs.readFileSync(path.join(__dirname,'../asset-browser.js'),'utf8').split('async function openAssetBrowser()')[0];
   code=code.replace('return {open,hide};',`return {pick,pickMany,clearSelection,batchTargets,actionCandidates,updateBatchControls,
