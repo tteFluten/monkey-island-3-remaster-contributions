@@ -23,6 +23,14 @@ def summarize(path):
     result = dict(frames=len(rows), fps=fps, intervalP99Ms=p99(intervals), cpuP99Ms=p99(cpu),
                   gpuP99Ms=p99(gpu), gpuSamples=len(gpu), over25MsPercent=late, maximumIntervalMs=max(intervals))
     result['cameraPositions'] = len({(row.get('camera_x'), row.get('camera_y')) for row in rows})
+    if 'visual_camera_x' in rows[0]:
+        poses = [(float(r['visual_camera_x']), float(r['visual_camera_y'])) for r in rows]
+        result['visualCameraPositions'] = len(set(poses))
+        result['fractionalCameraFrames'] = sum(any(abs(v - round(v)) > .0001 for v in p) for p in poses)
+        result['followFrames'] = sum(r['camera_follow'] == '1' for r in rows)
+        result['maximumCameraStep'] = max((max(abs(a-b) for a,b in zip(p,q))
+                                           for p,q in zip(poses, poses[1:])), default=0)
+
     result['passed'] = 59 <= fps <= 61 and p99(cpu) <= 1000 / 60 and (not gpu or p99(gpu) <= 1000 / 60) and late < 1
     return result
 

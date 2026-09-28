@@ -200,4 +200,8 @@ from patch_language import patch as patch_language
 patch_language(root, edit)
 print('Applied language packs')
 
+from patch_camera import patch as patch_camera
+patch_camera(root, edit)
+print('Applied soft camera follow and fractional world presentation')
+
 stamp.write_text(revision + "\n")
