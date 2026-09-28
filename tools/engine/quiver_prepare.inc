@@ -1,10 +1,13 @@
 // Resolve complete replacement poses BEFORE copying native foreground pixels.
 // Original actors remain in the simulation buffer for scripts/masking/hit tests,
 // but their pixels never become an underpainting beneath valid SVG/PNG poses.
+HdHead::state().visual.valid = false;
+HdMasks::state().animationVisuals.clear();
 struct QuiverPose {
     Actor *actor;
     bool water = false;
     bool nativeColorFallback = false;
+    bool nativeAnimation = false;
     bool topaz = false;
     Graphics::Surface cannonFrom;
     Common::Array<Graphics::Surface *> textures;
@@ -21,6 +24,8 @@ const bool waterRequested = waterState.active && HdWater::room(_currentRoom) &&
     (!ConfMan.hasKey("hd_water_shader") || ConfMan.getBool("hd_water_shader"));
 waterState.water = false;
 waterState.waterSurface = false;
+if (waterRequested && HdMasks::state().widePainting && HdMasks::waterOverride(_currentRoom))
+    waterState.water = waterState.waterSurface = true;
 if (waterRequested) {
     if (waterState.waterCoverage.w != visW || waterState.waterCoverage.h != visH) {
         waterState.waterCoverage.free();
@@ -41,7 +46,7 @@ if (waterRequested) {
         }
     }
 }
-if (waterRequested || _hdUICostumeManager || (playtestExactRoom(_currentRoom) && _hdQuiverManager && _hdQuiverManager->isEnabled())) {
+if (waterRequested || hdPlunderMapActive() || hdVoodooExteriorActive() || _hdUICostumeManager || (playtestExactRoom(_currentRoom) && _hdQuiverManager && _hdQuiverManager->isEnabled())) {
     Common::Array<Actor *> actors;
     for (int ai = 0; ai < _numActors; ++ai) {
         Actor *a = _actors[ai];
@@ -62,12 +67,17 @@ if (waterRequested || _hdUICostumeManager || (playtestExactRoom(_currentRoom) &&
         if (a->_quiverWidth != visW || a->_quiverHeight != visH || a->_quiverCamera != vs->xstart ||
             a->_quiverAfter.size() != (uint)(visW * visH) || a->_quiverUnder.size() != a->_quiverAfter.size())
             continue;
-        if (waterRequested && HdWater::ambient(_currentRoom, a->_costume)) {
+        // The map's palette-cycled shoreline/fog costume carries fragments of
+        // the old painting. The wider painting owns those pixels, including
+        // with water disabled; keep the animated boat (66) and actors intact.
+        if ((waterRequested && HdWater::ambient(_currentRoom, a->_costume)) ||
+            (hdPlunderMapActive() && a->_costume == 63) ||
+            (hdVoodooExteriorActive() && a->_costume == 164)) {
             QuiverPose pose;
             pose.actor = a; pose.water = true;
             quiverPoses.push_back(pose);
             quiverHasWater = true;
-            waterState.water = true;
+            waterState.water |= waterRequested;
             continue; // No PNG decode, upload or replacement draw for water.
         }
         // Preserve sparse sea animation with its actual native transparency
@@ -115,8 +125,12 @@ if (waterRequested || _hdUICostumeManager || (playtestExactRoom(_currentRoom) &&
             }
             quiverPoses.push_back(pose);
         }
-        else for (uint i = 0; i < pose.textures.size(); ++i) {
-            delete pose.textures[i];
+        else {
+            for (uint i = 0; i < pose.textures.size(); ++i) delete pose.textures[i];
+            pose.textures.clear();
+            // Flames remain editable when the selected HD pack has no PNGs.
+            // Use their live decoded palette/alpha, preserving every frame.
+            if(a->_costume==7||a->_costume==8){pose.nativeColorFallback=true;pose.nativeAnimation=true;quiverPoses.push_back(pose);}
         }
     }
     if (!quiverPoses.empty()) {
@@ -138,7 +152,9 @@ if (waterRequested || _hdUICostumeManager || (playtestExactRoom(_currentRoom) &&
             if (water)
                 HdWater::removeOverlay(quiverWithoutWater.data(), a->_quiverUnder.data(),
                     a->_quiverAfter.data(), quiverWithoutWater.size(), _currentPalette, mixedWater);
-            if (quiverPoses[ai].water && !waterState.waterSurface)
+            // Map overlay removal also runs with the shader disabled. Its
+            // coverage buffer exists only when water rendering was requested.
+            if (waterRequested && water && !waterState.waterSurface)
                 for (int y = 0; y < visH; ++y)
                     HdWater::coverage((byte *)waterState.waterCoverage.getBasePtr(0, y),
                         &quiverNative[y * visW], &a->_quiverUnder[y * visW],

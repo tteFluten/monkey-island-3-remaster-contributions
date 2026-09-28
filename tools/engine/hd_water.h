@@ -1,12 +1,16 @@
 #ifndef COMMON_HD_WATER_H
 #define COMMON_HD_WATER_H
 #include "common/hd_water_regions.h"
+#include "hd_scene_masks.h"
 
 namespace HdWater {
 // Reviewed ambient/reflection costumes and mixed water/boat poses are generated
 // from water_regions.json. Story poses, impacts and waterfalls are excluded.
-inline bool room(int room) { return room == 10 || room == 11 || room == 14 || room == 15 || mappedRoom(room); }
+inline bool room(int room) { return HdMasks::waterOverride(room) || room == 10 || room == 11 || room == 14 || room == 15 || mappedRoom(room); }
 inline bool fullSurface(int room) { return room == 10 || room == 11; }
+
+// Puerto Pollo keeps wave motion and painted color without reflective lighting.
+inline bool reflectiveLight(int room) { return room != 15; }
 
 // The cannon and waterline paintings use this material classifier: their wood is
 // olive/brown and their water is dark blue/teal. Work from the

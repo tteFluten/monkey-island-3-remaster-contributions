@@ -141,5 +141,22 @@ class AssetPackTests(unittest.TestCase):
         pack.rollback(self.target, receipt['transaction'])
         self.assertEqual(json.loads(state_path.read_text()), old)
 
+    def test_authored_replacement_preserves_fallback_and_custom_selection(self):
+        variants = {'old': dict(id='old', assetId='map'),
+                    'wide': dict(id='wide', assetId='map', params=dict(replacesVariantId='old'))}
+        metadata = self.root / 'assets/metadata/workshop-state.json'
+        metadata.parent.mkdir(parents=True)
+        metadata.write_text(json.dumps(dict(selections={'map': 'wide'}, variants=variants)))
+        for selection, expected in [('old', 'wide'), ('custom', 'custom'), (None, None)]:
+            old = dict(selections={'map': selection}, variants={'custom': dict(id='custom', assetId='map')})
+            state_path = self.target_file('.playtest/state.json', json.dumps(old).encode())
+            receipt = pack.install(self.root, self.target)
+            state = json.loads(state_path.read_text())
+            self.assertEqual(state['selections']['map'], expected)
+            self.assertEqual(set(state['variants']), {'old', 'wide', 'custom'})
+            self.assertEqual(pack.install(self.root, self.target)['changed_files'], 0)
+            pack.rollback(self.target, receipt['transaction'])
+            self.assertEqual(json.loads(state_path.read_text()), old)
+
 
 if __name__ == '__main__': unittest.main()

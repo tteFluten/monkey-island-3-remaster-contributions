@@ -84,7 +84,7 @@ test('settings reject malformed paths and config injection', () => {
   assert.throws(() => validateSettings({ disc1: '/a', disc2: '/b', backgroundFolder: '/c', characterPack: 'topaz\nhd_path=/tmp' }), /Unknown character pack/);
 });
 
-for (const roomId of [9, 13, 87, 92]) test(`room ${roomId}: wide import stages matching center and sides; ordinary selection removes sides`, async () => {
+for (const roomId of [9, 13, 29, 87, 92]) test(`room ${roomId}: wide import stages matching center and sides; ordinary selection removes sides`, async () => {
   const number = String(roomId).padStart(4, '0');
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'mi3-wide-'));
   const service = new PlaytestService(root);
@@ -192,6 +192,7 @@ test('import, persistence, staging, process commands and original restoration', 
     assert.deepEqual(readFilmSettings(launchConfig), { enabled: false, strength: 20 });
     // Per-room grades are tracked authoring data edited from the in-game Look panel.
     assert.match(await fs.readFile(path.join(root, '.playtest/scummvm.ini'), 'utf8'), new RegExp(`hd_color_grades_path=${path.join(root, 'data/color-grades.json')}`));
+    assert.match(launchConfig, new RegExp(`hd_scene_masks_path=${path.join(root, 'data/scene-masks.json')}`));
     await assert.rejects(service.launch(), /already running/);
     const deadline = Date.now() + 5000;
     while (!service.status.engine?.ready && Date.now() < deadline) await new Promise(r => setTimeout(r, 50));

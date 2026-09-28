@@ -32,7 +32,7 @@ HdColorGradeState &hdColorGradeState() {
 enum { kLookColor = 0, kLookFocus = HdColorGrade::kVignetteOn,
     kLookBlur, kLookEdge, kLookIntensity, kLookDepth, kLookVignette,
     kLookRows = kLookVignette + 4 };
-const int kLookWidth = 300, kLookTop = 8, kLookLineHeight = 16, kLookExtraLines = 9;
+const int kLookWidth = 300, kLookTop = 8, kLookLineHeight = 16, kLookExtraLines = 12;
 static_assert(HdSceneLook::kShadowX - HdSceneLook::kWaterOpacity <= kLookRows, "Water controls must fit panel buffers");
 int hdLookRows() {
     const auto &st = hdColorGradeState();
@@ -40,7 +40,7 @@ int hdLookRows() {
         : st.waterPage ? (HdWater::fullSurface(HdRemaster::state().room) ? HdSceneLook::kShadowX : HdSceneLook::kWaterReflection)
             - HdSceneLook::kWaterOpacity : kLookRows;
 }
-int hdLookLine(int row) { return row + 2 + ((hdColorGradeState().waterPage || hdColorGradeState().filmPage || hdColorGradeState().shadowPage) ? 0 : (row >= kLookFocus ? 1 : 0) + (row >= kLookVignette ? 1 : 0)); }
+int hdLookLine(int row) { if(hdColorGradeState().shadowPage)return row+3;return row + 2 + ((hdColorGradeState().waterPage || hdColorGradeState().filmPage || hdColorGradeState().shadowPage) ? 0 : (row >= kLookFocus ? 1 : 0) + (row >= kLookVignette ? 1 : 0)); }
 
 void hdCycleLookPage(int room) {
     auto &st = hdColorGradeState();
@@ -301,8 +301,21 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         const int scale = MAX(1, (int)_hdScale);
         const Common::Point position = hdLookPosition();
         const int x = event.mouse.x / scale - position.x, y = event.mouse.y / scale - position.y;
-        if (x < 0 || x >= kLookWidth || y < 0 || y >= (rows + kLookExtraLines) * kLookLineHeight) {
+        if (x < 0 || x >= kLookWidth || y < 0 || y >= (rows + (st.shadowPage ? 10 : 9)) * kLookLineHeight) {
             st.panel = false; return true;
+        }
+        if (st.shadowPage) {
+            if (y < 4 + kLookLineHeight) return true;
+            if (y < 4 + 2 * kLookLineHeight) { st.editGlobal = x >= kLookWidth / 2; st.savedAt = 0; return true; }
+            const int room = hdSceneLookEditRoom(_currentRoom);
+            if (y >= 4 + 13 * kLookLineHeight && y < 4 + 13 * kLookLineHeight + 14) {
+                if (room && !st.settings.shadowPositionOverridden(room)) st.settings.overrideShadowPosition(room);
+                else st.settings.resetShadows(room, true);
+                st.shadowBypass = false; hdSaveColorGrades(st); return true;
+            }
+            if (y >= 4 + 14 * kLookLineHeight && y < 4 + 14 * kLookLineHeight + 14) {
+                st.settings.resetShadows(room); st.shadowBypass = false; hdSaveColorGrades(st); return true;
+            }
         }
         if (y < 4 + kLookLineHeight) { if (!st.filmPage) st.editGlobal = !st.editGlobal; st.savedAt = 0; return true; }
         if (y < 4 + 2 * kLookLineHeight) {
@@ -325,8 +338,7 @@ bool ScummEngine::handleHDLookEvent(const Common::Event &event) {
         if (st.filmPage) { HdFilm::reset(); st.savedAt = _system->getMillis(); return true; }
         if (st.shadowPage) {
             const int room = hdSceneLookEditRoom(_currentRoom);
-            for (int c = HdSceneLook::kShadowX; c < HdSceneLook::kControls; ++c)
-                st.settings.reset(room, c);
+            st.settings.resetShadows(room);
             st.shadowBypass = false;
             hdSaveColorGrades(st);
         } else if (!st.editGlobal && HdSceneLook::Settings::roomValid(_currentRoom)) {
@@ -437,8 +449,15 @@ void ScummEngine::drawHDLookPanel() {
     const char *title = st.filmPage ? "FILM LOOK" : st.waterPage ? "WATER SHADER" : st.shadowPage ? "CHARACTER SHADOWS" : "SCENE LOOK";
     lines[count++] = editingRoom ? Common::String::format("%s   Room %d (* override)", title, room)
         : Common::String::format("%s   Global defaults", title);
+    if (st.shadowPage) {
+        lines[0] = editingRoom ? Common::String::format("SHADOWS   Scene %d", room) : "SHADOWS   Global default";
+        lines[count++] = ""; // Clickable scope buttons.
+        lines[count++] = editingRoom ? Common::String::format("Position X: %s   Y: %s",
+            st.settings.rooms[room].has(HdSceneLook::kShadowX)?"scene":"global",
+            st.settings.rooms[room].has(HdSceneLook::kShadowY)?"scene":"global") : "Applies where no scene override is set";
+    }
     for (int row = 0; row < rows; ++row) {
-        if (row == 0) lines[count++] = st.filmPage ? "Film texture   Tab: Shadows"
+        if (row == 0 && !st.shadowPage) lines[count++] = st.filmPage ? "Film texture   Tab: Shadows"
             : st.shadowPage ? (HdWater::room(room) ? "Shadows   Tab: Water" : "Shadows   Tab: Scene Look")
             : st.waterPage ? "Water shader   Tab: Scene Look" : "Color correction   Tab: Film";
         if (!st.waterPage && !st.filmPage && !st.shadowPage && row == kLookFocus) lines[count++] = "Scene depth";
@@ -451,9 +470,15 @@ void ScummEngine::drawHDLookPanel() {
         lines[count++] = Common::String::format("%s%s\t%s", row == st.row ? "> " : "   ", name, values[row].c_str());
     }
     if (st.shadowPage) {
-        lines[count++] = "X: right +   Y: down +";
-        lines[count++] = "Ovalness: 5 flat / 100 round";
-    }
+        lines[count++] = "Click - / +   Arrows adjust   Shift x5";
+        lines[count++] = "X: right +   Y: down +   * scene override";
+        lines[count++] = ""; // Position inheritance button.
+        lines[count++] = ""; // Entire shadow inheritance button.
+        lines[count++] = "G: switch scope   Tab: other looks";
+        lines[count++] = st.shadowBypass ? "B: restore shadows   U / Esc: close" : "B: compare   M: scene tools   U: close";
+        lines[count++] = !st.error.empty() ? st.error : !editingRoom && st.settings.shadowPositionOverridden(room)
+            ? "This scene keeps its position override" : "Changes save automatically";
+    } else {
     lines[count++] = "Click - / +   Arrows adjust   Shift x5";
     lines[count++] = st.filmPage ? "Backspace default   R reset film"
         : st.shadowPage ? (editingRoom ? "Backspace / R: inherit shadows" : "Backspace default   R reset shadows")
@@ -466,11 +491,12 @@ void ScummEngine::drawHDLookPanel() {
         lines[count++] = editingRoom ? "Room settings saved" : "Global defaults saved";
     else if (!st.filmPage && !editingRoom && HdSceneLook::Settings::roomValid(room) && st.settings.rooms[room].mask)
         lines[count++] = "This room also has overrides";
+    }
     const int scale = MAX(1, (int)_hdScale);
     const Common::Point position = hdLookPosition();
     const int left = position.x, top = position.y;
     drawHDOverlayText(_hdComposite, _hdFontManager, _charset, scale, left, top, kLookWidth,
-        lines, count, accent, 45, kLookLineHeight, 140);
+        lines, count, accent, 45, kLookLineHeight, 140, st.shadowPage?HdMasks::state().panelOpacity*255/100:255);
     const int oldSize = _hdFontManager->getSizePercent();
     _hdFontManager->setSizePercent(45);
     for (int row = 0; row < rows; ++row) {
@@ -482,6 +508,28 @@ void ScummEngine::drawHDLookPanel() {
             _hdFontManager->drawChar(3, button ? '+' : '-', _hdComposite,
                 (x + 7) * scale, y * scale, 255, 220, 160);
         }
+    }
+    if (st.shadowPage) {
+        auto button = [&](int x, int line, int width, const Common::String &label, bool active) {
+            int y = top + 4 + line * kLookLineHeight;
+            _hdComposite.fillRect(Common::Rect((left+x)*scale,y*scale,(left+x+width)*scale,(y+14)*scale),
+                _hdComposite.format.ARGBToColor(HdMasks::state().panelOpacity*255/100,(active?95:35)*HdMasks::state().panelOpacity/100,(active?65:45)*HdMasks::state().panelOpacity/100,(active?35:55)*HdMasks::state().panelOpacity/100));
+            const int oldFont = _charset->getCurID(); _charset->setCurID(3);
+            const auto *font = dynamic_cast<const CharsetRendererNut *>(_charset);
+            int x100 = (left+x+6)*scale*100;
+            for (uint i=0;i<label.size();++i) {
+                const byte ch=label[i];
+                const int advance=(font?font->getCharWidth100(ch):_charset->getCharWidth(ch)*100)*scale;
+                if(x100+advance>(left+x+width-4)*scale*100)break;
+                _hdFontManager->drawChar(3,ch,_hdComposite,x100/100,y*scale,255,active?220:238,active?140:200);
+                x100+=advance;
+            }
+            _charset->setCurID(oldFont);
+        };
+        button(2,1,146,"This scene",editingRoom!=0);
+        button(152,1,146,"Global default",editingRoom==0);
+        button(2,13,296,editingRoom?(st.settings.shadowPositionOverridden(room)?"Use global position":"Override position for this scene"):"Reset global position",false);
+        button(2,14,296,editingRoom?"Use global size, color and position":"Reset all global shadow settings",false);
     }
     _hdFontManager->setSizePercent(oldSize);
 }

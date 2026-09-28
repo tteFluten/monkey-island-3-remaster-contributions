@@ -54,6 +54,8 @@ int main() {
     for (int r : rooms) assert(room(r));
     for (int r : {1,4,28,38,39,52,56,57,60,65,68,80,82,83,85,87,92}) assert(!room(r));
     assert(ambient(10,45) && ambient(11,51) && ambient(14,73) && ambient(15,83));
+    assert(!reflectiveLight(15));
+    for (int r : {10,11,13,14,29,31,44}) assert(reflectiveLight(r));
     // Story poses and impacts must never be removed as ambient water.
     for (int c : {34,46,47}) assert(!ambient(10,c));
     for (int c : {49,54,57}) assert(!ambient(11,c));
@@ -75,6 +77,18 @@ int main() {
     removeOverlay(display,under,after,4,palette,false);
     assert(display[0]==0 && display[1]==0 && display[2]==3 && display[3]==1);
     assert(mapped(13,900,850,20,60,150));
+    // Puerto Pollo's painted bay needs continuous coverage between ripple cels.
+    assert(mappedRoom(14));
+    for (int x : {300, 350, 400, 470}) assert(mapped(14,x,780,20,100,150));
+    // Water under the welcome sign and inside the wreck's gaps stays animated.
+    const int puertoGaps[][2] = {{100,780},{110,800},{170,705},{505,730},{530,730}};
+    for (const auto &p : puertoGaps) assert(mapped(14,p[0],p[1],20,100,150));
+    // The same blue hue must not animate the sky, fort, beach or right-hand path.
+    const int puertoDry[][2] = {{250,600},{400,650},{450,700},{400,860},{560,760},
+        {134,698},{165,683}}; // Purple medallion and blue banner remain dry.
+    for (const auto &p : puertoDry) assert(!mapped(14,p[0],p[1],20,100,150));
+    assert(!mapped(14,350,790,100,110,30)); // Foreground palm leaves.
+    assert(!mapped(14,510,790,110,60,25)); // Wreckage inside the bay outline.
     assert(mapped(49,550,370,20,30,150));
     assert(mapped(76,500,580,20,60,150));
     assert(mapped(77,950,970,20,60,150)); // Tall-room bottom, not screen bottom.

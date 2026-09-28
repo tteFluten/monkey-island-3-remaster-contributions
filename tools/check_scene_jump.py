@@ -27,9 +27,16 @@ def main():
         key(106)  # J
         check.screenshot('cannon-picker')
         # Other overlay and gameplay keys cannot reach the game.
-        for code in (105, 111, 1073741886, 117):  # I, O, F5, U
+        for code in (105, 117):  # I, U
             key(code)
             assert check.state()['room'] == 9 and not check.state()['inventoryOpen']
+        # Options remain reachable from the picker, including repeated opens.
+        for code in (111, 1073741886, 111):  # O, F5, O again
+            key(code)
+            check.room(92)
+            key(27)
+            check.room(9)
+            key(106)
         key(13)  # Current room closes, without re-entering its script.
         check.room(9)
         key(106); key(27); key(106); key(106)  # Esc and J both close.

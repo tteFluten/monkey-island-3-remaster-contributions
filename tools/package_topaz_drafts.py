@@ -12,11 +12,12 @@ from topaz_character_cutouts import digest
 from topaz_scenes import ROOT, read
 
 
-def package(root=ROOT):
-    with locked(root/'.context/topaz-packaging'), locked(root/'.playtest/draft-install'):
+def package(root=ROOT, local=None):
+    local = local or root/'.playtest'
+    with locked(root/'.context/topaz-packaging'), locked(local/'draft-install'):
         manifest = read(root/'assets/manifest.json')
         index = {r['path']: r for r in manifest['files']}
-        assets = read(root/'.playtest/draft-install/receipt.json')['assets']
+        assets = read(local/'draft-install/receipt.json')['assets']
         reviews = read(root/'assets/metadata/artwork-review.json')
         library = read(root/'assets/metadata/topaz-library.json')
         known = {r['source'] for r in library['records']}
@@ -59,7 +60,7 @@ def package(root=ROOT):
                         for pack in ('topaz-cannon','topaz-crisp')]
                        if source.startswith('costumes/') else [source])
             for path in runtime:
-                if digest(root/'.playtest/hd'/path) != asset['sha256']:
+                if digest(local/'hd'/path) != asset['sha256']:
                     raise ValueError('Install draft before packaging: '+source)
             clean = root/'output/topaz-batch/cleaned'/source
             if digest(clean) != records[source]['cleaned_sha256']:
@@ -72,21 +73,27 @@ def package(root=ROOT):
             register(name,original,category,source,asset['state'],
                      'output/topaz-batch/4x/'+source,canonical=True)
             for path in runtime:
-                register('assets/runtime/'+path,root/'.playtest/hd'/path,
+                register('assets/runtime/'+path,local/'hd'/path,
                          'runtime/'+path.split('/')[0],source,asset['state'],'.playtest/hd/'+path,
                          derived_from=name,transform=dict(kind='copy',source_sha256=asset['sha256']))
             register('assets/references/topaz-cleaned/'+source,clean,
                      'references/topaz-cleaned',source,'original-reference',
                      'output/topaz-batch/cleaned/'+source)
-            reviews[source] = dict(asset,master='source:albuquerque/'+original.relative_to(root).as_posix())
+            reviews[source] = dict(asset,master=f'source:{root.name}/'+original.relative_to(root).as_posix())
             if source not in known:
                 library['records'].append(records[source]);known.add(source)
 
         library['records'].sort(key=lambda r:r['source'])
         selected = {e['source'] for s in scene_plan['scenes'] for e in s['sources']} | set(assets)
+        known_scenes = {s['id'] for s in scene_plan['scenes']}
+        for scene in full_plan['scenes']:
+            if scene['id'] not in known_scenes and any(e['source'] in selected for e in scene['sources']):
+                scene_plan['scenes'].append(dict(scene))
+                known_scenes.add(scene['id'])
         for scene in scene_plan['scenes']:
             full = next(s for s in full_plan['scenes'] if s['id']==scene['id'])
             scene['sources'] = [e for e in full['sources'] if e['source'] in selected]
+            scene['counts'] = dict(Counter(e.get('operation', 'existing') for e in scene['sources']))
         scene_plan['total_sources'] = sum(len(s['sources']) for s in scene_plan['scenes'])
         for name,value in [('artwork-review.json',reviews),('topaz-library.json',library),
                            ('topaz-scene-plan.json',scene_plan)]:
@@ -94,7 +101,7 @@ def package(root=ROOT):
             atomic(root/path,value)
             index[path].update(sha256=digest(root/path),bytes=(root/path).stat().st_size)
         mapping = 'assets/runtime/object_map.json'
-        shutil.copy2(root/'.playtest/hd/object_map.json',root/mapping)
+        shutil.copy2(local/'hd/object_map.json',root/mapping)
         index[mapping].update(sha256=digest(root/mapping),bytes=(root/mapping).stat().st_size)
         categories=defaultdict(lambda:dict(files=0,bytes=0));unique={}
         for row in manifest['files']:
@@ -114,4 +121,6 @@ def package(root=ROOT):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root',type=Path,default=ROOT)
-    print(package(parser.parse_args().root))
+    parser.add_argument('--local',type=Path,help='Verified staged runtime; defaults to ROOT/.playtest')
+    args=parser.parse_args()
+    print(package(args.root,args.local))

@@ -206,7 +206,7 @@ bool ScummEngine::handleHDDepthOfFieldEvent(const Common::Event &event) {
 // tab moves to column `tab`. Coordinates and sizes are in original 640x480 pixels.
 static void drawHDOverlayText(Graphics::Surface &dest, HdFontManager *fonts, CharsetRenderer *charset, int scale,
                               int left, int top, int width, const Common::String *lines, int count,
-                              const bool *highlight = nullptr, int sizePercent = 55, int lineHeight = 19, int tab = 0) {
+                              const bool *highlight = nullptr, int sizePercent = 55, int lineHeight = 19, int tab = 0, int panelAlpha = 255) {
     left *= scale; top *= scale;
     width = MIN((int)dest.w - left, width * scale);
     const int height = (count * lineHeight + 6) * scale;
@@ -215,7 +215,7 @@ static void drawHDOverlayText(Graphics::Surface &dest, HdFontManager *fonts, Cha
         for (int x = MAX(0, left); x < left + width; ++x) {
             byte a, r, g, b;
             dest.format.colorToARGB(row[x], a, r, g, b);
-            row[x] = dest.format.ARGBToColor(255, r * 2 / 5, g * 2 / 5, b * 2 / 5);
+            row[x] = panelAlpha==255?dest.format.ARGBToColor(255,r*2/5,g*2/5,b*2/5):dest.format.ARGBToColor(panelAlpha+a*(255-panelAlpha)/255,r*(255-panelAlpha)/255,g*(255-panelAlpha)/255,b*(255-panelAlpha)/255);
         }
     }
     const int previous = fonts->getSizePercent();

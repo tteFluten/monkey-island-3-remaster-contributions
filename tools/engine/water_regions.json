@@ -3,12 +3,12 @@
   "existing": {
     "10": {"name": "cannon-v", "mode": "connected-painted-surface"},
     "11": {"name": "waterln", "mode": "connected-painted-surface"},
-    "14": {"name": "fortbase", "mode": "native-ambient-coverage"},
     "15": {"name": "town", "mode": "native-ambient-coverage"}
   },
   "regions": {
     "9": {"name": "cannon", "palette": "blue", "polygons": [[[78, 588], [116, 588], [109, 607], [77, 627]]], "note": "Small sea opening below the gunport view; retain its wood frame."},
     "13": {"name": "plndrmap", "palette": "blue", "polygons": [[[0, 525], [90, 545], [185, 640], [214, 655], [206, 715], [166, 769], [196, 850], [218, 880], [324, 924], [433, 916], [542, 858], [615, 803], [640, 774], [658, 790], [724, 748], [736, 702], [782, 669], [780, 622], [859, 597], [1000, 488], [1000, 1000], [0, 1000]], [[666, 447], [742, 421], [839, 409], [920, 417], [935, 435], [883, 463], [850, 497], [837, 555], [886, 577], [1000, 491], [1000, 596], [856, 640], [792, 669], [790, 610], [731, 588], [676, 568], [672, 521]]], "note": "Island view: sea and harbor only; exclude land, buildings, docks and ships."},
+    "14": {"name": "fortbase", "palette": "blue", "polygons": [[[0, 688], [309, 688], [311, 696], [418, 696], [423, 702], [435, 710], [440, 717], [449, 717], [457, 710], [460, 706], [461, 702], [457, 694], [463, 694], [466, 700], [477, 702], [480, 715], [485, 721], [495, 721], [502, 717], [508, 710], [518, 715], [528, 719], [536, 715], [536, 754], [531, 783], [517, 794], [499, 804], [473, 808], [444, 812], [407, 817], [373, 823], [343, 829], [309, 838], [277, 844], [244, 848], [212, 854], [187, 860], [160, 865], [127, 871], [94, 873], [60, 862], [0, 856]]], "note": "Puerto Pollo beach: full painted bay including water under the welcome sign and between the rocks and wreckage. Trace the shore in panorama coordinates; blue color guard protects sand, foliage and wood, with tight exclusions for the purple medallion and blue banner.", "holes": [[[119, 625], [156, 625], [157, 662], [155, 688], [151, 704], [144, 717], [138, 723], [131, 717], [125, 702], [120, 688]], [[159, 625], [168, 625], [167, 710], [165, 704], [162, 685]]]},
     "22": {"name": "clring-a", "palette": "blue", "polygons": [[[298, 332], [478, 328], [619, 318], [643, 491], [600, 545], [523, 513], [451, 480], [404, 504], [361, 550], [300, 542]]], "note": ""},
     "26": {"name": "bchclub", "palette": "blue", "polygons": [[[824, 211], [1000, 212], [1000, 313], [936, 288], [879, 285], [813, 263]]], "note": ""},
     "27": {"name": "beachhot", "palette": "blue", "polygons": [[[579, 308], [1000, 315], [1000, 452], [951, 432], [902, 429], [864, 407], [805, 397], [727, 405], [655, 404], [634, 376]]], "note": ""},

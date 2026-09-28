@@ -64,6 +64,40 @@ int main() {
     assert(settings.get(87, kVignetteAmount) == 40);
     assert(settings.get(87, kVignetteOn) == 1);
 
+    // Scene position overrides pin both effective coordinates; reverting just
+    // position keeps other shadow properties and every unrelated look setting.
+    settings.set(0, HdSceneLook::kShadowX, -3);
+    settings.set(0, HdSceneLook::kShadowY, -5);
+    settings.set(29, HdSceneLook::kShadowWidth, 140);
+    settings.set(29, kBrightness, 8);
+    assert(!settings.shadowPositionOverridden(29));
+    settings.overrideShadowPosition(29);
+    settings.set(0, HdSceneLook::kShadowX, 12);
+    assert(settings.get(29, HdSceneLook::kShadowX)==-3);
+    assert(settings.get(14, HdSceneLook::kShadowX)==12);
+    settings.set(29, HdSceneLook::kShadowY, 0);
+    assert(settings.get(29, HdSceneLook::kShadowY)==0); // Explicit zero overrides.
+    settings.resetShadows(29,true);
+    assert(!settings.shadowPositionOverridden(29));
+    assert(settings.get(29, HdSceneLook::kShadowX)==12);
+    assert(settings.get(29, HdSceneLook::kShadowWidth)==140);
+    assert(settings.get(29, kBrightness)==8);
+    settings.set(29, HdSceneLook::kShadowX, 7);
+    assert(settings.shadowPositionOverridden(29));
+    assert(!settings.rooms[29].has(HdSceneLook::kShadowY));
+    settings.overrideShadowPosition(29);
+    assert(settings.get(29, HdSceneLook::kShadowX)==7 && settings.rooms[29].has(HdSceneLook::kShadowY));
+    settings.resetShadows(29);
+    assert(settings.get(29, HdSceneLook::kShadowWidth)==100);
+    assert(settings.get(29, kBrightness)==8);
+    settings.set(0, HdSceneLook::kShadowWidth, 135);
+    settings.resetShadows(0,true);
+    assert(settings.get(0, HdSceneLook::kShadowX)==0 && settings.get(0, HdSceneLook::kShadowY)==0);
+    assert(settings.get(0, HdSceneLook::kShadowWidth)==135);
+    settings.resetShadows(0);
+    assert(settings.get(0, HdSceneLook::kShadowWidth)==100);
+    assert(settings.get(0, HdSceneLook::kWaterRed)==125);
+
     // The neutral grade is an exact identity for every color, alpha preserved.
     Grade neutral;
     assert(identity(neutral));

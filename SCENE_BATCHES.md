@@ -4,7 +4,187 @@ The current workflow is **Wonder 3.5, High enhancement, 4×**, followed by **Top
 
 Backgrounds are excluded. The difficulty screen remains unchanged except for its four knife animation cels. Solid object artwork is upscaled intact, because matting a scenery patch would erase intended artwork. Positioned layers reuse the enhanced object at its original coordinates; duplicates reuse the same result across scenes. Blank assets need no API request. Very small sprites remain listed for padded-input pilots, following the successful cannon-particle approach.
 
-## Current focus — cannon and waterline only
+## Processing complete: scene 32 — September 28
+
+Quicksand has **206 packaged 4× outputs**: 149 passed automated validation,
+50 remain cleanup drafts, and seven are derived copies. All 199 regular inputs
+are complete, including the 43 codec-5 cels recovered by the native audit.
+Four tiny sprites retain native fallback: the padded balloon-fragment trial
+failed visual review, so the smaller fragment and two single-pixel cels were
+not sent for further paid processing. Processing completion is not artwork
+approval or full scene signoff.
+
+The regular batch used **394 existing credits** and the tiny trial used two,
+for **396 total**, with no purchases. The final balance is **2,457 credits**,
+including the unchanged three-credit reservation for earlier uncertain jobs.
+No regular requests remain submitted, unknown or unprocessed; queues are stopped.
+
+All 199 regular outputs were compared with references on light and dark sheets.
+Local alpha recovery uses enhanced RGB only; narrow string-gap recovery retains
+its cleanup hold. Thin stems/strings, stretched bird cels and the isolated plaque
+remain cleanup drafts. The reviewed masters match all 199 packaged master hashes.
+Full media verification passed for all 50,757 manifest entries.
+The isolated software and OpenGL room/menu checks passed; full animation and story signoff
+remain outstanding. Native test details and the OpenGL result are recorded in
+`assets/metadata/quicksand-topaz-provenance.json`.
+
+After the player session closed, all 161 Snake and 206 Quicksand outputs were
+installed and their runtime hashes verified. The game was left closed. Journals are in
+`output/topaz-quicksand-scenes/` and `output/topaz-quicksand-tiny-pilot/`;
+`.context/quicksand-sprite-sheets.html` contains the comparison gallery.
+
+## Processing complete: scene 31 — September 28
+
+The Snake room has **161 packaged 4× outputs**: 153 passed automated validation,
+one shadow/line cel remains rejected, and seven are derived copies (one inherits
+that cleanup hold). All 154 regular source inputs have completed; no submitted,
+unknown, or unprocessed regular jobs remain. The 51 intentionally excluded
+native particle/shadow cels retain their original fallback. Processing completion
+is not artwork approval or full scene signoff.
+
+The first partial checkpoint reused 13 paid Wonder results and spent 145 credits.
+After the user requested more asset work, a fresh account check found 3,003
+credits. The final 75 source inputs used exactly **150 additional existing
+credits**, producing 79 additional packaged outputs including four derivatives.
+The full scene cost is **308 credits**, matching its original frozen ceiling.
+No credits were purchased; **2,853 credits remained at this checkpoint**, including the three-credit
+reservation for earlier uncertain requests. All queues are stopped.
+
+All 154 regular outputs were reviewed against references on light and dark
+sheets. Enhanced-RGB alpha recovery removes coil matte spill without filling
+negative spaces; additive recovery restores detached leaves in 15 Guybrush
+frames while preserving provider alpha. Swallowing poses retain their contours
+and the plaque retains its authored scenery patch. No original pixels or masks
+were applied, and existing artwork review status remains unchanged. The only
+cleanup hold is costume 174/frame 1 and its costume 176/frame 5 alias.
+
+The complete pack is installed into the isolated test runtime and player runtime
+after game closure, with all 161 runtime asset hashes verified. Baseline, checkpoint, and final
+software room-loading/menu-return checks passed using copied saves and Scene
+Look settings. The fixture samples costumes 2 and 177 rather than the special
+Snake costumes; full animation and OpenGL interaction signoff remains outstanding.
+All 154 review-sheet master hashes match the packaged files. Full media
+verification passed for all **49,944 manifest files**. Source hashes,
+provider histories, local repairs, delivery status, and test evidence are in
+`assets/metadata/snake-topaz-provenance.json`. Frozen journals and both continuation
+ceilings remain in `output/topaz-snake-scenes/production/`.
+
+## Coverage pass: scenes 19–28 — September 27–28
+
+The user-selected continuation produced **1,510 new packaged and installed 4×
+outputs**: 1,072 passed automated validation,
+350 remain rejected cleanup drafts, and
+88 are derived copies, eight of which inherit cleanup holds from their parents.
+Installation is not artwork approval. All 966 existing canonical outputs retain their hashes and
+review states.
+
+| Room | Scene | New outputs | Rejected inputs needing cleanup |
+| --- | --- | ---: | ---: |
+| 19 | Stage | 202 | 81 |
+| 20 | Spotlight | 0 | 0 |
+| 21 | Barber shop | 424 | 19 |
+| 22 | Clearing A | 260 | 26 |
+| 23 | Clearing B | 137 | 25 |
+| 24 | Pistols | 2 | 0 |
+| 25 | Banjo | 60 | 16 |
+| 26 | Beach club | 175 | 88 |
+| 27 | Hot beach | 57 | 8 |
+| 28 | Brimstone Beach | 193 | 87 |
+
+The native-resource audit added 747 cels absent from the earlier export catalog.
+The frozen scope contains 2,697 records and 1,425 regular enhancement inputs.
+The continuation accounts for **2,835 of the authorized 2,843 existing credits**,
+with 3 credits reserved for uncertain submissions
+and 4 credits for two rejected tiny trials. Confirmed charges total 2,832; the
+account balance was 148 credits after processing. No credits were purchased.
+All 116 tiny sources retain native fallback; the jawbreaker’s positioned layer
+also remains native because its parent trial was rejected. Historical failed
+and unknown requests were held without repurchase. Three new matting submissions
+returned no recoverable job ID; room 26 costume 154/frame 61 and room 27
+costume 159/frame 31, plus room 28 costume 161/frame 48, keep native fallback
+with their uncertain charges reserved.
+The full coverage ledger contains 1,510 new outputs, 966 preserved outputs and
+221 native fallbacks. Provider journals, source hashes, repair audits and the
+exact cleanup list are recorded in
+`assets/metadata/middle-scenes-topaz-provenance.json`.
+
+Local alpha recovery preserves enhanced RGB and uses no original pixels or
+alpha masks. Enlarged visual review retained repaired lower bodies as cleanup
+drafts where provider masks truncated them. Foot/shadow artifacts remain
+rejected even when geometry checks pass. Remaining problems include thin
+silhouettes, shadows, eye overlays, hat/headrest fill, gate transparency and
+matte rectangles on some effects. These prevent final scene sign-off.
+
+All ten rooms passed baseline OpenGL loading and menu-return checks. Stage
+conversation and the barber’s new Haggis animation were exercised before the
+Mac locked. Final software-renderer checks cover loading, sampled animation and
+menu return in all ten rooms; they do not certify OpenGL presentation or mouse
+interactions. Remaining final OpenGL interaction checks require an unlocked
+desktop. Tests use isolated saves and copied Scene Look settings.
+
+The bounded journals remain in `output/topaz-middle-scenes/` with frozen
+membership and credit ceilings. Processing is stopped after delivery; do not
+repurchase failed or unknown jobs. The Snake and unrelated broad queues remain
+paused. Full packaged-media verification passed for all 49,301 manifest files;
+the preserved-asset audit passed for all 966 existing outputs. The runner and
+packaging unit checks also passed (nine tests, with no paid API calls).
+
+## Priority scenes 13, 14, 15 and 18 — September 27
+
+The user moved these four rooms ahead of the Snake scene. The canonical pack
+already contained 1,039 reusable outputs across them; masters, packaged runtime
+copies and live textures passed hash checks without changing their review states.
+The native resource audit added 151 missing Kenny cels in room 15. **150 new
+outputs are packaged and installed**: 132 passed automated validation and 18
+remain rejected cleanup drafts. One provider enhancement failed; frame 72 keeps
+its native fallback. No failed job was repurchased. A local enhanced-RGB alpha
+recovery improved 17 cutouts without restoring original pixels or alpha.
+
+The regular batch cost 301 credits against its 302-credit ceiling. Room 18's
+single padded tiny-sprite trial cost two more and failed visual/geometry review;
+all three tiny pieces retain native fallback. **303 credits total** were used.
+The 84 old map-overlay cels stay native for fallback artwork because the new
+widescreen map disables them. Shader-replaced water, native shadows and palette
+effects also remain native. Existing review flags were preserved; these scenes
+are not signed off as final artwork.
+
+All eight map hover targets, available destination transitions, aspect sizes
+and menu restoration passed native checks. Rooms 14, 15 and 18 passed loading
+and menu-return checks, and Kenny's conversation was exercised with the new
+textures in an isolated save. Coverage, provider history, validation and cleanup
+items are in `assets/metadata/priority-scenes-topaz-provenance.json`.
+
+The Snake run remains deferred after 13 paid enhancements, with masters and its
+frozen budget preserved. The unrelated broad scene queue remains stopped.
+
+## Voodoo exterior and interior — September 27
+
+The user selected rooms **29 and 30** for a bounded Topaz continuation. The
+regular batch produced **195 packaged outputs**: 185 costume cels, four unique
+objects, one object alias, and five positioned layers. Of these, 168 passed
+automated validation, 21 remain rejected cleanup drafts, and six are derived
+copies. Review flags have not been promoted to approval.
+
+The native resource audit found 301 room-30 cels absent from the old export
+queue. It added the Voodoo Lady, throne backdrop, and Guybrush interaction
+resources; 180 palette-driven dissolve cels remain native. The exterior's 79
+shader-replaced water cels and the interior's transition strip also remain
+native. A padded trial for the remaining 4×6-pixel exterior cel was rejected;
+its native fallback remains active. There are 22 cleanup/review items overall.
+
+The regular batch cost 374 credits; the tiny pilot cost two, for **376 total**.
+No jobs remain in flight and no rejected output was repurchased. Source hashes,
+provider IDs, validation, native exclusions, and the exact cleanup list are in
+`assets/metadata/voodoo-topaz-provenance.json`. Local resumable journals live in
+`output/topaz-voodoo-scenes/`; the unrelated broad queue was not resumed.
+
+The pack was exercised in isolated exterior walking/conversation/exit tests and
+an interior alligator interaction, Voodoo Lady conversation, and menu-return
+test. These checks establish runtime compatibility, not final artwork approval.
+The packager can read a verified isolated runtime with `--local` while the
+player's game remains open; live installation must still wait for it to close.
+
+## Previous focus — cannon and waterline only
 
 The user narrowed the next quality pass to **0009_cannon** and **0011_waterln**.
 The all-Guybrush/room-19 continuation is paused. Do not resume it or advance to

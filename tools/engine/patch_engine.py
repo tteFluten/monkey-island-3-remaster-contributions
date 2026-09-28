@@ -75,7 +75,7 @@ edit('backends/events/sdl/sdl2-events.cpp', '\twhile (SDL_PollEvent(&ev)) {', ''
         // engine-local hook; real desktop input must not contaminate a replay.
         if (getenv("MI3_ENGINE_TEST_INPUT") && getenv("MI3_ENGINE_TEST_EXCLUSIVE") &&
             (ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP || ev.type == SDL_TEXTINPUT ||
-             ev.type == SDL_MOUSEMOTION || ev.type == SDL_MOUSEBUTTONDOWN || ev.type == SDL_MOUSEBUTTONUP) &&
+             ev.type == SDL_MOUSEMOTION || ev.type == SDL_MOUSEWHEEL || ev.type == SDL_MOUSEBUTTONDOWN || ev.type == SDL_MOUSEBUTTONUP) &&
             ev.key.windowID != 0) continue;''')
 
 from patch_quiver import patch as patch_quiver
@@ -199,6 +199,22 @@ print('Applied HD options book pages')
 from patch_language import patch as patch_language
 patch_language(root, edit)
 print('Applied language packs')
+
+from patch_plunder_map import patch as patch_plunder_map
+patch_plunder_map(root, edit)
+print('Applied widescreen Plunder Island map registration')
+
+from patch_voodoo_exterior import patch as patch_voodoo_exterior
+patch_voodoo_exterior(root, edit)
+print('Applied widescreen Voodoo exterior registration')
+
+from patch_subtitle_bounds import patch as patch_subtitle_bounds
+patch_subtitle_bounds(root, edit)
+print('Applied crop-aware gameplay subtitle boundaries')
+
+from patch_scene_masks import patch as patch_scene_masks
+patch_scene_masks(root, edit)
+print("Applied live walkable-area and water mask editor")
 
 from patch_camera import patch as patch_camera
 patch_camera(root, edit)

@@ -53,6 +53,14 @@ bool ScummEngine::handleHDSceneJumpEvent(const Common::Event &event) {
     }
     if (!_hdSceneJump.open) return false;
     _fullRedraw = true;
+    // The options shortcut must remain reachable while browsing scenes.
+    // Forward it to the normal keyboard handler, which owns the scripted book.
+    if (key && (code == Common::KEYCODE_o || code == Common::KEYCODE_F5) &&
+        event.kbd.hasFlags(0)) {
+        if (event.kbdRepeat) return true;
+        _hdSceneJump.close();
+        return false;
+    }
     if (event.type == Common::EVENT_MOUSEMOVE || down) {
         // Track the pointer for rendering without setting gameplay click bits.
         const int scale = MAX(1, (int)_hdScale);

@@ -44,3 +44,7 @@ __pycache__/
 # Local Scene Look migration backup
 /data/color-grades.json.v1.bak
 /data/color-grades.json.tmp
+
+# Local mask-editor save locks and atomic-write staging
+/data/scene-masks.json.lock
+/data/scene-masks.json.tmp.*
