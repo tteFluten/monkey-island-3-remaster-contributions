@@ -14,7 +14,6 @@ bool ScummEngine::canPresentHDMotion() {
 }
 
 void ScummEngine::captureHDMotion() {
-    _hdMotionPresented = false;
     const bool enabled = canPresentHDMotion();
     bool reset = _hdMotionClock.sample(_currentRoom, _system->getMillis(), enabled);
     if (ABS(camera._cur.x - _hdMotionCamera.x) > 160 || ABS(camera._cur.y - _hdMotionCamera.y) > 160)
@@ -42,15 +41,37 @@ void ScummEngine::captureHDMotion() {
         }
     }
     if (!cannonFound) _hdMotionCannon = HdMotion::CannonAim();
+    // Respect native camera ownership. Ego is Guybrush; scripted pans clear
+    // _follows and frozen cameras must never be pulled toward the player.
+    const int ego = VAR(VAR_EGO);
+    const bool follow = enabled && !_cameraIsFrozen && camera._follows == ego &&
+        ego > 0 && ego < _numActors && _actors[ego]->_visible &&
+        _actors[ego]->_room == _currentRoom &&
+        (_roomWidth > _screenWidth || _roomHeight > _screenHeight);
+    if (follow) {
+        const auto &track = _hdMotionActors[ego];
+        const bool actorCut = ABS(track.x - _hdCameraActorX) > 160 || ABS(track.y - _hdCameraActorY) > 160;
+        if (reset || actorCut || _hdFollow.actor != ego)
+            _hdFollow.reset(camera._cur.x, camera._cur.y, track.y, ego, HdRemaster::milliseconds());
+        _hdCameraActorX = track.x; _hdCameraActorY = track.y;
+    } else _hdFollow.actor = 0;
+    _hdCameraDirty = true;
+    _hdCameraStageValid = false;
     _hdMotionFonts = _hdFontChars;
     if (_hdFrameCount % 120 == 0 && enabled)
         hdPrintf("HD-MOTION native interval=%ums moving=%d camera=%d", _hdMotionClock.interval, _hdMotionMoving, camera._cur.x);
 }
 
 void ScummEngine::presentHDMotion() {
-    if (!_hdMotionClock.valid || !_hdMotionMoving || !canPresentHDMotion() ||
+    if (!canPresentHDMotion()) {
+        _hdMotionClock.valid = false;
+        _hdFollow.actor = 0;
+        return;
+    }
+    if (!_hdMotionClock.valid || (!_hdMotionMoving && !_hdFollow.actor) ||
         _hdMotionClock.room != _currentRoom || _hdMotionActors.size() != (uint)_numActors)
         return;
+    if (!_hdCameraDirty && !_hdMotionMoving && !_hdFollow.moving()) return;
     const double motionStarted = HdRemaster::milliseconds(), cpuBefore = HdRemaster::state().cpuWork;
     const uint32 started = _system->getMillis();
     unsigned int fraction = _hdMotionClock.fraction(started);
@@ -64,6 +85,25 @@ void ScummEngine::presentHDMotion() {
         }
     }
     _hdMotionFraction = fraction;
+    double drawX = _hdMotionCamera.preciseX(fraction), drawY = _hdMotionCamera.preciseY(fraction);
+    if (_hdFollow.actor && !verify) {
+        Common::Point low(0, 0), high(_roomWidth, _roomHeight);
+        clampCameraPos(&low); clampCameraPos(&high);
+        // Fixed axes retain their authored framing. Moving axes also stay
+        // inside the painting, including tall-room vertical camera limits.
+        if (_roomWidth <= _screenWidth) low.x = high.x = camera._cur.x;
+        if (_roomHeight <= _screenHeight) low.y = high.y = camera._cur.y;
+        else {
+            low.y = CLIP<int>(low.y, _screenHeight / 2, _roomHeight - _screenHeight / 2);
+            high.y = CLIP<int>(high.y, low.y, _roomHeight - _screenHeight / 2);
+        }
+        const auto &actor = _hdMotionActors[_hdFollow.actor];
+        _hdFollow.step(actor.preciseX(fraction), actor.preciseY(fraction), motionStarted,
+            low.x, high.x, low.y, high.y);
+        drawX = _hdFollow.x.position; drawY = _hdFollow.y.position;
+    }
+    if (verify) { drawX = camera._cur.x; drawY = camera._cur.y; }
+    _hdCameraDirty = false;
     // Scratch copies isolate hit testing, saves, script coordinates, masks and
     // dirty-strip bookkeeping from intermediate display positions.
     VirtScreen &screen = _virtscr[kMainVirtScreen];
@@ -107,14 +147,42 @@ void ScummEngine::presentHDMotion() {
     if (screen.backBuf) screen.backBuf = back.data();
     _hdCleanBackground.setPixels(clean.data()); _hdCleanValid = valid.data();
     _hdInterpolating = true;
-    camera._cur = Common::Point(_hdMotionCamera.atX(fraction), _hdMotionCamera.atY(fraction));
+    const bool wideGpu = !verify && HdRemaster::state().active && hdAspectRatio() == 169 && _screenWidth == 864;
+    camera._cur = Common::Point(HdCamera::rasterAnchor(drawX, wideGpu), HdCamera::anchor(drawY));
     cameraMoved();
+    // The native raster uses an integral anchor. The backend shifts all world
+    // layers together by the remaining fraction, before adding screen UI.
+    _hdCameraFractionX = drawX - camera._cur.x;
+    _hdCameraFractionY = drawY - camera._cur.y;
     _fullRedraw = true;
-    if (_hdMotionStageRoom == _currentRoom && camera._cur == _hdMotionStageCamera &&
+    if (wideGpu && _hdCameraStageValid && camera._cur == _hdCameraStageAnchor &&
+        _hdCameraStageFront.size() == bufferSize && _hdCameraStageMasks.size() == (uint)maskSize) {
+        memcpy(front.data(), _hdCameraStageFront.data(), bufferSize);
+        if (screen.backBuf) memcpy(back.data(), _hdCameraStageBack.data(), bufferSize);
+        memcpy(maskBuffer, _hdCameraStageMasks.data(), maskSize);
+        memcpy(clean.data(), _hdCameraStageClean.data(), clean.size());
+        memcpy(valid.data(), _hdCameraStageValidPixels.data(), valid.size());
+        memcpy(gfxUsageBits, _hdCameraStageUsage.data(), sizeof(gfxUsageBits));
+    } else if (_hdMotionStageRoom == _currentRoom && camera._cur == _hdMotionStageCamera &&
         _hdMotionStageFront.size() == bufferSize && _hdMotionStageMasks.size() == (uint)maskSize) {
         memcpy(front.data(), _hdMotionStageFront.data(), bufferSize);
         memcpy(maskBuffer, _hdMotionStageMasks.data(), maskSize);
     } else redrawBGAreas();
+    if (wideGpu && (!_hdCameraStageValid || camera._cur != _hdCameraStageAnchor)) {
+        _hdCameraStageFront.resize(bufferSize); _hdCameraStageMasks.resize(maskSize);
+        memcpy(_hdCameraStageFront.data(), front.data(), bufferSize);
+        if (screen.backBuf) {
+            _hdCameraStageBack.resize(bufferSize);
+            memcpy(_hdCameraStageBack.data(), back.data(), bufferSize);
+        }
+        memcpy(_hdCameraStageMasks.data(), maskBuffer, maskSize);
+        _hdCameraStageClean.resize(clean.size()); _hdCameraStageValidPixels.resize(valid.size());
+        memcpy(_hdCameraStageClean.data(), clean.data(), clean.size());
+        memcpy(_hdCameraStageValidPixels.data(), valid.data(), valid.size());
+        _hdCameraStageUsage.resize(ARRAYSIZE(gfxUsageBits));
+        memcpy(_hdCameraStageUsage.data(), gfxUsageBits, sizeof(gfxUsageBits));
+        _hdCameraStageAnchor = camera._cur; _hdCameraStageValid = true;
+    }
     // Preserve COMI's original (non-stable) depth sort, including equal depths.
     int count = 0;
     for (int i = 1; i < _numActors; ++i)
@@ -132,8 +200,8 @@ void ScummEngine::presentHDMotion() {
     for (int i = 0; i < _numActors; ++i) {
         _actors[i] = originals[i];
     }
-    _hdMotionDrawCamera = camera._cur.x;
-    _hdMotionDrawTop = _screenTop;
+    _hdMotionDrawCamera = drawX;
+    _hdMotionDrawTop = drawY - _screenHeight / 2;
     _hdMotionPresented = true;
     memcpy(_sortedActors, sorted.data(), _numActors * sizeof(Actor *));
     screen = savedScreen; camera = savedCamera;
@@ -144,6 +212,7 @@ void ScummEngine::presentHDMotion() {
     memcpy(maskBuffer, masks.data(), maskSize);
     memcpy(gfxUsageBits, savedUsage, sizeof(savedUsage));
     _hdInterpolating = false;
+    _hdCameraFractionX = _hdCameraFractionY = 0;
     if (verify) {
         // Compare a target-position replay to the normal compositor using the
         // restored native buffers/actors, rather than the preceding display.
@@ -175,7 +244,7 @@ void ScummEngine::presentHDMotion() {
     static uint32 frames = 0, elapsed = 0, maximum = 0;
     static int samples = 0;
     if (samples < 60) {
-        hdPrintf("HD-MOTION sample native=%d draw=%d fraction=%u interval=%u", camera._cur.x,
+        hdPrintf("HD-MOTION sample native=%d draw=%.3f fraction=%u interval=%u", camera._cur.x,
                  _hdMotionDrawCamera, fraction, _hdMotionClock.interval); ++samples;
     }
     HdRemaster::state().cpuMotion += HdRemaster::milliseconds() - motionStarted;

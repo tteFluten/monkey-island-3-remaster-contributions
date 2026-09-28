@@ -129,6 +129,7 @@ uniform sampler2D reflectionTexture;
 uniform vec4 backgroundRect, canvasRect, coverageRect;
 uniform vec4 focusRect, blurRect;
 uniform vec4 reflectionRect;
+uniform vec2 cameraOffset, sceneTexel;
 uniform vec2 reflectionTexel;
 uniform vec2 reflectionPlane; // intercept and slope in reflection texture coordinates
 uniform vec4 waterPatternRect;
@@ -159,25 +160,29 @@ vec3 grade(vec3 rgb) {
     return floor((v * gain + 127.0) / 255.0) / 255.0;
 }
 void main() {
-    vec4 scene = texture2D(shaderTexture, uv);
+    // A fractional residual shifts the entire world uniformly. Clamp
+    // to edge texel centers to provide a replicated gutter, with no black
+    // fringe at room borders. Vignette and the separate UI remain stationary.
+    vec2 worldUV = clamp(uv + cameraOffset, sceneTexel * 0.5, vec2(1.0) - sceneTexel * 0.5);
+    vec4 scene = texture2D(shaderTexture, worldUV);
     vec3 rgb = scene.rgb;
-    vec2 bgUV = backgroundRect.xy + uv * backgroundRect.zw;
+    vec2 bgUV = backgroundRect.xy + worldUV * backgroundRect.zw;
     float visibility = mix(1.0 - scene.a, 1.0, backgroundOnly);
     float focus = 0.0;
     if (dofIntensity > 0.0) {
-        focus = texture2D(coverageTexture, focusRect.xy + uv * focusRect.zw).r * dofIntensity;
+        focus = texture2D(coverageTexture, focusRect.xy + worldUV * focusRect.zw).r * dofIntensity;
         float amount = focus * visibility;
-        rgb += (texture2D(blurTexture, blurRect.xy + uv * blurRect.zw).rgb - texture2D(backgroundTexture, bgUV).rgb) * amount;
+        rgb += (texture2D(blurTexture, blurRect.xy + worldUV * blurRect.zw).rgb - texture2D(backgroundTexture, bgUV).rgb) * amount;
     }
     if (waterEnabled > 0.0) {
-        float coverage = texture2D(waterTexture, coverageRect.xy + uv * coverageRect.zw).r;
+        float coverage = texture2D(waterTexture, coverageRect.xy + worldUV * coverageRect.zw).r;
         float depth = coverage * 255.0;
         float mask = waterSurface > 0.5 ? smoothstep(0.0, 2.5, depth) : coverage;
         float amount = mask * visibility * (1.0 - focus) * waterTuning.x;
         if (amount > 0.001) {
             // Height and normals come from the small GPU wave target. Reflect
             // and light them at presentation resolution for sharp highlights.
-            vec4 pattern = texture2D(waterPatternTexture, waterPatternRect.xy + uv * waterPatternRect.zw);
+            vec4 pattern = texture2D(waterPatternTexture, waterPatternRect.xy + worldUV * waterPatternRect.zw);
             float calmEdge = waterSurface > 0.5 ? smoothstep(2.0, 16.0, depth) : 1.0;
             vec3 normal = normalize(mix(vec3(0.0, 1.0, 0.0), pattern.rgb * 2.0 - 1.0, calmEdge));
             vec2 offset = normal.xz * vec2(3.5, 1.75) * waterTexel * mask * waterTuning.y;
@@ -200,7 +205,7 @@ void main() {
                 // Keep its opacity separate
                 // from wave lighting so stronger ripples don't make a solid
                 // mirrored hull. Never sample actors or UI.
-                vec2 reflectionUV = reflectionRect.xy + uv * reflectionRect.zw;
+                vec2 reflectionUV = reflectionRect.xy + worldUV * reflectionRect.zw;
                 float mirrorY = reflectionPlane.x + reflectionPlane.y * reflectionUV.x;
                 reflectionUV.y = 2.0 * mirrorY - reflectionUV.y;
                 reflectionUV += normal.xz * vec2(24.0, 5.0) * calmEdge * waterTuning.y * reflectionTexel;
@@ -531,6 +536,8 @@ void main() {
             _canvas->setSize(canvasW, canvasH);
             _effects->setFramebuffer(_canvas); _effects->activate();
             GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
+            _effect->setUniform("cameraOffset", Math::Vector2d(0, 0));
+            _effect->setUniform("sceneTexel", Math::Vector2d(1.0f/canvasW, 1.0f/canvasH));
             if (wide && canvasW == 2560 && s.viewportWidth == 640) {
                 _effect->setUniform1f("dofIntensity", s.dof ? s.intensity / 100.0f : 0);
                 _effect->setUniform1f("backgroundOnly", 1);
@@ -577,6 +584,9 @@ void main() {
             _effect->setUniform("canvasRect", (wide || s.viewportWidth > 640)
                 ? Math::Vector4d(float(left)/canvasW,0,float(gameW)/canvasW,1)
                 : Math::Vector4d(0,0,1,1));
+            _effect->setUniform("cameraOffset", Math::Vector2d(s.cameraFractionX / s.viewportWidth,
+                s.cameraFractionY / s.viewportHeight));
+            _effect->setUniform("sceneTexel", Math::Vector2d(1.0f/s.scene.w, 1.0f/s.scene.h));
             _effects->drawTexture(*_scene, left, 0, gameW, canvasH);
             normal->setFramebuffer(_canvas); normal->activate();
             _canvas->enableBlend(Framebuffer::kBlendModePremultipliedTransparency);

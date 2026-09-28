@@ -565,7 +565,44 @@ horizontal, vertical, and scripted camera pans. Scratch buffers and actor clones
 are reused. Native scripts, puzzles, animation cels, audio, and movies retain
 their original timing. Interpolation adds one native tick of visual latency;
 intentional camera cuts, room changes, pauses, menus, and movies reset or bypass
-it. `hd_smooth_motion=false` disables interpolation for comparison.
+it. `hd_smooth_motion=false` disables interpolation and soft follow for comparison.
+
+When the native camera follows Guybrush, scrolling rooms use a presentation-only
+soft follow with a critically damped 0.20-second smoothing time. It follows his
+interpolated walking position, including route turns, and keeps drawing until
+it settles after he stops. Horizontal follow centers on him within the room and
+script bounds; tall rooms retain the authored vertical framing offset. Fixed
+axes stay fixed. Frozen cameras and scripted pans retain native ownership, and
+cuts, teleports, room changes, save/load, menus, movies and pauses reset follow.
+The walker, native camera variables, script timing and save format are unchanged.
+
+The world is rasterized at an integer camera anchor, then sampled at the remaining
+fractional offset. Scenery, actors, shadows, depth masks and water share that
+transform; vignette, text, UI and cursor remain screen-aligned. Edge-clamped
+sampling supplies a replicated gutter, avoiding black borders without copying
+an oversized render target. GPU panoramas also reuse their existing cropped side
+margins: an eight-pixel strip anchor keeps intermediate scenery reusable while
+the shader resolves its offset within the hidden gutter. Vertical motion and
+uncropped views use the nearest native pixel. Cached scenery is invalidated on
+every simulation tick so animated objects and masks remain current. The CPU compatibility
+path applies the same bilinear translation before grading and UI. Input uses the
+last displayed camera position and rounds only when entering native coordinates.
+Clicks retain the camera and pointer position from event time, even when several
+presentations occur before the next native input tick.
+
+Run `python3 -m unittest discover -s tools -p 'test_camera.py'` for deterministic
+spring and sampling checks. With a local runtime and copied fixture saves, run
+`tools/venv/bin/python tools/check_camera.py`; `--cpu` checks compatibility
+rendering and `--disabled` checks the original-motion fallback. Reports include
+walking, settled-camera and vertical-pan traces. `status.json` now includes
+`visualCameraLeft`, `visualCameraTop`, `cameraFollow` and `cameraSettling`.
+`inputCameraLeft/Top` and `inputMouseX/Y` capture the coordinate conversion at
+input-processing time; compare `mouseRoomX/Y` to that snapshot, since the camera
+may have advanced by the time the next status report is written.
+Benchmark CSVs retain the integer raster-camera columns and append fractional
+visual positions, targets, velocities and follow ownership. The performance
+summary also counts fractional camera frames, so 60 identical scene positions
+cannot be mistaken for smooth camera motion.
 
 One fractional scheduler targets 60 presentations per second. With GPU effects
 and display synchronization, it waits after rendering and lets the next display
@@ -591,6 +628,21 @@ untested hardware. Native loading and transition stalls remain separate from
 steady motion. `check_remaster.py` saves same-tick CPU/GPU comparisons; the
 native aspect interaction check compares interpolation endpoints pixel-for-pixel.
 Reports and screenshots belong under `.context/` and are not packaged assets.
+
+Camera follow validation (2026-09-28): the isolated optimized Mac build passed
+nine deterministic tests and the native panorama, input, settling, vertical-pan,
+inventory and save/load checks in GPU, CPU and disabled-motion modes. GPU/CPU
+render comparisons passed in rooms 9, 15 and 77 (mean channel errors below 0.27),
+and native interpolation endpoints matched pixel-for-pixel in rooms 9 and 77. Three 60-second fullscreen room-15 walking runs
+with GPU effects measured **58.18–58.61 fps**, CPU p99 **17.60–18.92 ms**, GPU p99
+**5.14–5.92 ms**, and **1.49–2.41%** of intervals over 25 ms. An unchanged-engine
+comparison measured **58.51 fps** on the same Mac. These runs **do not pass the
+strict 60 fps acceptance target**; the camera's motion/easing checks pass, but a
+locked 60 fps result remains unverified. Each new run contained over 3,300
+fractional camera frames. Raw results are in `.context/camera-final-performance/`
+and `.context/camera-baseline-performance/`; native regression captures are in
+`.context/camera-check/`. The 60 Hz scheduler and graphics settings are unchanged.
+
 
 Room jumps use debugger-style scene transitions with current puzzle state.
 They do not initialize chapter progression, inventory, or every room-specific

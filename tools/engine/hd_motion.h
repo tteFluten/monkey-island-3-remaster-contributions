@@ -18,6 +18,8 @@ struct Track {
         const int value = (b - a) * (int)fraction;
         return a + (value < 0 ? -((-value + 512) / 1024) : (value + 512) / 1024);
     }
+    double preciseX(unsigned int fraction) const { return fromX + (x - fromX) * (fraction / 1024.0); }
+    double preciseY(unsigned int fraction) const { return fromY + (y - fromY) * (fraction / 1024.0); }
     int atX(unsigned int fraction) const { return mix(fromX, x, fraction); }
     int atY(unsigned int fraction) const { return mix(fromY, y, fraction); }
 };
