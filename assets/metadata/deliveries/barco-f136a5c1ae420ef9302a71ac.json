@@ -1,0 +1,424 @@
+{
+  "id": "f136a5c1ae420ef9302a71ac",
+  "scope": "selection",
+  "selected_ids": [
+    "579497f94575b1953f1e414b",
+    "2d681e310c0ccc8d79ad2eed",
+    "2d35111e7dd7c812c5c82e43",
+    "7ce15a693c9f9e687abbf502",
+    "329a9e1cdf4c8920d0a417ff",
+    "1730a19a9cfe3498fee9c4f7",
+    "b832eaf9d4d40b0f93ea96ad",
+    "33e6fb3f4a81f98a02b60990",
+    "2eda881958acf6aa576e8368"
+  ],
+  "created_at": 1790620729.269695,
+  "status": "ready",
+  "ready": 9,
+  "blocked": 0,
+  "repository": "ragojose/monkey-island-3-remaster",
+  "base": "main",
+  "missing_sources": [],
+  "base_commit": "564a83d1f499786445c10232ab45cb4b45277914",
+  "source_commit": "e86631d7eaf325a89cec695ebc0281e60e612d5c",
+  "pr_target": "ragojose/monkey-island-3-remaster",
+  "delivery_state": "reviewed",
+  "items": [
+    {
+      "id": "579497f94575b1953f1e414b",
+      "name": "LFLF_0011_AKOS_0049_frame_0",
+      "path": "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_0.png",
+      "issues": [],
+      "approved": true,
+      "sha256": "170bc8f962c8888ff69d5105a5e1668ebd7dfa602f03b1e8f43ae0444da5b71a",
+      "revision": "1b5658235f45b2a1409901c54232de746c71394804a2309d3273fde682e2dd17",
+      "dimensions": [
+        684,
+        380
+      ],
+      "reference_sha256": "469bdb5a46630e2caa7420cbc0e46fe16717eb70dad1eca0fc0788c48a935fa9",
+      "audit": {
+        "issues": [
+          "Borde/alpha desviado"
+        ],
+        "passed": false,
+        "score": 1.59,
+        "metrics": {
+          "shape": 0.028,
+          "color": 7.17,
+          "edge": 0.19,
+          "ink": 0.073,
+          "halo": 10.79
+        },
+        "strict": true,
+        "checked_at": 1790620243.810451,
+        "visual_review_required": true
+      },
+      "warnings": [
+        "Borde/alpha desviado"
+      ],
+      "targets": [
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_0.png",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_0.png",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_0.png"
+      ],
+      "file_hashes": {
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_0.png": "170bc8f962c8888ff69d5105a5e1668ebd7dfa602f03b1e8f43ae0444da5b71a",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_0.png": "170bc8f962c8888ff69d5105a5e1668ebd7dfa602f03b1e8f43ae0444da5b71a",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_0.png": "170bc8f962c8888ff69d5105a5e1668ebd7dfa602f03b1e8f43ae0444da5b71a"
+      }
+    },
+    {
+      "id": "2d681e310c0ccc8d79ad2eed",
+      "name": "LFLF_0011_AKOS_0049_frame_1",
+      "path": "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_1.png",
+      "issues": [],
+      "approved": true,
+      "sha256": "5fb9f7cb6e60caa1bcb03c359b7949c4047b089d01d4f4f62c6720a6878dc3ec",
+      "revision": "b70cba2f7334759d75dc2a854dfac63b9f636e944db41d4581b6abfd2d1f7e33",
+      "dimensions": [
+        684,
+        380
+      ],
+      "reference_sha256": "cd666178d708bb964c8e6e3b77595a2e257ef8ffb52f02144ae29ad25c586ff7",
+      "audit": {
+        "issues": [
+          "Borde/alpha desviado"
+        ],
+        "passed": false,
+        "score": 1.53,
+        "metrics": {
+          "shape": 0.027,
+          "color": 7.68,
+          "edge": 0.183,
+          "ink": 0.075,
+          "halo": 12.59
+        },
+        "strict": true,
+        "checked_at": 1790620243.8484504,
+        "visual_review_required": true
+      },
+      "warnings": [
+        "Borde/alpha desviado"
+      ],
+      "targets": [
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_1.png",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_1.png",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_1.png"
+      ],
+      "file_hashes": {
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_1.png": "5fb9f7cb6e60caa1bcb03c359b7949c4047b089d01d4f4f62c6720a6878dc3ec",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_1.png": "5fb9f7cb6e60caa1bcb03c359b7949c4047b089d01d4f4f62c6720a6878dc3ec",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_1.png": "5fb9f7cb6e60caa1bcb03c359b7949c4047b089d01d4f4f62c6720a6878dc3ec"
+      }
+    },
+    {
+      "id": "2d35111e7dd7c812c5c82e43",
+      "name": "LFLF_0011_AKOS_0049_frame_2",
+      "path": "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_2.png",
+      "issues": [],
+      "approved": true,
+      "sha256": "4f2927ee2df81bdf355d6a3cf65f9641243eecdc8e46a373c4afa72156e06fd2",
+      "revision": "7d7669818cc6848e5ef7117040f2267d3e50a79f0b699fe6d11e98b6c7020b9f",
+      "dimensions": [
+        684,
+        380
+      ],
+      "reference_sha256": "e0d15bff7f5c8645f1093a16dfcadc57ec3e9b12f3ff94e56901876424ffa2dd",
+      "audit": {
+        "issues": [
+          "Borde/alpha desviado"
+        ],
+        "passed": false,
+        "score": 1.52,
+        "metrics": {
+          "shape": 0.027,
+          "color": 7.05,
+          "edge": 0.182,
+          "ink": 0.073,
+          "halo": 12.02
+        },
+        "strict": true,
+        "checked_at": 1790620243.8929677,
+        "visual_review_required": true
+      },
+      "warnings": [
+        "Borde/alpha desviado"
+      ],
+      "targets": [
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_2.png",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_2.png",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_2.png"
+      ],
+      "file_hashes": {
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_2.png": "4f2927ee2df81bdf355d6a3cf65f9641243eecdc8e46a373c4afa72156e06fd2",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_2.png": "4f2927ee2df81bdf355d6a3cf65f9641243eecdc8e46a373c4afa72156e06fd2",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_2.png": "4f2927ee2df81bdf355d6a3cf65f9641243eecdc8e46a373c4afa72156e06fd2"
+      }
+    },
+    {
+      "id": "7ce15a693c9f9e687abbf502",
+      "name": "LFLF_0011_AKOS_0049_frame_3",
+      "path": "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_3.png",
+      "issues": [],
+      "approved": true,
+      "sha256": "bff45aecee02bc2dd22637d32038fdb8e92c1c7218fdd7966a23509a89eff6e8",
+      "revision": "823eaa122879688d449a06909f1fd9f2fd8929932644fed216cc716929cea6b9",
+      "dimensions": [
+        684,
+        380
+      ],
+      "reference_sha256": "ebad7876aafbf152773185eb8f3402392afec4d99eb9f6c35224670694cd7951",
+      "audit": {
+        "issues": [
+          "Borde/alpha desviado"
+        ],
+        "passed": false,
+        "score": 1.66,
+        "metrics": {
+          "shape": 0.029,
+          "color": 7.6,
+          "edge": 0.199,
+          "ink": 0.077,
+          "halo": 11.38
+        },
+        "strict": true,
+        "checked_at": 1790620243.9469683,
+        "visual_review_required": true
+      },
+      "warnings": [
+        "Borde/alpha desviado"
+      ],
+      "targets": [
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_3.png",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_3.png",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_3.png"
+      ],
+      "file_hashes": {
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_3.png": "bff45aecee02bc2dd22637d32038fdb8e92c1c7218fdd7966a23509a89eff6e8",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_3.png": "bff45aecee02bc2dd22637d32038fdb8e92c1c7218fdd7966a23509a89eff6e8",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_3.png": "bff45aecee02bc2dd22637d32038fdb8e92c1c7218fdd7966a23509a89eff6e8"
+      }
+    },
+    {
+      "id": "329a9e1cdf4c8920d0a417ff",
+      "name": "LFLF_0011_AKOS_0049_frame_4",
+      "path": "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_4.png",
+      "issues": [],
+      "approved": true,
+      "sha256": "879cc728be82285151eb9fb0310050ee639a743f92867fbfd6c1b5da83e5dc57",
+      "revision": "a6825bfdfdd96b54992079dd1b06d0683c61b6ad1cc047be10ba4563ccbf5b55",
+      "dimensions": [
+        684,
+        388
+      ],
+      "reference_sha256": "87da017283ea2ac51a8dc34bf636be11ae68a3a340745d97bf342efa87030fb9",
+      "audit": {
+        "issues": [
+          "Borde/alpha desviado"
+        ],
+        "passed": false,
+        "score": 1.56,
+        "metrics": {
+          "shape": 0.028,
+          "color": 7.27,
+          "edge": 0.187,
+          "ink": 0.071,
+          "halo": 11.28
+        },
+        "strict": true,
+        "checked_at": 1790620243.9843233,
+        "visual_review_required": true
+      },
+      "warnings": [
+        "Borde/alpha desviado"
+      ],
+      "targets": [
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_4.png",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_4.png",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_4.png"
+      ],
+      "file_hashes": {
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_4.png": "879cc728be82285151eb9fb0310050ee639a743f92867fbfd6c1b5da83e5dc57",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_4.png": "879cc728be82285151eb9fb0310050ee639a743f92867fbfd6c1b5da83e5dc57",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_4.png": "879cc728be82285151eb9fb0310050ee639a743f92867fbfd6c1b5da83e5dc57"
+      }
+    },
+    {
+      "id": "1730a19a9cfe3498fee9c4f7",
+      "name": "LFLF_0011_AKOS_0049_frame_5",
+      "path": "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_5.png",
+      "issues": [],
+      "approved": true,
+      "sha256": "8178dfc2f36fa27c07d55175b69356198dc647c193894ff9ba33530d6fb52485",
+      "revision": "f1c8b1698dc4163d531315e2e3b10da0c0b6f03f6ef424614bbee90a0921c1a2",
+      "dimensions": [
+        684,
+        380
+      ],
+      "reference_sha256": "b236cea491fe8b7fc23bc4b38c92c397c46860792b4e90c5b4a66695f145c4ad",
+      "audit": {
+        "issues": [
+          "Borde/alpha desviado"
+        ],
+        "passed": false,
+        "score": 1.62,
+        "metrics": {
+          "shape": 0.029,
+          "color": 7.35,
+          "edge": 0.195,
+          "ink": 0.076,
+          "halo": 11.29
+        },
+        "strict": true,
+        "checked_at": 1790620244.0583236,
+        "visual_review_required": true
+      },
+      "warnings": [
+        "Borde/alpha desviado"
+      ],
+      "targets": [
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_5.png",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_5.png",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_5.png"
+      ],
+      "file_hashes": {
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_5.png": "8178dfc2f36fa27c07d55175b69356198dc647c193894ff9ba33530d6fb52485",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_5.png": "8178dfc2f36fa27c07d55175b69356198dc647c193894ff9ba33530d6fb52485",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_5.png": "8178dfc2f36fa27c07d55175b69356198dc647c193894ff9ba33530d6fb52485"
+      }
+    },
+    {
+      "id": "b832eaf9d4d40b0f93ea96ad",
+      "name": "LFLF_0011_AKOS_0049_frame_6",
+      "path": "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_6.png",
+      "issues": [],
+      "approved": true,
+      "sha256": "b3e35e7495da13ae6f911cf7204035816a71198d41a72475360fb9ea59f22c6b",
+      "revision": "11af96facc9bce79f00ef840fd267db3ad7a3b479313fb929d1d5d9320cfda50",
+      "dimensions": [
+        684,
+        388
+      ],
+      "reference_sha256": "bf10795129428f0b14c6dee8151614c28b8356319f5549117326584e845962ad",
+      "audit": {
+        "issues": [
+          "Borde/alpha desviado"
+        ],
+        "passed": false,
+        "score": 1.59,
+        "metrics": {
+          "shape": 0.029,
+          "color": 7.25,
+          "edge": 0.191,
+          "ink": 0.071,
+          "halo": 10.27
+        },
+        "strict": true,
+        "checked_at": 1790620244.0798209,
+        "visual_review_required": true
+      },
+      "warnings": [
+        "Borde/alpha desviado"
+      ],
+      "targets": [
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_6.png",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_6.png",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_6.png"
+      ],
+      "file_hashes": {
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_6.png": "b3e35e7495da13ae6f911cf7204035816a71198d41a72475360fb9ea59f22c6b",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_6.png": "b3e35e7495da13ae6f911cf7204035816a71198d41a72475360fb9ea59f22c6b",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_6.png": "b3e35e7495da13ae6f911cf7204035816a71198d41a72475360fb9ea59f22c6b"
+      }
+    },
+    {
+      "id": "33e6fb3f4a81f98a02b60990",
+      "name": "LFLF_0011_AKOS_0049_frame_7",
+      "path": "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_7.png",
+      "issues": [],
+      "approved": true,
+      "sha256": "95337696305a24aecae82d0adf23e8baf14c12aaca28a0cb428fdf8db912f4be",
+      "revision": "1ac1441530e118363bd297e410bd6c140b50ae7ebaef5f2afa12ebe04ba2fbe4",
+      "dimensions": [
+        684,
+        388
+      ],
+      "reference_sha256": "56c16b58142e513e203526c293519f6364d011ce072c25026bd6b3ffbe4954f8",
+      "audit": {
+        "issues": [
+          "Borde/alpha desviado"
+        ],
+        "passed": false,
+        "score": 1.61,
+        "metrics": {
+          "shape": 0.029,
+          "color": 7.25,
+          "edge": 0.194,
+          "ink": 0.074,
+          "halo": 12.18
+        },
+        "strict": true,
+        "checked_at": 1790620244.1263976,
+        "visual_review_required": true
+      },
+      "warnings": [
+        "Borde/alpha desviado"
+      ],
+      "targets": [
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_7.png",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_7.png",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_7.png"
+      ],
+      "file_hashes": {
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_7.png": "95337696305a24aecae82d0adf23e8baf14c12aaca28a0cb428fdf8db912f4be",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_7.png": "95337696305a24aecae82d0adf23e8baf14c12aaca28a0cb428fdf8db912f4be",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_7.png": "95337696305a24aecae82d0adf23e8baf14c12aaca28a0cb428fdf8db912f4be"
+      }
+    },
+    {
+      "id": "2eda881958acf6aa576e8368",
+      "name": "LFLF_0011_AKOS_0049_frame_8",
+      "path": "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_8.png",
+      "issues": [],
+      "approved": true,
+      "sha256": "18d10fb16aa4747ac57b53555317f5a4350689b231451439299e734a58196c09",
+      "revision": "1360042f08c0de2c41f3409f5f837833bc5784ae6d57d1045bc2af26606f445a",
+      "dimensions": [
+        684,
+        380
+      ],
+      "reference_sha256": "f7676baeb6cb65c48657facc7d7577e98612bbbf66f8d2b94f31ae3ec0aef175",
+      "audit": {
+        "issues": [
+          "Borde/alpha desviado"
+        ],
+        "passed": false,
+        "score": 1.53,
+        "metrics": {
+          "shape": 0.027,
+          "color": 7.21,
+          "edge": 0.183,
+          "ink": 0.073,
+          "halo": 11.27
+        },
+        "strict": true,
+        "checked_at": 1790620244.1684287,
+        "visual_review_required": true
+      },
+      "warnings": [
+        "Borde/alpha desviado"
+      ],
+      "targets": [
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_8.png",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_8.png",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_8.png"
+      ],
+      "file_hashes": {
+        "assets/masters/topaz-4x/costumes/LFLF_0011_AKOS_0049_frame_8.png": "18d10fb16aa4747ac57b53555317f5a4350689b231451439299e734a58196c09",
+        "assets/runtime/topaz-cannon/costumes/LFLF_0011_AKOS_0049_aframe_8.png": "18d10fb16aa4747ac57b53555317f5a4350689b231451439299e734a58196c09",
+        "assets/runtime/topaz-crisp/costumes/LFLF_0011_AKOS_0049_aframe_8.png": "18d10fb16aa4747ac57b53555317f5a4350689b231451439299e734a58196c09"
+      }
+    }
+  ]
+}
