@@ -32,27 +32,39 @@ _THUMB_DIR.mkdir(exist_ok=True)
 _IMG_CACHE_DIR = Path('/tmp/monkey-img-cache')
 _IMG_CACHE_DIR.mkdir(exist_ok=True)
 
+_ram_cache = {}
+_RAM_CACHE_MAX = 80  # ~64MB at ~800KB per sprite
+
 def _cached_read(path):
-    """Read file bytes, caching small files on ext4 /tmp to avoid repeated slow NTFS reads."""
+    """Read file bytes with RAM LRU cache to avoid repeated slow NTFS reads."""
     p = Path(path)
     try:
         stat = p.stat()
     except FileNotFoundError:
         raise
-    # Skip disk cache for large files (>200KB) to avoid filling WSL2 storage
-    if stat.st_size > 200_000:
-        return p.read_bytes()
     cache_key = hashlib.md5(f'{path}:{stat.st_mtime_ns}:{stat.st_size}'.encode()).hexdigest()
-    cached = _IMG_CACHE_DIR / cache_key
-    try:
-        return cached.read_bytes()
-    except FileNotFoundError:
-        pass
+    # RAM cache (fast, no disk usage)
+    if cache_key in _ram_cache:
+        _ram_cache[cache_key] = _ram_cache.pop(cache_key)  # move to end (LRU)
+        return _ram_cache[cache_key]
+    # Disk cache for small files only
+    if stat.st_size <= 200_000:
+        cached = _IMG_CACHE_DIR / cache_key
+        try:
+            data = cached.read_bytes()
+            _ram_cache[cache_key] = data
+            return data
+        except FileNotFoundError:
+            pass
     data = p.read_bytes()
-    try:
-        cached.write_bytes(data)
-    except OSError:
-        pass
+    _ram_cache[cache_key] = data
+    while len(_ram_cache) > _RAM_CACHE_MAX:
+        _ram_cache.pop(next(iter(_ram_cache)))
+    if stat.st_size <= 200_000:
+        try:
+            (_IMG_CACHE_DIR / cache_key).write_bytes(data)
+        except OSError:
+            pass
     return data
 
 def thumbnail(path, modified, reference):
@@ -699,13 +711,13 @@ class Handler(BaseHTTPRequestHandler):
                 data = _cached_read(p)
                 png_size(data)
                 v = args.get('v', [''])[0]
-                cc = 'private, max-age=300' if v and v != 'base' else 'no-store'
+                cc = 'public, max-age=31536000, immutable' if v and v != 'base' else 'no-store'
                 self.send(200, data, 'image/png', cc)
             elif parsed.path == '/api/reference':
                 reference=w.reference(args['id'][0])
                 if reference is None: return self.send(404, dict(error='No hay original asociado a este asset.'))
                 data=_cached_read(reference);png_size(data)
-                self.send(200, data, 'image/png')
+                self.send(200, data, 'image/png', 'public, max-age=86400, immutable')
             elif parsed.path == '/api/history':
                 id_ = args['id'][0]; w.frame(id_)
                 self.send(200, dict(items=w.history_names(id_)))
