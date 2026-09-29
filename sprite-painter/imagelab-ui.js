@@ -2,24 +2,38 @@
 const imageLabDefaultPrompt='Interpolar el dibujo original a mayor resolución. Conservar sus colores exactos, luminosidad y regiones de sombreado. Mantener el color y grosor relativo de cada línea, sin engrosarla ni agregar contornos. Suavizar solo escalones de muestreo. No reinterpretar, completar fragmentos, cambiar materiales, agregar vetas o volumen. Respetar tamaño, pose y encuadre.';
 const imageLabSending=new Set();
 function imageLabPreferences(id){try{const settings=JSON.parse(localStorage.getItem('imagelab-settings-'+id)||'{}');if(settings.prompt==='Remasterizar fielmente el original. Conservar exactamente su silueta, pose, paleta y encuadre. Mejorar bordes y sombreado sin inventar formas ni completar fragmentos.')settings.prompt=imageLabDefaultPrompt;return settings;}catch{return {};}}
-let imageLabAssetJobs=new Map(),imageLabApprovals={};
+let imageLabAssetJobs=new Map(),imageLabApprovals={},imageLabResultJobs=new Map();
+function latestImageLabResult(jobs){return [...jobs].filter(j=>['ready','applied'].includes(j.status)&&j.image).sort((a,b)=>b.created_at-a.created_at)[0];}
+function imageLabNeedsApproval(frame){const job=imageLabResultJobs.get(frame.id),approval=imageLabApprovals[frame.id];return !approval||!!(job&&job.candidate_sha256!==approval.sha256);}
 function syncImageLabAssets(jobs,approvals){
-  imageLabApprovals=approvals||{};imageLabAssetJobs=new Map();
+  imageLabApprovals=approvals||{};imageLabAssetJobs=new Map();imageLabResultJobs=new Map();
+  for(const job of [...jobs].sort((a,b)=>b.created_at-a.created_at))if(['ready','applied'].includes(job.status)&&job.image&&!imageLabResultJobs.has(job.asset_id))imageLabResultJobs.set(job.asset_id,job);
   for(const job of jobs){const old=imageLabAssetJobs.get(job.asset_id);if(!old||(['queued','running'].includes(job.status)&&!['queued','running'].includes(old.status)))imageLabAssetJobs.set(job.asset_id,job);}
+  if(typeof SpriteBatches!=='undefined')SpriteBatches.ingest(jobs,imageLabApprovals);
   window.dispatchEvent(new Event('imagelab-assets'));
 }
+async function acceptLatestImageLabResult(frame){
+  const history=await api('/api/imagelab/jobs?asset='+frame.id),job=latestImageLabResult(history.jobs);
+  const info=await api('/api/open?id='+frame.id);let revision=info.revision;
+  if(job&&(!job.candidate_sha256||job.candidate_sha256!==info.current_sha256)){
+    const saved=await api('/api/variants/select',{job_id:job.id,revision});revision=saved.revision;
+  }
+  const record=await api('/api/imagelab/approve',{id:frame.id,revision});imageLabApprovals[frame.id]=record;
+  // Read back the authoritative image/revision immediately; do not wait for SSE.
+  try{LiveAssets.merge(await api('/api/live-state?ids='+frame.id));}catch{LiveAssets.request([frame.id]);}
+  window.dispatchEvent(new Event('imagelab-assets'));return record;
+}
 async function approveImageLabAsset(frame){
+  if(imageLabSending.has(frame.id))return;imageLabSending.add(frame.id);
   try{
-    if(imageLabApprovals[frame.id]){await api('/api/imagelab/revoke',{id:frame.id});delete imageLabApprovals[frame.id];imageLabNotice('Aprobación retirada · '+frame.name);}
-    else{const info=await api('/api/open?id='+frame.id);const record=await api('/api/imagelab/approve',{id:frame.id,revision:info.revision});imageLabApprovals[frame.id]=record;imageLabNotice('Aprobado como referencia · '+frame.name);}
-    window.dispatchEvent(new Event('imagelab-assets'));
-  }catch(error){imageLabNotice(error.message);}
+    await acceptLatestImageLabResult(frame);imageLabNotice('Última versión aplicada y aprobada · '+frame.name);
+  }catch(error){imageLabNotice(error.message);}finally{imageLabSending.delete(frame.id);}
 }
 async function enqueueImageLab(frame,button){
   if(imageLabSending.has(frame.id))return;
   imageLabSending.add(frame.id);button.disabled=true;button.textContent='Enviando…';
   try{
-    const job=await api('/api/imagelab/jobs',{id:frame.id,prompt:imageLabDefaultPrompt,preserve_alpha:true,alpha_mode:'ai',...imageLabPreferences(frame.id)});
+    const job=await api('/api/imagelab/jobs',{id:frame.id,prompt:imageLabDefaultPrompt,preserve_alpha:false,alpha_mode:'none',...imageLabPreferences(frame.id)});
     imageLabAssetJobs.set(frame.id,job);window.dispatchEvent(new Event('imagelab-assets'));
     imageLabNotice(frame.name+' · agregado a la cola');
   }catch(error){imageLabNotice('No se pudo agregar: '+error.message);}
@@ -69,11 +83,11 @@ async function showImageLab(frame, onApply, selectedJob=null, upscaleJob=null){
   document.body.append(dialog);dialog.showModal();
   get('current').src='/api/reference?id='+frame.id;get('current').alt='Original del juego';dialog.querySelector('figcaption').textContent='Original · base del próximo envío';
   get('prompt').value=imageLabDefaultPrompt;
-  dialog.querySelector('.il-note').textContent='ImageLab recibe el original ampliado dentro de un lienzo cuadrado gris, junto al ejemplo que elijas. La salida se recupera desde el mismo encuadre y conserva el alfa original. Describí qué representa el sprite, especialmente si es un fragmento. Revisá contornos y alineación antes de aplicar: la generación puede reinterpretarlos. Consume el servicio del proveedor.';
+  dialog.querySelector('.il-note').textContent='ImageLab recibe el original ampliado y tu prompt. Con Alpha después conserva el fondo y no aplica ninguna máscara. Podés extraer la transparencia más tarde en otra versión, sin regenerar el dibujo. Consume ImageLab.';
   get('generate').textContent='Agregar a la cola';
   const preferences=imageLabPreferences(frame.id);
-  const alphaChoice=document.createElement('label');alphaChoice.innerHTML='Transparencia<select aria-label="Método de alfa"><option value="ai">IA · extraer del resultado</option><option value="original">Contorno original simplificado</option></select>';
-  dialog.querySelector('.il-options').append(alphaChoice);const alphaMode=alphaChoice.querySelector('select');alphaMode.value=preferences.alpha_mode||'ai';
+  const alphaChoice=document.createElement('label');alphaChoice.innerHTML='Transparencia<select aria-label="Método de alfa"><option value="none">Alpha después · conservar fondo</option><option value="ai">IA · extraer del resultado</option><option value="original">Contorno original simplificado</option></select>';
+  dialog.querySelector('.il-options').append(alphaChoice);const alphaMode=alphaChoice.querySelector('select');alphaMode.value=preferences.alpha_mode||'none';
   get('alpha').closest('label').hidden=true;
   dialog.querySelector('.il-note').append(' El modo IA realiza un segundo llamado para extraer alfa del resultado.');
   get('prompt').value=preferences.prompt||imageLabDefaultPrompt;get('alpha').checked=preferences.preserve_alpha!==false;
@@ -84,7 +98,7 @@ async function showImageLab(frame, onApply, selectedJob=null, upscaleJob=null){
   styleSelect.onchange=()=>{styleImage.hidden=!styleSelect.value;if(styleSelect.value)styleImage.src='/api/imagelab/reference?id='+styleSelect.value;};
   const saveSettings=document.createElement('button');saveSettings.textContent='Guardar configuración';dialog.querySelector('.il-footer').prepend(saveSettings);
   saveSettings.disabled=true;
-  const settings=()=>({prompt:get('prompt').value,model:get('model').value,preserve_alpha:true,alpha_mode:alphaMode.value,style_id:styleSelect.value});
+  const settings=()=>({prompt:get('prompt').value,model:get('model').value,preserve_alpha:alphaMode.value!=='none',alpha_mode:alphaMode.value,style_id:styleSelect.value});
   saveSettings.onclick=()=>{try{localStorage.setItem('imagelab-settings-'+frame.id,JSON.stringify(settings()));imageLabNotice('Configuración guardada para este asset');}catch(error){status(error.message);}};
   get('current').src='/api/imagelab/prepared?id='+frame.id;dialog.querySelector('figcaption').textContent='Base preparada · contorno simplificado';
   if(upscaleJob){
@@ -92,7 +106,7 @@ async function showImageLab(frame, onApply, selectedJob=null, upscaleJob=null){
     dialog.querySelector('.il-note').textContent='Envía este escalado como base y el original intacto como autoridad de pose, paleta y grosor de línea. ImageLab puede reinterpretar el dibujo: revisá la variante antes de aplicarla. Consume el proveedor.';
   }
   let job=null,timer=null,generating=false,connected=false;
-  const extract=document.createElement('button');extract.textContent='Reextraer alfa con IA';extract.disabled=true;dialog.querySelector('.il-footer').prepend(extract);
+  const extract=document.createElement('button');extract.textContent='Extraer alpha · ImageLab';extract.disabled=true;dialog.querySelector('.il-footer').prepend(extract);
   const reuse=document.createElement('button');reuse.textContent='Usar esta configuración en el botón directo';reuse.hidden=true;dialog.querySelector('.il-footer').prepend(reuse);
   reuse.onclick=()=>{if(!job)return;const chosen={prompt:job.prompt,model:job.model,style_id:job.style_asset_id||'',preserve_alpha:true,alpha_mode:job.alpha_mode||'original'};try{localStorage.setItem('imagelab-settings-'+frame.id,JSON.stringify(chosen));get('prompt').value=chosen.prompt;get('model').value=chosen.model;styleSelect.value=chosen.style_id;styleSelect.onchange();alphaMode.value=chosen.alpha_mode;imageLabNotice('El botón directo usará el prompt, modelo, ejemplo y alfa de esta variante');}catch(error){status(error.message);}};
   extract.onclick=async()=>{extract.disabled=true;try{const sent=await api('/api/imagelab/alpha',{job_id:job.id});imageLabAssetJobs.set(frame.id,sent);window.dispatchEvent(new Event('imagelab-assets'));close();imageLabNotice('Extracción de alfa en cola · no se vuelve a generar el dibujo');}catch(error){status(error.message);extract.disabled=false;}};
@@ -110,7 +124,8 @@ async function showImageLab(frame, onApply, selectedJob=null, upscaleJob=null){
     else if(job.status==='ready'||job.status==='applied'){
       get('result').src=job.image;get('result').hidden=false;get('placeholder').hidden=true;get('raw').href=job.raw_image;get('raw').hidden=false;
       status((job.status==='applied'?'Esta variante ya se aplicó como borrador.':'Variante lista · '+job.width+' × '+job.height+' px. ')+(job.base_kind==='original'?(job.style_asset_name?'Referencia de estilo aprobada: '+job.style_asset_name:'Solo original: no se encontró una referencia aprobada similar.'):'Generada con el flujo anterior. Un nuevo envío usará el original.'));
-      if(job.quality?.passed===false)status('Rechazada por fidelidad: '+job.quality.issues.join(', ')+'. Se conserva para comparar; no se puede aplicar ni aprobar.');
+      if(job.alpha_mode==='none')status('Dibujo listo · alpha pendiente. El resultado conserva el fondo; podés extraerlo después o retocarlo en Confite.');
+      else if(job.quality?.passed===false)status('Rechazada por fidelidad: '+job.quality.issues.join(', ')+'. Se conserva para comparar; no se puede aplicar ni aprobar.');
     }else status(job.error||'No se completó la generación.');
   }
   async function poll(){if(!dialog.isConnected||!job)return;try{render(await api('/api/imagelab/job?id='+job.id));}catch(error){status(error.message);timer=setTimeout(poll,4000);}}
@@ -164,24 +179,27 @@ async function showImageLabQueue(){
     if(!visible.length){q('grid').textContent='No hay trabajos en esta vista. Usá Retocar con ImageLab en cualquier asset para agregarlo.';return;}
     for(const job of visible){
       const card=document.createElement('article');card.className='il-job';
+      card.dataset.status=job.quality?.passed===false?'failed':job.status;
       const name=document.createElement('strong');name.textContent=job.asset_name;
-      const status=document.createElement('p');status.textContent=(job.quality?.passed===false?'Rechazada por fidelidad':imageLabStates[job.status])+' · '+new Date(job.created_at*1000).toLocaleString();
+      const status=document.createElement('p');status.textContent=(job.alpha_mode==='none'&&['ready','applied'].includes(job.status)?'Dibujo listo · alpha pendiente':job.quality?.passed===false?'Rechazada por fidelidad':imageLabStates[job.status])+' · '+new Date(job.created_at*1000).toLocaleString();
       const images=document.createElement('div');images.className='il-images';
       for(const [label,url] of [['Enviado','/api/imagelab/image?id='+job.id+'&input=1'],['Resultado',job.image]]){
         const figure=document.createElement('figure'),caption=document.createElement('figcaption');caption.textContent=label;figure.append(caption);
-        if(url){const img=document.createElement('img');img.src=url;img.alt=label+' '+job.asset_name;img.loading='lazy';figure.append(img);}else{const text=document.createElement('p');text.textContent=imageLabStates[job.status];figure.append(text);}images.append(figure);
+        if(url){const img=document.createElement('img');img.src=url;img.alt=label;img.loading='lazy';img.draggable=false;img.onerror=()=>{const fallback=document.createElement('p');fallback.className='il-image-empty';fallback.textContent='Imagen no disponible';img.replaceWith(fallback);};figure.append(img);}else{const text=document.createElement('p');text.className='il-image-empty';text.textContent=imageLabStates[job.status];figure.append(text);}images.append(figure);
       }
       const prompt=document.createElement('p');prompt.textContent=job.prompt;prompt.className='il-job-prompt';prompt.title=job.prompt;
-      const recipe=document.createElement('p');recipe.textContent=job.model+' · '+(job.style_asset_name?'Ejemplo: '+job.style_asset_name:'Sin ejemplo')+' · '+(job.alpha_mode==='ai'?'Alfa IA':'Alfa original')+(job.quality?.passed===false?' · RECHAZADA: '+job.quality.issues.join(', '):'');recipe.className='il-job-prompt';
+      const recipe=document.createElement('p');recipe.textContent=job.model+' · '+(job.style_asset_name?'Ejemplo: '+job.style_asset_name:'Sin ejemplo')+' · '+(job.alpha_mode==='none'?'Alpha pendiente':job.alpha_mode==='ai'?'Alfa IA':'Alfa original')+(job.quality?.passed===false?' · RECHAZADA: '+job.quality.issues.join(', '):'');recipe.className='il-job-prompt';
       const review=document.createElement('button');review.textContent='Comparar / revisar';review.onclick=async()=>{
         const frame=state.frames.find(f=>f.id===job.asset_id);if(!frame){q('message').textContent='El asset ya no está en el catálogo.';return;}
         close();await openAssetReview(frame,job.id);
       };
-      card.append(name,status,images,recipe,prompt,review);
+      const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Detalles del proceso';details.append(summary,recipe,prompt);
+      const actions=document.createElement('div');actions.className='il-job-actions';actions.append(review);
+      card.append(name,status,images,details,actions);
       if(['ready','applied'].includes(job.status)){
         const approve=document.createElement('button');const accepted=imageLabApprovals[job.asset_id]?.job_id===job.id;
         approve.textContent=accepted?'✓ Referencia aprobada':'Aprobar como referencia';approve.disabled=accepted||job.quality?.passed===false;
-        approve.onclick=async()=>{approve.disabled=true;try{const record=await api('/api/imagelab/approve',{job_id:job.id});imageLabApprovals[job.asset_id]=record;window.dispatchEvent(new Event('imagelab-assets'));last='';await refresh();}catch(error){q('message').textContent=error.message;approve.disabled=false;}};card.append(approve);
+        approve.onclick=async()=>{approve.disabled=true;try{const record=await api('/api/imagelab/approve',{job_id:job.id});imageLabApprovals[job.asset_id]=record;window.dispatchEvent(new Event('imagelab-assets'));last='';await refresh();}catch(error){q('message').textContent=error.message;approve.disabled=false;}};actions.append(approve);
       }
       if(job.error){const error=document.createElement('p');error.textContent=job.error;card.append(error);}
       if(job.status==='queued'){const cancel=document.createElement('button');cancel.textContent='Quitar de la cola';cancel.onclick=async()=>{try{await api('/api/imagelab/cancel',{job_id:job.id});last='';await refresh();}catch(error){q('message').textContent=error.message;}};card.append(cancel);}
@@ -189,12 +207,27 @@ async function showImageLabQueue(){
     }
   }
   q('filter').onchange=render;
-  async function refresh(){clearTimeout(timer);if(!dialog.isConnected)return;try{const result=await api('/api/imagelab/jobs');if(!dialog.isConnected)return;syncImageLabAssets(result.jobs,result.approvals);const signature=JSON.stringify(result);if(signature!==last){jobs=result.jobs;last=signature;render();}}catch(error){q('message').textContent=error.message;}if(dialog.isConnected)timer=setTimeout(refresh,2500);}
+  async function refresh(){clearTimeout(timer);if(!dialog.isConnected)return;try{const result=await api('/api/imagelab/jobs');if(!dialog.isConnected)return;const signature=JSON.stringify(result);if(signature!==last){jobs=result.jobs;last=signature;render();}}catch(error){q('message').textContent=error.message;}if(dialog.isConnected)timer=setTimeout(refresh,2500);}
   await refresh();
 }
+function updateQueueBadges(){
+  const queued=[...imageLabAssetJobs.values()].filter(j=>j.status==='queued').length;
+  const running=[...imageLabAssetJobs.values()].filter(j=>j.status==='running').length;
+  const ready=[...imageLabResultJobs.values()].filter(j=>j.status==='ready'&&!imageLabApprovals[j.asset_id]).length;
+  const total=queued+running;
+  for(const button of document.querySelectorAll('[data-imagelab-queue]')){
+    const parts=['Cola'];
+    if(total)parts.push(total+' pendiente'+(total>1?'s':''));
+    if(ready)parts.push(ready+' para revisar');
+    button.textContent=parts.join(' · ');
+    button.classList.toggle('il-queue-active',total>0);
+    button.classList.toggle('il-queue-ready',ready>0);
+  }
+}
+window.addEventListener('imagelab-assets',updateQueueBadges);
 window.addEventListener('load',()=>{
   for(const host of [document.querySelector('header')].filter(Boolean)){
-    const button=document.createElement('button');button.textContent='Cola de trabajos';button.onclick=showImageLabQueue;button.dataset.imagelabQueue='';host.append(button);
+    const button=document.createElement('button');button.textContent='Cola';button.onclick=showImageLabQueue;button.dataset.imagelabQueue='';host.append(button);
   }
-  async function updateQueueBadge(){try{const {jobs,approvals}=await api('/api/imagelab/jobs');syncImageLabAssets(jobs,approvals);const pending=jobs.filter(j=>['queued','running'].includes(j.status)).length,ready=jobs.filter(j=>j.status==='ready'&&j.quality?.passed!==false).length;document.querySelectorAll('[data-imagelab-queue]').forEach(button=>{button.textContent='Cola de trabajos · '+pending+' pendientes · '+ready+' para revisar';});}catch{}setTimeout(updateQueueBadge,4000);}updateQueueBadge();
+  updateQueueBadges();
 });

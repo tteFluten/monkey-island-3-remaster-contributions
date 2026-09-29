@@ -9,6 +9,8 @@ import re
 import secrets
 import socket
 import struct
+import subprocess
+import sys
 import threading
 import time
 import webbrowser
@@ -19,14 +21,48 @@ from functools import lru_cache
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 from imagelab import ImageLab
+from live_updates import ChangeFeed
 
 PNG = b'\x89PNG\r\n\x1a\n'
 MAX_BODY = 48 * 1024 * 1024
 
 
-@lru_cache(maxsize=192)
+_THUMB_DIR = Path('/tmp/monkey-thumb-cache')
+_THUMB_DIR.mkdir(exist_ok=True)
+_IMG_CACHE_DIR = Path('/tmp/monkey-img-cache')
+_IMG_CACHE_DIR.mkdir(exist_ok=True)
+
+def _cached_read(path):
+    """Read file bytes, caching small files on ext4 /tmp to avoid repeated slow NTFS reads."""
+    p = Path(path)
+    try:
+        stat = p.stat()
+    except FileNotFoundError:
+        raise
+    # Skip disk cache for large files (>200KB) to avoid filling WSL2 storage
+    if stat.st_size > 200_000:
+        return p.read_bytes()
+    cache_key = hashlib.md5(f'{path}:{stat.st_mtime_ns}:{stat.st_size}'.encode()).hexdigest()
+    cached = _IMG_CACHE_DIR / cache_key
+    try:
+        return cached.read_bytes()
+    except FileNotFoundError:
+        pass
+    data = p.read_bytes()
+    try:
+        cached.write_bytes(data)
+    except OSError:
+        pass
+    return data
+
 def thumbnail(path, modified, reference):
-    data = Path(path).read_bytes()
+    cache_key = hashlib.md5(f'{path}:{modified}:{reference}'.encode()).hexdigest()
+    cached = _THUMB_DIR / (cache_key + '.png')
+    try:
+        return cached.read_bytes()
+    except FileNotFoundError:
+        pass
+    data = _cached_read(path)
     png_size(data)
     try:
         from PIL import Image
@@ -36,7 +72,38 @@ def thumbnail(path, modified, reference):
         image = image.convert('RGBA')
         image.thumbnail((240, 180), Image.Resampling.NEAREST if reference else Image.Resampling.LANCZOS)
         result = io.BytesIO(); image.save(result, format='PNG')
-        return result.getvalue()
+        out = result.getvalue()
+    try:
+        cached.write_bytes(out)
+    except OSError:
+        pass
+    return out
+
+
+_VERSION_THUMB_DIR = Path('/tmp/monkey-version-thumbs')
+_VERSION_THUMB_DIR.mkdir(exist_ok=True)
+
+def version_thumb(data, cache_key):
+    """Return a small thumbnail PNG for a version image, cached on disk."""
+    cached = _VERSION_THUMB_DIR / (cache_key + '.png')
+    try:
+        return cached.read_bytes()
+    except FileNotFoundError:
+        pass
+    try:
+        from PIL import Image
+    except ImportError:
+        return data
+    with Image.open(io.BytesIO(data)) as image:
+        image = image.convert('RGBA')
+        image.thumbnail((128, 112), Image.Resampling.LANCZOS)
+        result = io.BytesIO(); image.save(result, format='PNG')
+        out = result.getvalue()
+    try:
+        cached.write_bytes(out)
+    except OSError:
+        pass
+    return out
 
 
 def png_size(data):
@@ -94,11 +161,86 @@ class Workshop:
         self.root = root.resolve()
         self.store = self.root / '.context' / 'sprite-painter'
         self.frames = {}
+        self.catalog_cache = {}
+        self._full_catalog_cache = None
+        self._catalog_json_path = Path('/tmp/monkey-catalog.json')
+        self._history_cache = {}
+        self._open_cache = {}
         self.lock = threading.RLock()
+        self.changes = ChangeFeed()
         self.reload()
+        # Build catalog in background thread
+        threading.Thread(target=self._prebuild_all, daemon=True).start()
+
+    def _prebuild_all(self):
+        """Load catalog from /tmp snapshot, then rebuild in a SUBPROCESS (no GIL)."""
+        try:
+            self.full_catalog()
+        except Exception:
+            pass
+        # Rebuild catalog + thumbnails in a subprocess so NTFS I/O never blocks HTTP
+        self._subprocess_rebuild()
+
+    def full_catalog(self):
+        with self.lock:
+            if self._full_catalog_cache is not None:
+                return self._full_catalog_cache
+        # Load from /tmp snapshot (instant)
+        try:
+            data = self._catalog_json_path.read_bytes()
+            result = json.loads(data)
+            cached_ids = {f['id'] for f in result.get('frames', [])}
+            if cached_ids == set(self.frames.keys()) and result.get('root') == str(self.root):
+                with self.lock:
+                    self._full_catalog_cache = result
+                return result
+        except (FileNotFoundError, json.JSONDecodeError, KeyError):
+            pass
+        # No snapshot — must build synchronously (only on very first run)
+        return self._rebuild_catalog()
+
+    def _rebuild_catalog(self):
+        edit_cache = self._scan_edits()
+        cursor = self.changes.cursor()
+        frames = [self.catalog_frame(id_, _edit_cache=edit_cache) for id_ in list(self.frames)]
+        result = dict(frames=frames, root=str(self.root), store=str(self.store), cursor=cursor)
+        with self.lock:
+            self._full_catalog_cache = result
+        try:
+            self._catalog_json_path.write_bytes(json.dumps(result, ensure_ascii=False).encode())
+        except OSError:
+            pass
+        return result
+
+    def _subprocess_rebuild(self):
+        """Rebuild catalog + thumbnails in a subprocess. Zero GIL impact."""
+        script = str(Path(__file__).parent / '_rebuild_catalog.py')
+        try:
+            proc = subprocess.Popen(
+                [sys.executable, script, str(self.root), str(self.store), str(self._catalog_json_path)],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+            # Watch for completion in a lightweight thread (no NTFS I/O)
+            def watch():
+                proc.wait()
+                try:
+                    data = self._catalog_json_path.read_bytes()
+                    result = json.loads(data)
+                    with self.lock:
+                        self._full_catalog_cache = result
+                except Exception:
+                    pass
+            threading.Thread(target=watch, daemon=True).start()
+        except OSError:
+            pass
+
+    def invalidate_catalog(self):
+        with self.lock:
+            self._full_catalog_cache = None
 
     def register(self, path, category, name=None, dimensions=None):
-        path = path.resolve()
+        if '..' in path.parts:
+            path = path.resolve()
         if not path.is_relative_to(self.root):
             raise ValueError('Ruta fuera del proyecto.')
         relative = path.relative_to(self.root).as_posix()
@@ -110,15 +252,23 @@ class Workshop:
         self.frames[id_] = dict(id=id_, path=relative, name=stem,
                                group=category + '/' + group, category=category,
                                number=index, dimensions=dimensions)
+        self.catalog_cache.pop(id_,None);self._open_cache.pop(id_,None);self._full_catalog_cache=None
         return id_
 
     def reload(self):
         with self.lock:
             self.reference.cache_clear()
+            self.catalog_cache.clear();self._full_catalog_cache=None
+            self._reference_index = None
             self.frames = {}
             manifest = self.root / 'assets' / 'manifest.json'
             review_file = self.root / 'assets/metadata/artwork-review.json'
             reviews = json.loads(review_file.read_text(encoding='utf-8-sig')) if review_file.exists() else {}
+            plan_path=self.root/'assets/metadata/topaz-scene-plan.json'
+            scene_sources=set()
+            if plan_path.exists():
+                plan=json.loads(plan_path.read_text(encoding='utf-8-sig'))
+                scene_sources={entry['source'] for scene in plan.get('scenes',[]) if scene['id'] in ('room-0009','room-0010','room-0011') for entry in scene['sources']}
             if manifest.exists():
                 records = json.loads(manifest.read_text(encoding='utf-8-sig')).get('files', [])
                 for record in records:
@@ -138,6 +288,8 @@ class Workshop:
                         category = 'Interfaz'
                     elif p.startswith('extracted/costumes/') and ('LFLF_0009_' in p or 'LFLF_0001_AKOS_0002_' in p):
                         category = 'Originales · referencia'
+                    if not category and record.get('canonical') and (record.get('source_id') in scene_sources or record.get('asset_id')=='background-room-10'):
+                        category='Entrega · dependencias del barco'
                     if category:
                         d = record.get('image', {})
                         frame_id = self.register(self.root / p, category,
@@ -153,6 +305,7 @@ class Workshop:
             if imports.exists():
                 for p in sorted(imports.glob('*/*.png')):
                     self.register(p, 'Importados · ' + p.parent.name)
+            self._build_reference_index()
 
     def frame(self, id_):
         if id_ not in self.frames:
@@ -169,18 +322,38 @@ class Workshop:
             raise ValueError('Ruta fuera del proyecto.')
         return p
 
+    def _build_reference_index(self):
+        """Scan reference directories once to avoid per-frame is_file() calls."""
+        if self._reference_index is not None:
+            return
+        index = {}
+        for folder in ('assets/references/topaz-cleaned', 'extracted'):
+            base = self.root / folder
+            if base.is_dir():
+                for p in base.rglob('*.png'):
+                    key = p.relative_to(base).as_posix()
+                    if key not in index:
+                        index[key] = p
+        self._reference_index = index
+
     @lru_cache(maxsize=4096)
     def reference(self, id_):
         relative = self.frame(id_)['path']
-        prefix = 'assets/masters/topaz-4x/'
-        if not relative.startswith(prefix):
+        prefix = next((p for p in ('assets/masters/topaz-4x/', 'assets/masters/ui-4x/') if relative.startswith(p)), None)
+        if prefix is None:
             return None
-        # The cleaned files retain original colors and restore game transparency.
-        # Raw extraction can contain palette-key backgrounds and shadow indices.
+        self._build_reference_index()
+        suffix = relative.removeprefix(prefix)
+        candidate = self._reference_index.get(suffix)
+        if candidate is not None:
+            return candidate
+        # Fallback for files created after index was built
         for folder in ('assets/references/topaz-cleaned', 'extracted'):
-            candidate = (self.root / folder / relative.removeprefix(prefix)).resolve()
-            if candidate.is_relative_to(self.root) and candidate.is_file():
-                return candidate
+            path = (self.root / folder / suffix)
+            if '..' not in path.parts:
+                path = path.resolve()
+            if path.is_relative_to(self.root) and path.is_file():
+                return path
         return None
 
     def revision(self, id_):
@@ -190,22 +363,106 @@ class Workshop:
         # Include metadata so concurrent alignment-only edits also conflict.
         return self.metadata(id_).get('revision') or sha(p.read_bytes())
 
+    def generation_reference(self, id_):
+        from source_preparation import reference
+        return reference(self, id_)
+
     def metadata(self, id_):
         p = self.store / 'edits' / (id_ + '.json')
         return json.loads(p.read_text()) if p.exists() else {}
 
-    def open(self, id_):
+    def _scan_edits(self):
+        """Pre-scan the edits directory once, returning dicts keyed by id."""
+        edits_dir = self.store / 'edits'
+        stats = {}
+        if edits_dir.is_dir():
+            for p in edits_dir.glob('*.png'):
+                stem = p.stem
+                try:
+                    st = p.stat()
+                    stats[stem] = (p, st)
+                except FileNotFoundError:
+                    pass
+        return stats
+
+    def catalog_frame(self, id_, _edit_cache=None):
         with self.lock:
-            original = self.original(id_).read_bytes()
+            frame=self.frame(id_)
+            # Fast path: check if this frame has an edit via pre-scanned cache
+            if _edit_cache is not None:
+                edit_entry = _edit_cache.get(id_)
+                if edit_entry:
+                    path, stat = edit_entry; edited = True
+                    image_version = f'{stat.st_mtime_ns}-{stat.st_size}'
+                else:
+                    edited = False; image_version = 'base'
+            else:
+                draft=self.draft(id_)
+                try:
+                    stat=draft.stat();edited=True;path=draft
+                    image_version=f'{stat.st_mtime_ns}-{stat.st_size}'
+                except FileNotFoundError:
+                    edited=False;image_version='base'
+            stamp=(edited,image_version)
+            cached=self.catalog_cache.get(id_)
+            if cached and cached[0]==stamp:return dict(cached[1])
+            if edited:
+                meta=self.metadata(id_)
+                variant=meta.get('selected_variant') or {}
+                revision=meta.get('revision') or sha(path.read_bytes())
+            else:
+                meta={};variant={};revision=None
+            ref=self.reference(id_)
+            result=dict(frame,edited=edited,revision=revision,thumbnail_version=image_version,
+                edge_cleaned=variant.get('operation')=='local-alpha' or variant.get('model','').startswith('Limpieza de borde'),
+                has_reference=ref is not None,reference_kind='original-preparado' if ref and 'topaz-cleaned' in ref.parts else 'original')
+            self.catalog_cache[id_]=(stamp,result)
+            return dict(result)
+
+    def history_names(self, id_):
+        """Return sorted history PNG names, cached to avoid repeated NTFS globs."""
+        folder = self.store / 'history' / id_
+        try:
+            mtime = folder.stat().st_mtime_ns
+        except FileNotFoundError:
+            self._history_cache.pop(id_, None)
+            return []
+        cached = self._history_cache.get(id_)
+        if cached and cached[0] == mtime:
+            return cached[1]
+        names = sorted((p.name for p in folder.glob('*.png')), reverse=True)
+        self._history_cache[id_] = (mtime, names)
+        return names
+
+    def invalidate_history(self, id_):
+        self._history_cache.pop(id_, None)
+
+    def open(self, id_):
+        from source_preparation import metadata
+        with self.lock:
+            draft = self.draft(id_)
+            try:
+                draft_stat = draft.stat()
+                draft_key = f'{draft_stat.st_mtime_ns}-{draft_stat.st_size}'
+            except FileNotFoundError:
+                draft_key = 'none'
+            cache_key = f'{id_}:{draft_key}'
+            cached = self._open_cache.get(id_)
+            if cached and cached[0] == cache_key:
+                return dict(cached[1])
+            original = _cached_read(self.original(id_))
             size = png_size(original)
             revision = self.revision(id_)
             meta = self.metadata(id_)
-            return dict(frame=self.frame(id_), width=size[0], height=size[1],
+            result = dict(frame=self.frame(id_), width=size[0], height=size[1],
                         revision=revision, offset=meta.get('offset', [0, 0]),
                         current_sha256=meta.get('sha256') if revision else sha(original),
                         selected_variant=meta.get('selected_variant'),
+                        source_preparation=metadata(self,id_),
                         original=f'/api/image?id={id_}&original=1',
                         image=f'/api/image?id={id_}&v={revision or "base"}')
+            self._open_cache[id_] = (cache_key, result)
+            return dict(result)
 
     def save(self, body, selected_variant=None):
         id_ = body['id']
@@ -230,6 +487,7 @@ class Workshop:
             prior = previous.read_bytes() if previous.exists() else original
             atomic(history / (stamp + '-before.png'), prior)
             atomic(history / (stamp + '-before.json'), json.dumps(self.metadata(id_)).encode())
+            self.invalidate_history(id_)
             meta = dict(source=self.frame(id_)['path'], source_sha256=sha(original),
                         sha256=sha(image), revision=revision, saved_at=time.time(), offset=offset,
                         width=size[0], height=size[1], review_status='manual-draft',
@@ -241,7 +499,25 @@ class Workshop:
                 meta['selected_variant']=previous_meta['selected_variant']
             atomic(previous, image)
             atomic(previous.with_suffix('.json'), json.dumps(meta, indent=2).encode())
+            if self.frame(id_)['name'].startswith('0003_') and self.frame(id_)['name'].endswith('_0000'):
+                from inventory_states import sync
+                sync(self,id_)
+            self.catalog_cache.pop(id_,None);self._open_cache.pop(id_,None);self._full_catalog_cache=None
+            self.changes.publish(id_)
             return dict(revision=revision, saved=str(previous), offset=offset)
+
+    def delete_history(self, body):
+        id_ = body['id']; self.frame(id_)
+        name = body['name']
+        if not isinstance(name, str) or not re.fullmatch(r'\d+-before\.png', name):
+            raise ValueError('Versión inválida.')
+        with self.lock:
+            path = self.store / 'history' / id_ / name
+            path.unlink(missing_ok=True)
+            path.with_suffix('.json').unlink(missing_ok=True)
+            self.invalidate_history(id_)
+            self.changes.publish(id_)
+            return dict(ok=True)
 
     def restore(self, body):
         id_ = body['id']; self.frame(id_)
@@ -268,22 +544,44 @@ class Workshop:
             if path.exists() and path.read_bytes() != data:
                 raise Conflict('Ya existe un PNG distinto con ese nombre en este lote.')
             atomic(path, data)
-            return dict(id=self.register(path, 'Importados · ' + session, dimensions=list(size)))
+            id_=self.register(path, 'Importados · ' + session, dimensions=list(size))
+            self.changes.publish(id_)
+            return dict(id=id_)
 
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def send(self, status, value, mime='application/json'):
+    def send(self, status, value, mime='application/json', cache_control='no-store'):
         data = json.dumps(value, ensure_ascii=False).encode() if mime == 'application/json' else value
         self.send_response(status)
         self.send_header('Content-Type', mime)
         self.send_header('Content-Length', str(len(data)))
-        self.send_header('Cache-Control', 'no-store')
+        self.send_header('Cache-Control', cache_control)
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.end_headers()
         self.wfile.write(data)
+
+    def stream_changes(self):
+        self.send_response(200)
+        self.send_header('Content-Type','text/event-stream')
+        self.send_header('Cache-Control','no-cache')
+        self.send_header('Connection','close')
+        self.end_headers()
+        cursor=self.headers.get('Last-Event-ID')
+        try:
+            self.wfile.write(b'retry: 1000\n\n');self.wfile.flush()
+            while True:
+                change=self.server.workshop.changes.read(cursor)
+                if change:
+                    cursor=change['cursor']
+                    packet=f'id: {cursor}\nevent: change\ndata: {json.dumps(change)}\n\n'.encode()
+                else:packet=b': keepalive\n\n'
+                self.wfile.write(packet);self.wfile.flush()
+        except (BrokenPipeError,ConnectionError,OSError):
+            pass
+        self.close_connection=True
 
     def trusted(self):
         expected = f'127.0.0.1:{self.server.server_port}'
@@ -301,16 +599,61 @@ class Handler(BaseHTTPRequestHandler):
             w = self.server.workshop
             if parsed.path == '/api/health':
                 self.send(200, dict(app='monkey-sprite-painter', root=str(w.root)))
+            elif parsed.path == '/api/events':
+                # Retire per-tab streams from already-open old clients. HTTP 204
+                # tells EventSource to stop reconnecting; their fallback stays usable.
+                if args.get('shared')==['1']: self.stream_changes()
+                else:self.send(204,b'','text/event-stream')
+            elif parsed.path == '/api/changes':
+                self.send(200,w.changes.read(args.get('since',[None])[0],0) or dict(cursor=w.changes.cursor(),ids=[]))
+            elif parsed.path == '/api/source-preparation':
+                from source_preparation import snapshot
+                self.send(200,snapshot(w,args['id'][0]))
+            elif parsed.path == '/api/source-image':
+                path=w.generation_reference(args['id'][0])
+                if path is None: raise ValueError('No hay original asociado.')
+                self.send(200,_cached_read(path),'image/png')
+            elif parsed.path == '/api/review':
+                asset=args['id'][0];lab=self.server.imagelab
+                with lab.lock,w.lock:
+                    result=dict(info=w.open(asset),jobs=lab.list(asset),
+                        history=dict(items=w.history_names(asset)),
+                        approvals={asset:lab.approvals().get(asset)})
+                self.send(200,result)
+            elif parsed.path == '/api/live-state':
+                ids=list(dict.fromkeys(args.get('ids',[''])[0].split(','))) if 'ids' in args else list(w.frames)
+                for id_ in ids:w.frame(id_)
+                lab=self.server.imagelab
+                # Same lock order as accepting a variant; never publish a half-saved image.
+                with lab.lock,w.lock:
+                    approvals=lab.approvals()
+                    jobs=lab.list(assets=ids)
+                    wanted=set(ids)
+                    changed=w.changes.read(args['since'][0],0) if 'since' in args and 'ids' not in args else None
+                    frame_ids=ids
+                    if 'since' in args and 'ids' not in args and not (changed and changed.get('reset')):
+                        frame_ids=[id_ for id_ in (changed or {}).get('ids',[]) if id_ in wanted]
+                    snapshot=dict(ids=ids,full='ids' not in args,
+                        cursor=w.changes.cursor(),frames=[w.catalog_frame(id_) for id_ in frame_ids],
+                        approvals={id_:approvals.get(id_) for id_ in ids},
+                        jobs=[job for job in jobs if job['asset_id'] in wanted])
+                self.send(200,snapshot)
             elif parsed.path == '/api/imagelab/status':
                 self.send(200, self.server.imagelab.status())
+            elif parsed.path == '/api/deliveries':
+                self.send(200,self.server.deliveries.snapshot())
             elif parsed.path == '/api/imagelab/jobs':
-                self.send(200, dict(jobs=self.server.imagelab.list(args.get('asset',[None])[0]),approvals=self.server.imagelab.approvals()))
+                asset=args.get('asset',[None])[0];approvals=self.server.imagelab.approvals()
+                ids=args.get('ids',[''])[0].split(',') if 'ids' in args else None
+                self.send(200, dict(jobs=self.server.imagelab.list(asset,assets=ids),approvals={asset:approvals.get(asset)} if asset else approvals))
             elif parsed.path == '/api/imagelab/job':
                 self.send(200, self.server.imagelab.read(args['id'][0]))
             elif parsed.path == '/api/imagelab/image':
                 folder=self.server.imagelab.folder(args['id'][0])
                 name='input.png' if 'input' in args else ('provider.png' if 'raw' in args else 'candidate.png')
-                self.send(200, (folder/name).read_bytes(), 'image/png')
+                if 'input' in args and (folder/'alpha-source.png').exists():
+                    name='alpha-source.png'
+                self.send(200, _cached_read(folder/name), 'image/png', 'private, max-age=300')
             elif parsed.path == '/api/imagelab/reference':
                 asset=args['id'][0];w.frame(asset);approval=self.server.imagelab.approvals().get(asset)
                 path=self.server.imagelab.root/'references'/approval['file'] if approval else w.original(asset)
@@ -318,7 +661,7 @@ class Handler(BaseHTTPRequestHandler):
             elif parsed.path == '/api/imagelab/prepared':
                 from PIL import Image
                 from spriteprep import clean_base
-                path=w.reference(args['id'][0])
+                path=w.generation_reference(args['id'][0])
                 if not path: raise ValueError('No hay original asociado.')
                 with Image.open(path) as original:
                     original=original.convert('RGBA');factor=896/max(original.size)
@@ -327,61 +670,133 @@ class Handler(BaseHTTPRequestHandler):
                     prepared.alpha_composite(clean_base(original,(width,height)),((1024-width)//2,(1024-height)//2))
                     buffer=io.BytesIO();prepared.save(buffer,format='PNG')
                 self.send(200,buffer.getvalue(),'image/png')
+            elif parsed.path == '/api/asset-audit':
+                self.send(200,self.server.audit.snapshot())
             elif parsed.path == '/api/catalog':
-                frames=[]
-                for f in w.frames.values():
-                    ref=w.reference(f['id'])
-                    frames.append(dict(f, edited=w.draft(f['id']).exists(), revision=w.revision(f['id']), has_reference=ref is not None,
-                        reference_kind='original-preparado' if ref and 'topaz-cleaned' in ref.parts else 'original'))
-                self.send(200, dict(frames=frames, root=str(w.root), store=str(w.store)))
+                self.send(200, w.full_catalog())
             elif parsed.path == '/api/thumbnail':
                 id_ = args['id'][0]
                 reference = args.get('reference', ['0'])[0] == '1'
-                path = w.reference(id_) if reference else w.draft(id_) if w.draft(id_).exists() else w.original(id_)
-                if path is None: return self.send(404, dict(error='No hay un original asociado por nombre exacto.'))
-                self.send(200, thumbnail(str(path), path.stat().st_mtime_ns, reference), 'image/png')
+                with w.lock:
+                    if reference:
+                        path = w.reference(id_)
+                    else:
+                        draft = w.draft(id_)
+                        path = draft if draft.exists() else (w.root / w.frame(id_)['path'])
+                    if path is None: return self.send(404, dict(error='No hay un original asociado por nombre exacto.'))
+                try:
+                    stat=path.stat();version=f'{stat.st_mtime_ns}-{stat.st_size}'
+                except FileNotFoundError:
+                    return self.send(404, dict(error='Archivo no disponible.'))
+                cache_control='private, max-age=31536000, immutable' if args.get('v',[''])[0]==version else 'no-store'
+                data=thumbnail(str(path), stat.st_mtime_ns, reference)
+                self.send(200,data,'image/png',cache_control)
             elif parsed.path == '/api/open':
                 self.send(200, w.open(args['id'][0]))
             elif parsed.path == '/api/image':
                 id_ = args['id'][0]
                 p = w.original(id_) if 'original' in args or not w.draft(id_).exists() else w.draft(id_)
-                data = p.read_bytes()
+                data = _cached_read(p)
                 png_size(data)
-                self.send(200, data, 'image/png')
+                v = args.get('v', [''])[0]
+                cc = 'private, max-age=300' if v and v != 'base' else 'no-store'
+                self.send(200, data, 'image/png', cc)
             elif parsed.path == '/api/reference':
                 reference=w.reference(args['id'][0])
                 if reference is None: return self.send(404, dict(error='No hay original asociado a este asset.'))
-                data=reference.read_bytes();png_size(data)
+                data=_cached_read(reference);png_size(data)
                 self.send(200, data, 'image/png')
             elif parsed.path == '/api/history':
                 id_ = args['id'][0]; w.frame(id_)
-                folder = w.store / 'history' / id_
-                names = sorted((p.name for p in folder.glob('*.png')), reverse=True)
-                self.send(200, dict(items=names))
+                self.send(200, dict(items=w.history_names(id_)))
             elif parsed.path == '/api/version':
                 id_ = args['id'][0]; w.frame(id_)
                 name = args['name'][0]
                 if not re.fullmatch(r'\d+-before\.png', name): raise ValueError('Versión inválida.')
-                data = (w.store / 'history' / id_ / name).read_bytes()
+                data = _cached_read(w.store / 'history' / id_ / name)
                 self.send(200, data, 'image/png')
+            elif parsed.path == '/api/version-thumb':
+                kind = args.get('kind', [''])[0]
+                if kind == 'job':
+                    job_id = args['job'][0]
+                    folder = self.server.imagelab.folder(job_id)
+                    path = folder / 'candidate.png'
+                    data = _cached_read(path)
+                    key = hashlib.md5(f'job:{job_id}:{path.stat().st_mtime_ns}'.encode()).hexdigest()
+                elif kind == 'history':
+                    id_ = args['id'][0]; w.frame(id_)
+                    name = args['name'][0]
+                    if not re.fullmatch(r'\d+-before\.png', name): raise ValueError('Versión inválida.')
+                    path = w.store / 'history' / id_ / name
+                    data = _cached_read(path)
+                    key = hashlib.md5(f'history:{id_}:{name}:{path.stat().st_mtime_ns}'.encode()).hexdigest()
+                elif kind == 'current':
+                    id_ = args['id'][0]
+                    draft = w.draft(id_)
+                    path = draft if draft.exists() else (w.root / w.frame(id_)['path'])
+                    data = _cached_read(path)
+                    key = hashlib.md5(f'current:{id_}:{path.stat().st_mtime_ns}'.encode()).hexdigest()
+                else:
+                    raise ValueError('Tipo de versión inválido.')
+                self.send(200, version_thumb(data, key), 'image/png', 'private, max-age=300')
             elif parsed.path == '/confite/':
                 self.send(200, (Path(__file__).parent / 'confite' / 'index.html').read_bytes(), 'text/html; charset=utf-8')
-            elif parsed.path in ('/', '/app.js', '/style.css', '/confite-link.js', '/confite-workshop.css', '/asset-browser.js', '/imagelab-ui.js', '/asset-review.js'):
+            elif parsed.path in ('/source-preparation.js','/live-worker.js'):
+                self.send(200,(Path(__file__).parent/parsed.path[1:]).read_bytes(),'text/javascript; charset=utf-8')
+            elif parsed.path in ('/', '/app.js', '/style.css', '/confite-link.js', '/confite-workshop.css', '/workshop-theme.css', '/asset-browser.js', '/imagelab-ui.js', '/asset-review.js', '/review-ui.js', '/lucide-icons.json', '/deliveries-ui.js', '/live-assets.js', '/sequence-tools.js'):
                 names = {'/': ('index.html', 'text/html; charset=utf-8'),
                          '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
                          '/confite-link.js': ('confite-link.js', 'text/javascript; charset=utf-8'),
                          '/confite-workshop.css': ('confite-workshop.css', 'text/css; charset=utf-8'),
+                         '/workshop-theme.css': ('workshop-theme.css', 'text/css; charset=utf-8'),
                          '/asset-browser.js': ('asset-browser.js', 'text/javascript; charset=utf-8'),
                          '/asset-review.js': ('asset-review.js', 'text/javascript; charset=utf-8'),
+                         '/review-ui.js': ('review-ui.js', 'text/javascript; charset=utf-8'),
+                         '/lucide-icons.json': ('lucide-icons.json', 'application/json; charset=utf-8'),
+                         '/deliveries-ui.js': ('deliveries-ui.js', 'text/javascript; charset=utf-8'),
                          '/imagelab-ui.js': ('imagelab-ui.js', 'text/javascript; charset=utf-8'),
+                         '/live-assets.js': ('live-assets.js', 'text/javascript; charset=utf-8'),
+                         '/sequence-tools.js': ('sequence-tools.js', 'text/javascript; charset=utf-8'),
                          '/style.css': ('style.css', 'text/css; charset=utf-8')}
                 name, mime = names[parsed.path]
                 self.send(200, (Path(__file__).parent / name).read_bytes(), mime)
+            elif parsed.path == '/api/preview/alpha':
+                from alpha_cleanup import clean, outline as make_outline, remove_magenta, _parse_color
+                from PIL import Image
+                id_=args['id'][0]
+                trim=float(args.get('trim',['0.5'])[0])
+                tint=float(args.get('tint',['0'])[0])
+                dark=args.get('dark',['1'])[0]=='1'
+                seams=args.get('seams',['1'])[0]=='1'
+                magenta=args.get('magenta',['0'])[0]=='1'
+                ol=args.get('outline',[None])[0]
+                job_id=args.get('job_id',[None])[0]
+                history=args.get('history',[None])[0]
+                with w.lock:
+                    source_body={'id':id_}
+                    if job_id:source_body['job_id']=job_id
+                    elif history:source_body['history']=history
+                    else:source_body['revision']=w.revision(id_)
+                    source_data=self.server.imagelab.variant_source(source_body)
+                    ref=w.reference(id_) if seams else None
+                    ref_img=Image.open(ref).convert('RGBA') if ref else None
+                img=Image.open(io.BytesIO(source_data)).convert('RGBA')
+                if ol:
+                    ol_color=_parse_color(args.get('outline_color',[None])[0],ol)
+                    ol_radius=max(1,min(int(args.get('outline_radius',['2'])[0]),8))
+                    result=make_outline(img,ol_color,ol_radius)
+                else:
+                    if magenta:img=remove_magenta(img)
+                    result=clean(img,trim,dark,tint,ref_img,seams and ref_img is not None)
+                if ref_img:ref_img.close()
+                buf=io.BytesIO();result.save(buf,format='PNG')
+                self.send(200,buf.getvalue(),'image/png')
             else: self.send(404, dict(error='No encontrado.'))
         except (ValueError, KeyError, FileNotFoundError) as error:
             self.send(400, dict(error=str(error)))
-        except Exception:
-            self.send(500, dict(error='No se pudo leer el archivo. Revisá permisos y espacio en disco.'))
+        except Exception as exc:
+            import traceback; traceback.print_exc()
+            self.send(500, dict(error=f'Error interno: {type(exc).__name__}: {exc}'))
 
     def do_POST(self):
         try:
@@ -392,13 +807,26 @@ class Handler(BaseHTTPRequestHandler):
                 raise ValueError('Formato de petición inválido.')
             body = json.loads(self.rfile.read(length))
             if self.path == '/api/save': result = self.server.workshop.save(body)
+            elif self.path == '/api/source-preparation':
+                from source_preparation import save
+                result=save(self.server.workshop,body)
+            elif self.path == '/api/deliveries/prepare': result = self.server.deliveries.start(body.get('scope','complete'),body.get('ids'))
+            elif self.path == '/api/deliveries/pull-request': result = self.server.deliveries.start_pr(body['id'],body.get('title'),body.get('draft',False))
+            elif self.path == '/api/deliveries/branch': result = self.server.deliveries.branch(body['id'],body.get('name'),body.get('draft') is True)
+            elif self.path == '/api/deliveries/push': result = self.server.deliveries.push(body['id'])
             elif self.path == '/api/restore': result = self.server.workshop.restore(body)
+            elif self.path == '/api/delete-history': result = self.server.workshop.delete_history(body)
             elif self.path == '/api/upscale/jobs': result = self.server.imagelab.create_upscale(body)
+            elif self.path == '/api/asset-audit': result = self.server.audit.start(body.get('ids',list(self.server.workshop.frames)),bool(body.get('strict',False)))
+            elif self.path == '/api/variants/refine-alpha': result = self.server.imagelab.refine_alpha(body)
+            elif self.path == '/api/variants/extract-alpha': result = self.server.imagelab.extract_variant_alpha(body)
+            elif self.path == '/api/variants/import': result = self.server.imagelab.import_variant(body)
             elif self.path == '/api/variants/select': result = self.server.imagelab.select_variant(body)
             elif self.path == '/api/import': result = self.server.workshop.import_png(body)
             elif self.path == '/api/imagelab/jobs': result = self.server.imagelab.create(body)
             elif self.path == '/api/imagelab/apply': result = self.server.imagelab.apply(body['job_id'])
             elif self.path == '/api/imagelab/cancel': result = self.server.imagelab.cancel(body['job_id'])
+            elif self.path == '/api/imagelab/delete': result = self.server.imagelab.delete(body['job_id'])
             elif self.path == '/api/imagelab/alpha': result = self.server.imagelab.alpha_variant(body['job_id'])
             elif self.path == '/api/imagelab/approve': result = self.server.imagelab.approve(body)
             elif self.path == '/api/imagelab/revoke': result = self.server.imagelab.revoke(body['id'])
@@ -410,7 +838,8 @@ class Handler(BaseHTTPRequestHandler):
 
 
 class LocalServer(ThreadingHTTPServer):
-    allow_reuse_address = False
+    allow_reuse_address = True
+    request_queue_size = 64
 
     def server_bind(self):
         if hasattr(socket, 'SO_EXCLUSIVEADDRUSE'):
@@ -422,6 +851,10 @@ def make_server(root, port=5215):
     server = LocalServer(('127.0.0.1', port), Handler)
     server.workshop = Workshop(Path(root))
     server.imagelab = ImageLab(server.workshop, atomic, sha, png_size, Conflict)
+    from asset_audit import AssetAudit
+    server.audit = AssetAudit(server.workshop)
+    from deliveries import Deliveries
+    server.deliveries = Deliveries(server.workshop,server.imagelab)
     server.imagelab.resume()
     return server
 
@@ -457,3 +890,4 @@ def main():
 
 
 if __name__ == '__main__': main()
+
