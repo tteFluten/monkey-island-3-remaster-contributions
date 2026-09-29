@@ -99,6 +99,17 @@ async function openAssetReview(frame, initialJob=null, initialInfo=null, options
   q('original').onload=()=>{q('original-size').textContent=q('original').naturalWidth+' × '+q('original').naturalHeight;};
   q('result').onload=()=>{q('result-size').textContent=q('result').naturalWidth+' × '+q('result').naturalHeight;};
   q('result').onerror=()=>{q('status').textContent='No se pudo cargar esta versión. Se conserva en el historial.';};
+  async function copyImage(img,button){
+    if(!img.naturalWidth)return;
+    const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+    canvas.getContext('2d').drawImage(img,0,0);
+    try{const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);button.textContent='✓ Copiado';setTimeout(()=>{button.textContent='Copiar';},1200);}
+    catch{button.textContent='Error';setTimeout(()=>{button.textContent='Copiar';},1200);}
+  }
+  const copyOriginal=document.createElement('button');copyOriginal.textContent='Copiar';copyOriginal.className='ar-copy';copyOriginal.onclick=()=>copyImage(q('original'),copyOriginal);
+  q('original').closest('figure').querySelector('figcaption').append(copyOriginal);
+  const copyResult=document.createElement('button');copyResult.textContent='Copiar';copyResult.className='ar-copy';copyResult.onclick=()=>copyImage(q('result'),copyResult);
+  q('result').closest('figure').querySelector('figcaption').append(copyResult);
   function transform(){for(const img of panel.querySelectorAll('.ar-image-area img'))img.style.transform=`translate(${px}px,${py}px) scale(${zoom})`;q('zoom').textContent=Math.round(zoom*100)+'%';}
   function scale(factor){zoom=Math.max(.25,Math.min(12,zoom*factor));transform();}
   q('fit').onclick=()=>{zoom=1;px=py=0;transform();};q('minus').onclick=()=>scale(1/1.25);q('plus').onclick=()=>scale(1.25);
