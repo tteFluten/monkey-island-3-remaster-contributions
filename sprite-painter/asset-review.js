@@ -291,8 +291,9 @@ async function openAssetReview(frame, initialJob=null, initialInfo=null, options
       await save();if(!asLayer&&selected!=='current')await useSelected(true);
       if(!state.catalogLoaded)await catalog();
       const sequence=state.groups.find(g=>g[0].group===frame.group);if(!sequence)throw new Error('No se encontró la secuencia.');
-      state.busy=false;state.playing=false;await navigate(sequence.findIndex(f=>f.id===frame.id),sequence);
+      state.busy=false;state.playing=false;state.pointer=null;await navigate(sequence.findIndex(f=>f.id===frame.id),sequence);
       if(state.info?.frame.id!==frame.id)throw new Error('No se pudo cargar el asset en el editor principal.');
+      state.busy=false;state.pointer=null;
       await confiteButton.onclick({hiddenLayers});if(!confiteSession)throw new Error('No se pudo abrir Confite. Verificá que el asset esté cargado.');
       panel.hidden=true;if(shade)shade.hidden=true;const grid=document.querySelector('.asset-browser');if(grid)grid.hidden=true;
       confiteSession.overlay.querySelector('[data-close]').textContent='Guardar y volver a comparación';

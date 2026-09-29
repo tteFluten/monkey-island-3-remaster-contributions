@@ -31,8 +31,6 @@ const assetGrid = (() => {
   }
   function restoreView(saved){
     sequenceFilters().forEach((el,i)=>{el.value=saved.filters[i];});
-    // If saved view had "all collections", pick a default scene instead
-    if(!collection.value&&[...collection.options].some(o=>o.value)){const preferred=['Barco · personajes','Agua · personajes'];collection.value=preferred.find(c=>[...collection.options].some(o=>o.value===c))||collection.options[1]?.value||'';}
     panel.querySelector('[data-density]').value=saved.density||'210';
     viewMode=saved.viewMode==='assets'?'assets':'sequences';sequenceScope=saved.sequenceScope||null;sequenceReturn=saved.sequenceReturn||null;
     selectionMode=!!saved.selectionMode;selectionAnchor=saved.selectionAnchor||null;
@@ -651,9 +649,7 @@ if(batchFilter){const batch=SpriteBatches.get(batchId);if(batch){const ids=new S
     refreshAudit().catch(()=>{});
     if(state.info){const key=state.info.frame.id+'/edit';cache.get(key)?.close?.();cache.delete(key);diskCache.then(s=>s&&s.keys().then(keys=>keys.filter(k=>k.url.includes(state.info.frame.id)).forEach(k=>s.delete(k)))).catch(()=>{});}
     const previous=collection.value;const categories=[...new Set(state.frames.map(f=>f.category))].sort();
-    collection.replaceChildren(new Option('⚠ Todas ('+state.frames.length+' assets)',''));categories.forEach(c=>{const count=state.frames.filter(f=>f.category===c).length;collection.add(new Option(c+' · '+count,c));});collection.value=previous;
-    // Always default to a scene — never show all 2774 assets at once
-    if(!collection.value){const preferred=['Barco · personajes','Agua · personajes','Entrega · dependencias del barco','Interfaz'];collection.value=preferred.find(c=>categories.includes(c))||categories[0]||'';};
+    collection.replaceChildren(new Option('Todas · '+state.frames.length+' assets',''));categories.forEach(c=>{const count=state.frames.filter(f=>f.category===c).length;collection.add(new Option(c+' · '+count,c));});collection.value=previous;
     const focused=!previousView&&focusId&&state.frames.find(f=>f.id===focusId);
     if(focused)collection.value=focused.category;
     resize();rebuild();

@@ -20,36 +20,57 @@ manifest = root / 'assets' / 'manifest.json'
 if not manifest.exists():
     sys.exit(0)
 
-records = json.loads(manifest.read_text(encoding='utf-8-sig'))
+manifest_data = json.loads(manifest.read_text(encoding='utf-8-sig'))
+records = manifest_data.get('files', [])
 review_file = root / 'assets/metadata/artwork-review.json'
 reviews = json.loads(review_file.read_text(encoding='utf-8-sig')) if review_file.exists() else {}
 
-# Build frame list
+# Load scene plan for dependency detection
+plan_path = root / 'assets/metadata/topaz-scene-plan.json'
+scene_sources = set()
+if plan_path.exists():
+    try:
+        plan = json.loads(plan_path.read_text(encoding='utf-8-sig'))
+        scene_sources = {entry['source'] for scene in plan.get('scenes', [])
+                         if scene['id'] in ('room-0009', 'room-0010', 'room-0011')
+                         for entry in scene['sources']}
+    except Exception:
+        pass
+
+# Build frame list — mirrors server.py reload() logic exactly
 frames = {}
-for p, record in records.items():
-    if not p.startswith('assets/masters/topaz-4x/'):
+for record in records:
+    p = record['path']
+    if not p.lower().endswith('.png'):
         continue
+    category = None
+    if p.startswith('assets/masters/topaz-4x/costumes/'):
+        if 'LFLF_0009_' in p: category = 'Barco · personajes'
+        elif 'LFLF_0001_AKOS_0002_' in p: category = 'Guybrush · compartido'
+        elif 'LFLF_0011_' in p: category = 'Agua · personajes'
+    elif p.startswith('assets/masters/topaz-4x/objects/') and re.search(r'/000[39]_', p):
+        category = 'Barco · objetos e inventario'
+    elif p.startswith('assets/masters/backgrounds/') and record.get('asset_id') in ('background-room-9', 'background-room-11'):
+        category = 'Fondos'
+    elif p.startswith('assets/masters/ui-4x/'):
+        category = 'Interfaz'
+    elif p.startswith('extracted/costumes/') and ('LFLF_0009_' in p or 'LFLF_0001_AKOS_0002_' in p):
+        category = 'Originales · referencia'
+    if not category and record.get('canonical') and (record.get('source_id') in scene_sources or record.get('asset_id') == 'background-room-10'):
+        category = 'Entrega · dependencias del barco'
+    if not category:
+        continue
+
     rel = p
     id_ = sha(rel.encode())[:24]
     stem = Path(p).stem
     match = re.match(r'(.*)_(a?frame)_(\d+)$', stem)
     group = (match.group(1) + '_' + match.group(2)) if match else stem
     index = int(match.group(3)) if match else 0
-    category_folder = Path(p).parent.name
-    category_map = {'costumes': 'Guybrush · compartido', 'objects': 'Barco · objetos e inventario',
-                    'backgrounds': 'Fondos', 'interface': 'Interfaz'}
-    category = category_map.get(category_folder, category_folder)
-    # Detect scene-specific categories from plan
-    plan_path = root / 'assets/metadata/topaz-scene-plan.json'
-    if plan_path.exists():
-        try:
-            plan = json.loads(plan_path.read_text(encoding='utf-8-sig'))
-        except:
-            plan = {}
-    else:
-        plan = {}
+    d = record.get('image', {})
+    dimensions = [d['width'], d['height']] if 'width' in d else None
     frames[id_] = dict(id=id_, path=rel, name=stem, group=category + '/' + group,
-                       category=category, number=index)
+                       category=category, number=index, dimensions=dimensions)
 
 # Scan edits
 edits_dir = store / 'edits'
